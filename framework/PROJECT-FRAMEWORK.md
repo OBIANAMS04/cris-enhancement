@@ -125,7 +125,7 @@ All five are left unticked in `progress.json`. None is claimed until the whole s
 ## 10. Links
 
 - Portal story: https://enterprise.colaberry.ai/portal/projects/workspace/a563218c-c3a4-433c-8ed7-4e8e0573f59c/STORY-000
-- Framework artifact (pinned): added below once published
+- Framework artifact (pinned): https://claude.ai/artifact/AZJzCgHVd2QAr4LnFCRzzf
 - GitHub repo and Command Center address: added once the repo exists
 
 ## How this document is maintained
