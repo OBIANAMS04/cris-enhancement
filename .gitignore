@@ -1,0 +1,10 @@
+# Never commit secrets: this repo is public.
+.env
+.env.*
+*.pem
+*.key
+node_modules/
+.playwright-mcp/
+*.log
+.DS_Store
+Thumbs.db

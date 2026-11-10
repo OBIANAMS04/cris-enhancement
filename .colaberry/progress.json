@@ -1,0 +1,422 @@
+{
+  "schema_version": 2,
+  "project": "Crash Records Information System (CRIS) Enhancement",
+  "totals": {
+    "stories_total": 16,
+    "stories_verified": 0,
+    "stories_submitted": 0,
+    "stories_in_progress": 0,
+    "stories_not_started": 16,
+    "criteria_total": 50,
+    "criteria_passed": 0,
+    "points_awarded": 0
+  },
+  "stories": [
+    {
+      "id": "STORY-000",
+      "release": null,
+      "acceptance_total": 5,
+      "criteria": [
+        {
+          "text": "Given the Command Center, when it is opened, then every tab is reachable and every card drills down one level.",
+          "passed": false
+        },
+        {
+          "text": "Given sample mode, when any tab is shown, then the sample data is visibly labelled as sample.",
+          "passed": false
+        },
+        {
+          "text": "Given the Command Center, when any tab renders, then .colaberry/plan.json and .colaberry/progress.json are both committed in this repo and every tab reads its content from them at runtime rather than from hard-coded values.",
+          "passed": false
+        },
+        {
+          "text": "Given the Command Center, when any tab is shown, then .colaberry/manifest.json is committed in this repo and every tab shows how old that data is and warns when the age exceeds a week.",
+          "passed": false
+        },
+        {
+          "text": "Trust — no tab shows a number, a connection or a result the project has not actually produced.",
+          "passed": false
+        }
+      ],
+      "files_touched": [
+        "index.html",
+        "assets/app.css",
+        "assets/js/main.js",
+        "assets/js/data.js",
+        "assets/js/sample.js",
+        "assets/js/ui.js",
+        "assets/js/tabs.js",
+        "assets/js/views/overview.js",
+        "assets/js/views/pending.js",
+        "scripts/serve.mjs"
+      ],
+      "tests_added": [
+        "tests/data.test.mjs",
+        "tests/browser-walk.js"
+      ],
+      "notes": "Overview built and paused for the owner's review, as the story asks. The other eight tabs are reachable placeholders, so no criterion is ticked yet. plan.json carries no schedule, release dates or due dates, so the Overview shows none.",
+      "updated_at": "2026-11-10T13:01:48.339Z",
+      "verification": null
+    },
+    {
+      "id": "STORY-001",
+      "release": "r0",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given a user has an issue, when they report it via the help desk, then they receive assistance.",
+          "passed": false
+        },
+        {
+          "text": "Given a resolved issue, when the user checks the status, then it shows as resolved.",
+          "passed": false
+        },
+        {
+          "text": "Trust: All help desk interactions are logged for audit.",
+          "passed": false
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": null
+    },
+    {
+      "id": "STORY-002",
+      "release": "r0",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given the system is running, when monitoring is active, then performance metrics are displayed.",
+          "passed": false
+        },
+        {
+          "text": "Given a system outage, when it occurs, then an alert is generated.",
+          "passed": false
+        },
+        {
+          "text": "Trust: All monitoring data is archived for audit.",
+          "passed": false
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": null
+    },
+    {
+      "id": "STORY-003",
+      "release": "r0",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given system data, when a report is generated, then it reflects current performance.",
+          "passed": false
+        },
+        {
+          "text": "Given a report request, when data is missing, then an error is shown.",
+          "passed": false
+        },
+        {
+          "text": "Trust: Reports are archived for future reference.",
+          "passed": false
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": null
+    },
+    {
+      "id": "STORY-004",
+      "release": "r1",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given user feedback, when a feature is developed, then it meets user needs.",
+          "passed": false
+        },
+        {
+          "text": "Given a feature request, when it is not feasible, then feedback is provided.",
+          "passed": false
+        },
+        {
+          "text": "Trust: All feature changes are documented.",
+          "passed": false
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": null
+    },
+    {
+      "id": "STORY-005",
+      "release": "r1",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given new features, when training is conducted, then staff understand functionalities.",
+          "passed": false
+        },
+        {
+          "text": "Given a training session, when a user misses it, then a recording is available.",
+          "passed": false
+        },
+        {
+          "text": "Trust: Training completion is logged.",
+          "passed": false
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": null
+    },
+    {
+      "id": "STORY-006",
+      "release": "r2",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given a report request, when generated, then it meets specifications.",
+          "passed": false
+        },
+        {
+          "text": "Given a report error, when it occurs, then it is logged and addressed.",
+          "passed": false
+        },
+        {
+          "text": "Trust: All reports are archived for compliance.",
+          "passed": false
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": null
+    },
+    {
+      "id": "STORY-007",
+      "release": "r2",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given a compliance check, when conducted, then no violations are found.",
+          "passed": false
+        },
+        {
+          "text": "Given a legal update, when it occurs, then the system is updated accordingly.",
+          "passed": false
+        },
+        {
+          "text": "Trust: Compliance checks are logged.",
+          "passed": false
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": null
+    },
+    {
+      "id": "STORY-008",
+      "release": "r3",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given a response, when submitted, then it is stored correctly.",
+          "passed": false
+        },
+        {
+          "text": "Given a submission error, when it occurs, then it is logged and addressed.",
+          "passed": false
+        },
+        {
+          "text": "Trust: All submissions are tracked for audit.",
+          "passed": false
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": null
+    },
+    {
+      "id": "STORY-009",
+      "release": "r3",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given a response, when evaluated, then it is scored accurately.",
+          "passed": false
+        },
+        {
+          "text": "Given a scoring error, when it occurs, then it is corrected.",
+          "passed": false
+        },
+        {
+          "text": "Trust: All scores are archived for transparency.",
+          "passed": false
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": null
+    },
+    {
+      "id": "STORY-010",
+      "release": "r4",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given a risk assessment, when conducted, then risks are identified and mitigated.",
+          "passed": false
+        },
+        {
+          "text": "Given a risk, when it is not mitigated, then it is logged for review.",
+          "passed": false
+        },
+        {
+          "text": "Trust: All risk assessments are archived.",
+          "passed": false
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": null
+    },
+    {
+      "id": "STORY-011",
+      "release": "r4",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given a cybersecurity training, when completed, then compliance is ensured.",
+          "passed": false
+        },
+        {
+          "text": "Given a security breach, when it occurs, then it is logged and addressed.",
+          "passed": false
+        },
+        {
+          "text": "Trust: All training completions are archived.",
+          "passed": false
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": null
+    },
+    {
+      "id": "STORY-012",
+      "release": "r0",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given the system is operational, when a technical issue arises, then the support team must resolve it within the SLA.",
+          "passed": false
+        },
+        {
+          "text": "Given a maintenance schedule, when maintenance is due, then the system must undergo maintenance without disrupting services.",
+          "passed": false
+        },
+        {
+          "text": "Trust: All support and maintenance activities must be logged and auditable.",
+          "passed": false
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": null
+    },
+    {
+      "id": "STORY-013",
+      "release": "r2",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given a new document, when it is uploaded, then it must be stored in the document management system.",
+          "passed": false
+        },
+        {
+          "text": "Given a stored document, when it is accessed, then it must be retrievable within 2 seconds.",
+          "passed": false
+        },
+        {
+          "text": "Trust: All document access and modifications must be logged.",
+          "passed": false
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": null
+    },
+    {
+      "id": "STORY-014",
+      "release": "r4",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given system performance metrics, when anomalies are detected, then alerts must be generated for investigation.",
+          "passed": false
+        },
+        {
+          "text": "Given user actions, when an error is made, then the system must provide corrective suggestions.",
+          "passed": false
+        },
+        {
+          "text": "Trust: All anomalies and user errors must be logged for audit purposes.",
+          "passed": false
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": null
+    },
+    {
+      "id": "STORY-015",
+      "release": "r4",
+      "acceptance_total": 3,
+      "criteria": [
+        {
+          "text": "Given an incident, when it is reported, then a detailed report must be generated and stored.",
+          "passed": false
+        },
+        {
+          "text": "Given a risk assessment, when it is completed, then the documentation must be accessible to authorized users.",
+          "passed": false
+        },
+        {
+          "text": "Trust: All reports and assessments must be version-controlled and logged.",
+          "passed": false
+        }
+      ],
+      "files_touched": [],
+      "tests_added": [],
+      "notes": null,
+      "updated_at": null,
+      "verification": null
+    }
+  ]
+}
