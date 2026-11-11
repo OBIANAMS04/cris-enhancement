@@ -8,7 +8,8 @@ export function reports(page, rest, ctx) {
   if (rest[0]) return reportPage(page, rest[0], ctx);
   const s = ctx.store;
   const today = s.now().toISOString().slice(0, 10);
-  const archived = s.list('Report').reverse();
+  // Reports built by the reporting engine (STORY-006) carry a specification and are listed on its own page.
+  const archived = s.list('Report', (r) => !r.spec).reverse();
   return h(
     'div',
     {},

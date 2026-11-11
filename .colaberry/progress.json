@@ -310,21 +310,29 @@
       "criteria": [
         {
           "text": "Given a report request, when generated, then it meets specifications.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Given a report error, when it occurs, then it is logged and addressed.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Trust: All reports are archived for compliance.",
-          "passed": false
+          "passed": true
         }
       ],
-      "files_touched": [],
-      "tests_added": [],
-      "notes": null,
-      "updated_at": null,
+      "files_touched": [
+        "content/report-specs.json",
+        "lib/reporting.js",
+        "workspace/js/reporting.js",
+        "workspace/js/reports.js",
+        "workspace/js/views.js"
+      ],
+      "tests_added": [
+        "tests/story-006-reporting-engine.test.mjs"
+      ],
+      "notes": "Reports are built section by section from recorded data and checked against their specification before archiving. A report that cannot meet it (no data for a required section, or a source system not connected, such as the TxDOT financial system) is refused and logged as an incident, which is addressed by a later successful run or by hand with the cause. Archived reports are unchangeable and carry the SHA-256 of their body.",
+      "updated_at": "2026-11-11T11:40:16.124Z",
       "verification": {
         "state": "in_progress",
         "criteria_passed": 0,

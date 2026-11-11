@@ -1,0 +1,52 @@
+{
+  "note": "Report specifications for the reporting engine, written for the demo. The contract manager's actual required reports replace these; each section names where its data comes from.",
+  "specs": [
+    {
+      "id": "SPEC-PERF",
+      "title": "System performance report",
+      "kind": "performance",
+      "sections": [
+        { "id": "availability", "title": "Availability by component", "source": "monitoring", "allow_empty": false },
+        { "id": "response", "title": "Response times", "source": "monitoring", "allow_empty": false },
+        { "id": "incidents", "title": "Incidents opened and resolved", "source": "incidents", "allow_empty": true }
+      ]
+    },
+    {
+      "id": "SPEC-INCIDENTS",
+      "title": "Incident log",
+      "kind": "incident log",
+      "sections": [
+        { "id": "incident_list", "title": "Every incident in the period", "source": "incidents", "allow_empty": true }
+      ]
+    },
+    {
+      "id": "SPEC-SUPPORT",
+      "title": "Help desk and support activity",
+      "kind": "contract-specified",
+      "sections": [
+        { "id": "tickets", "title": "Tickets opened and resolved, by priority", "source": "helpdesk", "allow_empty": true },
+        { "id": "sla", "title": "Resolved within service level", "source": "helpdesk", "allow_empty": true },
+        { "id": "maintenance", "title": "Maintenance windows", "source": "maintenance", "allow_empty": true }
+      ]
+    },
+    {
+      "id": "SPEC-TRAINING",
+      "title": "Training and cyber security completion",
+      "kind": "contract-specified",
+      "sections": [
+        { "id": "sessions", "title": "Sessions held, with recordings", "source": "training", "allow_empty": true },
+        { "id": "completions", "title": "Completions", "source": "training", "allow_empty": true },
+        { "id": "cyber", "title": "Vendor cyber security training status", "source": "people", "allow_empty": false }
+      ]
+    },
+    {
+      "id": "SPEC-COST",
+      "title": "Contract cost summary",
+      "kind": "contract-specified",
+      "requires_systems": ["TxDOT financial system"],
+      "sections": [
+        { "id": "costs", "title": "Costs by category", "source": "finance", "allow_empty": false }
+      ]
+    }
+  ]
+}

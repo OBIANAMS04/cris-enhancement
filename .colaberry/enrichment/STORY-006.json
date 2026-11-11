@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "1",
+  "projectId": "a563218c-c3a4-433c-8ed7-4e8e0573f59c",
+  "storyId": "STORY-006",
+  "projectTruthBaseRevision": 0,
+  "observedAt": "2026-11-11T11:40:16.125Z",
+  "sourceCommitSha": "4d2a08a1895778fd200c756022eed5d301029c97",
+  "factProposals": [
+    {
+      "dimension": "integrations",
+      "value": "The contract cost summary needs the TxDOT financial system (REQ-011), which this build cannot reach; the engine refuses that report and logs why.",
+      "evidence": "content/report-specs.json"
+    },
+    {
+      "dimension": "outputs",
+      "value": "Five report specifications: system performance, incident log, help desk and support activity, training and cyber security completion, contract cost summary.",
+      "evidence": "content/report-specs.json"
+    }
+  ],
+  "decisions": [
+    {
+      "statement": "Report errors are logged as incidents on the reporting engine, one per specification while open, resolved by a successful retry or by hand with the cause.",
+      "rationale": "The acceptance asks that errors are logged and addressed.",
+      "evidence": "lib/reporting.js"
+    },
+    {
+      "statement": "Specifications live in a content file, so the contract manager's actual required reports replace them without code changes.",
+      "rationale": "The plan does not list the required reports.",
+      "evidence": "content/report-specs.json"
+    }
+  ],
+  "limitations": [
+    {
+      "statement": "The specifications are written for the demo; the contract manager's real list is still needed.",
+      "evidence": "content/report-specs.json"
+    }
+  ],
+  "demonstrationEvidence": [
+    {
+      "kind": "test",
+      "ref": "tests/story-006-reporting-engine.test.mjs"
+    },
+    {
+      "kind": "screenshot",
+      "ref": "framework/screens/m2-02-reporting-engine-error.png"
+    },
+    {
+      "kind": "screenshot",
+      "ref": "framework/screens/m2-03-report-to-spec.png"
+    }
+  ],
+  "measurementEvents": []
+}
