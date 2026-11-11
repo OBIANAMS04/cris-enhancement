@@ -2,7 +2,7 @@
 
 **Solicitation:** Crash Records Information System Service Agreement (TxDOT) · **Bidder:** Colaberry
 **Owner:** Obi Anamelechi Kingsley · **Decision makers:** Ali Muwwakkil (Managing Director), Ram Katamaraja
-**Ship-by:** 24 November 2026 · **Last updated:** 2026-11-10 · Updated after every milestone
+**Ship-by:** 24 November 2026 · **Last updated:** 2026-11-11 · Updated after every milestone
 
 > Everything here is built and demonstrated on synthetic data. Nothing is operating in production and nothing is
 > connected to a TxDOT system. The Command Center shows no number, connection or result the project has not produced.
@@ -31,7 +31,7 @@ Dates in this table are the ones the portal's STORY-000 brief gives. The plan fi
 
 | Release | Stories | Dates in the brief | Status |
 |---|---|---|---|
-| — | **STORY-000** Build your Command Center | first | **In progress: Overview built 2026-11-10, paused for Obi's review** (the brief asks for this stop). Not yet pushed: no GitHub repo yet |
+| — | **STORY-000** Build your Command Center | first | **Verified 2026-11-11 by the portal, 50 points.** All nine tabs live at https://obianams04.github.io/cris-enhancement/ |
 | **r0** Initial System Setup and Support | 001 Help Desk Support Module · 002 System Monitoring Tools · 003 Performance Reports · 012 Ongoing Technical Support and Maintenance | 5 to 8 Nov | Not started. Already past the brief's dates |
 | **r1** Enhancement and Training | 004 Feature Development Module · 005 User Training Sessions | 10 to 12 Nov | Not started |
 | **r2** Reporting and Compliance | 006 Reporting Engine · 007 Compliance with Laws · 013 Required Documentation | 13 to 16 Nov | Not started |
@@ -42,7 +42,7 @@ Dates in this table are the ones the portal's STORY-000 brief gives. The plan fi
 
 | Milestone | Contents | Target |
 |---|---|---|
-| M0 | STORY-000: the Command Center, all nine tabs, verified by the portal | As soon as the repo is connected and Obi says "build the rest" |
+| M0 | STORY-000: the Command Center, all nine tabs, verified by the portal | **Done 2026-11-11** |
 | M1 | STORY-001, 002, 003, 012 and 004 (everything the brief dates up to 10 Nov) | Straight after M0 |
 | M2 | STORY-005, 006, 007, 013 | 16 Nov |
 | M3 | STORY-008, 009, 010 | 21 Nov |
@@ -52,17 +52,21 @@ Each milestone ends with: a summary, links, everything committed and pushed, the
 updated with current screenshots, and a short HTML presentation (three to five minutes, with charts and a story
 line) for the audience.
 
-### STORY-000 against its five acceptance criteria (2026-11-10)
+### STORY-000 against its five acceptance criteria (2026-11-11)
 
-All five are left unticked in `progress.json`. None is claimed until the whole story is true.
+All five ticked in `progress.json` because each holds in the repo, and the portal verified the story on 2026-11-11.
 
-| Criterion | Where it stands |
+| Criterion | Evidence |
 |---|---|
-| Every tab reachable, every card drills down one level | Tabs: all nine open. Cards: all 11 on the Overview open their own page. The other eight tabs are placeholders, so this is not true yet |
-| Sample data visibly labelled | True on what is built: a banner on every tab and a tag on every card |
-| Every tab reads plan.json and progress.json at runtime, both committed | True for the Overview; a story removed from the plan file disappears from the page. The files are committed locally, not yet on GitHub |
-| manifest.json committed; every tab shows the data's age and warns past a week | True on every tab (checked with a manifest dated nine days back) |
-| Trust: nothing shown that the project has not produced | True on the Overview: no dates are shown because the file has none; unchecked stories read "Not checked yet" |
+| Every tab reachable, every card drills down one level | Browser walk: 9 tabs, 65 cards, each card opens its own page |
+| Sample data visibly labelled | A banner on every tab and a tag on every card; none in Real mode |
+| Every tab reads plan.json and progress.json at runtime, both committed | A story removed from the plan file disappears from the page |
+| manifest.json committed; data age shown, warning past a week | Every tab warns on a manifest nine days old |
+| Trust: nothing shown that the project has not produced | Systems grey and not checked; agents "no runs recorded"; no dates because the file has none |
+
+The portal's own record (downloaded with Get my progress.json and committed unedited) has three oddities worth
+raising with Ali: it counts 45 criteria rather than 50, shows STORY-000 as "0 of 0" criteria, and names the first
+commit (f07db58) as the verifying one. It also marks the 15 unbuilt stories "in progress".
 
 ## 4. How it is built
 
@@ -90,15 +94,15 @@ All five are left unticked in `progress.json`. None is claimed until the whole s
 
 | Blocker | Effect | Owner | Next step |
 |---|---|---|---|
-| No GitHub sign-in on this machine (`gh` is signed out; Claude's browser is signed out of GitHub) | No repo, so nothing can be pushed, connected to the portal, verified or put online | Obi | Run `gh auth login` once, then tell Claude |
+| `gh` not signed in on this machine | Only the portal's push webhook waits on it (optional): without it Claude presses Sync from GitHub | Obi | Finish `gh auth login` when convenient |
 | `plan.json` has no schedule, release dates or due dates | The Overview shows no dates; the Project management tab would have an empty Gantt | Ali / the platform | See whether the first sync after connecting delivers dates; if not, ask Ali |
-| Overview review | The other eight tabs wait on it, by the brief's design | Obi | Say "build the rest" |
 
 ## 7. Timeline
 
 | Date | What happened |
 |---|---|
 | 2026-11-08 | Ali grants builder access on the portal and points Obi at STORY-000 |
+| 2026-11-11 | Obi said "build the rest". Repo `OBIANAMS04/cris-enhancement` created (public) in the browser, pushed, connected to the portal; the other eight tabs built; a browser walk of 9 tabs and 65 cards passes; all five criteria ticked; **STORY-000 verified by the portal, 50 points**; GitHub Pages live at https://obianams04.github.io/cris-enhancement/; the portal's progress record committed. Guided-tour button gets a play icon (standing rule) |
 | 2026-11-10 | SSS closed out. CRIS project folder created; plan documents downloaded from the portal; the Command Center data layer, shell and Overview built and checked locally (11 unit tests, browser walk with no failures); first local commit. Waiting on GitHub sign-in to create the repo, connect it in the portal, register the push webhook and turn on GitHub Pages |
 
 ## 8. Risks
@@ -110,23 +114,18 @@ All five are left unticked in `progress.json`. None is claimed until the whole s
 | The plan's requirements read as written for the delivered CRIS service, and also for handling the solicitation response itself (REQ-012 to 015) | Scope could be misread | Follow the story files as written; raise mismatches with Ali rather than reinterpreting |
 | The repo is public | Anything committed is visible to anyone | No secrets, keys or `.env` files, ever; the push-webhook secret is run once and never saved |
 
-## 9. Screens (2026-11-10)
+## 9. Screens (2026-11-11)
 
-| Screen | File |
-|---|---|
-| Overview, real data | `framework/screens/01-overview-real.png` |
-| A tab that is not built yet | `framework/screens/02-tab-not-built-yet.png` |
-| Drill-down: release r0 | `framework/screens/03-drill-down-release.png` |
-| Drill-down: schedule (empty state) | `framework/screens/04-drill-down-schedule.png` |
-| Overview, sample data | `framework/screens/05-overview-sample.png` |
-| Stale-data warning | `framework/screens/06-stale-data-warning.png` |
-| Overview at phone width | `framework/screens/07-overview-phone.png` |
+All in `framework/screens/`, taken by `tests/browser-walk.js`: 01 Overview, 02 Outcomes, 03 Users, 04 Guardrails,
+05 Systems, 06 Project management, 07 AI agents, 08 Knowledge base question panel, 09 Data model, 10 a guardrail
+drill-down, 11 a data-model entity, 12 to 14 sample mode, 15 the stale-data warning, 16 phone width.
 
 ## 10. Links
 
 - Portal story: https://enterprise.colaberry.ai/portal/projects/workspace/a563218c-c3a4-433c-8ed7-4e8e0573f59c/STORY-000
 - Framework artifact (pinned): https://claude.ai/artifact/AZJzCgHVd2QAr4LnFCRzzf
-- GitHub repo and Command Center address: added once the repo exists
+- GitHub repo: https://github.com/OBIANAMS04/cris-enhancement
+- Command Center (live): https://obianams04.github.io/cris-enhancement/
 
 ## How this document is maintained
 
