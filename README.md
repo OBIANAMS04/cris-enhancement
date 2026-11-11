@@ -40,6 +40,22 @@ them writes to. Open it from the Command Center's header, or at `/workspace/`.
 - The demo store lives in the browser (localStorage) with synthetic people. Nothing here reaches TxDOT. Service
   levels and service hours are proposals until TxDOT confirms them (`lib/sla.js`, `lib/support.js`).
 
+## The workspace (Milestone 2)
+
+Four more pages, built the same way (rules in `lib/`, pages in `workspace/js/`):
+
+- Training (STORY-005, `#/training`): sessions with materials from `content/training-materials.json`. A session
+  needs a recording to be marked held; staff complete training by passing a knowledge check at 80% or more.
+- Reporting engine (STORY-006, `#/reporting-engine`): five report specifications in `content/report-specs.json`.
+  A report that cannot meet its spec is refused and logged as an incident; archived reports carry a SHA-256.
+- Documents (STORY-013, `#/documents`): response documents by category, hashed and stored in the browser's
+  IndexedDB, with role checks and a 10 MB limit.
+- Compliance (STORY-007, `#/compliance`): a register of 14 rules in `content/compliance-rules.json`, checked against
+  the live store. The register is compiled from public sources, to be confirmed by TxDOT legal; it is not legal advice.
+
+`tests/workspace-walk-m2.js` walks these four pages in a real browser, including a legal update that raises a
+compliance violation and a training refresher that clears it.
+
 ## Run it
 
 It needs Node.js 20 or later and nothing else. There is no build step and there are no dependencies.
@@ -50,7 +66,7 @@ node --test tests/            # the data layer, against the files committed here
 ```
 
 The page has to be served, because a browser will not let a page opened straight from disk read the JSON files.
-`tests/browser-walk.js` and `tests/workspace-walk.js` are walks through the site in a real browser (every tab, every card, sample labels, the
+`tests/browser-walk.js`, `tests/workspace-walk.js` and `tests/workspace-walk-m2.js` are walks through the site in a real browser (every tab, every card, sample labels, the
 stale-data warning, a deleted story, a missing file, phone width); it is run through Playwright.
 
 ## Where things are
@@ -58,7 +74,7 @@ stale-data warning, a deleted story, a missing file, phone width); it is run thr
 | Path | What |
 |---|---|
 | `index.html`, `assets/` | The Command Center. `assets/js/data.js` is the only place data is loaded |
-| `workspace/`, `lib/` | The Milestone 1 workspace: pages in `workspace/js/`, rules and the store in `lib/` |
+| `workspace/`, `lib/` | The Milestone 1 and 2 workspace: pages in `workspace/js/`, rules and the store in `lib/` |
 | `assets/app.css` | Styles. The brand colours are two lines at the top |
 | `content/` | The project's own content: decisions and notes (`notes.json`, appended to) and the proposed data model |
 | `framework/` | The project framework (goals, status, decisions, risks) and its screenshots |

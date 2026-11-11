@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CRIS Milestone 2 Story</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@500&display=swap">
+</head>
+<body>
+<style>
+/* Layout: one slide at a time on a road-sign field: navy panel, safety-amber accent, a lane line under the title. */
+:root {
+  --bg: #eef1f5; --panel: #ffffff; --ink: #121a26; --muted: #4d5a6c; --rule: #d3d9e2;
+  --navy: #14365e; --amber: #c27a00; --amber-soft: #fbefd6;
+  --ok: #1f6b45; --ok-bg: #e2f1e7; --bad: #a3262a; --bad-bg: #fbe4e4; --idle: #b8c1cd;
+  --s1: #2a78d6; --tour: #c8102e; --tour-ink: #ffffff;
+  --display: "Archivo", "Arial Narrow", Arial, sans-serif;
+  --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0e141c; --panel: #17202b; --ink: #edf1f6; --muted: #a6b1c0; --rule: #2c3846;
+  --navy: #9cc0ea; --amber: #f2b441; --amber-soft: #3a2c10;
+  --ok: #86d4a6; --ok-bg: #163222; --bad: #f2a0a3; --bad-bg: #3d1b1d; --idle: #4a5666;
+  --s1: #3987e5; --tour: #e5383b; --tour-ink: #ffffff; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0e141c; --panel: #17202b; --ink: #edf1f6; --muted: #a6b1c0; --rule: #2c3846;
+  --navy: #9cc0ea; --amber: #f2b441; --amber-soft: #3a2c10;
+  --ok: #86d4a6; --ok-bg: #163222; --bad: #f2a0a3; --bad-bg: #3d1b1d; --idle: #4a5666;
+  --s1: #3987e5; --tour: #e5383b; --tour-ink: #ffffff; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 17px/1.5 var(--body); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 16px; }
+.wrap { max-width: 1100px; margin: 0 auto; display: grid; gap: 14px; }
+.bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+.brand { font: 800 0.8rem/1 var(--display); letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+button { font: 600 0.95rem var(--body); cursor: pointer; border-radius: 8px; min-height: 40px; padding: 8px 14px; border: 1px solid var(--rule); background: var(--panel); color: var(--ink); }
+button:focus-visible, a:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+.tour-launch { display: inline-flex; align-items: center; gap: 9px; background: var(--tour); color: var(--tour-ink); border-color: var(--tour); }
+.tour-play { width: 16px; height: 16px; flex: none; }
+.count { font: 500 0.85rem var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.stage { background: var(--panel); border: 1px solid var(--rule); border-radius: 14px; padding: clamp(18px, 4vw, 44px); min-height: 560px; display: grid; }
+.slide { display: grid; gap: 18px; align-content: start; }
+.kicker { font: 600 0.8rem var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+h1, h2 { font-family: var(--display); font-weight: 800; line-height: 1.08; margin: 0; text-wrap: balance; color: var(--navy); }
+h1 { font-size: clamp(2rem, 5.5vw, 3.6rem); }
+h2 { font-size: clamp(1.6rem, 3.6vw, 2.4rem); }
+.lane { height: 6px; width: 120px; background: repeating-linear-gradient(90deg, var(--amber) 0 26px, transparent 26px 40px); }
+p { margin: 0; max-width: 64ch; }
+.lede { font-size: 1.2rem; color: var(--muted); }
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 26px; align-items: start; }
+@media (max-width: 760px) { .two { grid-template-columns: 1fr; } .stage { min-height: 0; } }
+.shot { margin: 0; border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; background: var(--bg); }
+.shot img { display: block; width: 100%; height: auto; max-height: 420px; object-fit: cover; object-position: top; }
+.shot figcaption { font-size: 0.85rem; color: var(--muted); padding: 8px 12px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.tile { border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px; display: grid; gap: 4px; }
+.tile b { font: 800 2.1rem/1 var(--display); color: var(--navy); font-variant-numeric: tabular-nums; }
+.tile span { font-size: 0.9rem; color: var(--muted); }
+.tile.ok { border-color: var(--ok); background: var(--ok-bg); }
+.tile.warn { border-color: var(--amber); background: var(--amber-soft); }
+.flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
+.step { border: 1px solid var(--rule); border-radius: 10px; padding: 12px 14px; display: grid; gap: 4px; position: relative; }
+.step b { font: 800 1.05rem var(--display); color: var(--navy); }
+.step span { font-size: 0.9rem; color: var(--muted); }
+.step.ok { background: var(--ok-bg); border-color: var(--ok); }
+.step.bad { background: var(--bad-bg); border-color: var(--bad); }
+.cells { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+.cell { border-radius: 8px; padding: 10px 12px; display: grid; gap: 2px; border: 1px solid var(--rule); }
+.cell b { font: 600 0.8rem var(--mono); }
+.cell span { font-size: 0.88rem; }
+.cell em { font-style: normal; font-size: 0.78rem; font-weight: 600; }
+.cell.pass { background: var(--ok-bg); border-color: var(--ok); }
+.cell.pass em { color: var(--ok); }
+.cell.na { background: var(--panel); border-style: dashed; }
+.cell.na em { color: var(--muted); }
+.cell.fail { background: var(--bad-bg); border-color: var(--bad); }
+.cell.fail em { color: var(--bad); }
+.cell:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+ul.beats { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+ul.beats li { padding-left: 16px; border-left: 4px solid var(--amber); }
+.pill { display: inline-block; font: 600 0.78rem var(--body); padding: 2px 10px; border-radius: 999px; }
+.pill.ok { color: var(--ok); background: var(--ok-bg); }
+.pill.bad { color: var(--bad); background: var(--bad-bg); }
+.quote { font: 600 1.25rem/1.4 var(--body); border-left: 4px solid var(--navy); padding-left: 14px; }
+.chart { overflow-x: auto; }
+.chart svg { display: block; width: 100%; min-width: 420px; height: auto; }
+.chart text { font-family: var(--body); font-size: 13px; fill: var(--ink); }
+.chart .muted { fill: var(--muted); }
+.chart .num { font-family: var(--mono); font-size: 12px; fill: var(--ink); }
+.chart .track { fill: var(--idle); opacity: 0.45; }
+.chart .fill { fill: var(--s1); }
+.chart .hit:hover + .fill, .chart g:hover .fill { opacity: 0.8; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.85rem; color: var(--muted); }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.tip { position: fixed; pointer-events: none; background: var(--ink); color: var(--panel); font-size: 0.85rem; padding: 6px 10px; border-radius: 6px; }
+table { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font: 600 0.75rem var(--mono); text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.tbl { overflow-x: auto; }
+.caption { position: fixed; left: 0; right: 0; bottom: 0; padding: 14px max(16px, env(safe-area-inset-right, 0px)) calc(14px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); background: var(--navy); color: var(--panel); z-index: 20; }
+.caption .in { max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; }
+.caption p { font-size: 1.02rem; max-width: 80ch; }
+.caption .prog { height: 4px; background: var(--amber); width: 0; transition: width 0.25s linear; }
+.caption button { background: var(--panel); color: var(--ink); }
+.foot { font-size: 0.85rem; color: var(--muted); }
+@media (prefers-reduced-motion: no-preference) { .slide { animation: in 0.35s ease-out; } @keyframes in { from { opacity: 0.4; transform: translateY(6px); } to { opacity: 1; transform: none; } } }
+</style>
+
+<div class="wrap">
+  <div class="bar">
+    <span class="brand">CRIS Enhancement · TxDOT</span>
+    <div class="controls">
+      <button type="button" class="tour-launch" id="tour-launch" aria-haspopup="dialog"><svg class="tour-play" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4.5 2.6v10.8L13.6 8z" fill="currentColor"></path></svg>Take the guided tour</button>
+      <button type="button" id="prev" aria-label="Previous slide">← Back</button>
+      <span class="count" id="count" aria-live="polite">1 / 12</span>
+      <button type="button" id="next" aria-label="Next slide">Next →</button>
+    </div>
+  </div>
+  <main class="stage" id="stage"></main>
+  <p class="foot">Arrow keys or the buttons move between slides. Everything shown was produced by the project on 10–11 November 2026; the workspace runs on synthetic people and data.</p>
+</div>
+
+<div class="caption" id="caption" hidden role="dialog" aria-label="Guided tour">
+  <div class="prog" id="prog"></div>
+  <div class="in">
+    <p id="caption-text"></p>
+    <div class="controls"><button type="button" id="tour-voice" aria-pressed="true">Voice on</button><button type="button" id="tour-pause">Pause</button><button type="button" id="tour-stop">End tour</button></div>
+  </div>
+</div>
+<div class="tip" id="tip" hidden></div>
+
+<template id="slides">
+<section class="slide" data-say="Milestone two. In one afternoon the workspace learned to train people, report to specification, keep the bid's documents, and check itself against the law. Ten of sixteen stories are now verified.">
+  <p class="kicker">Milestone 2 · 11 November 2026</p>
+  <h1>Training, reports, documents and the law</h1>
+  <div class="lane"></div>
+  <p class="lede">Four stories, verified by the portal within seconds of the push. The workspace now covers Releases 0, 1 and 2 of the TxDOT Crash Records plan.</p>
+  <div class="tiles">
+    <div class="tile ok"><b>10 / 16</b><span>stories verified</span></div>
+    <div class="tile ok"><b>500</b><span>points on this build</span></div>
+    <div class="tile ok"><b>50</b><span>unit tests, all passing</span></div>
+    <div class="tile warn"><b>13</b><span>days left, 6 stories to go</span></div>
+  </div>
+</section>
+
+<section class="slide" data-say="Here is the climb. Fifty points for the Command Center, three hundred after milestone one, five hundred now. Every point was awarded by the portal reading a commit, not by us.">
+  <p class="kicker">The climb</p>
+  <h2>Points awarded by the portal, milestone by milestone</h2>
+  <div class="chart" data-chart="points" aria-label="Points after each milestone"></div>
+  <p class="legend"><span><i style="background:var(--s1)"></i>Points on the build after each milestone, from the portal's own record. M0: Command Center; M1: help desk to features; M2: training to compliance</span></p>
+  <p>Each step is a set of commits that name their story. The push webhook registered in Milestone 1 meant Milestone 2 verified on its own, with no manual sync.</p>
+</section>
+
+<section class="slide" data-say="Story five, training. Sam from support teaches the help desk. Jordan, a TxDOT manager, takes the knowledge check and scores one hundred percent. That is what completed means here: understood, not just attended.">
+  <p class="kicker">STORY-005 · Training</p>
+  <h2>Sam teaches the help desk. Jordan proves it landed.</h2>
+  <div class="two">
+    <ul class="beats">
+      <li>Sessions are scheduled with their materials, and can name the feature they teach.</li>
+      <li>Completion means passing a short knowledge check: 80% or more.</li>
+      <li>Jordan attends live and scores <span class="pill ok">100%</span></li>
+      <li>Vendor staff who finish the cyber course get the date on their record (REQ-020).</li>
+    </ul>
+    <figure class="shot"><img src="screens/m2-01-training-session.png" alt="A training session with materials, knowledge check and completions" width="1280" height="2600"><figcaption>Who completed it, how, and with what score</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-say="Avery missed the session. The recording is there, because a session cannot be marked held without one. Avery's first try fails and is logged. The second passes. Attending is not the same as understanding.">
+  <p class="kicker">STORY-005 · The missed session</p>
+  <h2>Avery missed it, so Avery watches the recording</h2>
+  <div class="flow">
+    <div class="step"><b>Held</b><span>only with a recording on file</span></div>
+    <div class="step bad"><b>First check</b><span>wrong answers: not passed, logged</span></div>
+    <div class="step ok"><b>Second check</b><span>100% from the recording</span></div>
+    <div class="step ok"><b>Logged</b><span>completed · via recording</span></div>
+  </div>
+  <p class="quote">Training counts when someone shows they understood it, wherever they watched it.</p>
+</section>
+
+<section class="slide" data-say="Story six, the reporting engine. Taylor, the contract manager, picks a specification. Every section the specification lists is built from recorded data, checked, then archived with its fingerprint.">
+  <p class="kicker">STORY-006 · Reporting engine</p>
+  <h2>Taylor asks for reports. Each one meets its specification.</h2>
+  <div class="two">
+    <ul class="beats">
+      <li>Five specifications: performance, incident log, help desk and support, training and cyber completion, contract costs.</li>
+      <li>Each section is computed from recorded data, then checked against the specification.</li>
+      <li>Archived once, never edited: <span class="pill ok">Matches its archived hash</span></li>
+    </ul>
+    <figure class="shot"><img src="screens/m2-03-report-to-spec.png" alt="A report built to its specification with its hash check" width="1280" height="1300"><figcaption>Training and cyber security completion, built to SPEC-TRAINING</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-say="Then Taylor asks for the contract cost summary. It needs the TxDOT financial system, which this build cannot reach. So the engine refuses, logs the error as an incident, and Taylor records what is being done about it. Nothing is guessed.">
+  <p class="kicker">STORY-006 · The report that says no</p>
+  <h2>No financial system, no cost report, and it says why</h2>
+  <div class="two">
+    <ul class="beats">
+      <li><span class="pill bad">Refused</span> "It needs the TxDOT financial system, which is not connected to this build."</li>
+      <li>Logged as an incident on the reporting engine, one per specification while open.</li>
+      <li>Addressed by Taylor: read access requested from TxDOT IT.</li>
+      <li>A later successful run resolves the error by itself.</li>
+    </ul>
+    <figure class="shot"><img src="screens/m2-02-reporting-engine-error.png" alt="The reporting engine refusing the cost summary" width="1280" height="1600"><figcaption>The error, its cause, and what was done</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-say="Story thirteen, the bid's documents. Morgan, the compliance officer, uploads the technical proposal, then a second draft. Avery tries to open it and is refused, and that refusal is logged. Quinn from procurement opens it in milliseconds, against a two second target.">
+  <p class="kicker">STORY-013 · Documents</p>
+  <h2>Morgan files the proposal. Avery is turned away. Quinn opens it fast.</h2>
+  <div class="two">
+    <ul class="beats">
+      <li>Stored by category, with a fingerprint, read back before the upload counts.</li>
+      <li>Draft 2 replaces draft 1; draft 1 is kept as superseded.</li>
+      <li><span class="pill bad">Access refused</span> for Avery, and the attempt is logged.</li>
+      <li>Quinn opens it well within 2 seconds; the content matches its fingerprint.</li>
+    </ul>
+    <figure class="shot"><img src="screens/m2-05-document-opened.png" alt="A document opened in milliseconds with its access log" width="1280" height="1200"><figcaption>Every upload, opening and refusal on the document's own page</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-say="Story seven, compliance. Fourteen rules from federal and Texas law, each with its official source. Green passes, grey means this build does not hold those records yet, and red would be a violation. Today there are none.">
+  <p class="kicker">STORY-007 · Compliance</p>
+  <h2>Fourteen rules, checked against the live system</h2>
+  <div class="matrix" data-chart="matrix" aria-label="Compliance results by rule"></div>
+  <p class="legend"><span><i style="background:var(--ok)"></i>Pass</span><span><i style="background:var(--idle)"></i>Not applicable to this build yet</span><span><i style="background:var(--bad)"></i>Violation</span></p>
+  <p class="foot">Compiled from official sources by a research agent on 11 Nov; to be confirmed by TxDOT legal. Not legal advice.</p>
+</section>
+
+<section class="slide" data-say="Then the law changes. In a drill, vendor cyber training must now be renewed every thirty days. The rule is updated and re-checked at once: a violation, logged. Riley and Casey take the refresher on the training page. Morgan re-runs the checks. Clean again.">
+  <p class="kicker">STORY-007 · When the law changes</p>
+  <h2>A legal update, a violation, a fix, a clean run</h2>
+  <div class="flow">
+    <div class="step"><b>Rule CR-08 v2</b><span>training valid 30 days (drill)</span></div>
+    <div class="step bad"><b>Re-checked at once</b><span>2 of 2 vendor staff lapsed: violation logged</span></div>
+    <div class="step"><b>Refresher</b><span>Riley and Casey pass the cyber course</span></div>
+    <div class="step ok"><b>Re-run</b><span>no violations</span></div>
+  </div>
+  <figure class="shot"><img src="screens/m2-07-compliance-legal-update.png" alt="The compliance page after a legal update showing the violation" width="1280" height="2600"><figcaption>Two stories working together: compliance found it, training fixed it</figcaption></figure>
+</section>
+
+<section class="slide" data-say="Three helpers worked alongside the build. One gave every guided tour a narrator's voice. One researched the law, and found that two Texas citations had moved this year. One kept the project framework up to date.">
+  <p class="kicker">Working in parallel</p>
+  <h2>Three background agents</h2>
+  <div class="tiles">
+    <div class="tile"><b>Narrator</b><span>added a male voice to every guided tour: this deck, the framework, the SSS pages</span></div>
+    <div class="tile"><b>Law research</b><span>verified 14 rules at official sources; caught §2054.5192 → §2063.104 and 1 TAC 202 → 477</span></div>
+    <div class="tile"><b>Framework</b><span>updated the project framework text for Milestone 2</span></div>
+  </div>
+</section>
+
+<section class="slide" data-say="The scoreboard. Releases zero, one and two are complete. Fifty unit tests and three browser walks pass. Each story is tied to the commit the portal verified.">
+  <p class="kicker">Scoreboard · 11 November</p>
+  <h2>Three releases done, two to go</h2>
+  <div class="slide">
+    <p><b>Stories verified by release</b></p>
+    <div class="chart" data-chart="releases" aria-label="Stories verified per release"></div>
+    <p class="legend"><span><i style="background:var(--s1)"></i>Verified</span><span><i style="background:var(--idle)"></i>Still to build</span></p>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Story</th><th>Commit</th><th>Tests</th><th>Portal</th></tr></thead>
+    <tbody>
+      <tr><td>005 Training</td><td class="n">4d2a08a</td><td class="n">4</td><td><span class="pill ok">Verified · 50</span></td></tr>
+      <tr><td>006 Reporting engine</td><td class="n">62097be</td><td class="n">4</td><td><span class="pill ok">Verified · 50</span></td></tr>
+      <tr><td>013 Documents</td><td class="n">fe53baa</td><td class="n">4</td><td><span class="pill ok">Verified · 50</span></td></tr>
+      <tr><td>007 Compliance</td><td class="n">a0fb8ce</td><td class="n">6</td><td><span class="pill ok">Verified · 50</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="slide" data-say="Next is milestone three: managing the bid's response submissions, scoring them, and the risk assessment tools. And three questions for TxDOT, through Ali.">
+  <p class="kicker">What comes next</p>
+  <h2>Milestone 3: submissions, scoring and risk</h2>
+  <div class="lane"></div>
+  <ul class="beats">
+    <li>STORY-008 Manage response submissions</li>
+    <li>STORY-009 Evaluate and score responses</li>
+    <li>STORY-010 Risk assessment tools</li>
+  </ul>
+  <p><b>For TxDOT, through Ali:</b> the contract manager's real list of required reports; read access to the financial system for the cost report; legal review of the 14-rule register; the proposed service levels.</p>
+  <p><a href="https://obianams04.github.io/cris-enhancement/workspace/#/compliance">Try the workspace</a> · <a href="https://obianams04.github.io/cris-enhancement/">Command Center</a> · <a href="https://github.com/OBIANAMS04/cris-enhancement">GitHub</a></p>
+</section>
+</template>
+
+<script>
+(function () {
+  var slides = Array.prototype.slice.call(document.getElementById('slides').content.querySelectorAll('.slide'))
+    .filter(function (s) { return s.parentNode && s.parentNode.nodeType === 11; });
+  var stage = document.getElementById('stage'), count = document.getElementById('count');
+  var i = 0;
+  var NS = 'http://www.w3.org/2000/svg';
+  var tip = document.getElementById('tip');
+  function el(tag, attrs, text) { var e = document.createElementNS(NS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; return e; }
+  function showTip(evt, text) { tip.textContent = text; tip.hidden = false; tip.style.left = (evt.clientX + 12) + 'px'; tip.style.top = (evt.clientY + 12) + 'px'; }
+  function hbars(host, rows, max, fmt) {
+    var labelW = 190, w = 560, rowH = 34, h = rows.length * rowH + 10, plot = w - labelW - 60;
+    var svg = el('svg', { viewBox: '0 0 ' + w + ' ' + h, role: 'img', 'aria-label': host.getAttribute('aria-label') });
+    rows.forEach(function (r, k) {
+      var y = 6 + k * rowH, g = el('g', {});
+      g.appendChild(el('text', { x: 0, y: y + 15 }, r.label));
+      if (r.total != null) g.appendChild(el('rect', { class: 'track', x: labelW, y: y + 3, width: plot * r.total / max, height: 16, rx: 4 }));
+      if (r.value > 0) g.appendChild(el('rect', { class: 'fill', x: labelW, y: y + 3, width: plot * r.value / max, height: 16, rx: 4 }));
+      g.appendChild(el('text', { class: 'num', x: labelW + plot * Math.max(r.value, r.total || 0) / max + 8, y: y + 15 }, fmt(r)));
+      var hit = el('rect', { x: 0, y: y, width: w, height: rowH, fill: 'transparent' });
+      hit.addEventListener('mousemove', function (e) { showTip(e, r.label + ': ' + fmt(r)); });
+      hit.addEventListener('mouseleave', function () { tip.hidden = true; });
+      g.appendChild(hit);
+      svg.appendChild(g);
+    });
+    host.appendChild(svg);
+  }
+  var RULES = [['CR-01','Crash report filing','na'],['CR-02','Release to eligible requesters','na'],['CR-03','Redacted public copies','na'],['CR-04','Driver privacy (DPPA)','na'],['CR-05','Motor vehicle records','na'],['CR-06','Public Information Act','na'],['CR-07','23 U.S.C. 407 safety data','na'],['CR-08','Vendor cyber training','pass'],['CR-09','TX-RAMP cloud','na'],['CR-10','Security controls','pass'],['CR-11','Breach notification','na'],['CR-12','Records retention','pass'],['CR-13','State accessibility','pass'],['CR-14','ADA web rule','pass']];
+  function points(host) {
+    var data = [['Start', 0, 'Start'], ['M0', 50, 'M0: Command Center'], ['M1', 300, 'M1: help desk to features'], ['M2', 500, 'M2: training to compliance']];
+    var w = 620, hgt = 260, l = 50, r = 20, t = 20, b = 50, max = 600;
+    var svg = el('svg', { viewBox: '0 0 ' + w + ' ' + hgt, role: 'img', 'aria-label': host.getAttribute('aria-label') });
+    var x = function (k) { return l + k * (w - l - r) / (data.length - 1); };
+    var y = function (v) { return t + (hgt - t - b) * (1 - v / max); };
+    [0, 200, 400, 600].forEach(function (v) { svg.appendChild(el('line', { x1: l, x2: w - r, y1: y(v), y2: y(v), stroke: 'var(--rule)' })); svg.appendChild(el('text', { class: 'num muted', x: l - 8, y: y(v) + 4, 'text-anchor': 'end' }, String(v))); });
+    var pts = data.map(function (p, k) { return x(k) + ',' + y(p[1]); }).join(' ');
+    svg.appendChild(el('polygon', { points: l + ',' + y(0) + ' ' + pts + ' ' + x(data.length - 1) + ',' + y(0), fill: 'var(--s1)', opacity: '0.12' }));
+    svg.appendChild(el('polyline', { points: pts, fill: 'none', stroke: 'var(--s1)', 'stroke-width': 2 }));
+    data.forEach(function (p, k) {
+      var c = el('circle', { cx: x(k), cy: y(p[1]), r: k === data.length - 1 ? 6 : 4, fill: 'var(--s1)', stroke: 'var(--panel)', 'stroke-width': 2 });
+      c.addEventListener('mousemove', function (e) { showTip(e, p[2] + ': ' + p[1] + ' points'); });
+      c.addEventListener('mouseleave', function () { tip.hidden = true; });
+      svg.appendChild(c);
+      if (k) svg.appendChild(el('text', { class: 'num', x: x(k), y: y(p[1]) - 12, 'text-anchor': 'middle' }, String(p[1])));
+      svg.appendChild(el('text', { class: 'muted', x: x(k), y: hgt - 18, 'text-anchor': k === 0 ? 'start' : k === data.length - 1 ? 'end' : 'middle' }, p[0]));
+    });
+    host.appendChild(svg);
+  }
+  function matrix(host) {
+    var grid = document.createElement('div');
+    grid.className = 'cells';
+    RULES.forEach(function (r) {
+      var c = document.createElement('div');
+      c.className = 'cell ' + r[2];
+      c.tabIndex = 0;
+      c.innerHTML = '';
+      var id = document.createElement('b'); id.textContent = r[0];
+      var name = document.createElement('span'); name.textContent = r[1];
+      var res = document.createElement('em'); res.textContent = r[2] === 'pass' ? 'Pass' : r[2] === 'fail' ? 'Violation' : 'Not applicable yet';
+      c.append(id, name, res);
+      grid.appendChild(c);
+    });
+    host.appendChild(grid);
+  }
+  var charts = {
+    points: points,
+    matrix: matrix,
+    releases: function (h) { hbars(h, [{ label: 'STORY-000 (first)', value: 1, total: 1 }, { label: 'r0 Setup and support', value: 4, total: 4 }, { label: 'r1 Enhancement, training', value: 2, total: 2 }, { label: 'r2 Reporting, compliance', value: 3, total: 3 }, { label: 'r3 Response management', value: 0, total: 2 }, { label: 'r4 Risk and security', value: 0, total: 4 }], 4, function (r) { return r.value + ' of ' + r.total; }); }
+  };
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    var s = slides[i].cloneNode(true);
+    stage.replaceChildren(s);
+    s.querySelectorAll('[data-chart]').forEach(function (h) { charts[h.getAttribute('data-chart')](h); });
+    count.textContent = (i + 1) + ' / ' + slides.length;
+    if (location.hash !== '#s' + (i + 1)) history.replaceState(null, '', '#s' + (i + 1));
+    if (tour.on) say();
+  }
+  document.getElementById('prev').onclick = function () { show(i - 1); };
+  document.getElementById('next').onclick = function () { show(i + 1); };
+  document.addEventListener('keydown', function (e) {
+    if (e.target.closest && e.target.closest('input,textarea')) return;
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') show(i + 1);
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') show(i - 1);
+    if (e.key === 'Escape' && tour.on) stopTour();
+  });
+  window.addEventListener('hashchange', function () { var m = /^#s(\d+)$/.exec(location.hash); if (m) show(+m[1] - 1); });
+
+  // Guided tour: walks every slide with a spoken-style caption, 20 seconds each (about 4 minutes in all).
+  // Male voice narrator (Web Speech API): reads each slide's caption; a slide advances when the 20 s timer has run out AND the speech has ended.
+  var synth = window.speechSynthesis, canSpeak = !!synth && typeof SpeechSynthesisUtterance !== 'undefined';
+  var MALE = /(male|david|mark|guy|daniel|alex|fred|george|james|ryan|christopher|eric|brian|roger|thomas|arthur|aaron|tom)/i;
+  var FEMALE = /female|zira|susan|hazel|samantha|victoria|karen|aria|jenny|libby|sonia|emma|michelle|catherine/i;
+  var voice = null, lowPitch = true, voiceOn = true, curUtt = null, voiceBtn = document.getElementById('tour-voice');
+  try { voiceOn = localStorage.getItem('tour-voice') !== 'off'; } catch (e) {}
+  function pickVoice() {
+    var en = (synth.getVoices() || []).filter(function (v) { return /^en([-_]|$)/i.test(v.lang); });
+    var males = en.filter(function (v) { return MALE.test(v.name) && !FEMALE.test(v.name); });
+    var nf = en.filter(function (v) { return !FEMALE.test(v.name); });
+    function us(a) { return a.filter(function (v) { return /^en[-_]US/i.test(v.lang); })[0] || a[0]; }
+    voice = us(males) || us(nf.filter(function (v) { return v.default; })) || us(nf) || us(en) || null;
+    lowPitch = !males.length;
+  }
+  function stopSpeech() { curUtt = null; if (canSpeak) { try { synth.cancel(); } catch (e) {} } }
+  function speak(text) {
+    if (!canSpeak || !voiceOn) return;
+    try {
+      synth.cancel();
+      var u = new SpeechSynthesisUtterance(text);
+      if (voice) { u.voice = voice; u.lang = voice.lang; } else u.lang = 'en-US';
+      u.rate = 1; u.pitch = lowPitch ? 0.8 : 1;
+      var done = function () { if (curUtt === u) curUtt = null; };
+      u.onend = done; u.onerror = done;
+      curUtt = u;
+      synth.speak(u);
+      if (tour.paused) synth.pause();
+    } catch (e) { curUtt = null; }
+  }
+  function paintVoice() { voiceBtn.textContent = voiceOn ? 'Voice on' : 'Voice off'; voiceBtn.setAttribute('aria-pressed', String(voiceOn)); }
+  if (canSpeak) {
+    pickVoice();
+    if (synth.addEventListener) synth.addEventListener('voiceschanged', pickVoice); else synth.onvoiceschanged = pickVoice;
+    paintVoice();
+    voiceBtn.onclick = function () {
+      voiceOn = !voiceOn; paintVoice();
+      try { localStorage.setItem('tour-voice', voiceOn ? 'on' : 'off'); } catch (e) {}
+      if (!voiceOn) stopSpeech(); else if (tour.on) speak(slides[i].getAttribute('data-say'));
+    };
+  } else voiceBtn.hidden = true;
+  var tour = { on: false, paused: false, t: 0, timer: null }, STEP = 20000;
+  var cap = document.getElementById('caption'), capText = document.getElementById('caption-text'), prog = document.getElementById('prog'), pauseBtn = document.getElementById('tour-pause');
+  function say() { capText.textContent = (i + 1) + ' of ' + slides.length + ' · ' + slides[i].getAttribute('data-say'); tour.t = 0; prog.style.width = '0'; speak(slides[i].getAttribute('data-say')); }
+  function tick() {
+    if (tour.paused) return;
+    tour.t += 250; prog.style.width = Math.min(100, tour.t / STEP * 100) + '%';
+    if (tour.t >= STEP && (!curUtt || tour.t >= STEP * 3)) { if (i < slides.length - 1) show(i + 1); else stopTour(); }
+  }
+  function startTour() { tour.on = true; tour.paused = false; pauseBtn.textContent = 'Pause'; cap.hidden = false; document.body.style.paddingBottom = '120px'; show(0); clearInterval(tour.timer); tour.timer = setInterval(tick, 250); pauseBtn.focus(); }
+  function stopTour() { stopSpeech(); tour.on = false; clearInterval(tour.timer); cap.hidden = true; document.body.style.paddingBottom = ''; document.getElementById('tour-launch').focus(); }
+  document.getElementById('tour-launch').onclick = startTour;
+  document.getElementById('tour-stop').onclick = stopTour;
+  pauseBtn.onclick = function () {
+    tour.paused = !tour.paused; pauseBtn.textContent = tour.paused ? 'Resume' : 'Pause';
+    if (canSpeak) { try { if (tour.paused) synth.pause(); else synth.resume(); } catch (e) {} }
+  };
+
+  var m = /^#s(\d+)$/.exec(location.hash);
+  show(m ? +m[1] - 1 : 0);
+})();
+</script>
+</body>
+</html>
