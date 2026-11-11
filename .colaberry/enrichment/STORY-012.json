@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "1",
+  "projectId": "a563218c-c3a4-433c-8ed7-4e8e0573f59c",
+  "storyId": "STORY-012",
+  "projectTruthBaseRevision": 0,
+  "observedAt": "2026-11-11T07:53:52.885Z",
+  "sourceCommitSha": "26bb33320ec298ce23217afd82eb8fe565591102",
+  "factProposals": [
+    {
+      "dimension": "constraints",
+      "value": "Maintenance must avoid service hours; the workspace uses Monday to Friday, 6:00 to 20:00 Central as the proposed definition.",
+      "evidence": "lib/support.js"
+    },
+    {
+      "dimension": "data",
+      "value": "MaintenanceWindow was added to the data model to record planned maintenance.",
+      "evidence": "content/data-model.json"
+    }
+  ],
+  "decisions": [
+    {
+      "statement": "Service levels by priority are proposed as 4, 8, 24 and 72 hours to a first answer.",
+      "rationale": "The plan states none; one place holds them so the confirmed values replace them in one edit.",
+      "evidence": "lib/sla.js"
+    },
+    {
+      "statement": "A new ticket goes to the on-duty support person with the fewest open tickets.",
+      "rationale": "Spreads the load and makes \"support team unavailable\" visible as an escalation.",
+      "evidence": "lib/sla.js"
+    }
+  ],
+  "limitations": [
+    {
+      "statement": "The system tracks and flags service levels; it cannot make people resolve in time. Service hours and service levels need TxDOT confirmation.",
+      "evidence": "lib/support.js"
+    }
+  ],
+  "demonstrationEvidence": [
+    {
+      "kind": "test",
+      "ref": "tests/story-012-support.test.mjs"
+    },
+    {
+      "kind": "screenshot",
+      "ref": "framework/screens/m1-03-support-dashboard.png"
+    }
+  ],
+  "measurementEvents": []
+}

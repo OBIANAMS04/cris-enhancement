@@ -528,21 +528,27 @@
       "criteria": [
         {
           "text": "Given the system is operational, when a technical issue arises, then the support team must resolve it within the SLA.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Given a maintenance schedule, when maintenance is due, then the system must undergo maintenance without disrupting services.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Trust: All support and maintenance activities must be logged and auditable.",
-          "passed": false
+          "passed": true
         }
       ],
-      "files_touched": [],
-      "tests_added": [],
-      "notes": null,
-      "updated_at": null,
+      "files_touched": [
+        "lib/support.js",
+        "workspace/js/support.js",
+        "workspace/js/views.js"
+      ],
+      "tests_added": [
+        "tests/story-012-support.test.mjs"
+      ],
+      "notes": "Every open ticket is tracked against its service level (on track, at risk, breached, met, missed). Maintenance can only be scheduled outside service hours and without overlaps; a window past its end and not done shows as overdue. On-duty changes and maintenance are logged.",
+      "updated_at": "2026-11-11T07:53:52.885Z",
       "verification": {
         "state": "in_progress",
         "criteria_passed": 0,
