@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CRIS Milestone 1 Story</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@500&display=swap">
+</head>
+<body>
+<style>
+/* Layout: one slide at a time on a road-sign field: navy panel, safety-amber accent, a lane line under the title. */
+:root {
+  --bg: #eef1f5; --panel: #ffffff; --ink: #121a26; --muted: #4d5a6c; --rule: #d3d9e2;
+  --navy: #14365e; --amber: #c27a00; --amber-soft: #fbefd6;
+  --ok: #1f6b45; --ok-bg: #e2f1e7; --bad: #a3262a; --bad-bg: #fbe4e4; --idle: #b8c1cd;
+  --s1: #2a78d6; --tour: #c8102e; --tour-ink: #ffffff;
+  --display: "Archivo", "Arial Narrow", Arial, sans-serif;
+  --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0e141c; --panel: #17202b; --ink: #edf1f6; --muted: #a6b1c0; --rule: #2c3846;
+  --navy: #9cc0ea; --amber: #f2b441; --amber-soft: #3a2c10;
+  --ok: #86d4a6; --ok-bg: #163222; --bad: #f2a0a3; --bad-bg: #3d1b1d; --idle: #4a5666;
+  --s1: #3987e5; --tour: #e5383b; --tour-ink: #ffffff; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0e141c; --panel: #17202b; --ink: #edf1f6; --muted: #a6b1c0; --rule: #2c3846;
+  --navy: #9cc0ea; --amber: #f2b441; --amber-soft: #3a2c10;
+  --ok: #86d4a6; --ok-bg: #163222; --bad: #f2a0a3; --bad-bg: #3d1b1d; --idle: #4a5666;
+  --s1: #3987e5; --tour: #e5383b; --tour-ink: #ffffff; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 17px/1.5 var(--body); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 16px; }
+.wrap { max-width: 1100px; margin: 0 auto; display: grid; gap: 14px; }
+.bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+.brand { font: 800 0.8rem/1 var(--display); letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+button { font: 600 0.95rem var(--body); cursor: pointer; border-radius: 8px; min-height: 40px; padding: 8px 14px; border: 1px solid var(--rule); background: var(--panel); color: var(--ink); }
+button:focus-visible, a:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+.tour-launch { display: inline-flex; align-items: center; gap: 9px; background: var(--tour); color: var(--tour-ink); border-color: var(--tour); }
+.tour-play { width: 16px; height: 16px; flex: none; }
+.count { font: 500 0.85rem var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.stage { background: var(--panel); border: 1px solid var(--rule); border-radius: 14px; padding: clamp(18px, 4vw, 44px); min-height: 560px; display: grid; }
+.slide { display: grid; gap: 18px; align-content: start; }
+.kicker { font: 600 0.8rem var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+h1, h2 { font-family: var(--display); font-weight: 800; line-height: 1.08; margin: 0; text-wrap: balance; color: var(--navy); }
+h1 { font-size: clamp(2rem, 5.5vw, 3.6rem); }
+h2 { font-size: clamp(1.6rem, 3.6vw, 2.4rem); }
+.lane { height: 6px; width: 120px; background: repeating-linear-gradient(90deg, var(--amber) 0 26px, transparent 26px 40px); }
+p { margin: 0; max-width: 64ch; }
+.lede { font-size: 1.2rem; color: var(--muted); }
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 26px; align-items: start; }
+@media (max-width: 760px) { .two { grid-template-columns: 1fr; } .stage { min-height: 0; } }
+.shot { margin: 0; border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; background: var(--bg); }
+.shot img { display: block; width: 100%; height: auto; max-height: 420px; object-fit: cover; object-position: top; }
+.shot figcaption { font-size: 0.85rem; color: var(--muted); padding: 8px 12px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.tile { border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px; display: grid; gap: 4px; }
+.tile b { font: 800 2.1rem/1 var(--display); color: var(--navy); font-variant-numeric: tabular-nums; }
+.tile span { font-size: 0.9rem; color: var(--muted); }
+ul.beats { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+ul.beats li { padding-left: 16px; border-left: 4px solid var(--amber); }
+.pill { display: inline-block; font: 600 0.78rem var(--body); padding: 2px 10px; border-radius: 999px; }
+.pill.ok { color: var(--ok); background: var(--ok-bg); }
+.pill.bad { color: var(--bad); background: var(--bad-bg); }
+.quote { font: 600 1.25rem/1.4 var(--body); border-left: 4px solid var(--navy); padding-left: 14px; }
+.chart { overflow-x: auto; }
+.chart svg { display: block; width: 100%; min-width: 420px; height: auto; }
+.chart text { font-family: var(--body); font-size: 13px; fill: var(--ink); }
+.chart .muted { fill: var(--muted); }
+.chart .num { font-family: var(--mono); font-size: 12px; fill: var(--ink); }
+.chart .track { fill: var(--idle); opacity: 0.45; }
+.chart .fill { fill: var(--s1); }
+.chart .hit:hover + .fill, .chart g:hover .fill { opacity: 0.8; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.85rem; color: var(--muted); }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.tip { position: fixed; pointer-events: none; background: var(--ink); color: var(--panel); font-size: 0.85rem; padding: 6px 10px; border-radius: 6px; }
+table { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font: 600 0.75rem var(--mono); text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.tbl { overflow-x: auto; }
+.caption { position: fixed; left: 0; right: 0; bottom: 0; padding: 14px max(16px, env(safe-area-inset-right, 0px)) calc(14px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); background: var(--navy); color: var(--panel); z-index: 20; }
+.caption .in { max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; }
+.caption p { font-size: 1.02rem; max-width: 80ch; }
+.caption .prog { height: 4px; background: var(--amber); width: 0; transition: width 0.25s linear; }
+.caption button { background: var(--panel); color: var(--ink); }
+.foot { font-size: 0.85rem; color: var(--muted); }
+@media (prefers-reduced-motion: no-preference) { .slide { animation: in 0.35s ease-out; } @keyframes in { from { opacity: 0.4; transform: translateY(6px); } to { opacity: 1; transform: none; } } }
+</style>
+
+<div class="wrap">
+  <div class="bar">
+    <span class="brand">CRIS Enhancement · TxDOT</span>
+    <div class="controls">
+      <button type="button" class="tour-launch" id="tour-launch" aria-haspopup="dialog"><svg class="tour-play" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4.5 2.6v10.8L13.6 8z" fill="currentColor"></path></svg>Take the guided tour</button>
+      <button type="button" id="prev" aria-label="Previous slide">← Back</button>
+      <span class="count" id="count" aria-live="polite">1 / 12</span>
+      <button type="button" id="next" aria-label="Next slide">Next →</button>
+    </div>
+  </div>
+  <main class="stage" id="stage"></main>
+  <p class="foot">Arrow keys or the buttons move between slides. Everything shown was produced by the project on 10–11 November 2026; the workspace runs on synthetic people and data.</p>
+</div>
+
+<div class="caption" id="caption" hidden role="dialog" aria-label="Guided tour">
+  <div class="prog" id="prog"></div>
+  <div class="in">
+    <p id="caption-text"></p>
+    <div class="controls"><button type="button" id="tour-pause">Pause</button><button type="button" id="tour-stop">End tour</button></div>
+  </div>
+</div>
+<div class="tip" id="tip" hidden></div>
+
+<template id="slides">
+<section class="slide" data-say="Two milestones in two days. This is the story of how the Crash Records build went from an empty folder to six verified stories.">
+  <p class="kicker">Milestones 0 and 1 · 10–11 November 2026</p>
+  <h1>From an empty folder to a working CRIS workspace</h1>
+  <div class="lane"></div>
+  <p class="lede">The TxDOT Crash Records Information System service agreement: 16 stories, ship-by 24 November. In two days the portal verified six of them, every one checked against the commit that built it.</p>
+  <div class="tiles">
+    <div class="tile"><b>6 / 16</b><span>stories verified by the portal</span></div>
+    <div class="tile"><b>300</b><span>points on this build</span></div>
+    <div class="tile"><b>32</b><span>unit tests, all passing</span></div>
+    <div class="tile"><b>13</b><span>days left to ship-by</span></div>
+  </div>
+</section>
+
+<section class="slide" data-say="The rule we built under: Trust before intelligence. The page never shows a number, a connection or a result the project has not produced.">
+  <p class="kicker">The rule</p>
+  <h2>Trust before intelligence</h2>
+  <div class="lane"></div>
+  <p class="quote">No screen shows a number, a connection or a result the project has not actually produced.</p>
+  <ul class="beats">
+    <li>A system we cannot reach stays grey and says "Not checked from here".</li>
+    <li>A report with no data behind it is refused, with the reason.</li>
+    <li>Made-up values exist only in Sample mode, labelled on every card.</li>
+    <li>Every action is written to a log that proves it was not changed afterwards.</li>
+  </ul>
+</section>
+
+<section class="slide" data-say="Milestone zero: the Command Center. Nine tabs, sixty-seven cards, all reading the plan and progress files live. The portal verified it first thing on the eleventh.">
+  <p class="kicker">Milestone 0 · STORY-000</p>
+  <h2>The Command Center: one page for the whole build</h2>
+  <div class="two">
+    <ul class="beats">
+      <li>9 tabs and 67 cards, each opening its own page.</li>
+      <li>Reads the plan and progress files at runtime; nothing is typed into the code.</li>
+      <li>Warns when the data is more than a week old.</li>
+      <li><span class="pill ok">Verified</span> by the portal on 11 Nov, 50 points.</li>
+    </ul>
+    <figure class="shot"><img src="screens/01-overview-real.png" alt="The Command Center overview with counts from the progress file" width="1280" height="1600"><figcaption>The Overview, live on GitHub Pages</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-say="Obi approved the proposed data model as it stood, so the eighteen tables were created, plus two the stories needed: an audit log and maintenance windows.">
+  <p class="kicker">Data model</p>
+  <h2>Eighteen tables created as proposed, two added by need</h2>
+  <div class="two">
+    <ul class="beats">
+      <li>No changes were requested, so the model went in as proposed.</li>
+      <li><b>AuditEntry</b> added: every Milestone 1 story has a Trust line about logging.</li>
+      <li><b>MaintenanceWindow</b> added for the support and maintenance story.</li>
+      <li>Every write is checked against these tables before it is stored.</li>
+    </ul>
+    <figure class="shot"><img src="screens/09-data-model.png" alt="The Data model tab marked Created" width="1280" height="1600"><figcaption>The Data model tab now reads "Created"</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-say="Nine in the morning. Avery, a TxDOT user, is locked out. Avery reports it and is told at once who has it, by when, and what to try while waiting.">
+  <p class="kicker">STORY-001 · Help desk</p>
+  <h2>9:00. Avery is locked out of CRIS</h2>
+  <div class="two">
+    <ul class="beats">
+      <li>Avery reports the issue in a few words and marks it high.</li>
+      <li>Avery gets a reference, the person who has it, and a deadline: 8 hours.</li>
+      <li>The matching help article appears straight away.</li>
+      <li>A double click still makes only one ticket.</li>
+    </ul>
+    <figure class="shot"><img src="screens/m1-01-helpdesk-assistance.png" alt="Help for TKT-0001 naming the support person, the deadline and a help article" width="1280" height="1500"><figcaption>Assistance the moment the issue is reported</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-say="Sam on the support desk sees every open ticket against its service level. Maintenance can only be booked outside service hours, so users are never cut off.">
+  <p class="kicker">STORY-012 · Support and maintenance</p>
+  <h2>Sam works the queue against the clock</h2>
+  <div class="two">
+    <ul class="beats">
+      <li>Each ticket shows on track, at risk or breached.</li>
+      <li>The ticket is resolved within its service level: <span class="pill ok">met</span></li>
+      <li>A 10:00 maintenance window is refused: it would disrupt users.</li>
+      <li>23:00 to 01:00 is accepted. Overdue work is flagged.</li>
+    </ul>
+    <figure class="shot"><img src="screens/m1-03-support-dashboard.png" alt="Support dashboard with service-level states and a scheduled maintenance window" width="1280" height="1800"><figcaption>Service levels are proposals until TxDOT confirms them</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-say="Riley in IT runs the monitor. Real checks, real response times, around ten milliseconds. Then the outage drill: a missing file, an alert, and one incident opened.">
+  <p class="kicker">STORY-002 · Monitoring</p>
+  <h2>Riley's monitor catches an outage</h2>
+  <div class="two">
+    <div class="slide">
+      <div class="chart" data-chart="ms" aria-label="Measured response times"></div>
+      <p class="legend"><span><i style="background:var(--s1)"></i>Median response time, ms, measured 11 Nov</span></p>
+      <p>The drill target answered <span class="pill bad">HTTP 404</span> twice (one retry), so an alert was raised and incident INC-0001 opened.</p>
+    </div>
+    <figure class="shot"><img src="screens/m1-04-monitoring-alert.png" alt="Monitoring page with four components up and an outage alert" width="1280" height="1300"><figcaption>It monitors this site, since CRIS is not reachable from the demo</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-say="Jordan, a TxDOT manager, asks for a report. For an empty period the answer is no, with the reason. For today the report is computed, archived and sealed with its hash.">
+  <p class="kicker">STORY-003 · Performance reports</p>
+  <h2>Jordan gets a report the numbers can back</h2>
+  <div class="two">
+    <ul class="beats">
+      <li>October 1–2: refused. "No monitoring samples between 2026-10-01 and 2026-10-02."</li>
+      <li>Today: availability, response times, incidents and help desk figures.</li>
+      <li>Archived once, never edited, checked against its SHA-256 on opening.</li>
+    </ul>
+    <figure class="shot"><img src="screens/m1-06-performance-report.png" alt="Performance report with availability bars and Matches its archived hash" width="1280" height="1500"><figcaption>"Matches its archived hash"</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-say="Avery asks for a county filter. Casey, the developer, plans it, builds it, and can only release it after writing down how it meets the request. A request that cannot be done gets the reason.">
+  <p class="kicker">STORY-004 · Feature development</p>
+  <h2>Casey ships what Avery asked for</h2>
+  <div class="two">
+    <ul class="beats">
+      <li>"Let me filter crash reports by county" becomes FC-0001.</li>
+      <li>Proposed → approved → in build → released.</li>
+      <li>Release is blocked until the team records how it meets the need.</li>
+      <li>"Other states' data" is declined: "CRIS holds Texas crash records only."</li>
+    </ul>
+    <figure class="shot"><img src="screens/m1-07-feature-released.png" alt="Feature FC-0001 released with its change history" width="1280" height="1100"><figcaption>Every step in the change history</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-say="And the proof under all of it. Every action is a line in a hash chain. We changed one stored line on purpose, and the audit page caught it at once.">
+  <p class="kicker">Trust · the audit log</p>
+  <h2>Change one line, and the chain says so</h2>
+  <div class="two">
+    <ul class="beats">
+      <li>Each line carries the hash of the line before it.</li>
+      <li>A record and its audit line are saved together, or neither is.</li>
+      <li>Test: one stored line edited by hand.</li>
+      <li>Result: <span class="pill bad">The chain is broken: line 4 was changed after it was written.</span></li>
+    </ul>
+    <figure class="shot"><img src="screens/m1-09-audit-tamper-detected.png" alt="Audit log reporting that line 4 was changed" width="1280" height="900"><figcaption>Tampering detected</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-say="The scoreboard. Release zero complete, release one half done, six of sixteen stories verified, and thirty-two tests guarding the work.">
+  <p class="kicker">Scoreboard · 11 November</p>
+  <h2>Release 0 done, Release 1 half done</h2>
+  <div class="slide">
+    <div class="slide">
+      <p><b>Stories verified by release</b></p>
+      <div class="chart" data-chart="releases" aria-label="Stories verified per release"></div>
+      <p class="legend"><span><i style="background:var(--s1)"></i>Verified</span><span><i style="background:var(--idle)"></i>Still to build</span></p>
+    </div>
+    <div class="slide">
+      <p><b>Unit tests by area</b> (32 in all)</p>
+      <div class="chart" data-chart="tests" aria-label="Unit tests per area"></div>
+    </div>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Story</th><th>Commit</th><th>Portal</th></tr></thead>
+    <tbody>
+      <tr><td>001 Help desk</td><td class="n">26bb333</td><td><span class="pill ok">Verified · 50</span></td></tr>
+      <tr><td>012 Support and maintenance</td><td class="n">3aff0b1</td><td><span class="pill ok">Verified · 50</span></td></tr>
+      <tr><td>002 Monitoring</td><td class="n">a8fb1d4</td><td><span class="pill ok">Verified · 50</span></td></tr>
+      <tr><td>003 Performance reports</td><td class="n">b07c1e0</td><td><span class="pill ok">Verified · 50</span></td></tr>
+      <tr><td>004 Feature development</td><td class="n">9f87093</td><td><span class="pill ok">Verified · 50</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="slide" data-say="Next is milestone two: training, the reporting engine, compliance and required documentation. Thirteen days, ten stories, and the same rule.">
+  <p class="kicker">What comes next</p>
+  <h2>Milestone 2: training, reporting, compliance</h2>
+  <div class="lane"></div>
+  <ul class="beats">
+    <li>STORY-005 User training sessions</li>
+    <li>STORY-006 Reporting engine</li>
+    <li>STORY-007 Compliance with federal, state and local laws</li>
+    <li>STORY-013 Required documentation</li>
+  </ul>
+  <p>Open questions for TxDOT: the service levels (4, 8, 24, 72 hours) and service hours (Mon–Fri 6:00–20:00 Central) are proposals.</p>
+  <p><a href="https://obianams04.github.io/cris-enhancement/workspace/">Try the workspace</a> · <a href="https://obianams04.github.io/cris-enhancement/">Command Center</a> · <a href="https://github.com/OBIANAMS04/cris-enhancement">GitHub</a></p>
+</section>
+</template>
+
+<script>
+(function () {
+  var slides = Array.prototype.slice.call(document.getElementById('slides').content.querySelectorAll('.slide'))
+    .filter(function (s) { return s.parentNode && s.parentNode.nodeType === 11; });
+  var stage = document.getElementById('stage'), count = document.getElementById('count');
+  var i = 0;
+  var NS = 'http://www.w3.org/2000/svg';
+  var tip = document.getElementById('tip');
+  function el(tag, attrs, text) { var e = document.createElementNS(NS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; return e; }
+  function showTip(evt, text) { tip.textContent = text; tip.hidden = false; tip.style.left = (evt.clientX + 12) + 'px'; tip.style.top = (evt.clientY + 12) + 'px'; }
+  function hbars(host, rows, max, fmt) {
+    var labelW = 190, w = 560, rowH = 34, h = rows.length * rowH + 10, plot = w - labelW - 60;
+    var svg = el('svg', { viewBox: '0 0 ' + w + ' ' + h, role: 'img', 'aria-label': host.getAttribute('aria-label') });
+    rows.forEach(function (r, k) {
+      var y = 6 + k * rowH, g = el('g', {});
+      g.appendChild(el('text', { x: 0, y: y + 15 }, r.label));
+      if (r.total != null) g.appendChild(el('rect', { class: 'track', x: labelW, y: y + 3, width: plot * r.total / max, height: 16, rx: 4 }));
+      if (r.value > 0) g.appendChild(el('rect', { class: 'fill', x: labelW, y: y + 3, width: plot * r.value / max, height: 16, rx: 4 }));
+      g.appendChild(el('text', { class: 'num', x: labelW + plot * Math.max(r.value, r.total || 0) / max + 8, y: y + 15 }, fmt(r)));
+      var hit = el('rect', { x: 0, y: y, width: w, height: rowH, fill: 'transparent' });
+      hit.addEventListener('mousemove', function (e) { showTip(e, r.label + ': ' + fmt(r)); });
+      hit.addEventListener('mouseleave', function () { tip.hidden = true; });
+      g.appendChild(hit);
+      svg.appendChild(g);
+    });
+    host.appendChild(svg);
+  }
+  var charts = {
+    ms: function (h) { hbars(h, [{ label: 'Command Center page', value: 11 }, { label: 'Plan data', value: 10 }, { label: 'Progress data', value: 10 }, { label: 'Data manifest', value: 9 }], 12, function (r) { return r.value + ' ms'; }); },
+    releases: function (h) { hbars(h, [{ label: 'STORY-000 (first)', value: 1, total: 1 }, { label: 'r0 Setup and support', value: 4, total: 4 }, { label: 'r1 Enhancement, training', value: 1, total: 2 }, { label: 'r2 Reporting, compliance', value: 0, total: 3 }, { label: 'r3 Response management', value: 0, total: 2 }, { label: 'r4 Risk and security', value: 0, total: 4 }], 4, function (r) { return r.value + ' of ' + r.total; }); },
+    tests: function (h) { hbars(h, [{ label: 'Command Center data', value: 11 }, { label: 'Store and audit chain', value: 4 }, { label: '001 Help desk', value: 4 }, { label: '002 Monitoring', value: 4 }, { label: '003 Reports', value: 3 }, { label: '004 Features', value: 3 }, { label: '012 Support', value: 3 }], 11, function (r) { return String(r.value); }); }
+  };
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    var s = slides[i].cloneNode(true);
+    stage.replaceChildren(s);
+    s.querySelectorAll('[data-chart]').forEach(function (h) { charts[h.getAttribute('data-chart')](h); });
+    count.textContent = (i + 1) + ' / ' + slides.length;
+    if (location.hash !== '#s' + (i + 1)) history.replaceState(null, '', '#s' + (i + 1));
+    if (tour.on) say();
+  }
+  document.getElementById('prev').onclick = function () { show(i - 1); };
+  document.getElementById('next').onclick = function () { show(i + 1); };
+  document.addEventListener('keydown', function (e) {
+    if (e.target.closest && e.target.closest('input,textarea')) return;
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') show(i + 1);
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') show(i - 1);
+    if (e.key === 'Escape' && tour.on) stopTour();
+  });
+  window.addEventListener('hashchange', function () { var m = /^#s(\d+)$/.exec(location.hash); if (m) show(+m[1] - 1); });
+
+  // Guided tour: walks every slide with a spoken-style caption, 20 seconds each (about 4 minutes in all).
+  var tour = { on: false, paused: false, t: 0, timer: null }, STEP = 20000;
+  var cap = document.getElementById('caption'), capText = document.getElementById('caption-text'), prog = document.getElementById('prog'), pauseBtn = document.getElementById('tour-pause');
+  function say() { capText.textContent = (i + 1) + ' of ' + slides.length + ' · ' + slides[i].getAttribute('data-say'); tour.t = 0; prog.style.width = '0'; }
+  function tick() {
+    if (tour.paused) return;
+    tour.t += 250; prog.style.width = Math.min(100, tour.t / STEP * 100) + '%';
+    if (tour.t >= STEP) { if (i < slides.length - 1) show(i + 1); else stopTour(); }
+  }
+  function startTour() { tour.on = true; tour.paused = false; pauseBtn.textContent = 'Pause'; cap.hidden = false; document.body.style.paddingBottom = '120px'; show(0); clearInterval(tour.timer); tour.timer = setInterval(tick, 250); pauseBtn.focus(); }
+  function stopTour() { tour.on = false; clearInterval(tour.timer); cap.hidden = true; document.body.style.paddingBottom = ''; document.getElementById('tour-launch').focus(); }
+  document.getElementById('tour-launch').onclick = startTour;
+  document.getElementById('tour-stop').onclick = stopTour;
+  pauseBtn.onclick = function () { tour.paused = !tour.paused; pauseBtn.textContent = tour.paused ? 'Resume' : 'Pause'; };
+
+  var m = /^#s(\d+)$/.exec(location.hash);
+  show(m ? +m[1] - 1 : 0);
+})();
+</script>
+</body>
+</html>
