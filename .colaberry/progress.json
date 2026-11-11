@@ -265,21 +265,28 @@
       "criteria": [
         {
           "text": "Given new features, when training is conducted, then staff understand functionalities.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Given a training session, when a user misses it, then a recording is available.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Trust: Training completion is logged.",
-          "passed": false
+          "passed": true
         }
       ],
-      "files_touched": [],
-      "tests_added": [],
-      "notes": null,
-      "updated_at": null,
+      "files_touched": [
+        "content/training-materials.json",
+        "lib/training.js",
+        "workspace/js/training.js",
+        "workspace/js/views.js"
+      ],
+      "tests_added": [
+        "tests/story-005-training.test.mjs"
+      ],
+      "notes": "Sessions are scheduled with their materials (optionally linked to the feature they teach), and cannot be marked held without a recording. A person completes training only by passing the knowledge check (80%), live or from the recording, so completion means understanding. Every attempt and completion is logged; completing the cyber security course records the date on the person (REQ-020).",
+      "updated_at": "2026-11-11T11:40:15.575Z",
       "verification": {
         "state": "in_progress",
         "criteria_passed": 0,

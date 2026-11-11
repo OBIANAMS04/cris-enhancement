@@ -1,0 +1,73 @@
+{
+  "note": "Training materials written for the demo from the workspace as built. Each course has a short knowledge check; passing it (80% or more) is what counts as understanding. The cyber security course only records completion of TxDOT's approved programme; its content is TxDOT's, not this demo's.",
+  "pass_mark": 0.8,
+  "courses": [
+    {
+      "id": "COURSE-HELPDESK",
+      "title": "Using the Help desk",
+      "kind": "new functionality",
+      "page": "help-desk",
+      "materials": [
+        "Report an issue in a few words and choose how urgent it is; urgency sets the answer deadline.",
+        "You get a reference such as TKT-0001, the person who has it, and the time you will hear back.",
+        "Check the reference at any time to see the status and the full history.",
+        "If a fix did not work, reopen the ticket and say what is still wrong."
+      ],
+      "questions": [
+        { "q": "What decides the deadline for the first answer?", "options": ["The area you choose", "How urgent you say it is", "The time of day"], "answer": 1 },
+        { "q": "A ticket was marked resolved but the problem is back. What do you do?", "options": ["Report a new issue", "Reopen the ticket and say what is still wrong", "Wait for the deadline"], "answer": 1 },
+        { "q": "Where do you see everything that happened on a ticket?", "options": ["Its history, opened from the reference", "The monitoring page", "Nowhere"], "answer": 0 }
+      ]
+    },
+    {
+      "id": "COURSE-REPORTS",
+      "title": "Monitoring and performance reports",
+      "kind": "new functionality",
+      "page": "reports",
+      "materials": [
+        "The monitor records availability and response time for each component, and raises an alert when one stops answering.",
+        "A performance report is computed from what was recorded in the period you choose.",
+        "A period with no recorded data is refused with the reason, never estimated.",
+        "Every report is archived once and checked against its fingerprint when opened."
+      ],
+      "questions": [
+        { "q": "You ask for a report on a week with no monitoring data. What happens?", "options": ["It shows zeros", "It is refused and says what is missing", "It estimates from other weeks"], "answer": 1 },
+        { "q": "What happens when a component stops answering?", "options": ["An alert is raised and an incident opened", "Nothing until someone notices", "The component is removed"], "answer": 0 },
+        { "q": "Can an archived report be edited?", "options": ["Yes, by a manager", "No; a changed copy fails its fingerprint check", "Only on the same day"], "answer": 1 }
+      ]
+    },
+    {
+      "id": "COURSE-FEATURES",
+      "title": "Giving feedback and new features",
+      "kind": "new functionality",
+      "page": "features",
+      "materials": [
+        "Anyone can give feedback; the development team answers every piece.",
+        "Feasible ideas become feature changes: proposed, approved, in build, released.",
+        "A change is released only when the team records how it meets the feedback.",
+        "Ideas that cannot be done are answered with the reason."
+      ],
+      "questions": [
+        { "q": "What must be recorded before a feature is released?", "options": ["Its cost", "How it meets the feedback it came from", "Nothing"], "answer": 1 },
+        { "q": "Your idea cannot be done. What do you get?", "options": ["No answer", "An answer with the reason", "A new ticket"], "answer": 1 },
+        { "q": "What is the order a change moves through?", "options": ["Proposed, approved, in build, released", "Released, then approved", "In build, proposed, released"], "answer": 0 }
+      ]
+    },
+    {
+      "id": "COURSE-CYBER",
+      "title": "Cyber security training (TxDOT-approved programme)",
+      "kind": "cyber security",
+      "page": "training",
+      "materials": [
+        "Vendor employees must complete a TxDOT-approved cyber security training programme (REQ-020).",
+        "This record shows completion and the date; the programme content itself is TxDOT's.",
+        "Completion is renewed every year; the compliance checks flag anyone whose completion has lapsed."
+      ],
+      "questions": [
+        { "q": "Who must complete the TxDOT-approved cyber security programme?", "options": ["Only TxDOT staff", "Vendor employees working on CRIS", "Nobody"], "answer": 1 },
+        { "q": "What does this workspace record?", "options": ["The programme content", "Completion and its date", "Passwords"], "answer": 1 },
+        { "q": "How often is completion renewed?", "options": ["Every year", "Never", "Every ten years"], "answer": 0 }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "1",
+  "projectId": "a563218c-c3a4-433c-8ed7-4e8e0573f59c",
+  "storyId": "STORY-005",
+  "projectTruthBaseRevision": 0,
+  "observedAt": "2026-11-11T11:40:15.577Z",
+  "sourceCommitSha": "e4704932c5d63fcff87196910f6f01e49783cc4f",
+  "factProposals": [
+    {
+      "dimension": "actors",
+      "value": "A trainer schedules and holds sessions; staff take a knowledge check; vendor staff complete the TxDOT-approved cyber security programme.",
+      "evidence": "lib/training.js"
+    },
+    {
+      "dimension": "success_definition",
+      "value": "The build counts a person as trained only when they pass the course knowledge check at 80% or more.",
+      "evidence": "content/training-materials.json"
+    }
+  ],
+  "decisions": [
+    {
+      "statement": "Understanding is measured by a short knowledge check per course, not by attendance.",
+      "rationale": "The acceptance asks that staff understand the functionality.",
+      "evidence": "lib/training.js"
+    },
+    {
+      "statement": "A session cannot be marked held without a recording reference.",
+      "rationale": "People who miss it must have the recording.",
+      "evidence": "lib/training.js"
+    },
+    {
+      "statement": "Cyber security completion is stored on the person, so compliance checks can read it.",
+      "rationale": "REQ-020 and the compliance rule CR-08.",
+      "evidence": "lib/training.js"
+    }
+  ],
+  "limitations": [
+    {
+      "statement": "The workspace stores where the recording is kept; it does not record or host video.",
+      "evidence": "lib/training.js"
+    },
+    {
+      "statement": "The cyber security course here only records completion; the programme content is TxDOT's.",
+      "evidence": "content/training-materials.json"
+    }
+  ],
+  "demonstrationEvidence": [
+    {
+      "kind": "test",
+      "ref": "tests/story-005-training.test.mjs"
+    },
+    {
+      "kind": "screenshot",
+      "ref": "framework/screens/m2-01-training-session.png"
+    }
+  ],
+  "measurementEvents": []
+}
