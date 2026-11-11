@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1",
+  "projectId": "a563218c-c3a4-433c-8ed7-4e8e0573f59c",
+  "storyId": "STORY-007",
+  "projectTruthBaseRevision": 0,
+  "observedAt": "2026-11-11T11:40:17.515Z",
+  "sourceCommitSha": "fe53baaae4f128968a71087f5e0ee81b7d924fff",
+  "factProposals": [
+    {
+      "dimension": "constraints",
+      "value": "Rules that bind CRIS include Tex. Transp. Code §550.062 and §550.065 (crash reports and their release), the Driver's Privacy Protection Act, Tex. Gov't Code ch. 552 and §2063.104 (vendor cyber security training), TX-RAMP, 1 TAC ch. 202/477, records retention and state and ADA accessibility rules.",
+      "evidence": "content/compliance-rules.json"
+    },
+    {
+      "dimension": "unknowns",
+      "value": "No city or county rule was found that clearly governs CRIS; TxDOT legal should confirm.",
+      "evidence": "content/compliance-rules.json"
+    }
+  ],
+  "decisions": [
+    {
+      "statement": "A rule whose records this build does not hold is \"not applicable\" with that reason, never a pass.",
+      "rationale": "Trust: no result the project has not produced.",
+      "evidence": "lib/compliance.js"
+    },
+    {
+      "statement": "A legal update raises the rule's version and re-checks it in the same step; checks against older versions show as stale.",
+      "rationale": "The acceptance asks that the system is updated when the law changes.",
+      "evidence": "lib/compliance.js"
+    }
+  ],
+  "limitations": [
+    {
+      "statement": "The register is compiled from public sources and is not legal advice; it must be confirmed by TxDOT legal and compliance staff.",
+      "evidence": "content/compliance-rules.json"
+    },
+    {
+      "statement": "The accessibility check is an automated subset run on the open page; a manual WCAG review is still required.",
+      "evidence": "lib/compliance.js"
+    }
+  ],
+  "demonstrationEvidence": [
+    {
+      "kind": "test",
+      "ref": "tests/story-007-compliance.test.mjs"
+    },
+    {
+      "kind": "test",
+      "ref": "tests/workspace-walk-m2.js"
+    },
+    {
+      "kind": "screenshot",
+      "ref": "framework/screens/m2-06-compliance-clean.png"
+    },
+    {
+      "kind": "screenshot",
+      "ref": "framework/screens/m2-07-compliance-legal-update.png"
+    }
+  ],
+  "measurementEvents": []
+}

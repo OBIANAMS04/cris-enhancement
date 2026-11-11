@@ -1,0 +1,159 @@
+{
+  "note": "Compliance register for the demo. Compiled from public sources on 2026-11-11; to be confirmed by TxDOT's legal and compliance staff before any real use. Not legal advice. No city or county rule that clearly governs CRIS was found, so no local-jurisdiction rule is listed; local law enforcement agencies are submitters of reports and recipients of released reports under the state rules below.",
+  "rules": [
+    {
+      "id": "CR-01",
+      "title": "Officer collision reports filed electronically within 10 days",
+      "jurisdiction": "state",
+      "source_reference": "Tex. Transp. Code §550.062(a)-(b)",
+      "source_url": "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.550.htm",
+      "summary": "A law enforcement officer who investigates a collision causing injury, death, or apparent property damage of $1,000 or more must make a written report, filed electronically with the department no later than the 10th day after the collision.",
+      "applies_to": "CRIS report intake from law enforcement agencies (electronic submission channel and submission timestamps).",
+      "check": "Does every intake record store the collision date and the electronic filing date, and is every report filed more than 10 days after the collision flagged as late?",
+      "check_kind": "records"
+    },
+    {
+      "id": "CR-02",
+      "title": "Full collision reports released only to eligible requesters",
+      "jurisdiction": "state",
+      "source_reference": "Tex. Transp. Code §550.065(b)-(d)",
+      "source_url": "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.550.htm",
+      "summary": "Collision reports held by the department are privileged and confidential except for listed agencies and persons directly concerned or with a proper interest (drivers, owners, insurers, licensed media, and others), on written request and payment of the fee ($6 per copy, $2 more to certify).",
+      "applies_to": "CRIS crash report purchase and request workflows, and the release log.",
+      "check": "Is every release of a full crash report recorded with the requester's eligibility category, the written request, and the fee charged?",
+      "check_kind": "access"
+    },
+    {
+      "id": "CR-03",
+      "title": "Redacted report for everyone else",
+      "jurisdiction": "state",
+      "source_reference": "Tex. Transp. Code §550.065(c-1), (f)",
+      "source_url": "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.550.htm",
+      "summary": "Any person may request a redacted collision report. Names, driver's license numbers, full birth dates, street addresses and phone numbers, license plates, insurer names and policy numbers, officer badge numbers, and certain dates and transport details must be withheld or redacted.",
+      "applies_to": "CRIS redacted report generation, public query tool, and any data export that is not a full eligible-requester release.",
+      "check": "Does every public or non-eligible release suppress all of the fields listed in §550.065(f)(2) (names, license numbers, birth date other than year, address other than zip, plates, insurance details, officer identifiers)?",
+      "check_kind": "privacy"
+    },
+    {
+      "id": "CR-04",
+      "title": "Driver's Privacy Protection Act limits on motor vehicle record data",
+      "jurisdiction": "federal",
+      "source_reference": "18 U.S.C. §2721(a)-(b)",
+      "source_url": "https://www.law.cornell.edu/uscode/text/18/2721",
+      "summary": "A state motor vehicle agency, and its officers, employees, and contractors, may not knowingly disclose personal information obtained in connection with a motor vehicle record except for the permissible uses listed in the statute (government functions, safety, insurer claims, litigation, and others).",
+      "applies_to": "Any CRIS data element sourced from driver license or vehicle registration records, and any vendor staff or subcontractor who can see it.",
+      "check": "Is every disclosure of license- or registration-sourced personal information tied to a documented permissible use, with no disclosure outside the list?",
+      "check_kind": "privacy"
+    },
+    {
+      "id": "CR-05",
+      "title": "Texas motor vehicle records disclosure and redisclosure log",
+      "jurisdiction": "state",
+      "source_reference": "Tex. Transp. Code §§730.004, 730.007, 730.013",
+      "source_url": "https://statutes.capitol.texas.gov/Docs/TN/htm/TN.730.htm",
+      "summary": "An agency may not disclose personal information from motor vehicle records except for permitted uses; recipients who redisclose must keep records of who received it and the permitted use for at least five years and give them to the agency on request. Information in a Chapter 550 collision report is excluded from the definition of personal information.",
+      "applies_to": "CRIS data feeds, bulk or API access, and agreements with recipients of motor-vehicle-record personal information.",
+      "check": "Do data-sharing agreements require recipients to keep recipient and permitted-use records for at least five years and produce them on request?",
+      "check_kind": "records"
+    },
+    {
+      "id": "CR-06",
+      "title": "Public Information Act response deadlines and motor vehicle record exception",
+      "jurisdiction": "state",
+      "source_reference": "Tex. Gov't Code §§552.221, 552.301, 552.130",
+      "source_url": "https://statutes.capitol.texas.gov/Docs/GV/htm/GV.552.htm",
+      "summary": "Public information must be produced promptly, and if it cannot be produced within 10 business days the requestor must be told in writing; to withhold information the body generally must ask the attorney general for a decision within 10 business days. Driver license, vehicle title and registration information may be released only as Chapter 730, Transportation Code allows.",
+      "applies_to": "CRIS data and records requests that arrive as public information requests rather than through the crash report purchase flow.",
+      "check": "Does the request tracker record the receipt date for each public information request and flag any request with no production, written certification, or attorney general referral by business day 10?",
+      "check_kind": "records"
+    },
+    {
+      "id": "CR-07",
+      "title": "Safety-analysis data protected from discovery and evidence use",
+      "jurisdiction": "federal",
+      "source_reference": "23 U.S.C. §407",
+      "source_url": "https://www.law.cornell.edu/uscode/text/23/407",
+      "summary": "Reports, surveys, schedules, lists, or data compiled or collected to identify, evaluate, or plan safety enhancements of potential crash sites, hazardous roadway conditions, or rail-highway crossings under the federal safety programs are not subject to discovery or admission as evidence in federal or state court actions for damages arising from occurrences at those locations.",
+      "applies_to": "CRIS-derived safety analyses, hazard-location lists, and exports prepared for federal-aid highway safety programs.",
+      "check": "Is every safety-program analysis or hazard-location export labeled as prepared under 23 U.S.C. §407 and kept separate from the crash report release workflow?",
+      "check_kind": "config"
+    },
+    {
+      "id": "CR-08",
+      "title": "Vendor cybersecurity training, completed and verified",
+      "jurisdiction": "state",
+      "source_reference": "Tex. Gov't Code §2063.104 (formerly §2054.5192)",
+      "source_url": "https://statutes.capitol.texas.gov/Docs/GV/htm/GV.2063.htm",
+      "summary": "A state agency must require any contractor (including its subcontractors, officers, and employees) with access to a state computer system or database to complete a cybersecurity training program certified by the Texas Cyber Command, during the contract term and any renewal. Training must be a contract term, and the contractor must verify completion to the agency, which reports it by August 31 each year.",
+      "applies_to": "Every vendor employee and subcontractor with access to CRIS (supports REQ-020).",
+      "check": "Does every vendor user with CRIS access have a completed, certified cybersecurity training record dated within the current year, and is access blocked when it is missing?",
+      "check_kind": "training"
+    },
+    {
+      "id": "CR-09",
+      "title": "TX-RAMP certification for vendor-hosted cloud services",
+      "jurisdiction": "state",
+      "source_reference": "Tex. Gov't Code §2063.408 (formerly §2054.0593)",
+      "source_url": "https://statutes.capitol.texas.gov/Docs/GV/htm/GV.2063.htm",
+      "summary": "A state agency must require a vendor providing cloud computing services that process agency data to comply with the state risk and authorization management program (TX-RAMP), may not enter or renew such a contract unless the vendor demonstrates compliance, and must require the vendor to maintain certification throughout the term.",
+      "applies_to": "The cloud hosting and any cloud services the vendor uses to process CRIS data.",
+      "check": "Does every cloud service that processes CRIS data have a current TX-RAMP certification (or approved federal or other-state equivalent) on file, with its expiry date tracked?",
+      "check_kind": "security"
+    },
+    {
+      "id": "CR-10",
+      "title": "State information security standards (NIST-based controls)",
+      "jurisdiction": "state",
+      "source_reference": "1 Tex. Admin. Code ch. 202 (transferred to 1 Tex. Admin. Code ch. 477, eff. Aug. 1, 2026)",
+      "source_url": "https://www.sos.state.tx.us/texreg/pdf/backview/0626/0626tran.pdf",
+      "summary": "State agencies must follow the Information Security Standards, which require use of the security controls standards catalog based on NIST SP 800-53 Rev. 5 and assign responsibilities for information owners, custodians, and users. The rules were transferred from the Department of Information Resources to the Texas Cyber Command with the same section numbers under chapter 477.",
+      "applies_to": "CRIS and vendor operations: access control, audit logging, data classification, and incident handling.",
+      "check": "Is each control required by the agency's current security controls catalog mapped to a CRIS or vendor control with an owner and last-test date?",
+      "check_kind": "security"
+    },
+    {
+      "id": "CR-11",
+      "title": "Breach notification and protection of sensitive personal information",
+      "jurisdiction": "state",
+      "source_reference": "Tex. Bus. & Com. Code §§521.052, 521.053",
+      "source_url": "https://statutes.capitol.texas.gov/Docs/BC/htm/BC.521.htm",
+      "summary": "A business must keep reasonable procedures to protect sensitive personal information and destroy unneeded records securely. After a breach of computerized data it must notify affected individuals no later than 60 days after determining the breach occurred, and notify the attorney general within 30 days if 250 or more Texas residents are affected; a service holder of data it does not own must notify the owner immediately. This applies to the vendor as a business; the agency's own breach duties may also come from other state laws not verified here.",
+      "applies_to": "The vendor's handling of CRIS data that includes names with driver license numbers or other sensitive personal information.",
+      "check": "Does the incident response plan set a 60-day individual notice deadline, a 30-day attorney general notice for 250 or more Texans, and immediate notice to TxDOT when the vendor holds data it does not own?",
+      "check_kind": "security"
+    },
+    {
+      "id": "CR-12",
+      "title": "Records retention per the TSLAC-approved TxDOT schedule",
+      "jurisdiction": "state",
+      "source_reference": "Tex. Gov't Code §441.185; TxDOT Records Retention Schedule (crash reports and data: 10 years plus the current year)",
+      "source_url": "https://www.txdot.gov/data-maps/crash-reports-records.html",
+      "summary": "TxDOT keeps a records retention schedule approved by the Texas State Library and Archives Commission that is the legal authority to keep and destroy records. TxDOT states the retention for crash reports and data is 10 years plus the current year, and records subject to litigation, audit, or a public information request may not be destroyed until the matter is resolved.",
+      "applies_to": "CRIS crash report and data storage, purge jobs, and legal-hold handling.",
+      "check": "Does the purge job delete only crash records older than the 10-year-plus-current-year window and skip any record under a legal hold or open request?",
+      "check_kind": "retention"
+    },
+    {
+      "id": "CR-13",
+      "title": "State accessibility standard for web pages and applications",
+      "jurisdiction": "state",
+      "source_reference": "1 Tex. Admin. Code §§213.10, 206.50",
+      "source_url": "https://www.law.cornell.edu/regulations/texas/1-Tex-Admin-Code-SS-213-10",
+      "summary": "New or changed state agency web pages and software applications must meet the referenced Section 508 standards, including WCAG 2.0 Level AA (excluding the time-based media guideline), unless the agency head approves an exception. Section 508 of the Rehabilitation Act binds federal agencies directly; for Texas it applies here only because these state rules adopt its technical standards.",
+      "applies_to": "All CRIS public and staff web interfaces, including the crash report purchase and query tools.",
+      "check": "Does every released CRIS page pass an automated and manual WCAG 2.0 Level AA check with the results on file?",
+      "check_kind": "accessibility"
+    },
+    {
+      "id": "CR-14",
+      "title": "ADA Title II web and mobile accessibility rule (WCAG 2.1 AA)",
+      "jurisdiction": "federal",
+      "source_reference": "28 C.F.R. §35.200",
+      "source_url": "https://www.ecfr.gov/current/title-28/chapter-I/part-35/subpart-H/section-35.200",
+      "summary": "State and local government web content and mobile apps, including those provided through a contractor, must meet WCAG 2.1 Level AA, starting April 26, 2027 for entities of 50,000 or more people and April 26, 2028 for smaller entities, after the Department of Justice extended the dates in April 2026. Whether a state agency falls in the first tier should be confirmed by TxDOT counsel.",
+      "applies_to": "CRIS public-facing web content and any mobile app, whether built or hosted by the vendor.",
+      "check": "Does every public CRIS page and mobile screen meet WCAG 2.1 Level A and AA success criteria before April 26, 2027?",
+      "check_kind": "accessibility"
+    }
+  ]
+}

@@ -356,21 +356,29 @@
       "criteria": [
         {
           "text": "Given a compliance check, when conducted, then no violations are found.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Given a legal update, when it occurs, then the system is updated accordingly.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Trust: Compliance checks are logged.",
-          "passed": false
+          "passed": true
         }
       ],
-      "files_touched": [],
-      "tests_added": [],
-      "notes": null,
-      "updated_at": null,
+      "files_touched": [
+        "content/compliance-rules.json",
+        "lib/compliance.js",
+        "workspace/js/compliance.js",
+        "workspace/js/views.js"
+      ],
+      "tests_added": [
+        "tests/story-007-compliance.test.mjs",
+        "tests/workspace-walk-m2.js"
+      ],
+      "notes": "A register of 14 federal and Texas rules (compiled from official sources, to be confirmed by TxDOT legal) is checked rule by rule: mechanical checks run against the live store (vendor cyber training, audit controls, retention, an automated accessibility scan); rules about records this build does not hold are not applicable, with that reason. A run on the workspace finds no violations. A legal update raises the rule version and re-checks it at once; older checks show as stale. Every check is logged with its evidence.",
+      "updated_at": "2026-11-11T11:40:17.514Z",
       "verification": {
         "state": "in_progress",
         "criteria_passed": 0,
