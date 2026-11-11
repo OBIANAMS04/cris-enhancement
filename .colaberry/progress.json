@@ -92,21 +92,39 @@
       "criteria": [
         {
           "text": "Given a user has an issue, when they report it via the help desk, then they receive assistance.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Given a resolved issue, when the user checks the status, then it shows as resolved.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Trust: All help desk interactions are logged for audit.",
-          "passed": false
+          "passed": true
         }
       ],
-      "files_touched": [],
-      "tests_added": [],
-      "notes": null,
-      "updated_at": null,
+      "files_touched": [
+        "lib/schema.js",
+        "lib/store.js",
+        "lib/seed.js",
+        "lib/sla.js",
+        "lib/helpdesk.js",
+        "content/help-articles.json",
+        "content/demo-people.json",
+        "workspace/index.html",
+        "workspace/workspace.css",
+        "workspace/js/main.js",
+        "workspace/js/common.js",
+        "workspace/js/views.js",
+        "workspace/js/helpdesk.js",
+        "workspace/js/audit.js"
+      ],
+      "tests_added": [
+        "tests/store.test.mjs",
+        "tests/story-001-helpdesk.test.mjs"
+      ],
+      "notes": "A user reports an issue and is told at once who has it, by when, and which help articles match. Status shows resolved once support resolves it; a wrong fix is reopened. Every write goes through a hash-chained audit log and is saved together with its audit line or not at all.",
+      "updated_at": "2026-11-11T07:53:52.540Z",
       "verification": {
         "state": "in_progress",
         "criteria_passed": 0,

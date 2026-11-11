@@ -1,0 +1,12 @@
+{
+  "note": "Sample help articles written for the demo, to be replaced by TxDOT's own CRIS help content. They give general steps only and state no TxDOT policy.",
+  "articles": [
+    { "id": "HELP-01", "title": "Cannot sign in", "keywords": ["sign in", "login", "log in", "password", "locked", "account"], "steps": ["Check the address of the sign-in page.", "Reset your password from the sign-in page.", "If the account is locked, say so in the ticket; support will unlock it."] },
+    { "id": "HELP-02", "title": "A crash report will not submit", "keywords": ["submit", "submission", "crash report", "form", "save"], "steps": ["Note the exact message shown.", "Check the fields marked as required.", "Keep the report open; support can see where it stopped."] },
+    { "id": "HELP-03", "title": "Requesting a copy of a crash report", "keywords": ["copy", "purchase", "request", "download", "pdf"], "steps": ["Search by the crash identifier if you have it.", "Say in the ticket which report you need and why."] },
+    { "id": "HELP-04", "title": "A report or query runs slowly or times out", "keywords": ["slow", "timeout", "time out", "query", "loading", "performance"], "steps": ["Narrow the date range and try again.", "Note the time it happened; support checks it against monitoring."] },
+    { "id": "HELP-05", "title": "Correcting a submitted crash report", "keywords": ["correct", "correction", "wrong", "edit", "amend", "mistake"], "steps": ["Give the crash identifier and the field that is wrong.", "Do not submit a second report for the same crash."] },
+    { "id": "HELP-06", "title": "Exporting data", "keywords": ["export", "extract", "csv", "data file", "bulk"], "steps": ["Say which data and which period you need.", "Large exports are prepared by support and you are told when ready."] },
+    { "id": "HELP-07", "title": "Accessibility problems", "keywords": ["screen reader", "accessibility", "keyboard", "contrast", "zoom"], "steps": ["Say which page and which assistive tool you use.", "Accessibility issues are treated as high priority."] }
+  ]
+}

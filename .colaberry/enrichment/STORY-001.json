@@ -1,0 +1,75 @@
+{
+  "schemaVersion": "1",
+  "projectId": "a563218c-c3a4-433c-8ed7-4e8e0573f59c",
+  "storyId": "STORY-001",
+  "projectTruthBaseRevision": 0,
+  "observedAt": "2026-11-11T07:53:52.541Z",
+  "sourceCommitSha": "431c7a1b43a5fbe480ee5c6fb5779420f1d4cd78",
+  "factProposals": [
+    {
+      "dimension": "actors",
+      "value": "The help desk has three roles in use: the TxDOT user who reports, the support person who resolves, and a support lead who receives tickets when nobody is on duty.",
+      "evidence": "lib/helpdesk.js"
+    },
+    {
+      "dimension": "data",
+      "value": "The data model is created as the store of the workspace; AuditEntry was added because every Milestone 1 story requires its actions to be logged.",
+      "evidence": "content/data-model.json"
+    },
+    {
+      "dimension": "security_context",
+      "value": "Every write is checked against the data model and appended to a SHA-256 hash chain; a changed or missing line is detected.",
+      "evidence": "lib/store.js"
+    }
+  ],
+  "decisions": [
+    {
+      "statement": "The workspace runs in the browser with the store in localStorage, using synthetic people only.",
+      "rationale": "No TxDOT system or account is available to this build, and the site is public on GitHub Pages.",
+      "evidence": "workspace/js/main.js"
+    },
+    {
+      "statement": "A record and its audit line are saved together or not at all.",
+      "rationale": "An action that is not logged would break the Trust line.",
+      "evidence": "lib/store.js"
+    },
+    {
+      "statement": "Reports can be submitted twice safely with an idempotency key.",
+      "rationale": "A double click or a retry must not create a second ticket.",
+      "evidence": "lib/helpdesk.js"
+    }
+  ],
+  "limitations": [
+    {
+      "statement": "The store is per browser: two people on two machines do not see each other's tickets until a shared backend replaces localStorage.",
+      "evidence": "lib/store.js"
+    },
+    {
+      "statement": "The help articles are sample content written for the demo, to be replaced by TxDOT's own; matching is by keywords.",
+      "evidence": "content/help-articles.json"
+    },
+    {
+      "statement": "The service levels used for the answer deadline are a proposal; the plan sets none.",
+      "evidence": "lib/sla.js"
+    }
+  ],
+  "demonstrationEvidence": [
+    {
+      "kind": "test",
+      "ref": "tests/story-001-helpdesk.test.mjs"
+    },
+    {
+      "kind": "test",
+      "ref": "tests/store.test.mjs"
+    },
+    {
+      "kind": "screenshot",
+      "ref": "framework/screens/m1-01-helpdesk-assistance.png"
+    },
+    {
+      "kind": "screenshot",
+      "ref": "framework/screens/m1-02-ticket-resolved.png"
+    }
+  ],
+  "measurementEvents": []
+}
