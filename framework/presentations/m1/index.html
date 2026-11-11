@@ -108,7 +108,7 @@ td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; }
   <div class="prog" id="prog"></div>
   <div class="in">
     <p id="caption-text"></p>
-    <div class="controls"><button type="button" id="tour-pause">Pause</button><button type="button" id="tour-stop">End tour</button></div>
+    <div class="controls"><button type="button" id="tour-voice" aria-pressed="true">Voice on</button><button type="button" id="tour-pause">Pause</button><button type="button" id="tour-stop">End tour</button></div>
   </div>
 </div>
 <div class="tip" id="tip" hidden></div>
@@ -343,19 +343,62 @@ td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; }
   window.addEventListener('hashchange', function () { var m = /^#s(\d+)$/.exec(location.hash); if (m) show(+m[1] - 1); });
 
   // Guided tour: walks every slide with a spoken-style caption, 20 seconds each (about 4 minutes in all).
+  // Male voice narrator (Web Speech API): reads each slide's caption; a slide advances when the 20 s timer has run out AND the speech has ended.
+  var synth = window.speechSynthesis, canSpeak = !!synth && typeof SpeechSynthesisUtterance !== 'undefined';
+  var MALE = /(male|david|mark|guy|daniel|alex|fred|george|james|ryan|christopher|eric|brian|roger|thomas|arthur|aaron|tom)/i;
+  var FEMALE = /female|zira|susan|hazel|samantha|victoria|karen|aria|jenny|libby|sonia|emma|michelle|catherine/i;
+  var voice = null, lowPitch = true, voiceOn = true, curUtt = null, voiceBtn = document.getElementById('tour-voice');
+  try { voiceOn = localStorage.getItem('tour-voice') !== 'off'; } catch (e) {}
+  function pickVoice() {
+    var en = (synth.getVoices() || []).filter(function (v) { return /^en([-_]|$)/i.test(v.lang); });
+    var males = en.filter(function (v) { return MALE.test(v.name) && !FEMALE.test(v.name); });
+    var nf = en.filter(function (v) { return !FEMALE.test(v.name); });
+    function us(a) { return a.filter(function (v) { return /^en[-_]US/i.test(v.lang); })[0] || a[0]; }
+    voice = us(males) || us(nf.filter(function (v) { return v.default; })) || us(nf) || us(en) || null;
+    lowPitch = !males.length;
+  }
+  function stopSpeech() { curUtt = null; if (canSpeak) { try { synth.cancel(); } catch (e) {} } }
+  function speak(text) {
+    if (!canSpeak || !voiceOn) return;
+    try {
+      synth.cancel();
+      var u = new SpeechSynthesisUtterance(text);
+      if (voice) { u.voice = voice; u.lang = voice.lang; } else u.lang = 'en-US';
+      u.rate = 1; u.pitch = lowPitch ? 0.8 : 1;
+      var done = function () { if (curUtt === u) curUtt = null; };
+      u.onend = done; u.onerror = done;
+      curUtt = u;
+      synth.speak(u);
+      if (tour.paused) synth.pause();
+    } catch (e) { curUtt = null; }
+  }
+  function paintVoice() { voiceBtn.textContent = voiceOn ? 'Voice on' : 'Voice off'; voiceBtn.setAttribute('aria-pressed', String(voiceOn)); }
+  if (canSpeak) {
+    pickVoice();
+    if (synth.addEventListener) synth.addEventListener('voiceschanged', pickVoice); else synth.onvoiceschanged = pickVoice;
+    paintVoice();
+    voiceBtn.onclick = function () {
+      voiceOn = !voiceOn; paintVoice();
+      try { localStorage.setItem('tour-voice', voiceOn ? 'on' : 'off'); } catch (e) {}
+      if (!voiceOn) stopSpeech(); else if (tour.on) speak(slides[i].getAttribute('data-say'));
+    };
+  } else voiceBtn.hidden = true;
   var tour = { on: false, paused: false, t: 0, timer: null }, STEP = 20000;
   var cap = document.getElementById('caption'), capText = document.getElementById('caption-text'), prog = document.getElementById('prog'), pauseBtn = document.getElementById('tour-pause');
-  function say() { capText.textContent = (i + 1) + ' of ' + slides.length + ' · ' + slides[i].getAttribute('data-say'); tour.t = 0; prog.style.width = '0'; }
+  function say() { capText.textContent = (i + 1) + ' of ' + slides.length + ' · ' + slides[i].getAttribute('data-say'); tour.t = 0; prog.style.width = '0'; speak(slides[i].getAttribute('data-say')); }
   function tick() {
     if (tour.paused) return;
     tour.t += 250; prog.style.width = Math.min(100, tour.t / STEP * 100) + '%';
-    if (tour.t >= STEP) { if (i < slides.length - 1) show(i + 1); else stopTour(); }
+    if (tour.t >= STEP && (!curUtt || tour.t >= STEP * 3)) { if (i < slides.length - 1) show(i + 1); else stopTour(); }
   }
   function startTour() { tour.on = true; tour.paused = false; pauseBtn.textContent = 'Pause'; cap.hidden = false; document.body.style.paddingBottom = '120px'; show(0); clearInterval(tour.timer); tour.timer = setInterval(tick, 250); pauseBtn.focus(); }
-  function stopTour() { tour.on = false; clearInterval(tour.timer); cap.hidden = true; document.body.style.paddingBottom = ''; document.getElementById('tour-launch').focus(); }
+  function stopTour() { stopSpeech(); tour.on = false; clearInterval(tour.timer); cap.hidden = true; document.body.style.paddingBottom = ''; document.getElementById('tour-launch').focus(); }
   document.getElementById('tour-launch').onclick = startTour;
   document.getElementById('tour-stop').onclick = stopTour;
-  pauseBtn.onclick = function () { tour.paused = !tour.paused; pauseBtn.textContent = tour.paused ? 'Resume' : 'Pause'; };
+  pauseBtn.onclick = function () {
+    tour.paused = !tour.paused; pauseBtn.textContent = tour.paused ? 'Resume' : 'Pause';
+    if (canSpeak) { try { if (tour.paused) synth.pause(); else synth.resume(); } catch (e) {} }
+  };
 
   var m = /^#s(\d+)$/.exec(location.hash);
   show(m ? +m[1] - 1 : 0);
