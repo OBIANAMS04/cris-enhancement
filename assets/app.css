@@ -162,3 +162,62 @@ th { font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; colo
 .criteria .is-ticked .criteria__mark { color: var(--ok); }
 
 @media (prefers-reduced-motion: no-preference) { .card { transition: border-color 0.15s; } }
+
+/* Tabs 2 to 9 */
+.muted { color: var(--muted); }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+main h2 + .table-wrap, main h2 + ul { margin-top: 0; }
+main h2 { margin-top: 24px; }
+
+.quotes { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; max-width: 80ch; }
+.quotes li { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius); padding: 14px 16px; }
+.quotes blockquote { margin: 0 0 8px; font-size: 1.05rem; }
+.quotes__by { margin: 0; font-size: 0.9rem; display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
+
+/* Status dots: grey is unknown, never "fine". */
+.dot { display: inline-flex; align-items: center; gap: 7px; font-size: 0.9rem; font-weight: 600; }
+.dot__mark { width: 11px; height: 11px; border-radius: 50%; background: var(--unknown); flex: none; }
+.dot--unknown { color: var(--unknown); }
+.dot--unknown .dot__mark { background: transparent; border: 2px solid var(--unknown); }
+.dot--ok { color: var(--ok); } .dot--ok .dot__mark { background: var(--ok); }
+.dot--warn { color: var(--warn); } .dot--warn .dot__mark { background: var(--warn); }
+.dot--bad { color: var(--bad); } .dot--bad .dot__mark { background: var(--bad); }
+
+/* Gantt */
+.chart { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius); padding: 14px; overflow-x: auto; }
+.gantt { display: block; width: 100%; min-width: 620px; height: auto; }
+.gantt text { font-family: var(--font); fill: var(--ink); font-size: 12px; }
+.gantt .gantt__tick { fill: var(--muted); font-size: 11px; }
+.gantt__grid { stroke: var(--rule); stroke-width: 1; }
+.gantt__bar { stroke: none; }
+.gantt__bar--done { fill: var(--ok); }
+.gantt__bar--active { fill: var(--warn); }
+.gantt__bar--todo { fill: var(--unknown); opacity: 0.45; }
+.gantt a:hover .gantt__bar, .gantt a:focus .gantt__bar { stroke: var(--brand); stroke-width: 2; }
+.gantt__today { stroke: var(--brand); stroke-width: 2; stroke-dasharray: 4 3; }
+.gantt .gantt__today-label { fill: var(--brand); font-weight: 700; }
+.gantt__demo { stroke: var(--ink); stroke-width: 2; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 0.88rem; color: var(--muted); margin-top: 8px; }
+.gantt__key { display: inline-block; width: 12px; height: 12px; margin-right: 6px; vertical-align: -1px; border-radius: 2px; }
+i.gantt__bar--done { background: var(--ok); } i.gantt__bar--active { background: var(--warn); } i.gantt__bar--todo { background: var(--unknown); opacity: 0.45; }
+
+/* Knowledge base question panel */
+.chat { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius); padding: 16px; max-width: 86ch; }
+.chat h2 { margin-top: 0; }
+.chat__log { display: grid; gap: 8px; max-height: 420px; overflow-y: auto; margin-bottom: 12px; }
+.chat__hint { color: var(--muted); font-size: 0.92rem; }
+.chat__q { justify-self: end; background: var(--info-bg); color: var(--ink); border-radius: 10px 10px 2px 10px; padding: 8px 12px; margin: 0; max-width: 85%; }
+.chat__a { background: var(--paper); border: 1px solid var(--rule); border-radius: 10px 10px 10px 2px; padding: 8px 12px; max-width: 92%; }
+.chat__a p { margin: 0 0 6px; }
+.chat__src { font-size: 0.85rem; color: var(--muted); }
+.chat__form { display: flex; gap: 8px; flex-wrap: wrap; }
+.chat__input { flex: 1 1 240px; min-width: 0; font: inherit; padding: 9px 12px; border: 1px solid var(--rule); border-radius: 8px; background: var(--paper); color: var(--ink); min-height: 42px; }
+.chat__send { font: inherit; font-weight: 700; padding: 9px 18px; border: 0; border-radius: 8px; background: var(--brand); color: var(--brand-contrast); cursor: pointer; min-height: 42px; }
+
+.notes { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; max-width: 82ch; }
+.notes li { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius); padding: 12px 16px; }
+.notes__meta { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 4px; }
+.notes__title { font-weight: 700; margin-bottom: 4px; }
+
+.block > * + * { margin-top: 14px; }
+.card__value, .card__title { overflow-wrap: anywhere; }

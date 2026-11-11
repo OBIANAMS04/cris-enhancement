@@ -23,6 +23,8 @@ const NOW = new Date('2026-11-10T15:00:00Z');
 test('the three committed files load with no errors', () => {
   assert.deepEqual(real.errors, []);
   assert.ok(real.plan && real.progress && real.manifest);
+  assert.ok(Array.isArray(real.notes) && real.notes.length > 0, 'content/notes.json is read');
+  assert.ok(real.dataModel?.entities?.length > 0, 'content/data-model.json is read');
   assert.equal(real.mode, 'real');
 });
 
@@ -43,7 +45,7 @@ test('failure path: a file that is not JSON and a fetch that throws are both rep
   const offline = await loadReal(async () => {
     throw new Error('network down');
   });
-  assert.equal(offline.errors.length, 3);
+  assert.equal(offline.errors.length, 5, 'three plan files and two content files');
   assert.match(offline.errors[0], /could not be read \(network down\)/);
 });
 

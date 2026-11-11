@@ -6,6 +6,17 @@ import { h, env, link } from './ui.js';
 import { TABS } from './tabs.js';
 import { renderOverview } from './views/overview.js';
 import { renderPending } from './views/pending.js';
+import { renderOutcomes } from './views/outcomes.js';
+import { renderUsers } from './views/users.js';
+import { renderGuardrails } from './views/guardrails.js';
+import { renderSystems } from './views/systems.js';
+import { renderProject } from './views/project.js';
+import { renderAgents } from './views/agents.js';
+import { renderKnowledge } from './views/knowledge.js';
+import { renderDataModel } from './views/datamodel.js';
+import { BUILD_PAUSED_AT_OVERVIEW } from './tabs.js';
+
+const VIEWS = { outcomes: renderOutcomes, users: renderUsers, guardrails: renderGuardrails, systems: renderSystems, project: renderProject, agents: renderAgents, knowledge: renderKnowledge, 'data-model': renderDataModel };
 
 const MODE_KEY = 'command-center-mode';
 const app = document.getElementById('app');
@@ -61,7 +72,11 @@ function view(tab, data, ctx, rest) {
     return h('div', {}, h('h1', { tabindex: '-1' }, 'Page not found'), h('p', {}, 'There is no tab at this address. ', h('a', { href: link('overview') }, 'Go to the Overview'), '.'));
   }
   if (tab.id === 'overview') return renderOverview(data, ctx, rest);
-  return renderPending(tab);
+  if (BUILD_PAUSED_AT_OVERVIEW || !VIEWS[tab.id]) return renderPending(tab);
+  if (!data.plan || !data.progress) {
+    return h('div', {}, h('h1', { tabindex: '-1' }, tab.label), h('p', {}, 'This tab is drawn from .colaberry/plan.json and .colaberry/progress.json, and at least one could not be read. The message at the top of the page says which and why.'));
+  }
+  return VIEWS[tab.id](tab, data, ctx, rest);
 }
 
 function render({ moveFocus = false } = {}) {

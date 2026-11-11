@@ -97,11 +97,23 @@ export function buildSample(real, now = new Date()) {
   });
   progress.totals = totals;
 
+  // Made-up measures and connection statuses, so the Outcomes and Systems tabs can be seen full.
+  plan.derived = { ...(plan.derived ?? {}) };
+  plan.derived.measures = [
+    { id: 'SAMPLE-M1', statement: 'Sample: 90% of help desk tickets resolved within one business day.' },
+    { id: 'SAMPLE-M2', statement: 'Sample: CRIS available 99.5% of each month.' },
+  ];
+  const states = ['connected', 'not_connected', 'error'];
+  const systemStatus = Object.fromEntries((plan.derived.systems ?? []).map((name, i) => [name, { state: states[i % states.length], checked_at: new Date(now.getTime() - (i + 1) * 20 * 60000).toISOString() }]));
+
   return {
     mode: 'sample',
     sample: true,
     plan,
     progress,
+    notes: real.notes ?? null,
+    dataModel: real.dataModel ?? null,
+    systemStatus,
     manifest: { generated_at: new Date(now.getTime() - 3 * 3600000).toISOString(), sample: true },
     realManifest: real.manifest ?? null,
     errors: [],

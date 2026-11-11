@@ -19,23 +19,28 @@
       "criteria": [
         {
           "text": "Given the Command Center, when it is opened, then every tab is reachable and every card drills down one level.",
-          "passed": false
+          "passed": true,
+          "evidence": "tests/browser-walk.js: all 9 tabs reachable; 65 cards each open their own page"
         },
         {
           "text": "Given sample mode, when any tab is shown, then the sample data is visibly labelled as sample.",
-          "passed": false
+          "passed": true,
+          "evidence": "tests/browser-walk.js: sample banner on every tab and a Sample tag on every card; none in Real mode"
         },
         {
           "text": "Given the Command Center, when any tab renders, then .colaberry/plan.json and .colaberry/progress.json are both committed in this repo and every tab reads its content from them at runtime rather than from hard-coded values.",
-          "passed": false
+          "passed": true,
+          "evidence": "assets/js/data.js loads the files at runtime; tests/browser-walk.js removes STORY-003 from plan.json and it disappears from the page"
         },
         {
           "text": "Given the Command Center, when any tab is shown, then .colaberry/manifest.json is committed in this repo and every tab shows how old that data is and warns when the age exceeds a week.",
-          "passed": false
+          "passed": true,
+          "evidence": "assets/js/main.js stamp on every tab; tests/browser-walk.js serves a manifest 9 days old and every tab warns"
         },
         {
           "text": "Trust — no tab shows a number, a connection or a result the project has not actually produced.",
-          "passed": false
+          "passed": true,
+          "evidence": "Systems grey and \"Not checked from here\"; agents \"No runs recorded\"; no dates shown because plan.json has none; tests/browser-walk.js checks each"
         }
       ],
       "files_touched": [
@@ -46,16 +51,28 @@
         "assets/js/sample.js",
         "assets/js/ui.js",
         "assets/js/tabs.js",
+        "assets/js/answer.js",
         "assets/js/views/overview.js",
         "assets/js/views/pending.js",
+        "assets/js/views/common.js",
+        "assets/js/views/outcomes.js",
+        "assets/js/views/users.js",
+        "assets/js/views/guardrails.js",
+        "assets/js/views/systems.js",
+        "assets/js/views/project.js",
+        "assets/js/views/agents.js",
+        "assets/js/views/knowledge.js",
+        "assets/js/views/datamodel.js",
+        "content/notes.json",
+        "content/data-model.json",
         "scripts/serve.mjs"
       ],
       "tests_added": [
         "tests/data.test.mjs",
         "tests/browser-walk.js"
       ],
-      "notes": "Overview built and paused for the owner's review, as the story asks. The other eight tabs are reachable placeholders, so no criterion is ticked yet. plan.json carries no schedule, release dates or due dates, so the Overview shows none.",
-      "updated_at": "2026-11-10T13:01:48.339Z",
+      "notes": "All nine tabs built after the Overview review. Every criterion checked against the repo on 2026-11-11 with 11 unit tests and a browser walk (9 tabs, 65 cards, sample labels, stale-data warning, deleted story, missing file, phone width). plan.json still carries no dates, so the Gantt uses plan weeks and no due dates are shown.",
+      "updated_at": "2026-11-11T06:19:47.180Z",
       "verification": null
     },
     {

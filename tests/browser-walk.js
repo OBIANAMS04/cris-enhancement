@@ -57,20 +57,47 @@ async (page) => {
   }
   check(cardCount > 0, 'no cards found on any tab');
 
-  await open('overview');
-  await shot('01-overview-real.png');
+  // Each built tab tells the truth about what the files hold.
+  await open('guardrails');
+  check((await page.locator('main').innerText()).includes('Promise not yet kept'), 'Guardrails: an unverified guardrail is not called a promise not yet kept');
+  await open('systems');
+  const sysText = await page.locator('main').innerText();
+  check(!/Connected/.test(sysText) && sysText.includes('Not checked from here'), 'Systems: an indicator is not grey and "not checked from here" in Real mode');
+  await open('agents');
+  const agText = await page.locator('main').innerText();
+  check(agText.includes('No runs recorded') && agText.includes('not agents'), 'AI agents: owners are not marked as owners, or runs are implied');
+  check(!/success rate|0%/.test(agText), 'AI agents: a success rate is shown');
   await open('project');
-  await shot('02-tab-not-built-yet.png');
-  await open('overview/release/r0');
-  await shot('03-drill-down-release.png');
-  await open('overview/schedule');
-  await shot('04-drill-down-schedule.png');
+  check((await page.locator('svg.gantt rect').count()) > 0, 'Project management: no Gantt bars');
+  await open('knowledge');
+  await page.locator('#kb-question').fill('Which stories cover REQ-010?');
+  await page.getByRole('button', { name: 'Ask' }).click();
+  const ans = await page.locator('.chat__a').last().innerText();
+  check(ans.includes('REQ-010') && ans.includes('From:'), 'Knowledge base: the question panel does not answer from the data with a source');
+  await page.locator('#kb-question').fill('What is the weather in Austin tomorrow?');
+  await page.getByRole('button', { name: 'Ask' }).click();
+  check((await page.locator('.chat__a').last().innerText()).includes("can't answer"), 'Knowledge base: an unanswerable question is not refused');
+  await shot('08-knowledge-chat.png', false);
+  await open('data-model');
+  check((await page.locator('main').innerText()).includes('Proposed, not created'), 'Data model: not marked as a proposal');
+
+  const tabShots = [['overview', '01-overview-real.png'], ['outcomes', '02-outcomes.png'], ['users', '03-users.png'], ['guardrails', '04-guardrails.png'], ['systems', '05-systems.png'], ['project', '06-project-management.png'], ['agents', '07-agents.png'], ['data-model', '09-data-model.png'], ['guardrails/guardrail/REQ-010', '10-drill-down-guardrail.png'], ['data-model/entity/supportticket', '11-drill-down-entity.png']];
+  for (const [hash, name] of tabShots) {
+    await open(hash);
+    await shot(name);
+  }
 
   // Sample mode is labelled on every tab and on every card, and Real removes every label.
   await open('overview');
   await page.getByRole('button', { name: 'Sample' }).click();
   await page.waitForSelector('.sample-banner');
-  await shot('05-overview-sample.png');
+  await shot('12-overview-sample.png');
+  await open('systems');
+  check((await page.locator('main .tag-sample').count()) > 0, 'Systems: sample statuses are not labelled sample');
+  await shot('13-systems-sample.png');
+  await open('project');
+  check((await page.locator('.gantt__today').count()) === 1, 'Project management: sample dates do not mark today');
+  await shot('14-project-sample.png');
   for (const tab of tabs) {
     await open(tab.href.slice(2));
     check((await page.locator('.sample-banner').count()) === 1, `${tab.label}: sample mode is not labelled`);
@@ -91,7 +118,7 @@ async (page) => {
     check((await stamp.innerText()).includes('Sync from the portal to refresh'), `${tab.label}: the warning does not ask for a sync`);
   }
   await open('overview', 'stale');
-  await shot('06-stale-data-warning.png', false);
+  await shot('15-stale-data-warning.png', false);
   await page.unroute('**/.colaberry/manifest.json');
 
   // Deleting a story from the plan file removes it from the page.
@@ -120,7 +147,9 @@ async (page) => {
   await page.setViewportSize({ width: 390, height: 800 });
   await open('overview', 'phone');
   check((await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)) <= 0, 'the page scrolls sideways at phone width');
-  await shot('07-overview-phone.png', false);
+  await shot('16-overview-phone.png', false);
+  await open('project', 'phone');
+  check((await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)) <= 0, 'Project management scrolls sideways at phone width');
   await page.setViewportSize({ width: 1280, height: 900 });
   await open('overview');
 

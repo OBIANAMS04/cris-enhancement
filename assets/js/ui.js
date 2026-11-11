@@ -24,6 +24,7 @@ export const sampleTag = () => (env.sample ? h('span', { class: 'tag-sample' }, 
 
 /** A card is a link: every card on every tab drills down one level to its own page. */
 export function card({ to, label, value, unit, note, tone, wide }) {
+  if (typeof value === 'string' && value.length > 14 && !/^[\d\s.,%of]+$/.test(value)) wide = true;
   return h(
     'a',
     { class: `card${tone ? ` card--${tone}` : ''}${wide ? ' card--wide' : ''}`, href: link(to) },

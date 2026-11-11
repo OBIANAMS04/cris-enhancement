@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "_how_to_use": "Decisions and notes the project adds as it goes. Append new entries at the end; never rewrite old ones. The Knowledge base tab reads this file at runtime.",
+  "notes": [
+    {
+      "date": "2026-11-08",
+      "kind": "decision",
+      "story": null,
+      "title": "Crash Records is the live build",
+      "text": "Ali Muwwakkil moved the work from the closed SSS build to the Crash Records Information System Service Agreement, ship-by 24 November 2026, starting with STORY-000 and then the Release 0 stories in order."
+    },
+    {
+      "date": "2026-11-10",
+      "kind": "decision",
+      "story": "STORY-000",
+      "title": "A static Command Center read from the plan files",
+      "text": "The Command Center is a static site with no dependencies. One data layer reads .colaberry/plan.json, progress.json and manifest.json at runtime; no tab copies their contents."
+    },
+    {
+      "date": "2026-11-10",
+      "kind": "limitation",
+      "story": "STORY-000",
+      "title": "The plan file has no dates yet",
+      "text": "The portal brief lists release and due dates, but plan.json carries no schedule, release dates or due dates. The page shows empty states and draws the Gantt on the plan's week numbers until dates arrive."
+    },
+    {
+      "date": "2026-11-11",
+      "kind": "decision",
+      "story": "STORY-000",
+      "title": "The repo is public under Obi's own account",
+      "text": "OBIANAMS04/cris-enhancement, public as the portal requires for verification and GitHub Pages, connected to the portal on 11 November 2026."
+    },
+    {
+      "date": "2026-11-11",
+      "kind": "decision",
+      "story": "STORY-000",
+      "title": "The data model is a proposal",
+      "text": "The Data model tab shows 18 entities derived from the 20 requirements, named for what CRIS stores rather than for any vendor. No table is created until it is reviewed."
+    },
+    {
+      "date": "2026-11-11",
+      "kind": "limitation",
+      "story": "STORY-000",
+      "title": "The question panel matches words, it does not reason",
+      "text": "The Knowledge base question panel answers from the page data by matching ids, keywords and common questions. A static page cannot hold a model key, so questions it cannot match get a plain 'cannot answer' rather than a guess."
+    }
+  ]
+}

@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "status": "proposed",
+  "status_note": "A starting point derived from the requirements, for review. No table has been created.",
+  "entities": [
+    {
+      "name": "Person",
+      "purpose": "Anyone who uses or works on CRIS: TxDOT users and staff, contract managers, vendor staff and administrators.",
+      "from_requirements": ["REQ-002", "REQ-007", "REQ-020"],
+      "fields": [
+        ["id", "identifier", ""],
+        ["display_name", "text", ""],
+        ["role", "choice", "TxDOT user, TxDOT staff member, TxDOT manager, TxDOT contract manager, system administrator, developer, compliance officer, procurement officer, risk manager, security officer"],
+        ["organization", "choice", "TxDOT or vendor"],
+        ["cyber_training_completed_on", "date", "REQ-020: required for vendor employees"]
+      ],
+      "relations": []
+    },
+    {
+      "name": "SupportTicket",
+      "purpose": "An issue a user reports through the help desk, and its resolution.",
+      "from_requirements": ["REQ-001", "REQ-002"],
+      "fields": [
+        ["id", "identifier", ""],
+        ["reported_by", "Person", ""],
+        ["assigned_to", "Person", "optional"],
+        ["summary", "text", ""],
+        ["priority", "choice", "low, normal, high, urgent"],
+        ["status", "choice", "open, in progress, resolved, closed"],
+        ["opened_at", "timestamp", ""],
+        ["resolved_at", "timestamp", "optional"]
+      ],
+      "relations": [["reported_by", "Person", "many to one"], ["assigned_to", "Person", "many to one"]]
+    },
+    {
+      "name": "TicketEvent",
+      "purpose": "The audit trail of a ticket: every change, by whom and when. STORY-001 requires every help desk interaction to be logged.",
+      "from_requirements": ["REQ-002"],
+      "fields": [["id", "identifier", ""], ["ticket", "SupportTicket", ""], ["actor", "Person", ""], ["action", "text", ""], ["at", "timestamp", ""], ["note", "text", "optional"]],
+      "relations": [["ticket", "SupportTicket", "many to one"], ["actor", "Person", "many to one"]]
+    },
+    {
+      "name": "HealthSample",
+      "purpose": "One measurement of how CRIS is performing, taken by the monitoring tools.",
+      "from_requirements": ["REQ-003", "REQ-004"],
+      "fields": [["id", "identifier", ""], ["component", "text", "which part of CRIS"], ["metric", "text", "for example response time or availability"], ["value", "number", ""], ["unit", "text", ""], ["observed_at", "timestamp", ""], ["source", "text", "which monitor reported it"]],
+      "relations": []
+    },
+    {
+      "name": "Incident",
+      "purpose": "An outage, failure or operator error, from detection to resolution, with its reference in the incident management system.",
+      "from_requirements": ["REQ-005", "REQ-017", "REQ-018", "REQ-019"],
+      "fields": [["id", "identifier", ""], ["title", "text", ""], ["severity", "choice", "1 to 4"], ["status", "choice", "open, mitigated, resolved"], ["detected_at", "timestamp", ""], ["resolved_at", "timestamp", "optional"], ["root_cause", "text", "optional"], ["external_reference", "text", "id in the incident management system"]],
+      "relations": [["risk", "Risk", "many to one, optional"]]
+    },
+    {
+      "name": "Report",
+      "purpose": "A generated report: performance, incident resolution, compliance, or one the contract manager specifies.",
+      "from_requirements": ["REQ-005", "REQ-009", "REQ-019"],
+      "fields": [["id", "identifier", ""], ["kind", "choice", "performance, incident log, compliance, contract-specified, risk assessment"], ["period_start", "date", ""], ["period_end", "date", ""], ["requested_by", "Person", ""], ["generated_at", "timestamp", ""], ["file_reference", "text", ""]],
+      "relations": [["requested_by", "Person", "many to one"]]
+    },
+    {
+      "name": "Feedback",
+      "purpose": "Something a user says about CRIS, collected so it can shape new features.",
+      "from_requirements": ["REQ-006", "REQ-008"],
+      "fields": [["id", "identifier", ""], ["submitted_by", "Person", ""], ["text", "text", ""], ["category", "text", ""], ["submitted_at", "timestamp", ""], ["status", "choice", "new, reviewed, planned, declined"]],
+      "relations": [["feature", "FeatureChange", "many to one, optional"]]
+    },
+    {
+      "name": "FeatureChange",
+      "purpose": "A new feature or change to CRIS, and the feedback or operational need that led to it.",
+      "from_requirements": ["REQ-006"],
+      "fields": [["id", "identifier", ""], ["title", "text", ""], ["reason", "text", "the user feedback or operational need"], ["status", "choice", "proposed, approved, in build, released"], ["released_on", "date", "optional"]],
+      "relations": []
+    },
+    {
+      "name": "TrainingSession",
+      "purpose": "A training session for TxDOT staff on new functionality, or the vendor cyber security training.",
+      "from_requirements": ["REQ-007", "REQ-020"],
+      "fields": [["id", "identifier", ""], ["title", "text", ""], ["kind", "choice", "new functionality, cyber security"], ["scheduled_at", "timestamp", ""], ["trainer", "Person", ""], ["materials_reference", "text", ""]],
+      "relations": [["trainer", "Person", "many to one"]]
+    },
+    {
+      "name": "TrainingAttendance",
+      "purpose": "Who attended a session and whether they completed it.",
+      "from_requirements": ["REQ-007", "REQ-020"],
+      "fields": [["session", "TrainingSession", ""], ["person", "Person", ""], ["completed", "yes or no", ""], ["completed_on", "date", "optional"]],
+      "relations": [["session", "TrainingSession", "many to one"], ["person", "Person", "many to one"]]
+    },
+    {
+      "name": "ComplianceRule",
+      "purpose": "A federal, state or local law or rule CRIS has to comply with.",
+      "from_requirements": ["REQ-010"],
+      "fields": [["id", "identifier", ""], ["title", "text", ""], ["jurisdiction", "choice", "federal, state, local"], ["source_reference", "text", "the law or rule it comes from"]],
+      "relations": []
+    },
+    {
+      "name": "ComplianceCheck",
+      "purpose": "One check of CRIS against a rule, with its result and evidence.",
+      "from_requirements": ["REQ-010", "REQ-011"],
+      "fields": [["id", "identifier", ""], ["rule", "ComplianceRule", ""], ["checked_at", "timestamp", ""], ["result", "choice", "pass, fail, not applicable"], ["evidence", "text", ""], ["checked_by", "Person", ""]],
+      "relations": [["rule", "ComplianceRule", "many to one"], ["checked_by", "Person", "many to one"]]
+    },
+    {
+      "name": "CostEntry",
+      "purpose": "A cost or payment line exchanged with TxDOT's financial systems for reporting and compliance checks.",
+      "from_requirements": ["REQ-011"],
+      "fields": [["id", "identifier", ""], ["period", "text", ""], ["amount", "money", ""], ["category", "text", ""], ["financial_system_reference", "text", "id in TxDOT's financial system"]],
+      "relations": []
+    },
+    {
+      "name": "SolicitationResponse",
+      "purpose": "A response to the solicitation, and its submission and tracking through the procurement system.",
+      "from_requirements": ["REQ-012", "REQ-015"],
+      "fields": [["id", "identifier", ""], ["solicitation_reference", "text", ""], ["respondent", "text", ""], ["status", "choice", "draft, submitted, under evaluation, awarded, not awarded"], ["submitted_at", "timestamp", "optional"], ["procurement_reference", "text", "id in the procurement system"]],
+      "relations": []
+    },
+    {
+      "name": "ResponseDocument",
+      "purpose": "A document that belongs to a response.",
+      "from_requirements": ["REQ-013"],
+      "fields": [["id", "identifier", ""], ["response", "SolicitationResponse", ""], ["kind", "text", "for example technical proposal, pricing, forms"], ["file_reference", "text", ""], ["uploaded_at", "timestamp", ""]],
+      "relations": [["response", "SolicitationResponse", "many to one"]]
+    },
+    {
+      "name": "ScoringCriterion",
+      "purpose": "One criterion in TxDOT's weighted scoring system, with its weight.",
+      "from_requirements": ["REQ-014"],
+      "fields": [["id", "identifier", ""], ["name", "text", ""], ["weight", "number", "share of the total score"]],
+      "relations": []
+    },
+    {
+      "name": "EvaluationScore",
+      "purpose": "One evaluator's score for one response against one criterion.",
+      "from_requirements": ["REQ-014"],
+      "fields": [["response", "SolicitationResponse", ""], ["criterion", "ScoringCriterion", ""], ["evaluator", "Person", ""], ["score", "number", ""], ["comment", "text", "optional"]],
+      "relations": [["response", "SolicitationResponse", "many to one"], ["criterion", "ScoringCriterion", "many to one"], ["evaluator", "Person", "many to one"]]
+    },
+    {
+      "name": "Risk",
+      "purpose": "A risk to CRIS from performance problems, user error, outages or operator error, with its mitigation.",
+      "from_requirements": ["REQ-016", "REQ-017", "REQ-019"],
+      "fields": [["id", "identifier", ""], ["title", "text", ""], ["category", "choice", "performance, user error, outage, operator error, security"], ["likelihood", "choice", "low, medium, high"], ["impact", "choice", "low, medium, high"], ["owner", "Person", ""], ["mitigation", "text", ""], ["status", "choice", "open, mitigated, accepted, closed"]],
+      "relations": [["owner", "Person", "many to one"]]
+    }
+  ]
+}

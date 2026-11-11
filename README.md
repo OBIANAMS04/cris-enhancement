@@ -45,6 +45,7 @@ stale-data warning, a deleted story, a missing file, phone width); it is run thr
 |---|---|
 | `index.html`, `assets/` | The Command Center. `assets/js/data.js` is the only place data is loaded |
 | `assets/app.css` | Styles. The brand colours are two lines at the top |
+| `content/` | The project's own content: decisions and notes (`notes.json`, appended to) and the proposed data model |
 | `framework/` | The project framework (goals, status, decisions, risks) and its screenshots |
 | `docs/`, `.colaberry/`, `CLAUDE.md` | Written by the platform: requirements, stories, traceability, the data files |
 | `tests/`, `scripts/` | Tests and the local server |

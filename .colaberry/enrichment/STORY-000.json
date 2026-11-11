@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "1",
+  "projectId": "a563218c-c3a4-433c-8ed7-4e8e0573f59c",
+  "storyId": "STORY-000",
+  "projectTruthBaseRevision": 0,
+  "observedAt": "2026-11-11T06:19:47.301Z",
+  "sourceCommitSha": "36b87dc2e4cfe84b00e3aa08aa30dda9d0357ced",
+  "factProposals": [
+    {
+      "dimension": "systems",
+      "value": "The plan names two outside systems, TxDOT and Euna Procurement. Neither is connected; the Command Center shows both as not checked.",
+      "evidence": "assets/js/views/systems.js"
+    },
+    {
+      "dimension": "actors",
+      "value": "The stories are written for ten roles, including TxDOT user, TxDOT contract manager, compliance officer and risk manager.",
+      "evidence": "assets/js/views/users.js"
+    },
+    {
+      "dimension": "data",
+      "value": "A proposed data model of 18 entities derived from the 20 requirements, not yet created.",
+      "evidence": "content/data-model.json"
+    }
+  ],
+  "decisions": [
+    {
+      "statement": "The Command Center is a static site with no dependencies that reads the .colaberry files at runtime through one data layer.",
+      "rationale": "A static page cannot keep a secret, and one data layer means the tabs never hold plan content.",
+      "evidence": "assets/js/data.js"
+    },
+    {
+      "statement": "Draw the release Gantt on the plan's week numbers while the plan file has no dates.",
+      "rationale": "plan.json carries week_start and week_end but no starts_on, ends_on or due dates.",
+      "evidence": "assets/js/views/project.js"
+    }
+  ],
+  "limitations": [
+    {
+      "statement": "No dates are shown anywhere: plan.json has no schedule, release dates or story due dates.",
+      "evidence": ".colaberry/plan.json"
+    },
+    {
+      "statement": "The Knowledge base question panel matches ids and keywords; it does not reason, and refuses questions it cannot match.",
+      "evidence": "assets/js/answer.js"
+    }
+  ],
+  "demonstrationEvidence": [
+    {
+      "kind": "test",
+      "ref": "tests/data.test.mjs"
+    },
+    {
+      "kind": "test",
+      "ref": "tests/browser-walk.js"
+    }
+  ],
+  "measurementEvents": []
+}

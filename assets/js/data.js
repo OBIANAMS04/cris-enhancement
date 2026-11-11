@@ -10,6 +10,12 @@ export const FILES = {
   manifest: '.colaberry/manifest.json',
 };
 
+/** The project's own content, committed beside the page: notes that grow, and the proposed data model. */
+export const CONTENT = {
+  notes: 'content/notes.json',
+  dataModel: 'content/data-model.json',
+};
+
 export const FETCH_TIMEOUT_MS = 10000;
 export const STALE_AFTER_DAYS = 7;
 const DAY_MS = 86400000;
@@ -44,13 +50,15 @@ async function readJson(path, fetchImpl) {
 
 /** Reads the three files. A file that cannot be read is reported in `errors` and left null; it is never guessed. */
 export async function loadReal(fetchImpl = (...args) => globalThis.fetch(...args)) {
-  const names = Object.keys(FILES);
-  const results = await Promise.all(names.map((name) => readJson(FILES[name], fetchImpl)));
-  const data = { mode: 'real', sample: false, errors: [] };
+  const all = { ...FILES, ...CONTENT };
+  const names = Object.keys(all);
+  const results = await Promise.all(names.map((name) => readJson(all[name], fetchImpl)));
+  const data = { mode: 'real', sample: false, errors: [], systemStatus: null };
   names.forEach((name, i) => {
     data[name] = results[i].value ?? null;
     if (results[i].error) data.errors.push(results[i].error);
   });
+  data.notes = data.notes?.notes ?? null;
   return data;
 }
 

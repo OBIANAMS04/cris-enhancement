@@ -4,7 +4,7 @@
  * STORY-000 asks for the Overview first, then a stop for review. While this is true the Overview carries a
  * banner and the other eight tabs say they are not built yet. Set to false when the rest is built.
  */
-export const BUILD_PAUSED_AT_OVERVIEW = true;
+export const BUILD_PAUSED_AT_OVERVIEW = false; // the owner said "build the rest" on 2026-11-11
 
 export const TABS = [
   { id: 'overview', label: 'Overview', built: true },
