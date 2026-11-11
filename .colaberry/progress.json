@@ -148,21 +148,27 @@
       "criteria": [
         {
           "text": "Given the system is running, when monitoring is active, then performance metrics are displayed.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Given a system outage, when it occurs, then an alert is generated.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Trust: All monitoring data is archived for audit.",
-          "passed": false
+          "passed": true
         }
       ],
-      "files_touched": [],
-      "tests_added": [],
-      "notes": null,
-      "updated_at": null,
+      "files_touched": [
+        "lib/monitoring.js",
+        "workspace/js/monitoring.js",
+        "workspace/js/views.js"
+      ],
+      "tests_added": [
+        "tests/story-002-monitoring.test.mjs"
+      ],
+      "notes": "Real checks of the site with a 5 s time limit and one retry record availability and response time. An outage opens one incident and raises an alert; recovery resolves it. Samples are append-only and the archive downloads with its SHA-256.",
+      "updated_at": "2026-11-11T07:53:53.253Z",
       "verification": {
         "state": "in_progress",
         "criteria_passed": 0,

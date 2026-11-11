@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "1",
+  "projectId": "a563218c-c3a4-433c-8ed7-4e8e0573f59c",
+  "storyId": "STORY-002",
+  "projectTruthBaseRevision": 0,
+  "observedAt": "2026-11-11T07:53:53.253Z",
+  "sourceCommitSha": "3aff0b1898b328959be1e3af457259b63ad4654e",
+  "factProposals": [
+    {
+      "dimension": "systems",
+      "value": "The monitor checks the Command Center site itself; CRIS is not reachable from this build, so it is not monitored yet.",
+      "evidence": "lib/monitoring.js"
+    },
+    {
+      "dimension": "outputs",
+      "value": "Monitoring produces availability and response-time samples, incidents and alerts.",
+      "evidence": "lib/monitoring.js"
+    }
+  ],
+  "decisions": [
+    {
+      "statement": "Every check has a 5 second time limit and one retry, and a failure is a recorded result rather than an error.",
+      "rationale": "The build rules require explicit timeouts and capped retries on every external call.",
+      "evidence": "lib/monitoring.js"
+    },
+    {
+      "statement": "One open incident per component: repeated failures do not open more.",
+      "rationale": "Running a check twice must not double-create.",
+      "evidence": "lib/monitoring.js"
+    }
+  ],
+  "limitations": [
+    {
+      "statement": "Checks run while the page is open (on demand or every minute); there is no unattended scheduler yet, and the targets are the site's own files.",
+      "evidence": "workspace/js/monitoring.js"
+    }
+  ],
+  "demonstrationEvidence": [
+    {
+      "kind": "test",
+      "ref": "tests/story-002-monitoring.test.mjs"
+    },
+    {
+      "kind": "screenshot",
+      "ref": "framework/screens/m1-04-monitoring-alert.png"
+    }
+  ],
+  "measurementEvents": []
+}

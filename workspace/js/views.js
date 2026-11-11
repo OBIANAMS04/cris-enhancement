@@ -3,16 +3,18 @@
 import { h } from '../../assets/js/ui.js';
 import { helpDesk } from './helpdesk.js';
 import { support } from './support.js';
+import { monitoring } from './monitoring.js';
 import { audit, tables } from './audit.js';
 
 export const PAGES = [
   { id: 'help-desk', label: 'Help desk', story: 'STORY-001', req: 'REQ-002' },
   { id: 'support', label: 'Support dashboard', story: 'STORY-012', req: 'REQ-001' },
+  { id: 'monitoring', label: 'Monitoring', story: 'STORY-002', req: 'REQ-003' },
   { id: 'audit', label: 'Audit log' },
   { id: 'tables', label: 'Tables' },
 ];
 
-const RENDER = { 'help-desk': helpDesk, support, audit, tables };
+const RENDER = { 'help-desk': helpDesk, support, monitoring, audit, tables };
 
 export function renderPage(page, rest, ctx) {
   if (!page) return h('div', {}, h('h1', { tabindex: '-1' }, 'Page not found'), h('p', {}, 'There is no workspace page at this address. ', h('a', { href: '#/help-desk' }, 'Go to the Help desk'), '.'));
