@@ -74,8 +74,14 @@ test('stories: plan and progress join on id, and an absent verification block me
   assert.equal(rows[0].title, null, 'its title is not in the files, so none is invented');
   const first = rows.find((r) => r.id === 'STORY-001');
   assert.equal(first.title, real.plan.stories.find((s) => s.id === 'STORY-001').title);
-  assert.equal(first.checked, false);
-  assert.equal(first.state, null);
+  // State comes only from progress.verification: absent means not checked (null), never a guessed state.
+  for (const r of rows) {
+    const p = real.progress.stories.find((x) => x.id === r.id);
+    assert.equal(r.checked, Boolean(p?.verification), r.id);
+    assert.equal(r.state, p?.verification?.state ?? null, r.id);
+  }
+  const stripped = storyRows(real.plan, { ...real.progress, stories: real.progress.stories.map(({ verification, ...rest }) => rest) });
+  assert.ok(stripped.every((r) => r.checked === false && r.state === null), 'no verification block means not checked');
 });
 
 test('stories: deleting a story from the plan removes it from the rows', () => {

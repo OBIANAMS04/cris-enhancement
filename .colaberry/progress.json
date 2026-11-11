@@ -3,13 +3,13 @@
   "project": "Crash Records Information System (CRIS) Enhancement",
   "totals": {
     "stories_total": 16,
-    "stories_verified": 0,
+    "stories_verified": 1,
     "stories_submitted": 0,
-    "stories_in_progress": 0,
-    "stories_not_started": 16,
-    "criteria_total": 50,
+    "stories_in_progress": 15,
+    "stories_not_started": 0,
+    "criteria_total": 45,
     "criteria_passed": 0,
-    "points_awarded": 0
+    "points_awarded": 50
   },
   "stories": [
     {
@@ -73,7 +73,17 @@
       ],
       "notes": "All nine tabs built after the Overview review. Every criterion checked against the repo on 2026-11-11 with 11 unit tests and a browser walk (9 tabs, 65 cards, sample labels, stale-data warning, deleted story, missing file, phone width). plan.json still carries no dates, so the Gantt uses plan weeks and no due dates are shown.",
       "updated_at": "2026-11-11T06:19:47.180Z",
-      "verification": null
+      "verification": {
+        "state": "verified",
+        "criteria_passed": 0,
+        "criteria_total": 0,
+        "verified_at": "2026-11-11T06:20:13.828Z",
+        "commit_sha": "f07db580e74a201b5b9fa4341fd0d71a7c295e0b",
+        "commit_url": "https://github.com/OBIANAMS04/cris-enhancement/commit/f07db580e74a201b5b9fa4341fd0d71a7c295e0b",
+        "commit_at": null,
+        "points_awarded": 50,
+        "outstanding": []
+      }
     },
     {
       "id": "STORY-001",
@@ -97,7 +107,21 @@
       "tests_added": [],
       "notes": null,
       "updated_at": null,
-      "verification": null
+      "verification": {
+        "state": "in_progress",
+        "criteria_passed": 0,
+        "criteria_total": 3,
+        "verified_at": null,
+        "commit_sha": null,
+        "commit_url": null,
+        "commit_at": null,
+        "points_awarded": null,
+        "outstanding": [
+          "Given a user has an issue, when they report it via the help desk, then they receive assistance.",
+          "Given a resolved issue, when the user checks the status, then it shows as resolved.",
+          "Trust: All help desk interactions are logged for audit."
+        ]
+      }
     },
     {
       "id": "STORY-002",
@@ -121,7 +145,21 @@
       "tests_added": [],
       "notes": null,
       "updated_at": null,
-      "verification": null
+      "verification": {
+        "state": "in_progress",
+        "criteria_passed": 0,
+        "criteria_total": 3,
+        "verified_at": null,
+        "commit_sha": null,
+        "commit_url": null,
+        "commit_at": null,
+        "points_awarded": null,
+        "outstanding": [
+          "Given the system is running, when monitoring is active, then performance metrics are displayed.",
+          "Given a system outage, when it occurs, then an alert is generated.",
+          "Trust: All monitoring data is archived for audit."
+        ]
+      }
     },
     {
       "id": "STORY-003",
@@ -145,7 +183,21 @@
       "tests_added": [],
       "notes": null,
       "updated_at": null,
-      "verification": null
+      "verification": {
+        "state": "in_progress",
+        "criteria_passed": 0,
+        "criteria_total": 3,
+        "verified_at": null,
+        "commit_sha": null,
+        "commit_url": null,
+        "commit_at": null,
+        "points_awarded": null,
+        "outstanding": [
+          "Given system data, when a report is generated, then it reflects current performance.",
+          "Given a report request, when data is missing, then an error is shown.",
+          "Trust: Reports are archived for future reference."
+        ]
+      }
     },
     {
       "id": "STORY-004",
@@ -169,7 +221,21 @@
       "tests_added": [],
       "notes": null,
       "updated_at": null,
-      "verification": null
+      "verification": {
+        "state": "in_progress",
+        "criteria_passed": 0,
+        "criteria_total": 3,
+        "verified_at": null,
+        "commit_sha": null,
+        "commit_url": null,
+        "commit_at": null,
+        "points_awarded": null,
+        "outstanding": [
+          "Given user feedback, when a feature is developed, then it meets user needs.",
+          "Given a feature request, when it is not feasible, then feedback is provided.",
+          "Trust: All feature changes are documented."
+        ]
+      }
     },
     {
       "id": "STORY-005",
@@ -193,7 +259,21 @@
       "tests_added": [],
       "notes": null,
       "updated_at": null,
-      "verification": null
+      "verification": {
+        "state": "in_progress",
+        "criteria_passed": 0,
+        "criteria_total": 3,
+        "verified_at": null,
+        "commit_sha": null,
+        "commit_url": null,
+        "commit_at": null,
+        "points_awarded": null,
+        "outstanding": [
+          "Given new features, when training is conducted, then staff understand functionalities.",
+          "Given a training session, when a user misses it, then a recording is available.",
+          "Trust: Training completion is logged."
+        ]
+      }
     },
     {
       "id": "STORY-006",
@@ -217,7 +297,21 @@
       "tests_added": [],
       "notes": null,
       "updated_at": null,
-      "verification": null
+      "verification": {
+        "state": "in_progress",
+        "criteria_passed": 0,
+        "criteria_total": 3,
+        "verified_at": null,
+        "commit_sha": null,
+        "commit_url": null,
+        "commit_at": null,
+        "points_awarded": null,
+        "outstanding": [
+          "Given a report request, when generated, then it meets specifications.",
+          "Given a report error, when it occurs, then it is logged and addressed.",
+          "Trust: All reports are archived for compliance."
+        ]
+      }
     },
     {
       "id": "STORY-007",
@@ -241,7 +335,21 @@
       "tests_added": [],
       "notes": null,
       "updated_at": null,
-      "verification": null
+      "verification": {
+        "state": "in_progress",
+        "criteria_passed": 0,
+        "criteria_total": 3,
+        "verified_at": null,
+        "commit_sha": null,
+        "commit_url": null,
+        "commit_at": null,
+        "points_awarded": null,
+        "outstanding": [
+          "Given a compliance check, when conducted, then no violations are found.",
+          "Given a legal update, when it occurs, then the system is updated accordingly.",
+          "Trust: Compliance checks are logged."
+        ]
+      }
     },
     {
       "id": "STORY-008",
@@ -265,7 +373,21 @@
       "tests_added": [],
       "notes": null,
       "updated_at": null,
-      "verification": null
+      "verification": {
+        "state": "in_progress",
+        "criteria_passed": 0,
+        "criteria_total": 3,
+        "verified_at": null,
+        "commit_sha": null,
+        "commit_url": null,
+        "commit_at": null,
+        "points_awarded": null,
+        "outstanding": [
+          "Given a response, when submitted, then it is stored correctly.",
+          "Given a submission error, when it occurs, then it is logged and addressed.",
+          "Trust: All submissions are tracked for audit."
+        ]
+      }
     },
     {
       "id": "STORY-009",
@@ -289,7 +411,21 @@
       "tests_added": [],
       "notes": null,
       "updated_at": null,
-      "verification": null
+      "verification": {
+        "state": "in_progress",
+        "criteria_passed": 0,
+        "criteria_total": 3,
+        "verified_at": null,
+        "commit_sha": null,
+        "commit_url": null,
+        "commit_at": null,
+        "points_awarded": null,
+        "outstanding": [
+          "Given a response, when evaluated, then it is scored accurately.",
+          "Given a scoring error, when it occurs, then it is corrected.",
+          "Trust: All scores are archived for transparency."
+        ]
+      }
     },
     {
       "id": "STORY-010",
@@ -313,7 +449,21 @@
       "tests_added": [],
       "notes": null,
       "updated_at": null,
-      "verification": null
+      "verification": {
+        "state": "in_progress",
+        "criteria_passed": 0,
+        "criteria_total": 3,
+        "verified_at": null,
+        "commit_sha": null,
+        "commit_url": null,
+        "commit_at": null,
+        "points_awarded": null,
+        "outstanding": [
+          "Given a risk assessment, when conducted, then risks are identified and mitigated.",
+          "Given a risk, when it is not mitigated, then it is logged for review.",
+          "Trust: All risk assessments are archived."
+        ]
+      }
     },
     {
       "id": "STORY-011",
@@ -337,7 +487,21 @@
       "tests_added": [],
       "notes": null,
       "updated_at": null,
-      "verification": null
+      "verification": {
+        "state": "in_progress",
+        "criteria_passed": 0,
+        "criteria_total": 3,
+        "verified_at": null,
+        "commit_sha": null,
+        "commit_url": null,
+        "commit_at": null,
+        "points_awarded": null,
+        "outstanding": [
+          "Given a cybersecurity training, when completed, then compliance is ensured.",
+          "Given a security breach, when it occurs, then it is logged and addressed.",
+          "Trust: All training completions are archived."
+        ]
+      }
     },
     {
       "id": "STORY-012",
@@ -361,7 +525,21 @@
       "tests_added": [],
       "notes": null,
       "updated_at": null,
-      "verification": null
+      "verification": {
+        "state": "in_progress",
+        "criteria_passed": 0,
+        "criteria_total": 3,
+        "verified_at": null,
+        "commit_sha": null,
+        "commit_url": null,
+        "commit_at": null,
+        "points_awarded": null,
+        "outstanding": [
+          "Given the system is operational, when a technical issue arises, then the support team must resolve it within the SLA.",
+          "Given a maintenance schedule, when maintenance is due, then the system must undergo maintenance without disrupting services.",
+          "Trust: All support and maintenance activities must be logged and auditable."
+        ]
+      }
     },
     {
       "id": "STORY-013",
@@ -385,7 +563,21 @@
       "tests_added": [],
       "notes": null,
       "updated_at": null,
-      "verification": null
+      "verification": {
+        "state": "in_progress",
+        "criteria_passed": 0,
+        "criteria_total": 3,
+        "verified_at": null,
+        "commit_sha": null,
+        "commit_url": null,
+        "commit_at": null,
+        "points_awarded": null,
+        "outstanding": [
+          "Given a new document, when it is uploaded, then it must be stored in the document management system.",
+          "Given a stored document, when it is accessed, then it must be retrievable within 2 seconds.",
+          "Trust: All document access and modifications must be logged."
+        ]
+      }
     },
     {
       "id": "STORY-014",
@@ -409,7 +601,21 @@
       "tests_added": [],
       "notes": null,
       "updated_at": null,
-      "verification": null
+      "verification": {
+        "state": "in_progress",
+        "criteria_passed": 0,
+        "criteria_total": 3,
+        "verified_at": null,
+        "commit_sha": null,
+        "commit_url": null,
+        "commit_at": null,
+        "points_awarded": null,
+        "outstanding": [
+          "Given system performance metrics, when anomalies are detected, then alerts must be generated for investigation.",
+          "Given user actions, when an error is made, then the system must provide corrective suggestions.",
+          "Trust: All anomalies and user errors must be logged for audit purposes."
+        ]
+      }
     },
     {
       "id": "STORY-015",
@@ -433,7 +639,21 @@
       "tests_added": [],
       "notes": null,
       "updated_at": null,
-      "verification": null
+      "verification": {
+        "state": "in_progress",
+        "criteria_passed": 0,
+        "criteria_total": 3,
+        "verified_at": null,
+        "commit_sha": null,
+        "commit_url": null,
+        "commit_at": null,
+        "points_awarded": null,
+        "outstanding": [
+          "Given an incident, when it is reported, then a detailed report must be generated and stored.",
+          "Given a risk assessment, when it is completed, then the documentation must be accessible to authorized users.",
+          "Trust: All reports and assessments must be version-controlled and logged."
+        ]
+      }
     }
   ]
 }
