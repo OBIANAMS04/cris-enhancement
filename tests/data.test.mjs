@@ -100,11 +100,16 @@ test('releases: with no dates in the plan the focus falls back to progress and s
   assert.equal(releases.length, real.plan.releases.length);
   const undated = releases.every((r) => !r.starts_on);
   const focus = focusRelease(releases, NOW);
-  assert.equal(focus.release.key, releases[0].key);
-  if (undated) {
+  // The focus is the first release with a story not yet verified, whatever the committed progress says today.
+  const firstOpen = releases.find((r) => r.verified < r.stories.length);
+  assert.equal(focus.release.key, (firstOpen ?? releases.at(-1)).key);
+  if (undated && firstOpen) {
     assert.equal(focus.basis, 'progress-no-dates');
-    assert.equal(releaseWindow(releases[0]).dated, false);
+    assert.equal(releaseWindow(firstOpen).dated, false);
   }
+  // With nothing verified, the focus is the first release.
+  const fresh = releases.map((r) => ({ ...r, verified: 0 }));
+  assert.equal(focusRelease(fresh, NOW).release.key, releases[0].key);
   assert.equal(focusRelease([], NOW), null);
 });
 
