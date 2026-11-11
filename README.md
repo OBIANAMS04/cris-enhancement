@@ -26,6 +26,20 @@ Sample fills the page with made-up values so its shape can be seen, and labels e
 **What the page will not show.** A number, a connection or a result the project has not produced. A value that is
 not in the files is shown as an empty state that says what is missing and what has to happen first.
 
+## The workspace (Milestone 1)
+
+`workspace/` is where the stories run: the Help desk (STORY-001), the Support dashboard (STORY-012), Monitoring
+(STORY-002), Performance reports (STORY-003), Feature development (STORY-004), and the Audit log that every one of
+them writes to. Open it from the Command Center's header, or at `/workspace/`.
+
+- The rules live in `lib/`, one file per story, and are tested with `node --test tests/`. The pages in
+  `workspace/js/` only call those functions and draw what they return.
+- `lib/store.js` keeps the tables from `content/data-model.json` and checks every write against them. Every write
+  also appends a line to an audit log chained by SHA-256, in the same save, so an action is never stored unlogged
+  and a changed line is detected.
+- The demo store lives in the browser (localStorage) with synthetic people. Nothing here reaches TxDOT. Service
+  levels and service hours are proposals until TxDOT confirms them (`lib/sla.js`, `lib/support.js`).
+
 ## Run it
 
 It needs Node.js 20 or later and nothing else. There is no build step and there are no dependencies.
@@ -36,7 +50,7 @@ node --test tests/            # the data layer, against the files committed here
 ```
 
 The page has to be served, because a browser will not let a page opened straight from disk read the JSON files.
-`tests/browser-walk.js` is a walk through the site in a real browser (every tab, every card, sample labels, the
+`tests/browser-walk.js` and `tests/workspace-walk.js` are walks through the site in a real browser (every tab, every card, sample labels, the
 stale-data warning, a deleted story, a missing file, phone width); it is run through Playwright.
 
 ## Where things are
@@ -44,6 +58,7 @@ stale-data warning, a deleted story, a missing file, phone width); it is run thr
 | Path | What |
 |---|---|
 | `index.html`, `assets/` | The Command Center. `assets/js/data.js` is the only place data is loaded |
+| `workspace/`, `lib/` | The Milestone 1 workspace: pages in `workspace/js/`, rules and the store in `lib/` |
 | `assets/app.css` | Styles. The brand colours are two lines at the top |
 | `content/` | The project's own content: decisions and notes (`notes.json`, appended to) and the proposed data model |
 | `framework/` | The project framework (goals, status, decisions, risks) and its screenshots |
