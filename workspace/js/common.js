@@ -3,7 +3,7 @@ import { h } from '../../assets/js/ui.js';
 
 export const when = (iso) => (iso ? new Date(iso).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' }) : '—');
 export const person = (ctx, id) => ctx.store.get('Person', id)?.display_name ?? (id || '—');
-export const tone = { open: 'warn', 'in progress': 'info', resolved: 'ok', closed: 'ok', met: 'ok', 'on track': 'info', 'at risk': 'warn', breached: 'bad', missed: 'bad', scheduled: 'info', completed: 'ok', cancelled: 'unknown', new: 'info', planned: 'info', declined: 'unknown', reviewed: 'ok', proposed: 'info', approved: 'info', 'in build': 'warn', released: 'ok', mitigated: 'warn' };
+export const tone = { open: 'warn', 'in progress': 'info', resolved: 'ok', closed: 'ok', met: 'ok', 'on track': 'info', 'at risk': 'warn', breached: 'bad', missed: 'bad', scheduled: 'info', completed: 'ok', cancelled: 'unknown', new: 'info', planned: 'info', declined: 'unknown', reviewed: 'ok', proposed: 'info', approved: 'info', 'in build': 'warn', released: 'ok', mitigated: 'warn', held: 'ok', current: 'ok', superseded: 'unknown', pass: 'ok', fail: 'bad', 'not applicable': 'unknown', stale: 'warn' };
 export const badge = (text) => h('span', { class: `pill pill--${tone[text] ?? 'unknown'}` }, text);
 
 export function head(page, title, lede) {

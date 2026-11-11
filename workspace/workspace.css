@@ -39,3 +39,10 @@
 .bar__fill--warn { background: var(--warn); }
 .bar__fill--bad { background: var(--bad); }
 @media (max-width: 520px) { .bar { grid-template-columns: 1fr auto; } .bar__track { grid-column: 1 / -1; } }
+
+.preview { max-height: 320px; overflow: auto; background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 12px; font: 0.85rem/1.5 var(--mono); white-space: pre-wrap; }
+fieldset.field { border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; }
+fieldset.field legend { font-weight: 600; padding: 0 4px; }
+fieldset.field label { display: block; padding: 3px 0; font-weight: 400; }
+fieldset.field label { display: flex; align-items: center; gap: 10px; }
+.field input[type="radio"], .field input[type="checkbox"] { width: auto; min-height: 0; padding: 0; margin: 0; flex: none; accent-color: var(--brand); }

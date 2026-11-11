@@ -341,6 +341,11 @@
           "body",
           "json",
           "optional; added by STORY-003: the archived report itself"
+        ],
+        [
+          "spec",
+          "text",
+          "optional; added by STORY-006: the report specification it was built to"
         ]
       ],
       "relations": [
@@ -491,6 +496,26 @@
           "materials_reference",
           "text",
           ""
+        ],
+        [
+          "status",
+          "choice",
+          "optional; added by STORY-005: scheduled, held, cancelled"
+        ],
+        [
+          "feature",
+          "FeatureChange",
+          "optional; added by STORY-005: the new feature the session teaches"
+        ],
+        [
+          "recording_reference",
+          "text",
+          "optional; added by STORY-005: where the recording is kept"
+        ],
+        [
+          "held_at",
+          "timestamp",
+          "optional; added by STORY-005"
         ]
       ],
       "relations": [
@@ -498,6 +523,11 @@
           "trainer",
           "Person",
           "many to one"
+        ],
+        [
+          "feature",
+          "FeatureChange",
+          "many to one, optional"
         ]
       ]
     },
@@ -509,6 +539,11 @@
         "REQ-020"
       ],
       "fields": [
+        [
+          "id",
+          "identifier",
+          "added by STORY-005"
+        ],
         [
           "session",
           "TrainingSession",
@@ -528,6 +563,16 @@
           "completed_on",
           "date",
           "optional"
+        ],
+        [
+          "via",
+          "choice",
+          "optional; added by STORY-005: live, recording"
+        ],
+        [
+          "score",
+          "number",
+          "optional; added by STORY-005: share of the knowledge check answered correctly, 0 to 1"
         ]
       ],
       "relations": [
@@ -569,6 +614,36 @@
           "source_reference",
           "text",
           "the law or rule it comes from"
+        ],
+        [
+          "version",
+          "number",
+          "optional; added by STORY-007: raised when the law changes"
+        ],
+        [
+          "summary",
+          "text",
+          "optional; added by STORY-007"
+        ],
+        [
+          "source_url",
+          "text",
+          "optional; added by STORY-007"
+        ],
+        [
+          "check_kind",
+          "text",
+          "optional; added by STORY-007: which automated check applies"
+        ],
+        [
+          "parameters",
+          "json",
+          "optional; added by STORY-007: values the check uses, such as a training validity period"
+        ],
+        [
+          "effective_on",
+          "date",
+          "optional; added by STORY-007"
         ]
       ],
       "relations": []
@@ -610,6 +685,11 @@
           "checked_by",
           "Person",
           ""
+        ],
+        [
+          "rule_version",
+          "number",
+          "optional; added by STORY-007: the rule version checked against"
         ]
       ],
       "relations": [
@@ -696,7 +776,7 @@
         [
           "procurement_reference",
           "text",
-          "id in the procurement system"
+          "optional; id in the procurement system"
         ]
       ],
       "relations": []
@@ -732,6 +812,41 @@
           "uploaded_at",
           "timestamp",
           ""
+        ],
+        [
+          "title",
+          "text",
+          "optional; added by STORY-013"
+        ],
+        [
+          "uploaded_by",
+          "Person",
+          "optional; added by STORY-013"
+        ],
+        [
+          "version",
+          "number",
+          "optional; added by STORY-013: 1 for the first upload, raised by each replacement"
+        ],
+        [
+          "content_hash",
+          "text",
+          "optional; added by STORY-013: SHA-256 of the file, checked on every retrieval"
+        ],
+        [
+          "size_bytes",
+          "number",
+          "optional; added by STORY-013"
+        ],
+        [
+          "media_type",
+          "text",
+          "optional; added by STORY-013"
+        ],
+        [
+          "status",
+          "choice",
+          "optional; added by STORY-013: current, superseded"
         ]
       ],
       "relations": [
@@ -739,6 +854,11 @@
           "response",
           "SolicitationResponse",
           "many to one"
+        ],
+        [
+          "uploaded_by",
+          "Person",
+          "many to one, optional"
         ]
       ]
     },

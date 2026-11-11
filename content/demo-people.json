@@ -1,10 +1,49 @@
 {
   "note": "Synthetic people for the workspace demo. None of them is a real person or a real TxDOT employee.",
   "people": [
-    { "display_name": "Avery Demo (TxDOT user)", "role": "TxDOT user", "organization": "TxDOT" },
-    { "display_name": "Jordan Demo (TxDOT manager)", "role": "TxDOT manager", "organization": "TxDOT" },
-    { "display_name": "Sam Demo (support staff)", "role": "TxDOT staff member", "organization": "TxDOT", "on_duty": true },
-    { "display_name": "Riley Demo (system administrator)", "role": "system administrator", "organization": "vendor", "on_duty": true, "cyber_training_completed_on": "2026-10-01" },
-    { "display_name": "Casey Demo (developer)", "role": "developer", "organization": "vendor", "cyber_training_completed_on": "2026-10-01" }
+    {
+      "display_name": "Avery Demo (TxDOT user)",
+      "role": "TxDOT user",
+      "organization": "TxDOT"
+    },
+    {
+      "display_name": "Jordan Demo (TxDOT manager)",
+      "role": "TxDOT manager",
+      "organization": "TxDOT"
+    },
+    {
+      "display_name": "Sam Demo (support staff)",
+      "role": "TxDOT staff member",
+      "organization": "TxDOT",
+      "on_duty": true
+    },
+    {
+      "display_name": "Riley Demo (system administrator)",
+      "role": "system administrator",
+      "organization": "vendor",
+      "on_duty": true,
+      "cyber_training_completed_on": "2026-10-01"
+    },
+    {
+      "display_name": "Casey Demo (developer)",
+      "role": "developer",
+      "organization": "vendor",
+      "cyber_training_completed_on": "2026-10-01"
+    },
+    {
+      "display_name": "Taylor Demo (contract manager)",
+      "role": "TxDOT contract manager",
+      "organization": "TxDOT"
+    },
+    {
+      "display_name": "Morgan Demo (compliance officer)",
+      "role": "compliance officer",
+      "organization": "TxDOT"
+    },
+    {
+      "display_name": "Quinn Demo (procurement officer)",
+      "role": "procurement officer",
+      "organization": "TxDOT"
+    }
   ]
 }

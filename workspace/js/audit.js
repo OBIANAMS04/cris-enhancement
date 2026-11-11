@@ -21,6 +21,7 @@ export function audit(page, rest, ctx) {
       return;
     }
     s.reset();
+    await ctx.blobs?.clear?.();
     const { seedPeople } = await import('../../lib/seed.js');
     await seedPeople(s, ctx.peopleSeed);
     ctx.flash = { tone: 'ok', title: 'A new, empty demo store was started.' };
