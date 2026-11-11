@@ -79,6 +79,9 @@ p { margin: 0 0 12px; }
 .top__kicker { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--brand); }
 .top__name { font-weight: 700; font-size: 1.05rem; }
 
+.top__tools { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.top__link { font-weight: 600; }
+
 .switch { display: inline-flex; border: 1px solid var(--rule); border-radius: 999px; padding: 3px; background: var(--paper); }
 .switch__btn { font: inherit; font-size: 0.9rem; font-weight: 600; border: 0; background: transparent; color: var(--muted); padding: 6px 16px; border-radius: 999px; cursor: pointer; min-height: 36px; }
 .switch__btn[aria-pressed="true"] { background: var(--brand); color: var(--brand-contrast); }

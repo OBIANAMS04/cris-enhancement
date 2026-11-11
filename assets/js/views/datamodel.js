@@ -11,7 +11,7 @@ export function renderDataModel(tab, data, ctx, rest) {
   if (!dm?.entities?.length) {
     return h('div', {}, ...tabHead(tab, null), empty({ title: 'No data model yet', body: 'The model is read from content/data-model.json, which could not be read or holds no entities.', next: 'A model is proposed from the requirements and committed.' }));
   }
-  const status = pill(dm.status === 'proposed' ? 'Proposed, not created' : dm.status, dm.status === 'proposed' ? 'in_progress' : 'verified');
+  const status = dm.status === 'proposed' ? pill('Proposed, not created', 'in_progress') : dm.status === 'created' ? pill('Created', 'verified') : pill(dm.status, 'unknown');
 
   if (kind === 'entity') {
     const e = dm.entities.find((x) => slug(x.name) === id);
@@ -41,6 +41,7 @@ export function renderDataModel(tab, data, ctx, rest) {
     h('p', { class: 'paused', role: 'note' }, status, ' ', dm.status_note ?? ''),
     section(
       `Entities (${dm.entities.length})`,
+      dm.status === 'created' ? h('p', {}, h('a', { href: 'workspace/#/tables' }, 'See the tables in the workspace'), ', with how many rows each holds there.') : null,
       h('div', { class: 'grid grid--3' }, dm.entities.map((e) => card({ to: `data-model/entity/${slug(e.name)}`, label: `${e.fields.length} fields`, value: e.name, note: `${e.purpose} From ${e.from_requirements.join(', ')}.`, wide: true }))),
     ),
     section('Relationships', relations.length ? table(['From', 'Through', 'To', 'Kind'], relations.map(([from, via, to, k]) => [h('a', { href: link(`data-model/entity/${slug(from)}`) }, from), h('code', {}, via), h('a', { href: link(`data-model/entity/${slug(to)}`) }, to), k]), 'How the entities connect') : h('p', {}, 'No relationships recorded.')),

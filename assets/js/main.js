@@ -93,7 +93,7 @@ function render({ moveFocus = false } = {}) {
     h(
       'header',
       { class: 'top' },
-      h('div', { class: 'top__row' }, h('a', { class: 'top__brand', href: link('overview') }, h('span', { class: 'top__kicker' }, 'Command Center'), projectName ? h('span', { class: 'top__name' }, projectName) : null), modeSwitch()),
+      h('div', { class: 'top__row' }, h('a', { class: 'top__brand', href: link('overview') }, h('span', { class: 'top__kicker' }, 'Command Center'), projectName ? h('span', { class: 'top__name' }, projectName) : null), h('span', { class: 'top__tools' }, h('a', { class: 'top__link', href: 'workspace/' }, 'Open the workspace →'), modeSwitch())),
       stamp(data, now),
       h('nav', { class: 'tabs', 'aria-label': 'Tabs' }, TABS.map((t) => h('a', { href: link(t.id), 'aria-current': t.id === tabId ? 'page' : null }, t.label))),
     ),
@@ -120,6 +120,7 @@ document.querySelector('.skip')?.addEventListener('click', (event) => {
 });
 
 window.addEventListener('hashchange', () => {
+  if (!state.real) return; // still loading: the first render will show the new address
   render({ moveFocus: true });
   window.scrollTo(0, 0);
 });

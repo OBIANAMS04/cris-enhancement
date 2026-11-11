@@ -79,7 +79,8 @@ async (page) => {
   check((await page.locator('.chat__a').last().innerText()).includes("can't answer"), 'Knowledge base: an unanswerable question is not refused');
   await shot('08-knowledge-chat.png', false);
   await open('data-model');
-  check((await page.locator('main').innerText()).includes('Proposed, not created'), 'Data model: not marked as a proposal');
+  const dmText = await page.locator('main').innerText();
+  check(dmText.includes('Created') && dmText.includes('See the tables in the workspace'), 'Data model: the status does not match content/data-model.json (created)');
 
   const tabShots = [['overview', '01-overview-real.png'], ['outcomes', '02-outcomes.png'], ['users', '03-users.png'], ['guardrails', '04-guardrails.png'], ['systems', '05-systems.png'], ['project', '06-project-management.png'], ['agents', '07-agents.png'], ['data-model', '09-data-model.png'], ['guardrails/guardrail/REQ-010', '10-drill-down-guardrail.png'], ['data-model/entity/supportticket', '11-drill-down-entity.png']];
   for (const [hash, name] of tabShots) {
