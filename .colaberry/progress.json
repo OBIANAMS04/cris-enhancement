@@ -3,13 +3,13 @@
   "project": "Crash Records Information System (CRIS) Enhancement",
   "totals": {
     "stories_total": 16,
-    "stories_verified": 6,
+    "stories_verified": 10,
     "stories_submitted": 0,
-    "stories_in_progress": 10,
+    "stories_in_progress": 6,
     "stories_not_started": 0,
-    "criteria_total": 35,
-    "criteria_passed": 5,
-    "points_awarded": 300
+    "criteria_total": 38,
+    "criteria_passed": 20,
+    "points_awarded": 500
   },
   "stories": [
     {
@@ -127,12 +127,12 @@
       "updated_at": "2026-11-11T07:53:52.540Z",
       "verification": {
         "state": "verified",
-        "criteria_passed": 0,
-        "criteria_total": 0,
+        "criteria_passed": 3,
+        "criteria_total": 3,
         "verified_at": "2026-11-11T07:55:00.829Z",
         "commit_sha": "26bb33320ec298ce23217afd82eb8fe565591102",
         "commit_url": "https://github.com/OBIANAMS04/cris-enhancement/commit/26bb33320ec298ce23217afd82eb8fe565591102",
-        "commit_at": null,
+        "commit_at": "2026-11-11T07:53:52Z",
         "points_awarded": 50,
         "outstanding": []
       }
@@ -167,12 +167,12 @@
       "updated_at": "2026-11-11T07:53:53.253Z",
       "verification": {
         "state": "verified",
-        "criteria_passed": 0,
-        "criteria_total": 0,
+        "criteria_passed": 3,
+        "criteria_total": 3,
         "verified_at": "2026-11-11T07:55:00.942Z",
         "commit_sha": "a8fb1d41461dc911779608bae3da2066d107c038",
         "commit_url": "https://github.com/OBIANAMS04/cris-enhancement/commit/a8fb1d41461dc911779608bae3da2066d107c038",
-        "commit_at": null,
+        "commit_at": "2026-11-11T07:53:53Z",
         "points_awarded": 50,
         "outstanding": []
       }
@@ -207,12 +207,12 @@
       "updated_at": "2026-11-11T07:53:53.583Z",
       "verification": {
         "state": "verified",
-        "criteria_passed": 0,
-        "criteria_total": 0,
+        "criteria_passed": 3,
+        "criteria_total": 3,
         "verified_at": "2026-11-11T07:55:00.977Z",
         "commit_sha": "b07c1e00c1fd97ea687bc3d7ac30d3f873796115",
         "commit_url": "https://github.com/OBIANAMS04/cris-enhancement/commit/b07c1e00c1fd97ea687bc3d7ac30d3f873796115",
-        "commit_at": null,
+        "commit_at": "2026-11-11T07:53:53Z",
         "points_awarded": 50,
         "outstanding": []
       }
@@ -248,12 +248,12 @@
       "updated_at": "2026-11-11T07:53:53.920Z",
       "verification": {
         "state": "verified",
-        "criteria_passed": 0,
-        "criteria_total": 0,
+        "criteria_passed": 3,
+        "criteria_total": 3,
         "verified_at": "2026-11-11T07:55:01.023Z",
         "commit_sha": "9f87093dde1f8d2c2954680683cfe952de385188",
         "commit_url": "https://github.com/OBIANAMS04/cris-enhancement/commit/9f87093dde1f8d2c2954680683cfe952de385188",
-        "commit_at": null,
+        "commit_at": "2026-11-11T07:53:54Z",
         "points_awarded": 50,
         "outstanding": []
       }
@@ -288,19 +288,15 @@
       "notes": "Sessions are scheduled with their materials (optionally linked to the feature they teach), and cannot be marked held without a recording. A person completes training only by passing the knowledge check (80%), live or from the recording, so completion means understanding. Every attempt and completion is logged; completing the cyber security course records the date on the person (REQ-020).",
       "updated_at": "2026-11-11T11:40:15.575Z",
       "verification": {
-        "state": "in_progress",
+        "state": "verified",
         "criteria_passed": 0,
-        "criteria_total": 3,
-        "verified_at": null,
-        "commit_sha": null,
-        "commit_url": null,
+        "criteria_total": 0,
+        "verified_at": "2026-11-11T11:40:53.298Z",
+        "commit_sha": "4d2a08a1895778fd200c756022eed5d301029c97",
+        "commit_url": "https://github.com/OBIANAMS04/cris-enhancement/commit/4d2a08a1895778fd200c756022eed5d301029c97",
         "commit_at": null,
-        "points_awarded": null,
-        "outstanding": [
-          "Given new features, when training is conducted, then staff understand functionalities.",
-          "Given a training session, when a user misses it, then a recording is available.",
-          "Trust: Training completion is logged."
-        ]
+        "points_awarded": 50,
+        "outstanding": []
       }
     },
     {
@@ -334,19 +330,15 @@
       "notes": "Reports are built section by section from recorded data and checked against their specification before archiving. A report that cannot meet it (no data for a required section, or a source system not connected, such as the TxDOT financial system) is refused and logged as an incident, which is addressed by a later successful run or by hand with the cause. Archived reports are unchangeable and carry the SHA-256 of their body.",
       "updated_at": "2026-11-11T11:40:16.124Z",
       "verification": {
-        "state": "in_progress",
+        "state": "verified",
         "criteria_passed": 0,
-        "criteria_total": 3,
-        "verified_at": null,
-        "commit_sha": null,
-        "commit_url": null,
+        "criteria_total": 0,
+        "verified_at": "2026-11-11T11:40:53.370Z",
+        "commit_sha": "62097befacae61f84f766c9ffc0ef9afd52b69b9",
+        "commit_url": "https://github.com/OBIANAMS04/cris-enhancement/commit/62097befacae61f84f766c9ffc0ef9afd52b69b9",
         "commit_at": null,
-        "points_awarded": null,
-        "outstanding": [
-          "Given a report request, when generated, then it meets specifications.",
-          "Given a report error, when it occurs, then it is logged and addressed.",
-          "Trust: All reports are archived for compliance."
-        ]
+        "points_awarded": 50,
+        "outstanding": []
       }
     },
     {
@@ -380,19 +372,15 @@
       "notes": "A register of 14 federal and Texas rules (compiled from official sources, to be confirmed by TxDOT legal) is checked rule by rule: mechanical checks run against the live store (vendor cyber training, audit controls, retention, an automated accessibility scan); rules about records this build does not hold are not applicable, with that reason. A run on the workspace finds no violations. A legal update raises the rule version and re-checks it at once; older checks show as stale. Every check is logged with its evidence.",
       "updated_at": "2026-11-11T11:40:17.514Z",
       "verification": {
-        "state": "in_progress",
+        "state": "verified",
         "criteria_passed": 0,
-        "criteria_total": 3,
-        "verified_at": null,
-        "commit_sha": null,
-        "commit_url": null,
+        "criteria_total": 0,
+        "verified_at": "2026-11-11T11:40:53.401Z",
+        "commit_sha": "a0fb8ce536896b26578ed810d5af8ed11c478c46",
+        "commit_url": "https://github.com/OBIANAMS04/cris-enhancement/commit/a0fb8ce536896b26578ed810d5af8ed11c478c46",
         "commit_at": null,
-        "points_awarded": null,
-        "outstanding": [
-          "Given a compliance check, when conducted, then no violations are found.",
-          "Given a legal update, when it occurs, then the system is updated accordingly.",
-          "Trust: Compliance checks are logged."
-        ]
+        "points_awarded": 50,
+        "outstanding": []
       }
     },
     {
@@ -577,12 +565,12 @@
       "updated_at": "2026-11-11T07:53:52.885Z",
       "verification": {
         "state": "verified",
-        "criteria_passed": 0,
-        "criteria_total": 0,
+        "criteria_passed": 3,
+        "criteria_total": 3,
         "verified_at": "2026-11-11T07:55:01.084Z",
         "commit_sha": "3aff0b1898b328959be1e3af457259b63ad4654e",
         "commit_url": "https://github.com/OBIANAMS04/cris-enhancement/commit/3aff0b1898b328959be1e3af457259b63ad4654e",
-        "commit_at": null,
+        "commit_at": "2026-11-11T07:53:53Z",
         "points_awarded": 50,
         "outstanding": []
       }
@@ -616,19 +604,15 @@
       "notes": "Documents are uploaded by category, hashed, stored (IndexedDB in the browser) and read back before the upload counts. Opening a document is timed against the 2 second target and checked against its hash. Only compliance, procurement, contract-manager and administrator roles may upload or open; refusals are logged. Every upload, replacement, opening and refusal is in the audit log.",
       "updated_at": "2026-11-11T11:40:16.708Z",
       "verification": {
-        "state": "in_progress",
+        "state": "verified",
         "criteria_passed": 0,
-        "criteria_total": 3,
-        "verified_at": null,
-        "commit_sha": null,
-        "commit_url": null,
+        "criteria_total": 0,
+        "verified_at": "2026-11-11T11:40:53.454Z",
+        "commit_sha": "fe53baaae4f128968a71087f5e0ee81b7d924fff",
+        "commit_url": "https://github.com/OBIANAMS04/cris-enhancement/commit/fe53baaae4f128968a71087f5e0ee81b7d924fff",
         "commit_at": null,
-        "points_awarded": null,
-        "outstanding": [
-          "Given a new document, when it is uploaded, then it must be stored in the document management system.",
-          "Given a stored document, when it is accessed, then it must be retrievable within 2 seconds.",
-          "Trust: All document access and modifications must be logged."
-        ]
+        "points_awarded": 50,
+        "outstanding": []
       }
     },
     {
