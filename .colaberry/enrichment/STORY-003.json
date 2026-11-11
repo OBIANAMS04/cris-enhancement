@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "1",
+  "projectId": "a563218c-c3a4-433c-8ed7-4e8e0573f59c",
+  "storyId": "STORY-003",
+  "projectTruthBaseRevision": 0,
+  "observedAt": "2026-11-11T07:53:53.584Z",
+  "sourceCommitSha": "a8fb1d41461dc911779608bae3da2066d107c038",
+  "factProposals": [
+    {
+      "dimension": "outputs",
+      "value": "A performance report gives availability overall and per component, median and 95th percentile response time, incidents, and help desk volume, service level and time to resolve.",
+      "evidence": "lib/reports.js"
+    }
+  ],
+  "decisions": [
+    {
+      "statement": "A report is refused, not estimated, when its period has no monitoring samples.",
+      "rationale": "Trust: no number the project has not produced.",
+      "evidence": "lib/reports.js"
+    },
+    {
+      "statement": "Archived reports are append-only and carry the SHA-256 of their body.",
+      "rationale": "A later copy can be checked against the archive.",
+      "evidence": "lib/reports.js"
+    }
+  ],
+  "limitations": [
+    {
+      "statement": "Report periods are whole days in UTC, and reports are generated on request rather than on a schedule.",
+      "evidence": "lib/reports.js"
+    }
+  ],
+  "demonstrationEvidence": [
+    {
+      "kind": "test",
+      "ref": "tests/story-003-reports.test.mjs"
+    },
+    {
+      "kind": "screenshot",
+      "ref": "framework/screens/m1-05-report-missing-data.png"
+    },
+    {
+      "kind": "screenshot",
+      "ref": "framework/screens/m1-06-performance-report.png"
+    }
+  ],
+  "measurementEvents": []
+}

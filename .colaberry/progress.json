@@ -192,21 +192,27 @@
       "criteria": [
         {
           "text": "Given system data, when a report is generated, then it reflects current performance.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Given a report request, when data is missing, then an error is shown.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Trust: Reports are archived for future reference.",
-          "passed": false
+          "passed": true
         }
       ],
-      "files_touched": [],
-      "tests_added": [],
-      "notes": null,
-      "updated_at": null,
+      "files_touched": [
+        "lib/reports.js",
+        "workspace/js/reports.js",
+        "workspace/js/views.js"
+      ],
+      "tests_added": [
+        "tests/story-003-reports.test.mjs"
+      ],
+      "notes": "A report is computed at generation from the samples, incidents and tickets of the period. A period with no monitoring data is refused with an error naming what is missing. Reports are stored once, cannot be edited, and carry the SHA-256 of their body, checked when opened.",
+      "updated_at": "2026-11-11T07:53:53.583Z",
       "verification": {
         "state": "in_progress",
         "criteria_passed": 0,
