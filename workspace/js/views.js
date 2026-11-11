@@ -8,6 +8,7 @@ import { reports } from './reports.js';
 import { features } from './features.js';
 import { training } from './training.js';
 import { reportingEngine } from './reporting.js';
+import { documents } from './documents.js';
 import { audit, tables } from './audit.js';
 
 export const PAGES = [
@@ -18,11 +19,12 @@ export const PAGES = [
   { id: 'features', label: 'Feature development', story: 'STORY-004', req: 'REQ-006' },
   { id: 'training', label: 'Training', story: 'STORY-005', req: 'REQ-007' },
   { id: 'reporting-engine', label: 'Reporting engine', story: 'STORY-006', req: 'REQ-009' },
+  { id: 'documents', label: 'Documents', story: 'STORY-013', req: 'REQ-013' },
   { id: 'audit', label: 'Audit log' },
   { id: 'tables', label: 'Tables' },
 ];
 
-const RENDER = { 'help-desk': helpDesk, support, monitoring, reports, features, training, 'reporting-engine': reportingEngine, audit, tables };
+const RENDER = { 'help-desk': helpDesk, support, monitoring, reports, features, training, 'reporting-engine': reportingEngine, documents, audit, tables };
 
 export function renderPage(page, rest, ctx) {
   if (!page) return h('div', {}, h('h1', { tabindex: '-1' }, 'Page not found'), h('p', {}, 'There is no workspace page at this address. ', h('a', { href: '#/help-desk' }, 'Go to the Help desk'), '.'));

@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "1",
+  "projectId": "a563218c-c3a4-433c-8ed7-4e8e0573f59c",
+  "storyId": "STORY-013",
+  "projectTruthBaseRevision": 0,
+  "observedAt": "2026-11-11T11:40:16.709Z",
+  "sourceCommitSha": "62097befacae61f84f766c9ffc0ef9afd52b69b9",
+  "factProposals": [
+    {
+      "dimension": "data",
+      "value": "Response documents are stored by category with version, size, media type and SHA-256; replacements keep the old version as superseded.",
+      "evidence": "lib/documents.js"
+    },
+    {
+      "dimension": "security_context",
+      "value": "Only compliance officers, procurement officers, the TxDOT contract manager and system administrators may upload or open response documents; refusals are logged.",
+      "evidence": "lib/documents.js"
+    }
+  ],
+  "decisions": [
+    {
+      "statement": "An upload counts only after the stored file is read back and matches its hash.",
+      "rationale": "A failed store is caught at upload, not when someone needs the document.",
+      "evidence": "lib/documents.js"
+    },
+    {
+      "statement": "Each opening is timed and the time is logged with it.",
+      "rationale": "The acceptance sets a 2 second retrieval target.",
+      "evidence": "lib/documents.js"
+    }
+  ],
+  "limitations": [
+    {
+      "statement": "Files are kept in the browser (IndexedDB) for the demo, up to 10 MB each; a shared document store replaces it for real use.",
+      "evidence": "workspace/js/blobs.js"
+    }
+  ],
+  "demonstrationEvidence": [
+    {
+      "kind": "test",
+      "ref": "tests/story-013-documents.test.mjs"
+    },
+    {
+      "kind": "screenshot",
+      "ref": "framework/screens/m2-05-document-opened.png"
+    }
+  ],
+  "measurementEvents": []
+}

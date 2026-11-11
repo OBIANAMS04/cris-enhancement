@@ -586,21 +586,27 @@
       "criteria": [
         {
           "text": "Given a new document, when it is uploaded, then it must be stored in the document management system.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Given a stored document, when it is accessed, then it must be retrievable within 2 seconds.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Trust: All document access and modifications must be logged.",
-          "passed": false
+          "passed": true
         }
       ],
-      "files_touched": [],
-      "tests_added": [],
-      "notes": null,
-      "updated_at": null,
+      "files_touched": [
+        "lib/documents.js",
+        "workspace/js/documents.js",
+        "workspace/js/views.js"
+      ],
+      "tests_added": [
+        "tests/story-013-documents.test.mjs"
+      ],
+      "notes": "Documents are uploaded by category, hashed, stored (IndexedDB in the browser) and read back before the upload counts. Opening a document is timed against the 2 second target and checked against its hash. Only compliance, procurement, contract-manager and administrator roles may upload or open; refusals are logged. Every upload, replacement, opening and refusal is in the audit log.",
+      "updated_at": "2026-11-11T11:40:16.708Z",
       "verification": {
         "state": "in_progress",
         "criteria_passed": 0,
