@@ -3,13 +3,13 @@
   "project": "Crash Records Information System (CRIS) Enhancement",
   "totals": {
     "stories_total": 16,
-    "stories_verified": 1,
+    "stories_verified": 6,
     "stories_submitted": 0,
-    "stories_in_progress": 15,
+    "stories_in_progress": 10,
     "stories_not_started": 0,
-    "criteria_total": 45,
-    "criteria_passed": 0,
-    "points_awarded": 50
+    "criteria_total": 35,
+    "criteria_passed": 5,
+    "points_awarded": 300
   },
   "stories": [
     {
@@ -75,12 +75,12 @@
       "updated_at": "2026-11-11T06:19:47.180Z",
       "verification": {
         "state": "verified",
-        "criteria_passed": 0,
-        "criteria_total": 0,
+        "criteria_passed": 5,
+        "criteria_total": 5,
         "verified_at": "2026-11-11T06:20:13.828Z",
         "commit_sha": "f07db580e74a201b5b9fa4341fd0d71a7c295e0b",
         "commit_url": "https://github.com/OBIANAMS04/cris-enhancement/commit/f07db580e74a201b5b9fa4341fd0d71a7c295e0b",
-        "commit_at": null,
+        "commit_at": "2026-11-10T13:01:48Z",
         "points_awarded": 50,
         "outstanding": []
       }
@@ -126,19 +126,15 @@
       "notes": "A user reports an issue and is told at once who has it, by when, and which help articles match. Status shows resolved once support resolves it; a wrong fix is reopened. Every write goes through a hash-chained audit log and is saved together with its audit line or not at all.",
       "updated_at": "2026-11-11T07:53:52.540Z",
       "verification": {
-        "state": "in_progress",
+        "state": "verified",
         "criteria_passed": 0,
-        "criteria_total": 3,
-        "verified_at": null,
-        "commit_sha": null,
-        "commit_url": null,
+        "criteria_total": 0,
+        "verified_at": "2026-11-11T07:55:00.829Z",
+        "commit_sha": "26bb33320ec298ce23217afd82eb8fe565591102",
+        "commit_url": "https://github.com/OBIANAMS04/cris-enhancement/commit/26bb33320ec298ce23217afd82eb8fe565591102",
         "commit_at": null,
-        "points_awarded": null,
-        "outstanding": [
-          "Given a user has an issue, when they report it via the help desk, then they receive assistance.",
-          "Given a resolved issue, when the user checks the status, then it shows as resolved.",
-          "Trust: All help desk interactions are logged for audit."
-        ]
+        "points_awarded": 50,
+        "outstanding": []
       }
     },
     {
@@ -170,19 +166,15 @@
       "notes": "Real checks of the site with a 5 s time limit and one retry record availability and response time. An outage opens one incident and raises an alert; recovery resolves it. Samples are append-only and the archive downloads with its SHA-256.",
       "updated_at": "2026-11-11T07:53:53.253Z",
       "verification": {
-        "state": "in_progress",
+        "state": "verified",
         "criteria_passed": 0,
-        "criteria_total": 3,
-        "verified_at": null,
-        "commit_sha": null,
-        "commit_url": null,
+        "criteria_total": 0,
+        "verified_at": "2026-11-11T07:55:00.942Z",
+        "commit_sha": "a8fb1d41461dc911779608bae3da2066d107c038",
+        "commit_url": "https://github.com/OBIANAMS04/cris-enhancement/commit/a8fb1d41461dc911779608bae3da2066d107c038",
         "commit_at": null,
-        "points_awarded": null,
-        "outstanding": [
-          "Given the system is running, when monitoring is active, then performance metrics are displayed.",
-          "Given a system outage, when it occurs, then an alert is generated.",
-          "Trust: All monitoring data is archived for audit."
-        ]
+        "points_awarded": 50,
+        "outstanding": []
       }
     },
     {
@@ -214,19 +206,15 @@
       "notes": "A report is computed at generation from the samples, incidents and tickets of the period. A period with no monitoring data is refused with an error naming what is missing. Reports are stored once, cannot be edited, and carry the SHA-256 of their body, checked when opened.",
       "updated_at": "2026-11-11T07:53:53.583Z",
       "verification": {
-        "state": "in_progress",
+        "state": "verified",
         "criteria_passed": 0,
-        "criteria_total": 3,
-        "verified_at": null,
-        "commit_sha": null,
-        "commit_url": null,
+        "criteria_total": 0,
+        "verified_at": "2026-11-11T07:55:00.977Z",
+        "commit_sha": "b07c1e00c1fd97ea687bc3d7ac30d3f873796115",
+        "commit_url": "https://github.com/OBIANAMS04/cris-enhancement/commit/b07c1e00c1fd97ea687bc3d7ac30d3f873796115",
         "commit_at": null,
-        "points_awarded": null,
-        "outstanding": [
-          "Given system data, when a report is generated, then it reflects current performance.",
-          "Given a report request, when data is missing, then an error is shown.",
-          "Trust: Reports are archived for future reference."
-        ]
+        "points_awarded": 50,
+        "outstanding": []
       }
     },
     {
@@ -259,19 +247,15 @@
       "notes": "Feedback is assessed: feasible becomes a FeatureChange (proposed, approved, in build, released) that cannot be released without a recorded check of how it meets the feedback; not feasible is declined with the reason shown to the submitter. Every change step is in the audit log and the change history.",
       "updated_at": "2026-11-11T07:53:53.920Z",
       "verification": {
-        "state": "in_progress",
+        "state": "verified",
         "criteria_passed": 0,
-        "criteria_total": 3,
-        "verified_at": null,
-        "commit_sha": null,
-        "commit_url": null,
+        "criteria_total": 0,
+        "verified_at": "2026-11-11T07:55:01.023Z",
+        "commit_sha": "9f87093dde1f8d2c2954680683cfe952de385188",
+        "commit_url": "https://github.com/OBIANAMS04/cris-enhancement/commit/9f87093dde1f8d2c2954680683cfe952de385188",
         "commit_at": null,
-        "points_awarded": null,
-        "outstanding": [
-          "Given user feedback, when a feature is developed, then it meets user needs.",
-          "Given a feature request, when it is not feasible, then feedback is provided.",
-          "Trust: All feature changes are documented."
-        ]
+        "points_awarded": 50,
+        "outstanding": []
       }
     },
     {
@@ -569,19 +553,15 @@
       "notes": "Every open ticket is tracked against its service level (on track, at risk, breached, met, missed). Maintenance can only be scheduled outside service hours and without overlaps; a window past its end and not done shows as overdue. On-duty changes and maintenance are logged.",
       "updated_at": "2026-11-11T07:53:52.885Z",
       "verification": {
-        "state": "in_progress",
+        "state": "verified",
         "criteria_passed": 0,
-        "criteria_total": 3,
-        "verified_at": null,
-        "commit_sha": null,
-        "commit_url": null,
+        "criteria_total": 0,
+        "verified_at": "2026-11-11T07:55:01.084Z",
+        "commit_sha": "3aff0b1898b328959be1e3af457259b63ad4654e",
+        "commit_url": "https://github.com/OBIANAMS04/cris-enhancement/commit/3aff0b1898b328959be1e3af457259b63ad4654e",
         "commit_at": null,
-        "points_awarded": null,
-        "outstanding": [
-          "Given the system is operational, when a technical issue arises, then the support team must resolve it within the SLA.",
-          "Given a maintenance schedule, when maintenance is due, then the system must undergo maintenance without disrupting services.",
-          "Trust: All support and maintenance activities must be logged and auditable."
-        ]
+        "points_awarded": 50,
+        "outstanding": []
       }
     },
     {
