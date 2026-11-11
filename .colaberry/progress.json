@@ -236,21 +236,28 @@
       "criteria": [
         {
           "text": "Given user feedback, when a feature is developed, then it meets user needs.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Given a feature request, when it is not feasible, then feedback is provided.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Trust: All feature changes are documented.",
-          "passed": false
+          "passed": true
         }
       ],
-      "files_touched": [],
-      "tests_added": [],
-      "notes": null,
-      "updated_at": null,
+      "files_touched": [
+        "lib/features.js",
+        "workspace/js/features.js",
+        "workspace/js/views.js"
+      ],
+      "tests_added": [
+        "tests/story-004-features.test.mjs",
+        "tests/workspace-walk.js"
+      ],
+      "notes": "Feedback is assessed: feasible becomes a FeatureChange (proposed, approved, in build, released) that cannot be released without a recorded check of how it meets the feedback; not feasible is declined with the reason shown to the submitter. Every change step is in the audit log and the change history.",
+      "updated_at": "2026-11-11T07:53:53.920Z",
       "verification": {
         "state": "in_progress",
         "criteria_passed": 0,

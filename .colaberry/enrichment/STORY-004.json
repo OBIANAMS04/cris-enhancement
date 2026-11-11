@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "1",
+  "projectId": "a563218c-c3a4-433c-8ed7-4e8e0573f59c",
+  "storyId": "STORY-004",
+  "projectTruthBaseRevision": 0,
+  "observedAt": "2026-11-11T07:53:53.920Z",
+  "sourceCommitSha": "b07c1e00c1fd97ea687bc3d7ac30d3f873796115",
+  "factProposals": [
+    {
+      "dimension": "approval_points",
+      "value": "A feature change moves proposed, approved, in build, released; release requires a recorded check that it meets the feedback it came from.",
+      "evidence": "lib/features.js"
+    },
+    {
+      "dimension": "human_only_decisions",
+      "value": "Whether feedback is feasible is decided by the development team, with a reason the submitter sees.",
+      "evidence": "lib/features.js"
+    }
+  ],
+  "decisions": [
+    {
+      "statement": "Every piece of feedback gets an answer: planned, released, or declined with a reason.",
+      "rationale": "The acceptance asks that infeasible requests get feedback.",
+      "evidence": "lib/features.js"
+    }
+  ],
+  "limitations": [
+    {
+      "statement": "\"Meets user needs\" is a recorded statement by the team at release, not a measured outcome; the submitter does not yet confirm it.",
+      "evidence": "lib/features.js"
+    }
+  ],
+  "demonstrationEvidence": [
+    {
+      "kind": "test",
+      "ref": "tests/story-004-features.test.mjs"
+    },
+    {
+      "kind": "test",
+      "ref": "tests/workspace-walk.js"
+    },
+    {
+      "kind": "screenshot",
+      "ref": "framework/screens/m1-07-feature-released.png"
+    }
+  ],
+  "measurementEvents": []
+}
