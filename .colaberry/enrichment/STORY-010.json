@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "1",
+  "projectId": "a563218c-c3a4-433c-8ed7-4e8e0573f59c",
+  "storyId": "STORY-010",
+  "projectTruthBaseRevision": 0,
+  "observedAt": "2026-11-12T00:38:45.262Z",
+  "sourceCommitSha": "54ec08764a6ffeef9e08e92771c0472b88219640",
+  "factProposals": [
+    {
+      "dimension": "systems",
+      "value": "Risk assessment reads the monitoring incidents (the incident record) as its outage source; TxDOT's own incident management system is not connected.",
+      "evidence": "lib/risk.js"
+    },
+    {
+      "dimension": "exceptions",
+      "value": "Six conditions are assessed: open incidents, availability under 99%, slow responses, user error, operator error, security and compliance gaps.",
+      "evidence": "lib/risk.js"
+    }
+  ],
+  "decisions": [
+    {
+      "statement": "Risk score = likelihood x impact on a 1-3 scale (1 to 9); 9 goes to review at once, any open risk goes to review after 7 days.",
+      "rationale": "Unmitigated risks must be logged for review.",
+      "evidence": "lib/risk.js"
+    },
+    {
+      "statement": "A risk is mitigated automatically when its condition is gone at the next assessment.",
+      "rationale": "Mitigation is shown by the system, not only claimed.",
+      "evidence": "lib/risk.js"
+    }
+  ],
+  "limitations": [
+    {
+      "statement": "The likelihood and impact levels per condition are set by the build; TxDOT's risk matrix should replace them.",
+      "evidence": "lib/risk.js"
+    }
+  ],
+  "demonstrationEvidence": [
+    {
+      "kind": "test",
+      "ref": "tests/story-010-risk.test.mjs"
+    },
+    {
+      "kind": "test",
+      "ref": "tests/workspace-walk-m3.js"
+    },
+    {
+      "kind": "screenshot",
+      "ref": "framework/screens/m3-05-risk-assessment.png"
+    }
+  ],
+  "measurementEvents": []
+}

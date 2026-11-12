@@ -480,21 +480,28 @@
       "criteria": [
         {
           "text": "Given a risk assessment, when conducted, then risks are identified and mitigated.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Given a risk, when it is not mitigated, then it is logged for review.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Trust: All risk assessments are archived.",
-          "passed": false
+          "passed": true
         }
       ],
-      "files_touched": [],
-      "tests_added": [],
-      "notes": null,
-      "updated_at": null,
+      "files_touched": [
+        "lib/risk.js",
+        "workspace/js/risk.js",
+        "workspace/js/views.js"
+      ],
+      "tests_added": [
+        "tests/story-010-risk.test.mjs",
+        "tests/workspace-walk-m3.js"
+      ],
+      "notes": "An assessment reads the live system for outages (open incidents, availability under 99%), slow performance, user error (reopened tickets, failed checks), operator error (late or overdue maintenance, report errors) and security gaps (lapsed cyber training, compliance violations). Each finding is a Risk with likelihood, impact, score, evidence, owner and mitigation plan; risks are mitigated when the condition is gone or the owner records the action; score-9 or overdue open risks are logged for review. Every assessment is archived with SHA-256.",
+      "updated_at": "2026-11-12T00:38:45.261Z",
       "verification": {
         "state": "in_progress",
         "criteria_passed": 0,
