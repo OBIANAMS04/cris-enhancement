@@ -101,11 +101,6 @@ th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--rul
 th { font: 600 0.75rem var(--mono); text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
 td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; }
 .tbl { overflow-x: auto; }
-.caption { position: fixed; left: 0; right: 0; bottom: 0; padding: 14px max(16px, env(safe-area-inset-right, 0px)) calc(14px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); background: var(--navy); color: var(--panel); z-index: 20; }
-.caption .in { max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; }
-.caption p { font-size: 1.02rem; max-width: 80ch; }
-.caption .prog { height: 4px; background: var(--amber); width: 0; transition: width 0.25s linear; }
-.caption button { background: var(--panel); color: var(--ink); }
 .foot { font-size: 0.85rem; color: var(--muted); }
 @media (prefers-reduced-motion: no-preference) { .slide { animation: in 0.35s ease-out; } @keyframes in { from { opacity: 0.4; transform: translateY(6px); } to { opacity: 1; transform: none; } } }
 </style>
@@ -124,17 +119,10 @@ td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; }
   <p class="foot">Arrow keys or the buttons move between slides. Everything shown was produced by the project on 10–11 November 2026; the workspace runs on synthetic people and data.</p>
 </div>
 
-<div class="caption" id="caption" hidden role="dialog" aria-label="Guided tour">
-  <div class="prog" id="prog"></div>
-  <div class="in">
-    <p id="caption-text"></p>
-    <div class="controls"><button type="button" id="tour-voice" aria-pressed="true">Voice on</button><button type="button" id="tour-pause">Pause</button><button type="button" id="tour-stop">End tour</button></div>
-  </div>
-</div>
 <div class="tip" id="tip" hidden></div>
 
 <template id="slides">
-<section class="slide" data-say="Milestone two. In one afternoon the workspace learned to train people, report to specification, keep the bid's documents, and check itself against the law. Ten of sixteen stories are now verified.">
+<section class="slide" data-say="Milestone two. In one afternoon the workspace learned to train people, report to specification, keep the bid's documents, and check itself against the law. Ten of sixteen stories are now verified." data-say-script="OBI: Hi, I am OBI. Milestone 2: training, reports, documents and the law. || NIA: Where does that leave the build? || OBI: Ten of sixteen stories verified, 500 points, 50 unit tests all passing, and 13 days left with six stories to go.">
   <p class="kicker">Milestone 2 · 11 November 2026</p>
   <h1>Training, reports, documents and the law</h1>
   <div class="lane"></div>
@@ -147,7 +135,7 @@ td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; }
   </div>
 </section>
 
-<section class="slide" data-say="Here is the climb. Fifty points for the Command Center, three hundred after milestone one, five hundred now. Every point was awarded by the portal reading a commit, not by us.">
+<section class="slide" data-say="Here is the climb. Fifty points for the Command Center, three hundred after milestone one, five hundred now. Every point was awarded by the portal reading a commit, not by us." data-say-script="OBI: Here is the climb in points, awarded by the portal milestone by milestone. || NIA: From where to where? || OBI: Fifty for the Command Center, three hundred after Milestone 1, five hundred now. The push webhook meant Milestone 2 verified on its own, with no manual sync.">
   <p class="kicker">The climb</p>
   <h2>Points awarded by the portal, milestone by milestone</h2>
   <div class="chart" data-chart="points" aria-label="Points after each milestone"></div>
@@ -155,7 +143,7 @@ td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; }
   <p>Each step is a set of commits that name their story. The push webhook registered in Milestone 1 meant Milestone 2 verified on its own, with no manual sync.</p>
 </section>
 
-<section class="slide" data-say="Story five, training. Sam from support teaches the help desk. Jordan, a TxDOT manager, takes the knowledge check and scores one hundred percent. That is what completed means here: understood, not just attended.">
+<section class="slide" data-say="Story five, training. Sam from support teaches the help desk. Jordan, a TxDOT manager, takes the knowledge check and scores one hundred percent. That is what completed means here: understood, not just attended." data-say-script="OBI: Story five, training. Sam from support teaches the help desk. || NIA: How do you know it landed? || OBI: Completion means passing a short knowledge check, 80 percent or more. Jordan attends live and scores 100 percent.">
   <p class="kicker">STORY-005 · Training</p>
   <h2>Sam teaches the help desk. Jordan proves it landed.</h2>
   <div class="two">
@@ -169,7 +157,7 @@ td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; }
   </div>
 </section>
 
-<section class="slide" data-say="Avery missed the session. The recording is there, because a session cannot be marked held without one. Avery's first try fails and is logged. The second passes. Attending is not the same as understanding.">
+<section class="slide" data-say="Avery missed the session. The recording is there, because a session cannot be marked held without one. Avery's first try fails and is logged. The second passes. Attending is not the same as understanding." data-say-script="OBI: Avery missed the session, so Avery watches the recording. || NIA: Is there always a recording? || OBI: Yes: a session cannot be marked held without one. Avery’s first check fails and is logged; the second passes at 100 percent.">
   <p class="kicker">STORY-005 · The missed session</p>
   <h2>Avery missed it, so Avery watches the recording</h2>
   <div class="flow">
@@ -181,7 +169,7 @@ td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; }
   <p class="quote">Training counts when someone shows they understood it, wherever they watched it.</p>
 </section>
 
-<section class="slide" data-say="Story six, the reporting engine. Taylor, the contract manager, picks a specification. Every section the specification lists is built from recorded data, checked, then archived with its fingerprint.">
+<section class="slide" data-say="Story six, the reporting engine. Taylor, the contract manager, picks a specification. Every section the specification lists is built from recorded data, checked, then archived with its fingerprint." data-say-script="OBI: Story six, the reporting engine. Taylor, the contract manager, asks for reports. || NIA: How is each one built? || OBI: Every section the specification lists is computed from recorded data, checked, then archived once with its hash.">
   <p class="kicker">STORY-006 · Reporting engine</p>
   <h2>Taylor asks for reports. Each one meets its specification.</h2>
   <div class="two">
@@ -194,7 +182,7 @@ td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; }
   </div>
 </section>
 
-<section class="slide" data-say="Then Taylor asks for the contract cost summary. It needs the TxDOT financial system, which this build cannot reach. So the engine refuses, logs the error as an incident, and Taylor records what is being done about it. Nothing is guessed.">
+<section class="slide" data-say="Then Taylor asks for the contract cost summary. It needs the TxDOT financial system, which this build cannot reach. So the engine refuses, logs the error as an incident, and Taylor records what is being done about it. Nothing is guessed." data-say-script="OBI: Then Taylor asks for the contract cost summary. || NIA: Can the engine build it? || OBI: No. It needs the TxDOT financial system, which this build cannot reach. So it refuses, logs an incident, and Taylor records that read access was requested.">
   <p class="kicker">STORY-006 · The report that says no</p>
   <h2>No financial system, no cost report, and it says why</h2>
   <div class="two">
@@ -208,7 +196,7 @@ td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; }
   </div>
 </section>
 
-<section class="slide" data-say="Story thirteen, the bid's documents. Morgan, the compliance officer, uploads the technical proposal, then a second draft. Avery tries to open it and is refused, and that refusal is logged. Quinn from procurement opens it in milliseconds, against a two second target.">
+<section class="slide" data-say="Story thirteen, the bid's documents. Morgan, the compliance officer, uploads the technical proposal, then a second draft. Avery tries to open it and is refused, and that refusal is logged. Quinn from procurement opens it in milliseconds, against a two second target." data-say-script="OBI: Story thirteen, documents. Morgan, the compliance officer, files the technical proposal. || NIA: Who can open it? || OBI: Avery is refused, and the attempt is logged. Quinn from procurement opens it well within the two-second target.">
   <p class="kicker">STORY-013 · Documents</p>
   <h2>Morgan files the proposal. Avery is turned away. Quinn opens it fast.</h2>
   <div class="two">
@@ -222,7 +210,7 @@ td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; }
   </div>
 </section>
 
-<section class="slide" data-say="Story seven, compliance. Fourteen rules from federal and Texas law, each with its official source. Green passes, grey means this build does not hold those records yet, and red would be a violation. Today there are none.">
+<section class="slide" data-say="Story seven, compliance. Fourteen rules from federal and Texas law, each with its official source. Green passes, grey means this build does not hold those records yet, and red would be a violation. Today there are none." data-say-script="OBI: Story seven, compliance: fourteen rules from federal and Texas law, checked against the live system. || NIA: What do the colours mean? || OBI: Green passes, grey means this build does not hold those records yet, and red would be a violation. Today there are none.">
   <p class="kicker">STORY-007 · Compliance</p>
   <h2>Fourteen rules, checked against the live system</h2>
   <div class="matrix" data-chart="matrix" aria-label="Compliance results by rule"></div>
@@ -230,7 +218,7 @@ td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; }
   <p class="foot">Compiled from official sources by a research agent on 11 Nov; to be confirmed by TxDOT legal. Not legal advice.</p>
 </section>
 
-<section class="slide" data-say="Then the law changes. In a drill, vendor cyber training must now be renewed every thirty days. The rule is updated and re-checked at once: a violation, logged. Riley and Casey take the refresher on the training page. Morgan re-runs the checks. Clean again.">
+<section class="slide" data-say="Then the law changes. In a drill, vendor cyber training must now be renewed every thirty days. The rule is updated and re-checked at once: a violation, logged. Riley and Casey take the refresher on the training page. Morgan re-runs the checks. Clean again." data-say-script="OBI: Then the law changes. In a drill, vendor cyber training must be renewed every thirty days. || NIA: What happened next? || OBI: The rule was re-checked at once: two of two vendor staff had lapsed, so a violation was logged. Riley and Casey took the refresher, and the re-run was clean.">
   <p class="kicker">STORY-007 · When the law changes</p>
   <h2>A legal update, a violation, a fix, a clean run</h2>
   <div class="flow">
@@ -242,7 +230,7 @@ td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; }
   <figure class="shot"><img src="screens/m2-07-compliance-legal-update.png" alt="The compliance page after a legal update showing the violation" width="1280" height="2600"><figcaption>Two stories working together: compliance found it, training fixed it</figcaption></figure>
 </section>
 
-<section class="slide" data-say="Three helpers worked alongside the build. One gave every guided tour a narrator's voice. One researched the law, and found that two Texas citations had moved this year. One kept the project framework up to date.">
+<section class="slide" data-say="Three helpers worked alongside the build. One gave every guided tour a narrator's voice. One researched the law, and found that two Texas citations had moved this year. One kept the project framework up to date." data-say-script="OBI: Three background agents worked alongside the build. || NIA: Doing what? || OBI: One gave every guided tour a narrator’s voice, one verified fourteen rules at official sources, and one updated the project framework.">
   <p class="kicker">Working in parallel</p>
   <h2>Three background agents</h2>
   <div class="tiles">
@@ -252,7 +240,7 @@ td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; }
   </div>
 </section>
 
-<section class="slide" data-say="The scoreboard. Releases zero, one and two are complete. Fifty unit tests and three browser walks pass. Each story is tied to the commit the portal verified.">
+<section class="slide" data-say="The scoreboard. Releases zero, one and two are complete. Fifty unit tests and three browser walks pass. Each story is tied to the commit the portal verified." data-say-script="OBI: The scoreboard: three releases done, two to go. || NIA: And the evidence? || OBI: Each of the four stories is tied to the commit the portal verified, with its tests, 50 points each.">
   <p class="kicker">Scoreboard · 11 November</p>
   <h2>Three releases done, two to go</h2>
   <div class="slide">
@@ -271,7 +259,7 @@ td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; }
   </table></div>
 </section>
 
-<section class="slide" data-say="Next is milestone three: managing the bid's response submissions, scoring them, and the risk assessment tools. And three questions for TxDOT, through Ali.">
+<section class="slide" data-say="Next is milestone three: managing the bid's response submissions, scoring them, and the risk assessment tools. And three questions for TxDOT, through Ali." data-say-script="OBI: Next is Milestone 3: response submissions, scoring, and risk assessment tools. || NIA: And for TxDOT? || OBI: Through Ali: the real list of required reports, read access to the financial system, legal review of the rule register, and the service levels. Thanks for watching.">
   <p class="kicker">What comes next</p>
   <h2>Milestone 3: submissions, scoring and risk</h2>
   <div class="lane"></div>
@@ -361,7 +349,7 @@ td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; }
     s.querySelectorAll('[data-chart]').forEach(function (h) { charts[h.getAttribute('data-chart')](h); });
     count.textContent = (i + 1) + ' / ' + slides.length;
     if (location.hash !== '#s' + (i + 1)) history.replaceState(null, '', '#s' + (i + 1));
-    if (tour.on) say();
+    if (window.__deckOnShow) window.__deckOnShow(i);
   }
   document.getElementById('prev').onclick = function () { show(i - 1); };
   document.getElementById('next').onclick = function () { show(i + 1); };
@@ -369,71 +357,485 @@ td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; }
     if (e.target.closest && e.target.closest('input,textarea')) return;
     if (e.key === 'ArrowRight' || e.key === 'PageDown') show(i + 1);
     if (e.key === 'ArrowLeft' || e.key === 'PageUp') show(i - 1);
-    if (e.key === 'Escape' && tour.on) stopTour();
   });
   window.addEventListener('hashchange', function () { var m = /^#s(\d+)$/.exec(location.hash); if (m) show(+m[1] - 1); });
 
-  // Guided tour: walks every slide with a spoken-style caption, 20 seconds each (about 4 minutes in all).
-  // Male voice narrator (Web Speech API): reads each slide's caption; a slide advances when the 20 s timer has run out AND the speech has ended.
-  var synth = window.speechSynthesis, canSpeak = !!synth && typeof SpeechSynthesisUtterance !== 'undefined';
-  var MALE = /(male|david|mark|guy|daniel|alex|fred|george|james|ryan|christopher|eric|brian|roger|thomas|arthur|aaron|tom)/i;
-  var FEMALE = /female|zira|susan|hazel|samantha|victoria|karen|aria|jenny|libby|sonia|emma|michelle|catherine/i;
-  var voice = null, lowPitch = true, voiceOn = true, curUtt = null, voiceBtn = document.getElementById('tour-voice');
-  try { voiceOn = localStorage.getItem('tour-voice') !== 'off'; } catch (e) {}
-  function pickVoice() {
-    var en = (synth.getVoices() || []).filter(function (v) { return /^en([-_]|$)/i.test(v.lang); });
-    var males = en.filter(function (v) { return MALE.test(v.name) && !FEMALE.test(v.name); });
-    var nf = en.filter(function (v) { return !FEMALE.test(v.name); });
-    function us(a) { return a.filter(function (v) { return /^en[-_]US/i.test(v.lang); })[0] || a[0]; }
-    voice = us(males) || us(nf.filter(function (v) { return v.default; })) || us(nf) || us(en) || null;
-    lowPitch = !males.length;
-  }
-  function stopSpeech() { curUtt = null; if (canSpeak) { try { synth.cancel(); } catch (e) {} } }
-  function speak(text) {
-    if (!canSpeak || !voiceOn) return;
-    try {
-      synth.cancel();
-      var u = new SpeechSynthesisUtterance(text);
-      if (voice) { u.voice = voice; u.lang = voice.lang; } else u.lang = 'en-US';
-      u.rate = 1; u.pitch = lowPitch ? 0.8 : 1;
-      var done = function () { if (curUtt === u) curUtt = null; };
-      u.onend = done; u.onerror = done;
-      curUtt = u;
-      synth.speak(u);
-      if (tour.paused) synth.pause();
-    } catch (e) { curUtt = null; }
-  }
-  function paintVoice() { voiceBtn.textContent = voiceOn ? 'Voice on' : 'Voice off'; voiceBtn.setAttribute('aria-pressed', String(voiceOn)); }
-  if (canSpeak) {
-    pickVoice();
-    if (synth.addEventListener) synth.addEventListener('voiceschanged', pickVoice); else synth.onvoiceschanged = pickVoice;
-    paintVoice();
-    voiceBtn.onclick = function () {
-      voiceOn = !voiceOn; paintVoice();
-      try { localStorage.setItem('tour-voice', voiceOn ? 'on' : 'off'); } catch (e) {}
-      if (!voiceOn) stopSpeech(); else if (tour.on) speak(slides[i].getAttribute('data-say'));
-    };
-  } else voiceBtn.hidden = true;
-  var tour = { on: false, paused: false, t: 0, timer: null }, STEP = 20000;
-  var cap = document.getElementById('caption'), capText = document.getElementById('caption-text'), prog = document.getElementById('prog'), pauseBtn = document.getElementById('tour-pause');
-  function say() { capText.textContent = (i + 1) + ' of ' + slides.length + ' · ' + slides[i].getAttribute('data-say'); tour.t = 0; prog.style.width = '0'; speak(slides[i].getAttribute('data-say')); }
-  function tick() {
-    if (tour.paused) return;
-    tour.t += 250; prog.style.width = Math.min(100, tour.t / STEP * 100) + '%';
-    if (tour.t >= STEP && (!curUtt || tour.t >= STEP * 3)) { if (i < slides.length - 1) show(i + 1); else stopTour(); }
-  }
-  function startTour() { tour.on = true; tour.paused = false; pauseBtn.textContent = 'Pause'; cap.hidden = false; document.body.style.paddingBottom = '120px'; show(0); clearInterval(tour.timer); tour.timer = setInterval(tick, 250); pauseBtn.focus(); }
-  function stopTour() { stopSpeech(); tour.on = false; clearInterval(tour.timer); cap.hidden = true; document.body.style.paddingBottom = ''; document.getElementById('tour-launch').focus(); }
-  document.getElementById('tour-launch').onclick = startTour;
-  document.getElementById('tour-stop').onclick = stopTour;
-  pauseBtn.onclick = function () {
-    tour.paused = !tour.paused; pauseBtn.textContent = tour.paused ? 'Resume' : 'Pause';
-    if (canSpeak) { try { if (tour.paused) synth.pause(); else synth.resume(); } catch (e) {} }
-  };
+  // The deck tour (the deck-tour block below) drives the slides through this handle.
+  window.__deck = { slides: slides, stage: stage, go: show, index: function () { return i; } };
 
   var m = /^#s(\d+)$/.exec(location.hash);
   show(m ? +m[1] - 1 : 0);
 })();
 </script>
+
+<!-- deck-tour start -->
+<!-- Deck tour (same engine as framework/tour-snippet.html, deck mode). Standing rules (Obi): 2026-11-10 red tour button,
+     2026-11-11 play icon and male narrator, 2026-11-12 OBI two-host narration, docked left panel (the stage reflows beside
+     it), gauge synced to the voice, pointer synced to the voice. Each slide carries data-say-script="OBI: ... || NIA: ...";
+     the deck script exposes window.__deck = { slides, stage, go(n), index() } and calls window.__deckOnShow(i) from show().
+     Reuse: copy everything between deck-tour start and deck-tour end into a deck built the same way. -->
+<style>
+:root { --tp-w: clamp(280px, 25vw, 340px); --tp-red: #c8102e; --tp-red-ink: #ffffff; --tp-bg: #ffffff; --tp-ink: #1b1d21; --tp-muted: #5a606b; --tp-line: #d9dde3; --tp-soft: #eef0f3; --tp-obi: #b00d28; --tp-nia: #1d5fa8; --tp-now: #fdf1f3; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --tp-red: #ff5a6e; --tp-red-ink: #1a0a0d; --tp-bg: #1b1f25; --tp-ink: #eceef2; --tp-muted: #a3aab6; --tp-line: #343b45; --tp-soft: #262b33; --tp-obi: #ff8796; --tp-nia: #8ab9ff; --tp-now: #2e2024; } }
+:root[data-theme="dark"] { --tp-red: #ff5a6e; --tp-red-ink: #1a0a0d; --tp-bg: #1b1f25; --tp-ink: #eceef2; --tp-muted: #a3aab6; --tp-line: #343b45; --tp-soft: #262b33; --tp-obi: #ff8796; --tp-nia: #8ab9ff; --tp-now: #2e2024; }
+.tour-launch[hidden], .tour-panel[hidden], .tour-cursor[hidden], .tour-desc[hidden] { display: none !important; }
+/* Docked: the page reflows beside the panel instead of under it. */
+html.tour-on { padding-left: var(--tp-w) !important; }
+html.tour-on .tour-target { outline: 3px solid var(--tp-red) !important; outline-offset: 4px; }
+.tour-panel { position: fixed; z-index: 2147483001; top: 0; left: 0; bottom: 0; width: var(--tp-w); margin: 0; overflow-y: auto; overscroll-behavior: contain;
+  display: flex; flex-direction: column; gap: 12px; box-sizing: border-box; text-align: left;
+  padding: 16px 16px calc(16px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+  background: var(--tp-bg); color: var(--tp-ink); border-right: 1px solid var(--tp-line); border-top: 5px solid var(--tp-red); box-shadow: 4px 0 18px rgba(0, 0, 0, 0.12);
+  font: 15px/1.5 system-ui, "Segoe UI", Roboto, sans-serif; letter-spacing: normal; text-transform: none; }
+.tour-panel * { box-sizing: border-box; }
+.tour-panel p, .tour-panel ol { margin: 0; max-width: none; }
+.tour-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--tp-muted); }
+.tour-brand { display: inline-flex; align-items: center; gap: 6px; color: var(--tp-red); }
+.tour-brand svg { width: 12px; height: 12px; }
+.tour-panel h2.tour-title { margin: 0; font: 700 18px/1.25 system-ui, "Segoe UI", Roboto, sans-serif; color: var(--tp-ink); letter-spacing: normal; text-transform: none; }
+.tour-desc { font-size: 13.5px; color: var(--tp-muted); }
+.tour-gauge { height: 10px; border-radius: 999px; background: var(--tp-soft); border: 1px solid var(--tp-line); overflow: hidden; flex: none; }
+.tour-gauge i { display: block; height: 100%; background: var(--tp-red); transform: scaleX(0); transform-origin: left center; }
+.tour-caption { padding: 10px 12px; border-radius: 10px; background: var(--tp-now); border-left: 4px solid var(--tp-red); font-size: 15.5px; line-height: 1.45; min-height: 3.2em; }
+.tour-who { display: inline-block; margin-right: 6px; font-size: 12px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+.tour-who.is-obi, .tour-script .is-obi b { color: var(--tp-obi); }
+.tour-who.is-nia, .tour-script .is-nia b { color: var(--tp-nia); }
+.tour-ctrl { display: flex; flex-wrap: wrap; gap: 8px; }
+.tour-panel button { font: 600 14px/1 system-ui, "Segoe UI", Roboto, sans-serif; letter-spacing: normal; text-transform: none; border-radius: 8px; padding: 9px 12px; min-height: 38px; min-width: 0; cursor: pointer;
+  border: 1px solid var(--tp-muted); background: transparent; color: var(--tp-ink); box-shadow: none; }
+.tour-panel button:disabled { opacity: 0.45; cursor: default; }
+.tour-panel button.tour-next { background: var(--tp-red); border-color: var(--tp-red); color: var(--tp-red-ink); }
+.tour-panel button.tour-voice { align-self: flex-start; min-height: 30px; padding: 6px 10px; font-size: 12.5px; }
+.tour-panel button.tour-voice[aria-pressed="true"] { border-color: var(--tp-red); }
+.tour-panel button:focus-visible { outline: 3px solid var(--tp-ink); outline-offset: 2px; }
+.tour-script { list-style: none; padding: 0; display: grid; gap: 6px; font-size: 13.5px; color: var(--tp-muted); }
+.tour-script li { padding: 6px 8px; border-radius: 8px; border: 0; }
+.tour-script li.is-now { background: var(--tp-soft); color: var(--tp-ink); }
+.tour-script b { font-size: 11.5px; letter-spacing: 0.05em; text-transform: uppercase; }
+.tour-keys { font-size: 12px; color: var(--tp-muted); }
+.tour-panel.is-paused .tour-gauge i { opacity: 0.55; }
+/* Narrow screens: a compact strip at the top; the page is pushed down by its measured height. */
+@media (max-width: 699.98px) {
+  html.tour-on { padding-left: 0 !important; padding-top: var(--tour-strip, 168px) !important; scroll-padding-top: calc(var(--tour-strip, 168px) + 12px); }
+  .tour-panel { right: 0; bottom: auto; width: auto; max-height: 50vh; gap: 8px; padding: 8px max(12px, env(safe-area-inset-right, 0px)) 10px max(12px, env(safe-area-inset-left, 0px));
+    border-right: 0; border-bottom: 1px solid var(--tp-line); box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14); }
+  .tour-panel h2.tour-title { font-size: 15px; }
+  .tour-desc, .tour-script, .tour-keys { display: none !important; }
+  .tour-caption { font-size: 14px; padding: 6px 10px; min-height: 0; }
+  .tour-gauge { height: 8px; }
+  .tour-ctrl { gap: 6px; }
+  .tour-panel button { min-height: 34px; padding: 7px 10px; font-size: 13px; }
+  .tour-panel .tour-voice { position: absolute; top: 4px; right: max(12px, env(safe-area-inset-right, 0px)); }
+  .tour-head { padding-right: 96px; }
+}
+/* The synced pointer: drawn above the page, never over the panel, never clickable. */
+.tour-cursor { position: fixed; left: 0; top: 0; z-index: 2147483000; width: 24px; height: 30px; pointer-events: none; will-change: transform; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4)); }
+.tour-cursor svg { display: block; width: 24px; height: 30px; transform-origin: 3px 3px; }
+.tour-cursor.is-click svg { animation: tp-press 0.35s ease; }
+.tour-ripple { position: fixed; z-index: 2147482999; width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 50%; border: 3px solid var(--tp-red); pointer-events: none; animation: tp-ripple 0.7s ease-out forwards; }
+@keyframes tp-press { 50% { transform: scale(0.8); } }
+@keyframes tp-ripple { from { transform: scale(0.2); opacity: 0.95; } to { transform: scale(1.3); opacity: 0; } }
+@keyframes tp-fade { from { opacity: 0.9; } to { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .tour-ripple { animation: tp-fade 0.7s linear forwards; transform: none; } .tour-cursor.is-click svg { animation: none; } }
+@media (max-width: 699.98px) { .tour-panel h2.tour-title { padding-right: 92px; } .tour-panel button.tour-voice { min-height: 28px; padding: 4px 8px; font-size: 12px; top: 6px; } }
+</style>
+<aside class="tour-panel" id="tour-panel" data-mode="deck" role="dialog" aria-modal="false" aria-labelledby="tour-title" hidden>
+  <div class="tour-head"><span class="tour-brand"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4.5 2.6v10.8L13.6 8z" fill="currentColor"></path></svg>Guided tour · OBI and Nia</span><span id="tour-count"></span></div>
+  <h2 class="tour-title" id="tour-title"></h2>
+  <p class="tour-desc" id="tour-desc"></p>
+  <div class="tour-gauge" id="tour-gauge" role="progressbar" aria-label="Progress through this slide" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="tour-fill"></i></div>
+  <p class="tour-caption" aria-live="polite"><b class="tour-who is-obi" id="tour-who">OBI</b><span id="tour-line"></span></p>
+  <div class="tour-ctrl">
+    <button type="button" id="tour-back">Back</button>
+    <button type="button" id="tour-pause" aria-pressed="false">Pause</button>
+    <button type="button" class="tour-next" id="tour-next">Next</button>
+    <button type="button" id="tour-close" aria-label="Close the tour">Close</button>
+  </div>
+  <button type="button" class="tour-voice" id="tour-voice" aria-pressed="true">Voice on</button>
+  <ol class="tour-script" id="tour-script" aria-label="What OBI and Nia say here"></ol>
+  <p class="tour-keys">Left and right arrows move, Space pauses, Esc closes.</p>
+</aside>
+<div class="tour-cursor" id="tour-cursor" aria-hidden="true" hidden><svg viewBox="0 0 24 30" focusable="false"><path d="M3 2.5v21.5l5.6-5.3 3.9 8.6 3.6-1.6-3.8-8.4h7.7z" fill="#ffffff" stroke="#111418" stroke-width="1.6" stroke-linejoin="round"></path></svg></div>
+<script>
+(() => {
+  'use strict';
+  const panel = document.getElementById('tour-panel');
+  if (!panel || panel.dataset.ready) return;
+  panel.dataset.ready = '1';
+  const mode = panel.getAttribute('data-mode') || 'page';
+  const $ = (id) => document.getElementById(id);
+  const html = document.documentElement;
+  const launch = $('tour-launch'), cursor = $('tour-cursor'), gauge = $('tour-gauge'), fill = $('tour-fill');
+  const capWho = $('tour-who'), capLine = $('tour-line'), scriptList = $('tour-script');
+  const btnBack = $('tour-back'), btnPause = $('tour-pause'), btnNext = $('tour-next'), btnClose = $('tour-close'), btnVoice = $('tour-voice');
+  const PAUSE_AFTER = 600, READ_CPS = 15, START_DELAY = 650;
+  const mq = (q) => { try { return matchMedia(q).matches; } catch (e) { return false; } };
+  const reduce = () => mq('(prefers-reduced-motion: reduce)');
+  const isTop = () => mq('(max-width: 699.98px)');
+
+  // ---- Voices: OBI leads (male, natural, low), Nia answers (a different, preferably natural female voice).
+  const synth = 'speechSynthesis' in window ? window.speechSynthesis : null;
+  const canSpeak = !!synth && typeof window.SpeechSynthesisUtterance === 'function';
+  const MALE = ['andrew', 'guy', 'christopher', 'eric', 'davis', 'brian', 'roger', 'steffan', 'ryan', 'thomas'];
+  const NIA_NAMES = ['jenny', 'aria', 'ava', 'emma'];
+  const FEMALE = /\b(zira|susan|hazel|samantha|victoria|karen|aria|jenny|libby|sonia|emma|michelle|catherine|ava|emily|female)\b/i;
+  const NATURAL = /natural|online/i;
+  const named = (v, n) => new RegExp('\\b' + n + '\\b', 'i').test(v.name || '');
+  let cast = { obi: null, nia: null, obiPitch: 0.75, niaPitch: 1.15 };
+  function pickVoices() {
+    let all = [];
+    try { all = (synth && synth.getVoices()) || []; } catch (e) { all = []; }
+    const en = all.filter((v) => /^en([-_]|$)/i.test(v.lang || ''));
+    const pool = en.length ? en : all;
+    let obi = null, natural = false;
+    for (const n of MALE) { obi = pool.find((v) => NATURAL.test(v.name) && named(v, n)); if (obi) { natural = true; break; } }
+    obi = obi || pool.find((v) => /google uk english male/i.test(v.name)) || pool.find((v) => /microsoft (david|mark)\b/i.test(v.name))
+      || pool.find((v) => !FEMALE.test(v.name)) || pool[0] || null;
+    let nia = null;
+    for (const n of NIA_NAMES) { nia = pool.find((v) => v !== obi && NATURAL.test(v.name) && named(v, n)); if (nia) break; }
+    nia = nia || pool.find((v) => v !== obi && /google us english/i.test(v.name)) || pool.find((v) => v !== obi && /zira/i.test(v.name))
+      || pool.find((v) => v !== obi && FEMALE.test(v.name)) || pool.find((v) => v !== obi) || obi;
+    cast = { obi, nia, obiPitch: natural ? 0.82 : 0.75, niaPitch: nia === obi ? 1.15 : 1.0 };
+  }
+  if (canSpeak) {
+    pickVoices();
+    try { if (synth.addEventListener) synth.addEventListener('voiceschanged', pickVoices); else synth.onvoiceschanged = pickVoices; } catch (e) {}
+  }
+  let voiceOn = true;
+  try { voiceOn = localStorage.getItem('tour-voice') !== 'off'; } catch (e) {}
+  const paintVoice = () => {
+    if (!canSpeak) { btnVoice.textContent = 'No voice in this browser'; btnVoice.disabled = true; btnVoice.setAttribute('aria-pressed', 'false'); return; }
+    btnVoice.textContent = voiceOn ? 'Voice on' : 'Voice off';
+    btnVoice.setAttribute('aria-pressed', String(voiceOn));
+  };
+  paintVoice();
+
+  // ---- Stops. Dialogue: "OBI: text || NIA: text || ...". Without a script, OBI reads the short description.
+  function parse(script, fallback) {
+    const out = [];
+    String(script || '').split('||').forEach((raw) => {
+      const s = raw.trim();
+      if (!s) return;
+      const m = /^(OBI|NIA)\s*:\s*([\s\S]*)$/i.exec(s);
+      out.push(m ? { who: m[1].toUpperCase(), text: m[2].trim() } : { who: 'OBI', text: s });
+    });
+    if (!out.length && fallback && fallback.trim()) out.push({ who: 'OBI', text: fallback.trim() });
+    return out.filter((l) => l.text);
+  }
+  const clean = (s) => String(s || '').replace(/\s+/g, ' ').trim();
+  let bringing = false;
+  const adapter = mode === 'deck' ? {
+    noun: 'Slide',
+    stops() {
+      const D = window.__deck;
+      if (!D) return [];
+      return D.slides.map((s, k) => {
+        const h = s.querySelector('h1, h2');
+        const title = clean(h && h.textContent) || 'Slide ' + (k + 1);
+        return { title, desc: '', lines: parse(s.getAttribute('data-say-script'), s.getAttribute('data-say') || title) };
+      });
+    },
+    bring(stop, k) {
+      const D = window.__deck;
+      bringing = true;
+      try { if (D.index() !== k) D.go(k); } finally { bringing = false; }
+      return D.stage;
+    }
+  } : {
+    noun: 'Stop',
+    stops() {
+      return Array.prototype.filter.call(document.querySelectorAll('[data-tour]'), (el) => el.getClientRects().length && !panel.contains(el))
+        .map((el) => {
+          const h = el.querySelector('h1, h2, h3');
+          const desc = el.getAttribute('data-tour') || '';
+          return { el, title: el.getAttribute('data-tour-title') || clean(h && h.textContent) || '', desc, lines: parse(el.getAttribute('data-tour-script'), desc) };
+        });
+    },
+    bring(stop) { return stop.el; }
+  };
+
+  // ---- State. Every async callback carries the token it was started with; a newer token cancels it.
+  let running = false, paused = false, list = [], idx = 0, lines = [], lineIdx = 0, phase = 'line', tok = 0;
+  let target = null, items = null, anchor = null, speechBroken = false, keepUtt = null;
+  const timers = new Set();
+  const later = (fn, ms) => { const id = setTimeout(() => { timers.delete(id); fn(); }, ms); timers.add(id); return id; };
+  const clearTimers = () => { timers.forEach((id) => clearTimeout(id)); timers.clear(); };
+  const cancelSpeech = () => { keepUtt = null; if (canSpeak) { try { synth.cancel(); } catch (e) {} } };
+
+  // ---- Gauge: filled by speech (boundary charIndex over the stop's characters), eased between events,
+  // held below 100% until the last line's 'end'. With voice off it runs on reading time (15 characters a second).
+  let g = { shown: 0, done: 0, total: 1, len: 0, mode: 'idle', started: false, b: 0, bt: 0, cps: 14, t0: 0, dur: 1, final: false };
+  function setFill(p) {
+    g.shown = p;
+    fill.style.transform = 'scaleX(' + p + ')';
+    gauge.setAttribute('aria-valuenow', String(Math.floor(p * 100)));
+    gauge.dataset.progress = String(p);
+  }
+  function tickGauge() {
+    if (!running || paused || g.final) return;
+    const now = performance.now();
+    let est = g.done;
+    if (g.mode === 'speech' && g.started) est += Math.min(g.len * 0.97, g.b + Math.max(0, now - g.bt) / 1000 * g.cps);
+    else if (g.mode === 'timer') est += g.len * Math.min(1, (now - g.t0) / g.dur);
+    const p = Math.min(0.995, est / g.total);
+    if (p > g.shown) setFill(p);
+  }
+
+  // ---- Content area (everything right of the docked panel, or below the top strip) and the synced pointer.
+  function area() {
+    const r = panel.getBoundingClientRect(), w = html.clientWidth || innerWidth, h = innerHeight;
+    return isTop() ? { l: 0, t: Math.max(0, r.bottom), r: w, b: h } : { l: Math.max(0, r.right), t: 0, r: w, b: h };
+  }
+  function pointFor(el) {
+    const a = area(), r = el.getBoundingClientRect();
+    let x = r.left + Math.min(40, r.width * 0.3), y = r.top + Math.min(24, r.height * 0.5);
+    x = Math.max(a.l + 8, Math.min(x, a.r - 30));
+    y = Math.max(a.t + 8, Math.min(y, a.b - 34));
+    return [x, y];
+  }
+  let cx = 0, cy = 0, raf = 0;
+  function frame() {
+    raf = requestAnimationFrame(frame);
+    if (anchor && anchor.isConnected) {
+      const p = pointFor(anchor);
+      if (reduce()) { cx = p[0]; cy = p[1]; } else { cx += (p[0] - cx) * 0.14; cy += (p[1] - cy) * 0.14; }
+      const a = area();
+      cx = Math.max(a.l + 8, cx); cy = Math.max(a.t + 8, cy);
+      cursor.style.transform = 'translate(' + cx.toFixed(1) + 'px, ' + cy.toFixed(1) + 'px)';
+    }
+    tickGauge();
+  }
+  function click() {
+    if (!anchor) return;
+    const p = pointFor(anchor), r = document.createElement('span');
+    r.className = 'tour-ripple';
+    r.setAttribute('aria-hidden', 'true');
+    r.style.left = p[0] + 'px'; r.style.top = p[1] + 'px';
+    document.body.appendChild(r);
+    setTimeout(() => r.remove(), 800);
+    cursor.classList.remove('is-click'); void cursor.offsetWidth; cursor.classList.add('is-click');
+    cursor.dataset.clicks = String((+cursor.dataset.clicks || 0) + 1);
+  }
+  const ITEMS = 'li, tbody tr, figure, button, .tile, .step, .cell, .card, [class*="card"], article, dl > div';
+  function itemsIn(el) {
+    let els = Array.prototype.filter.call(el.querySelectorAll(ITEMS), (e) => e.getClientRects().length && !panel.contains(e));
+    els = els.filter((e) => !els.some((o) => o !== e && e.contains(o)));
+    if (isTop()) {
+      // On the top strip, never scroll the target up under the strip: only point at items already in view.
+      const a = area();
+      return els.filter((e) => { const r = e.getBoundingClientRect(); return r.top >= a.t && r.top < a.b - 40; });
+    }
+    const top = el.getBoundingClientRect().top, limit = top + Math.max(innerHeight * 1.2, 600);
+    const near = els.filter((e) => e.getBoundingClientRect().top < limit);
+    return near.length ? near : els.slice(0, 6);
+  }
+  function pick(n) {
+    if (n === 0 || !items || !items.length) return target;
+    const span = Math.max(1, lines.length - 2);
+    return items[Math.min(items.length - 1, Math.round((n - 1) * (items.length - 1) / span))];
+  }
+  function reveal(el) {
+    const a = area(), r = el.getBoundingClientRect();
+    if (r.top < a.t + 4 || r.bottom > a.b - 4) {
+      try { el.scrollIntoView({ block: r.height > a.b - a.t ? 'start' : 'nearest', behavior: reduce() ? 'auto' : 'smooth' }); } catch (e) { el.scrollIntoView(); }
+    }
+  }
+
+  // ---- Panel rendering.
+  function renderStop(stop) {
+    $('tour-count').textContent = adapter.noun + ' ' + (idx + 1) + ' of ' + list.length;
+    $('tour-title').textContent = stop.title || adapter.noun + ' ' + (idx + 1);
+    const d = $('tour-desc');
+    d.textContent = stop.desc && stop.lines.length > 1 ? stop.desc : '';
+    d.hidden = !d.textContent;
+    scriptList.replaceChildren(...lines.map((l) => {
+      const li = document.createElement('li'), b = document.createElement('b');
+      li.className = 'is-' + l.who.toLowerCase();
+      b.textContent = l.who === 'NIA' ? 'Nia' : 'OBI';
+      li.append(b, ' ', l.text);
+      return li;
+    }));
+    btnBack.disabled = idx === 0;
+    btnNext.textContent = idx === list.length - 1 ? 'Finish' : 'Next';
+  }
+  function renderLine(n) {
+    const l = lines[n];
+    capWho.textContent = l.who === 'NIA' ? 'Nia' : 'OBI';
+    capWho.className = 'tour-who is-' + l.who.toLowerCase();
+    capLine.textContent = l.text;
+    Array.prototype.forEach.call(scriptList.children, (li, k) => { li.classList.toggle('is-now', k === n); if (k === n) li.setAttribute('aria-current', 'true'); else li.removeAttribute('aria-current'); });
+  }
+
+  // ---- Playback.
+  function startStop(k) {
+    if (!list.length) return;
+    k = Math.max(0, Math.min(list.length - 1, k));
+    tok++; clearTimers(); cancelSpeech();
+    idx = k;
+    const stop = list[k];
+    lines = stop.lines.length ? stop.lines : [{ who: 'OBI', text: stop.title || adapter.noun + ' ' + (k + 1) }];
+    g = { shown: 0, done: 0, total: Math.max(1, lines.reduce((s, l) => s + l.text.length, 0)), len: 0, mode: 'idle', started: false, b: 0, bt: 0, cps: 14, t0: 0, dur: 1, final: false };
+    setFill(0);
+    renderStop(stop);
+    renderLine(0);
+    if (target) target.classList.remove('tour-target');
+    target = adapter.bring(stop, k);
+    target.classList.add('tour-target');
+    items = null; anchor = target; lineIdx = 0; phase = 'line';
+    try { target.scrollIntoView({ block: 'start', behavior: reduce() ? 'auto' : 'smooth' }); } catch (e) { target.scrollIntoView(); }
+    const t = tok;
+    if (!paused) later(() => settle(t, () => playLine(0)), reduce() ? 200 : START_DELAY);
+  }
+  // Wait until the page has stopped scrolling (smooth scrolls on long pages), so later scrolls do not cut it short.
+  function settle(t, fn) {
+    let last = -1, still = 0;
+    const t0 = performance.now();
+    const step = () => {
+      if (t !== tok) return;
+      const key = Math.round(window.scrollY) + ':' + (target ? Math.round(target.getBoundingClientRect().top) : 0);
+      still = key === last ? still + 1 : 0;
+      last = key;
+      if (still >= 6 || performance.now() - t0 > 2500) fn(); else requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+  function playLine(n) {
+    clearTimers();
+    const t = ++tok;
+    lineIdx = n; phase = 'line';
+    const line = lines[n];
+    g.len = line.text.length; g.started = false; g.final = false; g.b = 0;
+    renderLine(n);
+    if (n === 0) anchor = target;
+    else { if (!items) items = itemsIn(target); anchor = pick(n); if (!isTop()) reveal(anchor); }
+    if (voiceOn && canSpeak && !speechBroken) speakLine(t, n, line); else timerLine(t, n, line);
+  }
+  function timerLine(t, n, line) {
+    g.mode = 'timer'; g.t0 = performance.now(); g.dur = Math.max(1200, line.text.length / READ_CPS * 1000);
+    click();
+    later(() => lineDone(t, n), g.dur);
+  }
+  function speakLine(t, n, line) {
+    let u;
+    try { u = new SpeechSynthesisUtterance(line.text); } catch (e) { timerLine(t, n, line); return; }
+    pickVoices();
+    const nia = line.who === 'NIA', v = nia ? cast.nia : cast.obi;
+    if (v) { u.voice = v; u.lang = v.lang; } else u.lang = 'en-US';
+    u.pitch = nia ? cast.niaPitch : cast.obiPitch;
+    u.rate = nia ? 1.0 : 0.95;
+    g.mode = 'speech'; g.cps = 14 * u.rate;
+    const begin = () => { if (!g.started) { g.started = true; g.bt = performance.now(); click(); } };
+    u.onstart = () => { if (t === tok) begin(); };
+    u.onboundary = (e) => { if (t !== tok) return; begin(); g.b = Math.max(g.b, Math.min(g.len, e.charIndex || 0)); g.bt = performance.now(); };
+    u.onend = () => { if (t === tok) lineDone(t, n); };
+    u.onerror = (e) => {
+      if (t !== tok) return;
+      if (e && (e.error === 'interrupted' || e.error === 'canceled')) return;
+      const t2 = ++tok; timerLine(t2, n, line);
+    };
+    keepUtt = u;
+    try { synth.cancel(); } catch (e) {}
+    later(() => { if (t !== tok) return; try { synth.speak(u); } catch (e) { const t2 = ++tok; timerLine(t2, n, line); } }, 40);
+    // Some browsers expose speechSynthesis but never speak (no voices, blocked audio): fall back to reading time.
+    later(() => {
+      if (t !== tok || g.started) return;
+      speechBroken = true;
+      const t2 = ++tok; cancelSpeech(); timerLine(t2, n, line);
+    }, 3500);
+  }
+  function lineDone(t, n) {
+    if (t !== tok) return;
+    clearTimers();
+    g.done += g.len;
+    g.mode = 'idle'; g.started = false; g.b = 0;
+    const t2 = ++tok;
+    if (n + 1 < lines.length) {
+      lineIdx = n + 1;
+      later(() => { if (t2 === tok) playLine(n + 1); }, 120);
+    } else {
+      g.final = true; setFill(1); phase = 'after';
+      later(() => { if (t2 === tok) advance(); }, PAUSE_AFTER);
+    }
+  }
+  const advance = () => (idx + 1 < list.length ? startStop(idx + 1) : end());
+  function go(k) { if (k >= list.length) end(); else startStop(Math.max(0, k)); }
+  function setPaused(p) {
+    paused = p;
+    btnPause.textContent = p ? 'Resume' : 'Pause';
+    btnPause.setAttribute('aria-pressed', String(p));
+    panel.classList.toggle('is-paused', p);
+    if (p) { tok++; clearTimers(); cancelSpeech(); }
+    else if (phase === 'after') advance();
+    else playLine(lineIdx);
+  }
+
+  // ---- Docking: the panel is a fixed left column and the page reflows beside it (html.tour-on adds the padding);
+  // under 700px it is a strip at the top and the page is pushed down by its measured height.
+  function syncStrip() { if (running) html.style.setProperty('--tour-strip', Math.ceil(panel.getBoundingClientRect().height) + 'px'); }
+  let ro = null;
+  try { ro = new ResizeObserver(syncStrip); } catch (e) { ro = null; }
+  function start() {
+    list = adapter.stops();
+    if (!list.length) return;
+    running = true; speechBroken = false;
+    panel.hidden = false; cursor.hidden = false;
+    if (launch) launch.hidden = true;
+    html.classList.add('tour-on');
+    syncStrip();
+    if (ro) ro.observe(panel);
+    paused = false;
+    btnPause.textContent = 'Pause';
+    btnPause.setAttribute('aria-pressed', 'false');
+    panel.classList.remove('is-paused');
+    const a = area();
+    cx = a.l + 24; cy = isTop() ? a.t + 24 : innerHeight * 0.45;
+    if (!raf) raf = requestAnimationFrame(frame);
+    startStop(0);
+    try { btnPause.focus({ preventScroll: true }); } catch (e) {}
+  }
+  function end() {
+    if (!running) return;
+    running = false; paused = false; tok++;
+    clearTimers(); cancelSpeech();
+    if (raf) cancelAnimationFrame(raf);
+    raf = 0;
+    if (ro) ro.disconnect();
+    html.classList.remove('tour-on');
+    html.style.removeProperty('--tour-strip');
+    if (target) target.classList.remove('tour-target');
+    target = null; anchor = null; items = null;
+    panel.hidden = true; cursor.hidden = true;
+    if (launch) { launch.hidden = false; try { launch.focus({ preventScroll: true }); } catch (e) {} }
+  }
+
+  if (launch) launch.addEventListener('click', () => (running ? end() : start()));
+  btnBack.addEventListener('click', () => go(idx - 1));
+  btnNext.addEventListener('click', () => go(idx + 1));
+  btnPause.addEventListener('click', () => setPaused(!paused));
+  btnClose.addEventListener('click', end);
+  btnVoice.addEventListener('click', () => {
+    if (!canSpeak) return;
+    voiceOn = !voiceOn; speechBroken = false; paintVoice();
+    try { localStorage.setItem('tour-voice', voiceOn ? 'on' : 'off'); } catch (e) {}
+    if (running && !paused && phase === 'line') { tok++; clearTimers(); cancelSpeech(); playLine(lineIdx); }
+  });
+  const typing = (el) => !!el && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName || ''));
+  window.addEventListener('keydown', (e) => {
+    if (!running || typing(e.target) || e.altKey || e.ctrlKey || e.metaKey) return;
+    let used = true;
+    if (e.key === 'ArrowRight') go(idx + 1);
+    else if (e.key === 'ArrowLeft') go(idx - 1);
+    else if (e.key === ' ' || e.key === 'Spacebar') { if (!e.repeat) setPaused(!paused); }
+    else if (e.key === 'Escape') end();
+    else used = false;
+    if (used) { e.preventDefault(); e.stopPropagation(); }
+  }, true);
+  window.addEventListener('keyup', (e) => { if (running && (e.key === ' ' || e.key === 'Spacebar') && !typing(e.target)) { e.preventDefault(); e.stopPropagation(); } }, true);
+  addEventListener('resize', syncStrip);
+  if (mode === 'deck') window.__deckOnShow = (n) => { if (running && !bringing && n !== idx) startStop(n); };
+  window.__tour = { start, end, state: () => ({ running, paused, idx, lineIdx, phase, count: list.length, lines: lines.length, voice: cast.obi && cast.obi.name, nia: cast.nia && cast.nia.name, obiPitch: cast.obiPitch, niaPitch: cast.niaPitch }) };
+})();
+</script>
+<!-- deck-tour end -->
 </body>
 </html>

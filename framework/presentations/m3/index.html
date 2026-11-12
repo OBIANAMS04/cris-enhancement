@@ -1,0 +1,837 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CRIS Milestone 3 Story</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@500&display=swap">
+</head>
+<body>
+<style>
+/* Layout: one slide at a time on a road-sign field: navy panel, safety-amber accent, a lane line under the title. */
+:root {
+  --bg: #eef1f5; --panel: #ffffff; --ink: #121a26; --muted: #4d5a6c; --rule: #d3d9e2;
+  --navy: #14365e; --amber: #c27a00; --amber-soft: #fbefd6;
+  --ok: #1f6b45; --ok-bg: #e2f1e7; --bad: #a3262a; --bad-bg: #fbe4e4; --idle: #b8c1cd;
+  --s1: #2a78d6; --tour: #c8102e; --tour-ink: #ffffff;
+  --display: "Archivo", "Arial Narrow", Arial, sans-serif;
+  --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0e141c; --panel: #17202b; --ink: #edf1f6; --muted: #a6b1c0; --rule: #2c3846;
+  --navy: #9cc0ea; --amber: #f2b441; --amber-soft: #3a2c10;
+  --ok: #86d4a6; --ok-bg: #163222; --bad: #f2a0a3; --bad-bg: #3d1b1d; --idle: #4a5666;
+  --s1: #3987e5; --tour: #e5383b; --tour-ink: #ffffff; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0e141c; --panel: #17202b; --ink: #edf1f6; --muted: #a6b1c0; --rule: #2c3846;
+  --navy: #9cc0ea; --amber: #f2b441; --amber-soft: #3a2c10;
+  --ok: #86d4a6; --ok-bg: #163222; --bad: #f2a0a3; --bad-bg: #3d1b1d; --idle: #4a5666;
+  --s1: #3987e5; --tour: #e5383b; --tour-ink: #ffffff; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 17px/1.5 var(--body); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 16px; }
+.wrap { max-width: 1100px; margin: 0 auto; display: grid; gap: 14px; }
+.bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+.brand { font: 800 0.8rem/1 var(--display); letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+button { font: 600 0.95rem var(--body); cursor: pointer; border-radius: 8px; min-height: 40px; padding: 8px 14px; border: 1px solid var(--rule); background: var(--panel); color: var(--ink); }
+button:focus-visible, a:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+.tour-launch { display: inline-flex; align-items: center; gap: 9px; background: var(--tour); color: var(--tour-ink); border-color: var(--tour); }
+.tour-play { width: 16px; height: 16px; flex: none; }
+.count { font: 500 0.85rem var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.stage { background: var(--panel); border: 1px solid var(--rule); border-radius: 14px; padding: clamp(18px, 4vw, 44px); min-height: 560px; display: grid; }
+.slide { display: grid; gap: 18px; align-content: start; }
+.kicker { font: 600 0.8rem var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+h1, h2 { font-family: var(--display); font-weight: 800; line-height: 1.08; margin: 0; text-wrap: balance; color: var(--navy); }
+h1 { font-size: clamp(2rem, 5.5vw, 3.6rem); }
+h2 { font-size: clamp(1.6rem, 3.6vw, 2.4rem); }
+.lane { height: 6px; width: 120px; background: repeating-linear-gradient(90deg, var(--amber) 0 26px, transparent 26px 40px); }
+p { margin: 0; max-width: 64ch; }
+.lede { font-size: 1.2rem; color: var(--muted); }
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 26px; align-items: start; }
+@media (max-width: 760px) { .two { grid-template-columns: 1fr; } .stage { min-height: 0; } }
+.shot { margin: 0; border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; background: var(--bg); }
+.shot img { display: block; width: 100%; height: auto; max-height: 420px; object-fit: cover; object-position: top; }
+.shot figcaption { font-size: 0.85rem; color: var(--muted); padding: 8px 12px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.tile { border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px; display: grid; gap: 4px; }
+.tile b { font: 800 2.1rem/1 var(--display); color: var(--navy); font-variant-numeric: tabular-nums; }
+.tile span { font-size: 0.9rem; color: var(--muted); }
+.tile.ok { border-color: var(--ok); background: var(--ok-bg); }
+.tile.warn { border-color: var(--amber); background: var(--amber-soft); }
+.flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
+.step { border: 1px solid var(--rule); border-radius: 10px; padding: 12px 14px; display: grid; gap: 4px; position: relative; }
+.step b { font: 800 1.05rem var(--display); color: var(--navy); }
+.step span { font-size: 0.9rem; color: var(--muted); }
+.step.ok { background: var(--ok-bg); border-color: var(--ok); }
+.step.bad { background: var(--bad-bg); border-color: var(--bad); }
+.cells { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+.cell { border-radius: 8px; padding: 10px 12px; display: grid; gap: 2px; border: 1px solid var(--rule); }
+.cell b { font: 600 0.8rem var(--mono); }
+.cell span { font-size: 0.88rem; }
+.cell em { font-style: normal; font-size: 0.78rem; font-weight: 600; }
+.cell.pass { background: var(--ok-bg); border-color: var(--ok); }
+.cell.pass em { color: var(--ok); }
+.cell.na { background: var(--panel); border-style: dashed; }
+.cell.na em { color: var(--muted); }
+.cell.fail { background: var(--bad-bg); border-color: var(--bad); }
+.cell.fail em { color: var(--bad); }
+.heatgrid { display: grid; grid-template-columns: auto repeat(3, minmax(56px, 1fr)); gap: 6px; max-width: 420px; }
+.hg-head { font-size: 0.8rem; color: var(--muted); display: flex; align-items: center; justify-content: center; text-transform: capitalize; }
+.hg-cell { border-radius: 8px; min-height: 52px; display: grid; place-items: center; font: 800 1.3rem var(--display); border: 1px solid var(--rule); }
+.hg-cell.ok { background: var(--ok-bg); border-color: var(--ok); color: var(--ok); }
+.hg-cell.warn { background: var(--amber-soft); border-color: var(--amber); color: var(--amber); }
+.hg-cell.bad { background: var(--bad-bg); border-color: var(--bad); color: var(--bad); }
+.hg-cell.empty { opacity: 0.45; font-weight: 400; }
+.cell:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+ul.beats { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+ul.beats li { padding-left: 16px; border-left: 4px solid var(--amber); }
+.pill { display: inline-block; font: 600 0.78rem var(--body); padding: 2px 10px; border-radius: 999px; }
+.pill.ok { color: var(--ok); background: var(--ok-bg); }
+.pill.bad { color: var(--bad); background: var(--bad-bg); }
+.quote { font: 600 1.25rem/1.4 var(--body); border-left: 4px solid var(--navy); padding-left: 14px; }
+.chart { overflow-x: auto; }
+.chart svg { display: block; width: 100%; min-width: 420px; height: auto; }
+.chart text { font-family: var(--body); font-size: 13px; fill: var(--ink); }
+.chart .muted { fill: var(--muted); }
+.chart .num { font-family: var(--mono); font-size: 12px; fill: var(--ink); }
+.chart .track { fill: var(--idle); opacity: 0.45; }
+.chart .fill { fill: var(--s1); }
+.chart .hit:hover + .fill, .chart g:hover .fill { opacity: 0.8; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.85rem; color: var(--muted); }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.tip { position: fixed; pointer-events: none; background: var(--ink); color: var(--panel); font-size: 0.85rem; padding: 6px 10px; border-radius: 6px; }
+table { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font: 600 0.75rem var(--mono); text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.tbl { overflow-x: auto; }
+.foot { font-size: 0.85rem; color: var(--muted); }
+@media (prefers-reduced-motion: no-preference) { .slide { animation: in 0.35s ease-out; } @keyframes in { from { opacity: 0.4; transform: translateY(6px); } to { opacity: 1; transform: none; } } }
+</style>
+
+<div class="wrap">
+  <div class="bar">
+    <span class="brand">CRIS Enhancement · TxDOT</span>
+    <div class="controls">
+      <button type="button" class="tour-launch" id="tour-launch" aria-haspopup="dialog"><svg class="tour-play" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4.5 2.6v10.8L13.6 8z" fill="currentColor"></path></svg>Take the guided tour</button>
+      <button type="button" id="prev" aria-label="Previous slide">← Back</button>
+      <span class="count" id="count" aria-live="polite">1 / 12</span>
+      <button type="button" id="next" aria-label="Next slide">Next →</button>
+    </div>
+  </div>
+  <main class="stage" id="stage"></main>
+  <p class="foot">Arrow keys or the buttons move between slides. Everything shown was produced by the project on 10–11 November 2026; the workspace runs on synthetic people and data.</p>
+</div>
+
+<div class="tip" id="tip" hidden></div>
+
+<template id="slides">
+<section class="slide" data-say="Milestone three: the bid itself. Responses come in, get scored on weighted criteria, and the system watches its own risks. Thirteen of sixteen stories are verified." data-say-script="OBI: Hi, I am OBI. This is Milestone three of the Crash Records build, and it is about the bid itself.||NIA: So, collecting the responses and choosing the best one?||OBI: Exactly. Responses come in, they are scored on weighted criteria, and the system watches its own risks. Thirteen of sixteen stories are now verified.">
+  <p class="kicker">Milestone 3 · 11–12 November 2026</p>
+  <h1>Submissions, scoring and risk</h1>
+  <div class="lane"></div>
+  <p class="lede">Three stories, verified by the portal through the push webhook. Releases 0 to 3 are complete; three stories remain for the 24 November ship date.</p>
+  <div class="tiles">
+    <div class="tile ok"><b>13 / 16</b><span>stories verified</span></div>
+    <div class="tile ok"><b>650</b><span>points on this build</span></div>
+    <div class="tile ok"><b>62</b><span>unit tests, all passing</span></div>
+    <div class="tile warn"><b>3</b><span>stories left, Milestone 4</span></div>
+  </div>
+</section>
+
+<section class="slide" data-say="The climb continues: fifty, three hundred, five hundred, and now six hundred and fifty points, each awarded by the portal reading a commit." data-say-script="OBI: Here is the climb so far.||NIA: Fifty, three hundred, five hundred, and now six hundred and fifty.||OBI: And every one of those points was awarded by the portal reading a commit that names its story. We never mark our own homework.">
+  <p class="kicker">The climb</p>
+  <h2>Points awarded by the portal, milestone by milestone</h2>
+  <div class="chart" data-chart="points" aria-label="Points after each milestone"></div>
+  <p class="legend"><span><i style="background:var(--s1)"></i>Points after each milestone, from the portal's own record. M0 Command Center; M1 help desk to features; M2 training to compliance; M3 submissions to risk</span></p>
+</section>
+
+<section class="slide" data-say="Story eight. Quinn, the procurement officer, records Vendor A's response: on time, all four required documents, so it is stored with a receipt. Vendor B forgets two documents. Refused, and logged." data-say-script="OBI: Story eight. Quinn, the procurement officer, records Vendor A's response.||NIA: What does the system check first?||OBI: That it arrived before the closing time, and that all four required documents are there: technical proposal, pricing, forms, and the HUB subcontracting plan. Vendor A passes and gets a receipt.||NIA: And Vendor B?||OBI: Vendor B left out two documents. The submission is refused, and the error is logged with exactly what is missing.">
+  <p class="kicker">STORY-008 · Submissions</p>
+  <h2>Quinn records the responses. Missing documents are caught at the door.</h2>
+  <div class="two">
+    <ul class="beats">
+      <li>Checked before anything is stored: closing time, every required document, file types.</li>
+      <li>Vendor A: stored, with a SHA-256 receipt over its documents.</li>
+      <li><span class="pill bad">Refused</span> Vendor B: "Missing required document: Forms and certifications."</li>
+      <li>The error is logged and addressed when Vendor B resubmits correctly.</li>
+    </ul>
+    <figure class="shot"><img src="screens/m3-01-submission-error.png" alt="A refused submission listing the missing documents" width="1280" height="1600"><figcaption>The error, logged, then addressed by the full resubmission</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-say="Every response is tracked from receipt to award. The receipt is checked again whenever the response is opened, and every status change is in the audit log." data-say-script="OBI: Every response is tracked from the moment it arrives.||NIA: How do we know the documents were not swapped later?||OBI: The receipt. It is a fingerprint over every document, and it is checked again each time the response is opened. Every status change, from submitted to under evaluation, is in the audit log.">
+  <p class="kicker">STORY-008 · Tracking</p>
+  <h2>From receipt to award, every step on record</h2>
+  <div class="two">
+    <div class="flow">
+      <div class="step ok"><b>Submitted</b><span>receipt issued</span></div>
+      <div class="step"><b>Under evaluation</b><span>scoring opens</span></div>
+      <div class="step"><b>Awarded / not</b><span>decision recorded</span></div>
+    </div>
+    <figure class="shot"><img src="screens/m3-02-response-tracking.png" alt="A response with its documents, receipt check and tracking log" width="1280" height="1500"><figcaption>"Documents match the receipt"</figcaption></figure>
+  </div>
+  <p class="foot">TxDOT receives bids through Euna Procurement. No public Euna API was found, so the workspace tracks submissions itself and says so on the page.</p>
+</section>
+
+<section class="slide" data-say="Story nine, scoring. Five criteria that total one hundred, following Texas best value law, with price at thirty percent. Each evaluator scores each criterion from zero to ten." data-say-script="OBI: Story nine, scoring.||NIA: Whose weights are these?||OBI: They follow Texas best value law, where price and meeting the specifications come first. No weights for this solicitation are public, so these five are a demo proposal: technical approach thirty five, price thirty, experience fifteen, key personnel ten, security and continuity ten.||NIA: And each evaluator scores from zero to ten.">
+  <p class="kicker">STORY-009 · Weighted scoring</p>
+  <h2>Five criteria, one hundred points, Texas best value</h2>
+  <div class="chart" data-chart="weights" aria-label="Criterion weights"></div>
+  <p class="foot">Weighted score = sum of weight × (mean evaluator score ÷ 10). Basis: Tex. Gov't Code §2155.074 and §2157.003, and documented TxDOT solicitations. Demo proposal for TxDOT procurement to confirm.</p>
+</section>
+
+<section class="slide" data-say="Taylor types a one instead of an eight. The system flags it because it is far from Quinn's score, and archiving waits. Taylor corrects it with a reason. The original stays on record." data-say-script="OBI: Here is the moment I like. Taylor, the contract manager, types a one instead of an eight.||NIA: A typo that could change the winner.||OBI: The system flags it, because it is more than four points away from Quinn's score, and it refuses to archive the evaluation until it is checked.||NIA: So Taylor fixes it?||OBI: Taylor corrects it with a reason. And the original one stays on record, so nothing is ever quietly overwritten.">
+  <p class="kicker">STORY-009 · A scoring error, corrected</p>
+  <h2>A typo is caught before it can change the winner</h2>
+  <div class="two">
+    <div class="flow">
+      <div class="step bad"><b>Score 1</b><span>Taylor, technical approach, Vendor A</span></div>
+      <div class="step bad"><b>Flagged</b><span>more than 4 points from Quinn's 8</span></div>
+      <div class="step"><b>Corrected to 8</b><span>"Typed 1 instead of 8."</span></div>
+      <div class="step ok"><b>Archived</b><span>all 21 scores kept</span></div>
+    </div>
+    <figure class="shot"><img src="screens/m3-03-evaluation-flagged.png" alt="The evaluation page flagging a score and refusing to archive" width="1280" height="2000"><figcaption>Archiving waits until the flagged score is checked</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-say="The ranking. Vendor A scores eighty, Vendor B seventy. Vendor A is the best value offer, and the ranking is archived with every score behind it." data-say-script="OBI: And the ranking.||NIA: Vendor A at eighty, Vendor B at seventy.||OBI: Vendor A is the best value offer. The ranking is archived with every score behind it, including the corrected one, sealed with a fingerprint.">
+  <p class="kicker">STORY-009 · Ranking</p>
+  <h2>Best value: Vendor A Demo</h2>
+  <div class="chart" data-chart="ranking" aria-label="Weighted scores out of 100"></div>
+  <p class="foot">Synthetic vendors and scores from the browser walk of 12 November; the archive verifies against its SHA-256.</p>
+</section>
+
+<section class="slide" data-say="Story ten, risk. Rowan, the risk manager, runs an assessment. The system reads itself for six conditions. An outage drill is running, so it finds a high-likelihood, high-impact risk and logs it for review straight away." data-say-script="OBI: Story ten, risk. Rowan, our risk manager, runs an assessment.||NIA: What is it looking at?||OBI: The live system, for six conditions: outages, availability, slow responses, user error, operator error and security gaps.||NIA: And today?||OBI: An outage drill is running, so it finds a high-likelihood, high-impact risk, scores it nine out of nine, and logs it for review straight away.">
+  <p class="kicker">STORY-010 · Risk assessment</p>
+  <h2>The system reads itself for risk</h2>
+  <div class="two">
+    <div class="heatmap" data-chart="heat" aria-label="Open risks by likelihood and impact"></div>
+    <figure class="shot"><img src="screens/m3-05-risk-assessment.png" alt="A risk assessment with a score-9 outage risk for review" width="1280" height="1500"><figcaption>Evidence, owner and mitigation plan on every risk</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-say="Rowan records what was done, and the risk is mitigated. If the condition comes back, the next assessment raises it again. Every assessment is archived." data-say-script="OBI: Rowan records what was done about it, and the risk is marked mitigated.||NIA: What if the problem comes back?||OBI: Then the next assessment raises it again, because the risk is tied to a real condition in the system, not to a checkbox. And every assessment is archived with its fingerprint.">
+  <p class="kicker">STORY-010 · Mitigation</p>
+  <h2>Mitigated, and watched</h2>
+  <div class="flow">
+    <div class="step bad"><b>RISK-0001 · 9</b><span>components not answering</span></div>
+    <div class="step"><b>For review</b><span>logged at once</span></div>
+    <div class="step ok"><b>Mitigated</b><span>owner records the action</span></div>
+    <div class="step"><b>Next assessment</b><span>reopens it if the condition returns</span></div>
+  </div>
+  <figure class="shot"><img src="screens/m3-06-risk-mitigated.png" alt="The risk register after mitigation" width="1280" height="1300"><figcaption>The assessment archive verifies</figcaption></figure>
+</section>
+
+<section class="slide" data-say="Three helpers worked alongside. One rebuilt this narrated tour. One researched Texas procurement law and confirmed TxDOT uses Euna. One updated the project framework." data-say-script="NIA: Who else was working on this?||OBI: Three background agents. One rebuilt this narrated tour you are listening to. One researched Texas procurement law and confirmed that TxDOT receives bids through Euna Procurement. And one kept the project framework up to date.">
+  <p class="kicker">Working in parallel</p>
+  <h2>Three background agents</h2>
+  <div class="tiles">
+    <div class="tile"><b>Tour</b><span>OBI and Nia, docked beside the content, gauge and cursor in step with the voice</span></div>
+    <div class="tile"><b>Procurement law</b><span>Texas best value statutes, TxDOT scoring examples, Euna submission rules</span></div>
+    <div class="tile"><b>Framework</b><span>updated the project framework text for Milestone 3</span></div>
+  </div>
+</section>
+
+<section class="slide" data-say="The scoreboard. Four releases complete, sixty two unit tests and four browser walks passing, each story tied to its verified commit." data-say-script="OBI: The scoreboard.||NIA: Releases zero to three are complete.||OBI: Sixty two unit tests and four browser walks pass, and each story is tied to the commit the portal verified.">
+  <p class="kicker">Scoreboard · 12 November</p>
+  <h2>Four releases done, one to go</h2>
+  <div class="chart" data-chart="releases" aria-label="Stories verified per release"></div>
+  <p class="legend"><span><i style="background:var(--s1)"></i>Verified</span><span><i style="background:var(--idle)"></i>Still to build</span></p>
+  <div class="tbl"><table>
+    <thead><tr><th>Story</th><th>Commit</th><th>Tests</th><th>Portal</th></tr></thead>
+    <tbody>
+      <tr><td>008 Submissions</td><td class="n">3d3dacd</td><td class="n">4</td><td><span class="pill ok">Verified · 50</span></td></tr>
+      <tr><td>009 Evaluation</td><td class="n">54ec087</td><td class="n">4</td><td><span class="pill ok">Verified · 50</span></td></tr>
+      <tr><td>010 Risk</td><td class="n">5cbf603</td><td class="n">4</td><td><span class="pill ok">Verified · 50</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="slide" data-say="Next, Milestone four: cybersecurity compliance, performance and user-error risks, and incident reports. Then the demo. And four questions for TxDOT through Ali." data-say-script="OBI: Next is Milestone four: cybersecurity compliance, performance and user error risks, and incident reports. Then we prepare the demo.||NIA: Anything we need from TxDOT?||OBI: Yes. The real scoring criteria for this bid, whether Euna offers an export or an API, TxDOT's own risk matrix, and the questions still open from before. Thanks for listening. This was OBI.">
+  <p class="kicker">What comes next</p>
+  <h2>Milestone 4, then the demo</h2>
+  <div class="lane"></div>
+  <ul class="beats">
+    <li>STORY-011 Cybersecurity compliance</li>
+    <li>STORY-014 Performance and user-error risks</li>
+    <li>STORY-015 Incident reports and risk documentation</li>
+  </ul>
+  <p><b>For TxDOT, through Ali:</b> the solicitation's real criteria and weights; Euna export or API access; TxDOT's risk matrix; and the earlier open questions.</p>
+  <p><a href="https://obianams04.github.io/cris-enhancement/workspace/#/evaluation">Try the workspace</a> · <a href="https://obianams04.github.io/cris-enhancement/">Command Center</a> · <a href="https://github.com/OBIANAMS04/cris-enhancement">GitHub</a></p>
+</section>
+</template>
+
+<script>
+(function () {
+  var slides = Array.prototype.slice.call(document.getElementById('slides').content.querySelectorAll('.slide'))
+    .filter(function (s) { return s.parentNode && s.parentNode.nodeType === 11; });
+  var stage = document.getElementById('stage'), count = document.getElementById('count');
+  var i = 0;
+  var NS = 'http://www.w3.org/2000/svg';
+  var tip = document.getElementById('tip');
+  function el(tag, attrs, text) { var e = document.createElementNS(NS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; return e; }
+  function showTip(evt, text) { tip.textContent = text; tip.hidden = false; tip.style.left = (evt.clientX + 12) + 'px'; tip.style.top = (evt.clientY + 12) + 'px'; }
+  function hbars(host, rows, max, fmt) {
+    var labelW = 190, w = 560, rowH = 34, h = rows.length * rowH + 10, plot = w - labelW - 60;
+    var svg = el('svg', { viewBox: '0 0 ' + w + ' ' + h, role: 'img', 'aria-label': host.getAttribute('aria-label') });
+    rows.forEach(function (r, k) {
+      var y = 6 + k * rowH, g = el('g', {});
+      g.appendChild(el('text', { x: 0, y: y + 15 }, r.label));
+      if (r.total != null) g.appendChild(el('rect', { class: 'track', x: labelW, y: y + 3, width: plot * r.total / max, height: 16, rx: 4 }));
+      if (r.value > 0) g.appendChild(el('rect', { class: 'fill', x: labelW, y: y + 3, width: plot * r.value / max, height: 16, rx: 4 }));
+      g.appendChild(el('text', { class: 'num', x: labelW + plot * Math.max(r.value, r.total || 0) / max + 8, y: y + 15 }, fmt(r)));
+      var hit = el('rect', { x: 0, y: y, width: w, height: rowH, fill: 'transparent' });
+      hit.addEventListener('mousemove', function (e) { showTip(e, r.label + ': ' + fmt(r)); });
+      hit.addEventListener('mouseleave', function () { tip.hidden = true; });
+      g.appendChild(hit);
+      svg.appendChild(g);
+    });
+    host.appendChild(svg);
+  }
+  function points(host) {
+    var data = [['Start', 0, 'Start'], ['M0', 50, 'M0: Command Center'], ['M1', 300, 'M1: help desk to features'], ['M2', 500, 'M2: training to compliance'], ['M3', 650, 'M3: submissions to risk']];
+    var w = 620, hgt = 260, l = 50, r = 20, t = 20, b = 50, max = 800;
+    var svg = el('svg', { viewBox: '0 0 ' + w + ' ' + hgt, role: 'img', 'aria-label': host.getAttribute('aria-label') });
+    var x = function (k) { return l + k * (w - l - r) / (data.length - 1); };
+    var y = function (v) { return t + (hgt - t - b) * (1 - v / max); };
+    [0, 200, 400, 600, 800].forEach(function (v) { svg.appendChild(el('line', { x1: l, x2: w - r, y1: y(v), y2: y(v), stroke: 'var(--rule)' })); svg.appendChild(el('text', { class: 'num muted', x: l - 8, y: y(v) + 4, 'text-anchor': 'end' }, String(v))); });
+    var pts = data.map(function (p, k) { return x(k) + ',' + y(p[1]); }).join(' ');
+    svg.appendChild(el('polygon', { points: l + ',' + y(0) + ' ' + pts + ' ' + x(data.length - 1) + ',' + y(0), fill: 'var(--s1)', opacity: '0.12' }));
+    svg.appendChild(el('polyline', { points: pts, fill: 'none', stroke: 'var(--s1)', 'stroke-width': 2 }));
+    data.forEach(function (p, k) {
+      var c = el('circle', { cx: x(k), cy: y(p[1]), r: k === data.length - 1 ? 6 : 4, fill: 'var(--s1)', stroke: 'var(--panel)', 'stroke-width': 2 });
+      c.addEventListener('mousemove', function (e) { showTip(e, p[2] + ': ' + p[1] + ' points'); });
+      c.addEventListener('mouseleave', function () { tip.hidden = true; });
+      svg.appendChild(c);
+      if (k) svg.appendChild(el('text', { class: 'num', x: x(k), y: y(p[1]) - 12, 'text-anchor': 'middle' }, String(p[1])));
+      svg.appendChild(el('text', { class: 'muted', x: x(k), y: hgt - 18, 'text-anchor': k === 0 ? 'start' : k === data.length - 1 ? 'end' : 'middle' }, p[0]));
+    });
+    host.appendChild(svg);
+  }
+  function heat(host) {
+    var counts = { 'high|high': 1 };
+    var lv = ['high', 'medium', 'low'], im = ['low', 'medium', 'high'], n = { low: 1, medium: 2, high: 3 };
+    var grid = document.createElement('div');
+    grid.className = 'heatgrid';
+    var corner = document.createElement('span'); corner.className = 'hg-head'; corner.textContent = 'Likelihood / Impact'; grid.appendChild(corner);
+    im.forEach(function (i) { var s = document.createElement('span'); s.className = 'hg-head'; s.textContent = i; grid.appendChild(s); });
+    lv.forEach(function (l) {
+      var s = document.createElement('span'); s.className = 'hg-head'; s.textContent = l; grid.appendChild(s);
+      im.forEach(function (i) {
+        var score = n[l] * n[i], c = document.createElement('div');
+        c.className = 'hg-cell ' + (score >= 6 ? 'bad' : score >= 3 ? 'warn' : 'ok') + (counts[l + '|' + i] ? '' : ' empty');
+        c.textContent = counts[l + '|' + i] ? String(counts[l + '|' + i]) : '·';
+        c.title = l + ' likelihood, ' + i + ' impact: score ' + score;
+        grid.appendChild(c);
+      });
+    });
+    host.appendChild(grid);
+  }
+  var charts = {
+    points: points,
+    heat: heat,
+    weights: function (h) { hbars(h, [{ label: 'Technical approach', value: 35 }, { label: 'Price / total cost', value: 30 }, { label: 'Experience', value: 15 }, { label: 'Key personnel', value: 10 }, { label: 'Security, continuity', value: 10 }], 35, function (r) { return r.value + '%'; }); },
+    ranking: function (h) { hbars(h, [{ label: 'Vendor A Demo ★', value: 80, total: 100 }, { label: 'Vendor B Demo', value: 70, total: 100 }], 100, function (r) { return r.value + ' / 100'; }); },
+    releases: function (h) { hbars(h, [{ label: 'STORY-000 (first)', value: 1, total: 1 }, { label: 'r0 Setup and support', value: 4, total: 4 }, { label: 'r1 Enhancement, training', value: 2, total: 2 }, { label: 'r2 Reporting, compliance', value: 3, total: 3 }, { label: 'r3 Response management', value: 2, total: 2 }, { label: 'r4 Risk and security', value: 1, total: 4 }], 4, function (r) { return r.value + ' of ' + r.total; }); }
+  };
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    var s = slides[i].cloneNode(true);
+    stage.replaceChildren(s);
+    s.querySelectorAll('[data-chart]').forEach(function (h) { charts[h.getAttribute('data-chart')](h); });
+    count.textContent = (i + 1) + ' / ' + slides.length;
+    if (location.hash !== '#s' + (i + 1)) history.replaceState(null, '', '#s' + (i + 1));
+    if (window.__deckOnShow) window.__deckOnShow(i);
+  }
+  document.getElementById('prev').onclick = function () { show(i - 1); };
+  document.getElementById('next').onclick = function () { show(i + 1); };
+  document.addEventListener('keydown', function (e) {
+    if (e.target.closest && e.target.closest('input,textarea')) return;
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') show(i + 1);
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') show(i - 1);
+  });
+  window.addEventListener('hashchange', function () { var m = /^#s(\d+)$/.exec(location.hash); if (m) show(+m[1] - 1); });
+
+  // The deck tour (the deck-tour block below) drives the slides through this handle.
+  window.__deck = { slides: slides, stage: stage, go: show, index: function () { return i; } };
+
+  var m = /^#s(\d+)$/.exec(location.hash);
+  show(m ? +m[1] - 1 : 0);
+})();
+</script>
+
+<!-- deck-tour start -->
+<!-- Deck tour (same engine as framework/tour-snippet.html, deck mode). Standing rules (Obi): 2026-11-10 red tour button,
+     2026-11-11 play icon and male narrator, 2026-11-12 OBI two-host narration, docked left panel (the stage reflows beside
+     it), gauge synced to the voice, pointer synced to the voice. Each slide carries data-say-script="OBI: ... || NIA: ...";
+     the deck script exposes window.__deck = { slides, stage, go(n), index() } and calls window.__deckOnShow(i) from show().
+     Reuse: copy everything between deck-tour start and deck-tour end into a deck built the same way. -->
+<style>
+:root { --tp-w: clamp(280px, 25vw, 340px); --tp-red: #c8102e; --tp-red-ink: #ffffff; --tp-bg: #ffffff; --tp-ink: #1b1d21; --tp-muted: #5a606b; --tp-line: #d9dde3; --tp-soft: #eef0f3; --tp-obi: #b00d28; --tp-nia: #1d5fa8; --tp-now: #fdf1f3; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --tp-red: #ff5a6e; --tp-red-ink: #1a0a0d; --tp-bg: #1b1f25; --tp-ink: #eceef2; --tp-muted: #a3aab6; --tp-line: #343b45; --tp-soft: #262b33; --tp-obi: #ff8796; --tp-nia: #8ab9ff; --tp-now: #2e2024; } }
+:root[data-theme="dark"] { --tp-red: #ff5a6e; --tp-red-ink: #1a0a0d; --tp-bg: #1b1f25; --tp-ink: #eceef2; --tp-muted: #a3aab6; --tp-line: #343b45; --tp-soft: #262b33; --tp-obi: #ff8796; --tp-nia: #8ab9ff; --tp-now: #2e2024; }
+.tour-launch[hidden], .tour-panel[hidden], .tour-cursor[hidden], .tour-desc[hidden] { display: none !important; }
+/* Docked: the page reflows beside the panel instead of under it. */
+html.tour-on { padding-left: var(--tp-w) !important; }
+html.tour-on .tour-target { outline: 3px solid var(--tp-red) !important; outline-offset: 4px; }
+.tour-panel { position: fixed; z-index: 2147483001; top: 0; left: 0; bottom: 0; width: var(--tp-w); margin: 0; overflow-y: auto; overscroll-behavior: contain;
+  display: flex; flex-direction: column; gap: 12px; box-sizing: border-box; text-align: left;
+  padding: 16px 16px calc(16px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+  background: var(--tp-bg); color: var(--tp-ink); border-right: 1px solid var(--tp-line); border-top: 5px solid var(--tp-red); box-shadow: 4px 0 18px rgba(0, 0, 0, 0.12);
+  font: 15px/1.5 system-ui, "Segoe UI", Roboto, sans-serif; letter-spacing: normal; text-transform: none; }
+.tour-panel * { box-sizing: border-box; }
+.tour-panel p, .tour-panel ol { margin: 0; max-width: none; }
+.tour-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--tp-muted); }
+.tour-brand { display: inline-flex; align-items: center; gap: 6px; color: var(--tp-red); }
+.tour-brand svg { width: 12px; height: 12px; }
+.tour-panel h2.tour-title { margin: 0; font: 700 18px/1.25 system-ui, "Segoe UI", Roboto, sans-serif; color: var(--tp-ink); letter-spacing: normal; text-transform: none; }
+.tour-desc { font-size: 13.5px; color: var(--tp-muted); }
+.tour-gauge { height: 10px; border-radius: 999px; background: var(--tp-soft); border: 1px solid var(--tp-line); overflow: hidden; flex: none; }
+.tour-gauge i { display: block; height: 100%; background: var(--tp-red); transform: scaleX(0); transform-origin: left center; }
+.tour-caption { padding: 10px 12px; border-radius: 10px; background: var(--tp-now); border-left: 4px solid var(--tp-red); font-size: 15.5px; line-height: 1.45; min-height: 3.2em; }
+.tour-who { display: inline-block; margin-right: 6px; font-size: 12px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+.tour-who.is-obi, .tour-script .is-obi b { color: var(--tp-obi); }
+.tour-who.is-nia, .tour-script .is-nia b { color: var(--tp-nia); }
+.tour-ctrl { display: flex; flex-wrap: wrap; gap: 8px; }
+.tour-panel button { font: 600 14px/1 system-ui, "Segoe UI", Roboto, sans-serif; letter-spacing: normal; text-transform: none; border-radius: 8px; padding: 9px 12px; min-height: 38px; min-width: 0; cursor: pointer;
+  border: 1px solid var(--tp-muted); background: transparent; color: var(--tp-ink); box-shadow: none; }
+.tour-panel button:disabled { opacity: 0.45; cursor: default; }
+.tour-panel button.tour-next { background: var(--tp-red); border-color: var(--tp-red); color: var(--tp-red-ink); }
+.tour-panel button.tour-voice { align-self: flex-start; min-height: 30px; padding: 6px 10px; font-size: 12.5px; }
+.tour-panel button.tour-voice[aria-pressed="true"] { border-color: var(--tp-red); }
+.tour-panel button:focus-visible { outline: 3px solid var(--tp-ink); outline-offset: 2px; }
+.tour-script { list-style: none; padding: 0; display: grid; gap: 6px; font-size: 13.5px; color: var(--tp-muted); }
+.tour-script li { padding: 6px 8px; border-radius: 8px; border: 0; }
+.tour-script li.is-now { background: var(--tp-soft); color: var(--tp-ink); }
+.tour-script b { font-size: 11.5px; letter-spacing: 0.05em; text-transform: uppercase; }
+.tour-keys { font-size: 12px; color: var(--tp-muted); }
+.tour-panel.is-paused .tour-gauge i { opacity: 0.55; }
+/* Narrow screens: a compact strip at the top; the page is pushed down by its measured height. */
+@media (max-width: 699.98px) {
+  html.tour-on { padding-left: 0 !important; padding-top: var(--tour-strip, 168px) !important; scroll-padding-top: calc(var(--tour-strip, 168px) + 12px); }
+  .tour-panel { right: 0; bottom: auto; width: auto; max-height: 50vh; gap: 8px; padding: 8px max(12px, env(safe-area-inset-right, 0px)) 10px max(12px, env(safe-area-inset-left, 0px));
+    border-right: 0; border-bottom: 1px solid var(--tp-line); box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14); }
+  .tour-panel h2.tour-title { font-size: 15px; }
+  .tour-desc, .tour-script, .tour-keys { display: none !important; }
+  .tour-caption { font-size: 14px; padding: 6px 10px; min-height: 0; }
+  .tour-gauge { height: 8px; }
+  .tour-ctrl { gap: 6px; }
+  .tour-panel button { min-height: 34px; padding: 7px 10px; font-size: 13px; }
+  .tour-panel .tour-voice { position: absolute; top: 4px; right: max(12px, env(safe-area-inset-right, 0px)); }
+  .tour-head { padding-right: 96px; }
+}
+/* The synced pointer: drawn above the page, never over the panel, never clickable. */
+.tour-cursor { position: fixed; left: 0; top: 0; z-index: 2147483000; width: 24px; height: 30px; pointer-events: none; will-change: transform; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4)); }
+.tour-cursor svg { display: block; width: 24px; height: 30px; transform-origin: 3px 3px; }
+.tour-cursor.is-click svg { animation: tp-press 0.35s ease; }
+.tour-ripple { position: fixed; z-index: 2147482999; width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 50%; border: 3px solid var(--tp-red); pointer-events: none; animation: tp-ripple 0.7s ease-out forwards; }
+@keyframes tp-press { 50% { transform: scale(0.8); } }
+@keyframes tp-ripple { from { transform: scale(0.2); opacity: 0.95; } to { transform: scale(1.3); opacity: 0; } }
+@keyframes tp-fade { from { opacity: 0.9; } to { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .tour-ripple { animation: tp-fade 0.7s linear forwards; transform: none; } .tour-cursor.is-click svg { animation: none; } }
+@media (max-width: 699.98px) { .tour-panel h2.tour-title { padding-right: 92px; } .tour-panel button.tour-voice { min-height: 28px; padding: 4px 8px; font-size: 12px; top: 6px; } }
+</style>
+<aside class="tour-panel" id="tour-panel" data-mode="deck" role="dialog" aria-modal="false" aria-labelledby="tour-title" hidden>
+  <div class="tour-head"><span class="tour-brand"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4.5 2.6v10.8L13.6 8z" fill="currentColor"></path></svg>Guided tour · OBI and Nia</span><span id="tour-count"></span></div>
+  <h2 class="tour-title" id="tour-title"></h2>
+  <p class="tour-desc" id="tour-desc"></p>
+  <div class="tour-gauge" id="tour-gauge" role="progressbar" aria-label="Progress through this slide" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="tour-fill"></i></div>
+  <p class="tour-caption" aria-live="polite"><b class="tour-who is-obi" id="tour-who">OBI</b><span id="tour-line"></span></p>
+  <div class="tour-ctrl">
+    <button type="button" id="tour-back">Back</button>
+    <button type="button" id="tour-pause" aria-pressed="false">Pause</button>
+    <button type="button" class="tour-next" id="tour-next">Next</button>
+    <button type="button" id="tour-close" aria-label="Close the tour">Close</button>
+  </div>
+  <button type="button" class="tour-voice" id="tour-voice" aria-pressed="true">Voice on</button>
+  <ol class="tour-script" id="tour-script" aria-label="What OBI and Nia say here"></ol>
+  <p class="tour-keys">Left and right arrows move, Space pauses, Esc closes.</p>
+</aside>
+<div class="tour-cursor" id="tour-cursor" aria-hidden="true" hidden><svg viewBox="0 0 24 30" focusable="false"><path d="M3 2.5v21.5l5.6-5.3 3.9 8.6 3.6-1.6-3.8-8.4h7.7z" fill="#ffffff" stroke="#111418" stroke-width="1.6" stroke-linejoin="round"></path></svg></div>
+<script>
+(() => {
+  'use strict';
+  const panel = document.getElementById('tour-panel');
+  if (!panel || panel.dataset.ready) return;
+  panel.dataset.ready = '1';
+  const mode = panel.getAttribute('data-mode') || 'page';
+  const $ = (id) => document.getElementById(id);
+  const html = document.documentElement;
+  const launch = $('tour-launch'), cursor = $('tour-cursor'), gauge = $('tour-gauge'), fill = $('tour-fill');
+  const capWho = $('tour-who'), capLine = $('tour-line'), scriptList = $('tour-script');
+  const btnBack = $('tour-back'), btnPause = $('tour-pause'), btnNext = $('tour-next'), btnClose = $('tour-close'), btnVoice = $('tour-voice');
+  const PAUSE_AFTER = 600, READ_CPS = 15, START_DELAY = 650;
+  const mq = (q) => { try { return matchMedia(q).matches; } catch (e) { return false; } };
+  const reduce = () => mq('(prefers-reduced-motion: reduce)');
+  const isTop = () => mq('(max-width: 699.98px)');
+
+  // ---- Voices: OBI leads (male, natural, low), Nia answers (a different, preferably natural female voice).
+  const synth = 'speechSynthesis' in window ? window.speechSynthesis : null;
+  const canSpeak = !!synth && typeof window.SpeechSynthesisUtterance === 'function';
+  const MALE = ['andrew', 'guy', 'christopher', 'eric', 'davis', 'brian', 'roger', 'steffan', 'ryan', 'thomas'];
+  const NIA_NAMES = ['jenny', 'aria', 'ava', 'emma'];
+  const FEMALE = /\b(zira|susan|hazel|samantha|victoria|karen|aria|jenny|libby|sonia|emma|michelle|catherine|ava|emily|female)\b/i;
+  const NATURAL = /natural|online/i;
+  const named = (v, n) => new RegExp('\\b' + n + '\\b', 'i').test(v.name || '');
+  let cast = { obi: null, nia: null, obiPitch: 0.75, niaPitch: 1.15 };
+  function pickVoices() {
+    let all = [];
+    try { all = (synth && synth.getVoices()) || []; } catch (e) { all = []; }
+    const en = all.filter((v) => /^en([-_]|$)/i.test(v.lang || ''));
+    const pool = en.length ? en : all;
+    let obi = null, natural = false;
+    for (const n of MALE) { obi = pool.find((v) => NATURAL.test(v.name) && named(v, n)); if (obi) { natural = true; break; } }
+    obi = obi || pool.find((v) => /google uk english male/i.test(v.name)) || pool.find((v) => /microsoft (david|mark)\b/i.test(v.name))
+      || pool.find((v) => !FEMALE.test(v.name)) || pool[0] || null;
+    let nia = null;
+    for (const n of NIA_NAMES) { nia = pool.find((v) => v !== obi && NATURAL.test(v.name) && named(v, n)); if (nia) break; }
+    nia = nia || pool.find((v) => v !== obi && /google us english/i.test(v.name)) || pool.find((v) => v !== obi && /zira/i.test(v.name))
+      || pool.find((v) => v !== obi && FEMALE.test(v.name)) || pool.find((v) => v !== obi) || obi;
+    cast = { obi, nia, obiPitch: natural ? 0.82 : 0.75, niaPitch: nia === obi ? 1.15 : 1.0 };
+  }
+  if (canSpeak) {
+    pickVoices();
+    try { if (synth.addEventListener) synth.addEventListener('voiceschanged', pickVoices); else synth.onvoiceschanged = pickVoices; } catch (e) {}
+  }
+  let voiceOn = true;
+  try { voiceOn = localStorage.getItem('tour-voice') !== 'off'; } catch (e) {}
+  const paintVoice = () => {
+    if (!canSpeak) { btnVoice.textContent = 'No voice in this browser'; btnVoice.disabled = true; btnVoice.setAttribute('aria-pressed', 'false'); return; }
+    btnVoice.textContent = voiceOn ? 'Voice on' : 'Voice off';
+    btnVoice.setAttribute('aria-pressed', String(voiceOn));
+  };
+  paintVoice();
+
+  // ---- Stops. Dialogue: "OBI: text || NIA: text || ...". Without a script, OBI reads the short description.
+  function parse(script, fallback) {
+    const out = [];
+    String(script || '').split('||').forEach((raw) => {
+      const s = raw.trim();
+      if (!s) return;
+      const m = /^(OBI|NIA)\s*:\s*([\s\S]*)$/i.exec(s);
+      out.push(m ? { who: m[1].toUpperCase(), text: m[2].trim() } : { who: 'OBI', text: s });
+    });
+    if (!out.length && fallback && fallback.trim()) out.push({ who: 'OBI', text: fallback.trim() });
+    return out.filter((l) => l.text);
+  }
+  const clean = (s) => String(s || '').replace(/\s+/g, ' ').trim();
+  let bringing = false;
+  const adapter = mode === 'deck' ? {
+    noun: 'Slide',
+    stops() {
+      const D = window.__deck;
+      if (!D) return [];
+      return D.slides.map((s, k) => {
+        const h = s.querySelector('h1, h2');
+        const title = clean(h && h.textContent) || 'Slide ' + (k + 1);
+        return { title, desc: '', lines: parse(s.getAttribute('data-say-script'), s.getAttribute('data-say') || title) };
+      });
+    },
+    bring(stop, k) {
+      const D = window.__deck;
+      bringing = true;
+      try { if (D.index() !== k) D.go(k); } finally { bringing = false; }
+      return D.stage;
+    }
+  } : {
+    noun: 'Stop',
+    stops() {
+      return Array.prototype.filter.call(document.querySelectorAll('[data-tour]'), (el) => el.getClientRects().length && !panel.contains(el))
+        .map((el) => {
+          const h = el.querySelector('h1, h2, h3');
+          const desc = el.getAttribute('data-tour') || '';
+          return { el, title: el.getAttribute('data-tour-title') || clean(h && h.textContent) || '', desc, lines: parse(el.getAttribute('data-tour-script'), desc) };
+        });
+    },
+    bring(stop) { return stop.el; }
+  };
+
+  // ---- State. Every async callback carries the token it was started with; a newer token cancels it.
+  let running = false, paused = false, list = [], idx = 0, lines = [], lineIdx = 0, phase = 'line', tok = 0;
+  let target = null, items = null, anchor = null, speechBroken = false, keepUtt = null;
+  const timers = new Set();
+  const later = (fn, ms) => { const id = setTimeout(() => { timers.delete(id); fn(); }, ms); timers.add(id); return id; };
+  const clearTimers = () => { timers.forEach((id) => clearTimeout(id)); timers.clear(); };
+  const cancelSpeech = () => { keepUtt = null; if (canSpeak) { try { synth.cancel(); } catch (e) {} } };
+
+  // ---- Gauge: filled by speech (boundary charIndex over the stop's characters), eased between events,
+  // held below 100% until the last line's 'end'. With voice off it runs on reading time (15 characters a second).
+  let g = { shown: 0, done: 0, total: 1, len: 0, mode: 'idle', started: false, b: 0, bt: 0, cps: 14, t0: 0, dur: 1, final: false };
+  function setFill(p) {
+    g.shown = p;
+    fill.style.transform = 'scaleX(' + p + ')';
+    gauge.setAttribute('aria-valuenow', String(Math.floor(p * 100)));
+    gauge.dataset.progress = String(p);
+  }
+  function tickGauge() {
+    if (!running || paused || g.final) return;
+    const now = performance.now();
+    let est = g.done;
+    if (g.mode === 'speech' && g.started) est += Math.min(g.len * 0.97, g.b + Math.max(0, now - g.bt) / 1000 * g.cps);
+    else if (g.mode === 'timer') est += g.len * Math.min(1, (now - g.t0) / g.dur);
+    const p = Math.min(0.995, est / g.total);
+    if (p > g.shown) setFill(p);
+  }
+
+  // ---- Content area (everything right of the docked panel, or below the top strip) and the synced pointer.
+  function area() {
+    const r = panel.getBoundingClientRect(), w = html.clientWidth || innerWidth, h = innerHeight;
+    return isTop() ? { l: 0, t: Math.max(0, r.bottom), r: w, b: h } : { l: Math.max(0, r.right), t: 0, r: w, b: h };
+  }
+  function pointFor(el) {
+    const a = area(), r = el.getBoundingClientRect();
+    let x = r.left + Math.min(40, r.width * 0.3), y = r.top + Math.min(24, r.height * 0.5);
+    x = Math.max(a.l + 8, Math.min(x, a.r - 30));
+    y = Math.max(a.t + 8, Math.min(y, a.b - 34));
+    return [x, y];
+  }
+  let cx = 0, cy = 0, raf = 0;
+  function frame() {
+    raf = requestAnimationFrame(frame);
+    if (anchor && anchor.isConnected) {
+      const p = pointFor(anchor);
+      if (reduce()) { cx = p[0]; cy = p[1]; } else { cx += (p[0] - cx) * 0.14; cy += (p[1] - cy) * 0.14; }
+      const a = area();
+      cx = Math.max(a.l + 8, cx); cy = Math.max(a.t + 8, cy);
+      cursor.style.transform = 'translate(' + cx.toFixed(1) + 'px, ' + cy.toFixed(1) + 'px)';
+    }
+    tickGauge();
+  }
+  function click() {
+    if (!anchor) return;
+    const p = pointFor(anchor), r = document.createElement('span');
+    r.className = 'tour-ripple';
+    r.setAttribute('aria-hidden', 'true');
+    r.style.left = p[0] + 'px'; r.style.top = p[1] + 'px';
+    document.body.appendChild(r);
+    setTimeout(() => r.remove(), 800);
+    cursor.classList.remove('is-click'); void cursor.offsetWidth; cursor.classList.add('is-click');
+    cursor.dataset.clicks = String((+cursor.dataset.clicks || 0) + 1);
+  }
+  const ITEMS = 'li, tbody tr, figure, button, .tile, .step, .cell, .card, [class*="card"], article, dl > div';
+  function itemsIn(el) {
+    let els = Array.prototype.filter.call(el.querySelectorAll(ITEMS), (e) => e.getClientRects().length && !panel.contains(e));
+    els = els.filter((e) => !els.some((o) => o !== e && e.contains(o)));
+    if (isTop()) {
+      // On the top strip, never scroll the target up under the strip: only point at items already in view.
+      const a = area();
+      return els.filter((e) => { const r = e.getBoundingClientRect(); return r.top >= a.t && r.top < a.b - 40; });
+    }
+    const top = el.getBoundingClientRect().top, limit = top + Math.max(innerHeight * 1.2, 600);
+    const near = els.filter((e) => e.getBoundingClientRect().top < limit);
+    return near.length ? near : els.slice(0, 6);
+  }
+  function pick(n) {
+    if (n === 0 || !items || !items.length) return target;
+    const span = Math.max(1, lines.length - 2);
+    return items[Math.min(items.length - 1, Math.round((n - 1) * (items.length - 1) / span))];
+  }
+  function reveal(el) {
+    const a = area(), r = el.getBoundingClientRect();
+    if (r.top < a.t + 4 || r.bottom > a.b - 4) {
+      try { el.scrollIntoView({ block: r.height > a.b - a.t ? 'start' : 'nearest', behavior: reduce() ? 'auto' : 'smooth' }); } catch (e) { el.scrollIntoView(); }
+    }
+  }
+
+  // ---- Panel rendering.
+  function renderStop(stop) {
+    $('tour-count').textContent = adapter.noun + ' ' + (idx + 1) + ' of ' + list.length;
+    $('tour-title').textContent = stop.title || adapter.noun + ' ' + (idx + 1);
+    const d = $('tour-desc');
+    d.textContent = stop.desc && stop.lines.length > 1 ? stop.desc : '';
+    d.hidden = !d.textContent;
+    scriptList.replaceChildren(...lines.map((l) => {
+      const li = document.createElement('li'), b = document.createElement('b');
+      li.className = 'is-' + l.who.toLowerCase();
+      b.textContent = l.who === 'NIA' ? 'Nia' : 'OBI';
+      li.append(b, ' ', l.text);
+      return li;
+    }));
+    btnBack.disabled = idx === 0;
+    btnNext.textContent = idx === list.length - 1 ? 'Finish' : 'Next';
+  }
+  function renderLine(n) {
+    const l = lines[n];
+    capWho.textContent = l.who === 'NIA' ? 'Nia' : 'OBI';
+    capWho.className = 'tour-who is-' + l.who.toLowerCase();
+    capLine.textContent = l.text;
+    Array.prototype.forEach.call(scriptList.children, (li, k) => { li.classList.toggle('is-now', k === n); if (k === n) li.setAttribute('aria-current', 'true'); else li.removeAttribute('aria-current'); });
+  }
+
+  // ---- Playback.
+  function startStop(k) {
+    if (!list.length) return;
+    k = Math.max(0, Math.min(list.length - 1, k));
+    tok++; clearTimers(); cancelSpeech();
+    idx = k;
+    const stop = list[k];
+    lines = stop.lines.length ? stop.lines : [{ who: 'OBI', text: stop.title || adapter.noun + ' ' + (k + 1) }];
+    g = { shown: 0, done: 0, total: Math.max(1, lines.reduce((s, l) => s + l.text.length, 0)), len: 0, mode: 'idle', started: false, b: 0, bt: 0, cps: 14, t0: 0, dur: 1, final: false };
+    setFill(0);
+    renderStop(stop);
+    renderLine(0);
+    if (target) target.classList.remove('tour-target');
+    target = adapter.bring(stop, k);
+    target.classList.add('tour-target');
+    items = null; anchor = target; lineIdx = 0; phase = 'line';
+    try { target.scrollIntoView({ block: 'start', behavior: reduce() ? 'auto' : 'smooth' }); } catch (e) { target.scrollIntoView(); }
+    const t = tok;
+    if (!paused) later(() => settle(t, () => playLine(0)), reduce() ? 200 : START_DELAY);
+  }
+  // Wait until the page has stopped scrolling (smooth scrolls on long pages), so later scrolls do not cut it short.
+  function settle(t, fn) {
+    let last = -1, still = 0;
+    const t0 = performance.now();
+    const step = () => {
+      if (t !== tok) return;
+      const key = Math.round(window.scrollY) + ':' + (target ? Math.round(target.getBoundingClientRect().top) : 0);
+      still = key === last ? still + 1 : 0;
+      last = key;
+      if (still >= 6 || performance.now() - t0 > 2500) fn(); else requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+  function playLine(n) {
+    clearTimers();
+    const t = ++tok;
+    lineIdx = n; phase = 'line';
+    const line = lines[n];
+    g.len = line.text.length; g.started = false; g.final = false; g.b = 0;
+    renderLine(n);
+    if (n === 0) anchor = target;
+    else { if (!items) items = itemsIn(target); anchor = pick(n); if (!isTop()) reveal(anchor); }
+    if (voiceOn && canSpeak && !speechBroken) speakLine(t, n, line); else timerLine(t, n, line);
+  }
+  function timerLine(t, n, line) {
+    g.mode = 'timer'; g.t0 = performance.now(); g.dur = Math.max(1200, line.text.length / READ_CPS * 1000);
+    click();
+    later(() => lineDone(t, n), g.dur);
+  }
+  function speakLine(t, n, line) {
+    let u;
+    try { u = new SpeechSynthesisUtterance(line.text); } catch (e) { timerLine(t, n, line); return; }
+    pickVoices();
+    const nia = line.who === 'NIA', v = nia ? cast.nia : cast.obi;
+    if (v) { u.voice = v; u.lang = v.lang; } else u.lang = 'en-US';
+    u.pitch = nia ? cast.niaPitch : cast.obiPitch;
+    u.rate = nia ? 1.0 : 0.95;
+    g.mode = 'speech'; g.cps = 14 * u.rate;
+    const begin = () => { if (!g.started) { g.started = true; g.bt = performance.now(); click(); } };
+    u.onstart = () => { if (t === tok) begin(); };
+    u.onboundary = (e) => { if (t !== tok) return; begin(); g.b = Math.max(g.b, Math.min(g.len, e.charIndex || 0)); g.bt = performance.now(); };
+    u.onend = () => { if (t === tok) lineDone(t, n); };
+    u.onerror = (e) => {
+      if (t !== tok) return;
+      if (e && (e.error === 'interrupted' || e.error === 'canceled')) return;
+      const t2 = ++tok; timerLine(t2, n, line);
+    };
+    keepUtt = u;
+    try { synth.cancel(); } catch (e) {}
+    later(() => { if (t !== tok) return; try { synth.speak(u); } catch (e) { const t2 = ++tok; timerLine(t2, n, line); } }, 40);
+    // Some browsers expose speechSynthesis but never speak (no voices, blocked audio): fall back to reading time.
+    later(() => {
+      if (t !== tok || g.started) return;
+      speechBroken = true;
+      const t2 = ++tok; cancelSpeech(); timerLine(t2, n, line);
+    }, 3500);
+  }
+  function lineDone(t, n) {
+    if (t !== tok) return;
+    clearTimers();
+    g.done += g.len;
+    g.mode = 'idle'; g.started = false; g.b = 0;
+    const t2 = ++tok;
+    if (n + 1 < lines.length) {
+      lineIdx = n + 1;
+      later(() => { if (t2 === tok) playLine(n + 1); }, 120);
+    } else {
+      g.final = true; setFill(1); phase = 'after';
+      later(() => { if (t2 === tok) advance(); }, PAUSE_AFTER);
+    }
+  }
+  const advance = () => (idx + 1 < list.length ? startStop(idx + 1) : end());
+  function go(k) { if (k >= list.length) end(); else startStop(Math.max(0, k)); }
+  function setPaused(p) {
+    paused = p;
+    btnPause.textContent = p ? 'Resume' : 'Pause';
+    btnPause.setAttribute('aria-pressed', String(p));
+    panel.classList.toggle('is-paused', p);
+    if (p) { tok++; clearTimers(); cancelSpeech(); }
+    else if (phase === 'after') advance();
+    else playLine(lineIdx);
+  }
+
+  // ---- Docking: the panel is a fixed left column and the page reflows beside it (html.tour-on adds the padding);
+  // under 700px it is a strip at the top and the page is pushed down by its measured height.
+  function syncStrip() { if (running) html.style.setProperty('--tour-strip', Math.ceil(panel.getBoundingClientRect().height) + 'px'); }
+  let ro = null;
+  try { ro = new ResizeObserver(syncStrip); } catch (e) { ro = null; }
+  function start() {
+    list = adapter.stops();
+    if (!list.length) return;
+    running = true; speechBroken = false;
+    panel.hidden = false; cursor.hidden = false;
+    if (launch) launch.hidden = true;
+    html.classList.add('tour-on');
+    syncStrip();
+    if (ro) ro.observe(panel);
+    paused = false;
+    btnPause.textContent = 'Pause';
+    btnPause.setAttribute('aria-pressed', 'false');
+    panel.classList.remove('is-paused');
+    const a = area();
+    cx = a.l + 24; cy = isTop() ? a.t + 24 : innerHeight * 0.45;
+    if (!raf) raf = requestAnimationFrame(frame);
+    startStop(0);
+    try { btnPause.focus({ preventScroll: true }); } catch (e) {}
+  }
+  function end() {
+    if (!running) return;
+    running = false; paused = false; tok++;
+    clearTimers(); cancelSpeech();
+    if (raf) cancelAnimationFrame(raf);
+    raf = 0;
+    if (ro) ro.disconnect();
+    html.classList.remove('tour-on');
+    html.style.removeProperty('--tour-strip');
+    if (target) target.classList.remove('tour-target');
+    target = null; anchor = null; items = null;
+    panel.hidden = true; cursor.hidden = true;
+    if (launch) { launch.hidden = false; try { launch.focus({ preventScroll: true }); } catch (e) {} }
+  }
+
+  if (launch) launch.addEventListener('click', () => (running ? end() : start()));
+  btnBack.addEventListener('click', () => go(idx - 1));
+  btnNext.addEventListener('click', () => go(idx + 1));
+  btnPause.addEventListener('click', () => setPaused(!paused));
+  btnClose.addEventListener('click', end);
+  btnVoice.addEventListener('click', () => {
+    if (!canSpeak) return;
+    voiceOn = !voiceOn; speechBroken = false; paintVoice();
+    try { localStorage.setItem('tour-voice', voiceOn ? 'on' : 'off'); } catch (e) {}
+    if (running && !paused && phase === 'line') { tok++; clearTimers(); cancelSpeech(); playLine(lineIdx); }
+  });
+  const typing = (el) => !!el && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName || ''));
+  window.addEventListener('keydown', (e) => {
+    if (!running || typing(e.target) || e.altKey || e.ctrlKey || e.metaKey) return;
+    let used = true;
+    if (e.key === 'ArrowRight') go(idx + 1);
+    else if (e.key === 'ArrowLeft') go(idx - 1);
+    else if (e.key === ' ' || e.key === 'Spacebar') { if (!e.repeat) setPaused(!paused); }
+    else if (e.key === 'Escape') end();
+    else used = false;
+    if (used) { e.preventDefault(); e.stopPropagation(); }
+  }, true);
+  window.addEventListener('keyup', (e) => { if (running && (e.key === ' ' || e.key === 'Spacebar') && !typing(e.target)) { e.preventDefault(); e.stopPropagation(); } }, true);
+  addEventListener('resize', syncStrip);
+  if (mode === 'deck') window.__deckOnShow = (n) => { if (running && !bringing && n !== idx) startStop(n); };
+  window.__tour = { start, end, state: () => ({ running, paused, idx, lineIdx, phase, count: list.length, lines: lines.length, voice: cast.obi && cast.obi.name, nia: cast.nia && cast.nia.name, obiPitch: cast.obiPitch, niaPitch: cast.niaPitch }) };
+})();
+</script>
+<!-- deck-tour end -->
+</body>
+</html>
