@@ -390,21 +390,28 @@
       "criteria": [
         {
           "text": "Given a response, when submitted, then it is stored correctly.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Given a submission error, when it occurs, then it is logged and addressed.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Trust: All submissions are tracked for audit.",
-          "passed": false
+          "passed": true
         }
       ],
-      "files_touched": [],
-      "tests_added": [],
-      "notes": null,
-      "updated_at": null,
+      "files_touched": [
+        "content/solicitation.json",
+        "lib/submissions.js",
+        "workspace/js/submissions.js",
+        "workspace/js/views.js"
+      ],
+      "tests_added": [
+        "tests/story-008-submissions.test.mjs"
+      ],
+      "notes": "A response is checked before anything is stored (on time, every required document, accepted files), then every file is stored and read back by hash and the response is saved with its documents and a SHA-256 receipt. A failed submission is logged as an incident and addressed by a later valid submission or by hand. Every submission and status change is tracked in the audit log. Euna Procurement is not connected, so tracking is in the workspace.",
+      "updated_at": "2026-11-12T00:38:44.158Z",
       "verification": {
         "state": "in_progress",
         "criteria_passed": 0,

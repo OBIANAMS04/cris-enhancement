@@ -1,0 +1,16 @@
+{
+  "note": "Demo settings for receiving responses to the CRIS Service Agreement solicitation. The closing time and required documents are set for the demo; the real solicitation's terms replace them.",
+  "reference": "TxDOT Crash Records Information System Service Agreement (demo)",
+  "closes_at": "2026-11-20T21:00:00.000Z",
+  "closes_note": "3:00 p.m. Central on 20 November 2026 (demo date)",
+  "required_documents": [
+    "Technical proposal",
+    "Pricing",
+    "Forms and certifications",
+    "HUB subcontracting plan"
+  ],
+  "euna": {
+    "connected": false,
+    "note": "Euna Procurement is not connected to this build; submissions are tracked in the workspace."
+  }
+}

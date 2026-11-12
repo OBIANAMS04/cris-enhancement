@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "1",
+  "projectId": "a563218c-c3a4-433c-8ed7-4e8e0573f59c",
+  "storyId": "STORY-008",
+  "projectTruthBaseRevision": 0,
+  "observedAt": "2026-11-12T00:38:44.159Z",
+  "sourceCommitSha": "365ce4d4dc2adfd92402ab11633f3eca828a5a46",
+  "factProposals": [
+    {
+      "dimension": "integrations",
+      "value": "Submissions are meant to come through Euna Procurement (REQ-015); it is not connected to this build, so responses are recorded and tracked in the workspace.",
+      "evidence": "content/solicitation.json"
+    },
+    {
+      "dimension": "inputs",
+      "value": "A response must include a technical proposal, pricing, forms and certifications, and a HUB subcontracting plan, before the closing time (demo settings).",
+      "evidence": "content/solicitation.json"
+    }
+  ],
+  "decisions": [
+    {
+      "statement": "Each stored response gets a receipt: the SHA-256 over its documents, checked again on the response page.",
+      "rationale": "A submission must be provably stored as received.",
+      "evidence": "lib/submissions.js"
+    },
+    {
+      "statement": "A failed submission is logged as an incident per respondent and resolved by that respondent's next valid submission.",
+      "rationale": "The acceptance asks that errors are logged and addressed.",
+      "evidence": "lib/submissions.js"
+    }
+  ],
+  "limitations": [
+    {
+      "statement": "The closing time and required documents are demo settings; the real solicitation's terms replace them.",
+      "evidence": "content/solicitation.json"
+    }
+  ],
+  "demonstrationEvidence": [
+    {
+      "kind": "test",
+      "ref": "tests/story-008-submissions.test.mjs"
+    },
+    {
+      "kind": "screenshot",
+      "ref": "framework/screens/m3-01-submission-error.png"
+    },
+    {
+      "kind": "screenshot",
+      "ref": "framework/screens/m3-02-response-tracking.png"
+    }
+  ],
+  "measurementEvents": []
+}
