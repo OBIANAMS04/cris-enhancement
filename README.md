@@ -56,6 +56,23 @@ Four more pages, built the same way (rules in `lib/`, pages in `workspace/js/`):
 `tests/workspace-walk-m2.js` walks these four pages in a real browser, including a legal update that raises a
 compliance violation and a training refresher that clears it.
 
+## The workspace (Milestone 3)
+
+Three more pages, built the same way:
+
+- Submissions (STORY-008, `#/submissions`): a procurement officer or contract manager records each response. It is
+  checked first (closing time, all required documents, file types and sizes). The response and its documents are
+  saved together with a SHA-256 receipt; a failed submission is logged as an incident; a retried one is not stored
+  twice. Settings are in `content/solicitation.json`. Euna Procurement is not connected.
+- Evaluation (STORY-009, `#/evaluation`): weighted criteria (total 100) in `content/procurement-rules.json`,
+  compiled from public sources and proposed, not TxDOT's. Evaluators score 0 to 10; outliers are flagged; a
+  correction is a new score linked to the old one. The archive needs every response fully scored and every flag resolved.
+- Risk (STORY-010, `#/risk`): an assessment reads the live system for six conditions and records each finding as a
+  risk with a score from 1 to 9, an owner and a mitigation plan, on a heat map. Risks clear when the condition is gone.
+
+`tests/workspace-walk-m3.js` walks these three pages in a real browser: an incomplete submission logged then fixed,
+a typo score flagged and corrected before archiving, and an outage drill that raises a score-9 risk.
+
 ## Run it
 
 It needs Node.js 20 or later and nothing else. There is no build step and there are no dependencies.
@@ -66,7 +83,7 @@ node --test tests/            # the data layer, against the files committed here
 ```
 
 The page has to be served, because a browser will not let a page opened straight from disk read the JSON files.
-`tests/browser-walk.js`, `tests/workspace-walk.js` and `tests/workspace-walk-m2.js` are walks through the site in a real browser (every tab, every card, sample labels, the
+`tests/browser-walk.js`, `tests/workspace-walk.js`, `tests/workspace-walk-m2.js` and `tests/workspace-walk-m3.js` are walks through the site in a real browser (every tab, every card, sample labels, the
 stale-data warning, a deleted story, a missing file, phone width); it is run through Playwright.
 
 ## Where things are
@@ -74,7 +91,7 @@ stale-data warning, a deleted story, a missing file, phone width); it is run thr
 | Path | What |
 |---|---|
 | `index.html`, `assets/` | The Command Center. `assets/js/data.js` is the only place data is loaded |
-| `workspace/`, `lib/` | The Milestone 1 and 2 workspace: pages in `workspace/js/`, rules and the store in `lib/` |
+| `workspace/`, `lib/` | The Milestone 1, 2 and 3 workspace: pages in `workspace/js/`, rules and the store in `lib/` |
 | `assets/app.css` | Styles. The brand colours are two lines at the top |
 | `content/` | The project's own content: decisions and notes (`notes.json`, appended to) and the proposed data model |
 | `framework/` | The project framework (goals, status, decisions, risks) and its screenshots |

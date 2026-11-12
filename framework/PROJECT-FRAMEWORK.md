@@ -2,7 +2,7 @@
 
 **Solicitation:** Crash Records Information System Service Agreement (TxDOT) · **Bidder:** Colaberry
 **Owner:** Obi Anamelechi Kingsley · **Decision makers:** Ali Muwwakkil (Managing Director), Ram Katamaraja
-**Ship-by:** 24 November 2026 · **Last updated:** 2026-11-11 · Updated after every milestone
+**Ship-by:** 24 November 2026 · **Last updated:** 2026-11-12 · Updated after every milestone
 
 > Everything here is built and demonstrated on synthetic data. Nothing is operating in production and nothing is
 > connected to a TxDOT system. The Command Center shows no number, connection or result the project has not produced.
@@ -35,8 +35,8 @@ Dates in this table are the ones the portal's STORY-000 brief gives. The plan fi
 | **r0** Initial System Setup and Support | 001 Help Desk Support Module · 002 System Monitoring Tools · 003 Performance Reports · 012 Ongoing Technical Support and Maintenance | 5 to 8 Nov | **All four verified 2026-11-11**, 50 points each. Workspace live at https://obianams04.github.io/cris-enhancement/workspace/ |
 | **r1** Enhancement and Training | 004 Feature Development Module · 005 User Training Sessions | 10 to 12 Nov | **Complete.** 004 and 005 **verified 2026-11-11**, 50 points each |
 | **r2** Reporting and Compliance | 006 Reporting Engine · 007 Compliance with Laws · 013 Required Documentation | 13 to 16 Nov | **Complete.** 006, 007 and 013 **verified 2026-11-11**, 50 points each |
-| **r3** Response Management | 008 Response Submissions · 009 Evaluate and Score Responses | 18 to 20 Nov | Not started |
-| **r4** Risk Management and Security | 010 Risk Assessment Tools · 011 Cybersecurity Compliance · 014 Performance and User-Error Risks · 015 Incident Reports and Risk Documentation | 21 to 24 Nov | Not started |
+| **r3** Response Management | 008 Response Submissions · 009 Evaluate and Score Responses | 18 to 20 Nov | **Complete.** 008 and 009 **verified 2026-11-12**, 50 points each |
+| **r4** Risk Management and Security | 010 Risk Assessment Tools · 011 Cybersecurity Compliance · 014 Performance and User-Error Risks · 015 Incident Reports and Risk Documentation | 21 to 24 Nov | **In progress.** 010 **verified 2026-11-12**, 50 points. 011, 014 and 015 left (Milestone 4) |
 
 ### Milestones (three to five stories at a time)
 
@@ -45,12 +45,48 @@ Dates in this table are the ones the portal's STORY-000 brief gives. The plan fi
 | M0 | STORY-000: the Command Center, all nine tabs, verified by the portal | **Done 2026-11-11** |
 | M1 | STORY-001, 002, 003, 012 and 004: the workspace (help desk, support, monitoring, reports, features) | **Done 2026-11-11**, all five verified, 250 points |
 | M2 | STORY-005, 006, 007, 013: training, reporting engine, compliance, documents | **Done 2026-11-11**, all four verified, 200 points (10 of 16 stories, 500 points on this build) |
-| M3 | STORY-008, 009, 010 | 21 Nov (next) |
-| M4 | STORY-011, 014, 015, then demo prep | 24 Nov |
+| M3 | STORY-008, 009, 010: response submissions, evaluation and scoring, risk assessment | **Done 2026-11-12**, all three verified, 150 points (13 of 16 stories, 650 points on this build) |
+| M4 | STORY-011, 014, 015, then demo prep | 24 Nov (next) |
 
 Each milestone ends with: a summary, links, everything committed and pushed, the framework and its artifact
 updated with current screenshots, and a short HTML presentation (three to five minutes, with charts and a story
 line) for the audience.
+
+### Milestone 3 against its nine acceptance criteria (2026-11-12)
+
+All nine ticked in `progress.json`, one commit per story, each naming its story, after a groundwork commit
+(365ce4d: the data-model fields, the new demo person and the shared pieces). The portal verified all three on
+2026-11-12 (UTC) through the push webhook, 50 points each, 150 for the milestone. The portal's record is committed
+unedited (382b60b).
+
+| Story | What passes | Commit | Proof |
+|---|---|---|---|
+| STORY-008 Manage response submissions (REQ-012, REQ-015, `#/submissions`) | A procurement officer or contract manager records each response. It is checked first: before the closing time, all required documents present (technical proposal, pricing, forms and certifications, HUB subcontracting plan), accepted file types and sizes. Files are stored and read back by hash. The response and its documents are saved together with a SHA-256 receipt, re-checked on the response page. A failed submission is logged as an incident per respondent, addressed by that respondent's next valid submission or by hand. A retried submission is not stored twice. Every submission, document and status change (submitted, under evaluation, awarded, not awarded) is in the audit log. Settings are in `content/solicitation.json` (demo closing time 3 pm Central, 20 Nov 2026) | 3d3dacd | `tests/story-008-submissions.test.mjs` (4), `tests/workspace-walk-m3.js` |
+| STORY-009 Evaluate and score responses (REQ-014, `#/evaluation`) | Weighted criteria total 100. Evaluators (procurement officer, contract manager, TxDOT manager) score each 0 to 10. Weighted score = sum of weight x mean / 10, out of 100. Best value is the highest complete score; ties are flagged. A score more than 4 points from the other evaluators is flagged. Only its own evaluator can correct a score, with a reason, as a new score linked to the one it replaces; nothing is overwritten. The archive (ranking, every score, SHA-256) is allowed only when all responses are fully scored and every flag is resolved | 54ec087 | `tests/story-009-evaluation.test.mjs` (4), walk |
+| STORY-010 Risk assessment tools (REQ-017, REQ-016, `#/risk`) | An assessment reads the live system for six conditions (below). Each finding is a Risk with likelihood, impact, a score from 1 to 9, evidence, an owner and a mitigation plan, shown on a heat map. A risk is mitigated when its condition is gone at the next assessment, or when the owner records the action. A score of 9, or a risk open past 7 days, is logged for review. Every assessment is archived with a SHA-256 | 5cbf603 | `tests/story-010-risk.test.mjs` (4), walk |
+
+The six conditions the risk assessment reads: open incidents; availability under 99%; slow responses; user error
+(reopened tickets, failed knowledge checks); operator error (late or overdue maintenance, open report errors);
+security and compliance gaps (lapsed vendor cyber training, compliance violations).
+
+Where the criteria come from. The evaluation criteria in `content/procurement-rules.json` were compiled by a research
+agent from public sources: Tex. Gov't Code §2155.074 (best value; price and meeting specifications are principal
+factors), §2155.075 and §2157.003 (IT best value); the Comptroller Procurement and Contract Management Guide; and
+documented TxDOT examples (RFO 601440000054109: approach 50, lead time 10, price 40; a 2013 TxDOT IT services RFO
+with pricing at 30%). No CRIS-specific weights are public. The demo criteria are a proposal: technical approach and
+compliance 35, experience and past performance 15, key personnel 10, security, delivery and business continuity 10,
+price 30. Evaluator NDA and conflict rules were found only in the HHS handbook, not for TxDOT.
+
+Euna Procurement (formerly Bonfire). TxDOT does use it: the research found TxDOT pages and RFOs that require
+submission through Euna. No public Euna API documentation was found, so the integration is not connected and
+tracking happens in the workspace.
+
+The cross-story drill in `tests/workspace-walk-m3.js`: an incomplete submission is logged and then fixed; a typo
+score is flagged and corrected before archiving; an outage drill raises a score-9 risk that is logged for review and
+then mitigated.
+
+Limits: the evaluation weights and the closing time are proposals until TxDOT confirms them; the risk matrix is ours,
+not TxDOT's; Euna is not connected; the store and the document files are per browser.
 
 ### Milestone 2 against its twelve acceptance criteria (2026-11-11)
 
@@ -130,14 +166,24 @@ unbuilt stories are marked "in progress".
   counts. Fields added to the data model for these stories are each marked with their story; TrainingAttendance
   gained an id. Three synthetic demo roles were added: Taylor (contract manager), Morgan (compliance officer) and
   Quinn (procurement officer).
-- Checks: 50 unit tests (`node --test tests/`): the data layer, the store, and each story's happy path, Trust
-  line and failure paths. Three browser walks through Playwright: `tests/browser-walk.js` (Command Center: 9 tabs,
+- Milestone 3 adds three pages to the workspace: Submissions (`#/submissions`), Evaluation (`#/evaluation`) and
+  Risk (`#/risk`), each drawing only what the functions in `lib/` return. Content files:
+  `content/solicitation.json` (closing time and required documents) and `content/procurement-rules.json`
+  (evaluation criteria and their sources). A submission is saved with a SHA-256 receipt; scores are append-only, and a
+  correction is a new score linked to the one it replaces. Risks are read from the live system, not typed in. One new
+  synthetic demo person: Rowan (risk manager). Fields added to the data model for these stories, each marked with
+  its story: the receipt, the score id, what it corrects and why, and the risk's source, score, evidence and review
+  date.
+- Checks: 62 unit tests (`node --test tests/`): the data layer, the store, and each story's happy path, Trust
+  line and failure paths. Four browser walks through Playwright: `tests/browser-walk.js` (Command Center: 9 tabs,
   67 cards, sample labels, stale data, deleted story, missing file, phone width), `tests/workspace-walk.js`
-  (every M1 story from an empty store, the outage drill, a tampered audit line, phone width) and
-  `tests/workspace-walk-m2.js` (the four M2 stories, including the cross-story compliance drill, and phone width).
-  All pass, 2026-11-11.
-- Background agents: each milestone uses one to three, with notifications shown in the chat. M2 used three: the
-  tour narrator, the compliance research, and this framework update.
+  (every M1 story from an empty store, the outage drill, a tampered audit line, phone width),
+  `tests/workspace-walk-m2.js` (the four M2 stories, including the cross-story compliance drill, and phone width)
+  and `tests/workspace-walk-m3.js` (the three M3 stories: an incomplete submission logged then fixed, a typo score
+  flagged and corrected before archiving, and an outage drill raising a score-9 risk logged for review then
+  mitigated). All pass, 2026-11-12.
+- Background agents: each milestone uses one to three, with notifications shown in the chat. M3 used three: the
+  tour rebuild, the procurement research, and this framework update.
 - This framework lives in `framework/`, not `docs/`: the platform rewrites `docs/` on every sync.
 
 ## 5. Decisions
@@ -163,6 +209,11 @@ unbuilt stories are marked "in progress".
 | 2026-11-11 | The compliance register is compiled from official public sources and shown as to be confirmed by TxDOT legal, not legal advice | Claude |
 | 2026-11-11 | Every guided tour has a male voice narrator (added to the tour snippet `framework/tour-snippet.html`, the M0+M1 deck, the SSS framework and briefing) | Obi |
 | 2026-11-11 | Each milestone uses one to three background agents whose notifications show in the chat, and ends with an exciting 3 to 5 minute HTML presentation with charts | Obi |
+| 2026-11-12 | Every submission gets a SHA-256 receipt, saved with the response and re-checked on the response page; a retried submission is not stored twice | Claude |
+| 2026-11-12 | Corrections never overwrite scores: a correction is a new score linked to the one it replaces, with a reason, and only the original evaluator may make it | Claude |
+| 2026-11-12 | Evaluation criteria and weights are a proposal built from public Texas procurement sources and shown as such, until TxDOT gives the real ones | Claude |
+| 2026-11-12 | Risks are tied to live conditions and mitigated automatically when the condition is gone at the next assessment; otherwise the owner records the action | Claude |
+| 2026-11-12 | The guided-tour narrator is "OBI" ("Hi, I am OBI..."), a NotebookLM-style two-host conversation (OBI leads, co-host Nia) in a deeper natural male voice. The narrator panel docks to the left beside the content with no overlay up to 125% zoom. The progress gauge and an animated cursor are synchronised with the voice | Obi |
 
 ## 6. Blockers and owners
 
@@ -172,6 +223,9 @@ unbuilt stories are marked "in progress".
 | The contract manager's real list of required reports is not known | The five report specifications are proposals | TxDOT, through Ali | Send the real list; replace `content/report-specs.json` |
 | No access to the TxDOT financial system (REQ-011) | The contract cost summary is refused and logged as an incident | TxDOT, through Ali | Say whether and how access can be given |
 | The compliance register is not confirmed by TxDOT legal | The 14 rules are a research compilation, not legal advice | TxDOT legal, through Ali | Review `content/compliance-rules.json` |
+| The real evaluation criteria and weights for this solicitation are not known | The evaluation page uses a proposed set built from public sources | TxDOT, through Ali | Send them; replace `content/procurement-rules.json` |
+| Unknown whether submissions must flow through Euna Procurement, and whether an API or export is available | Euna is not connected; submissions are tracked in the workspace | TxDOT, through Ali | Say whether Euna is required and whether an API or export exists |
+| TxDOT's risk matrix is not known | The risk page uses our own likelihood and impact scale (1 to 9) | TxDOT, through Ali | Send the matrix; adjust the scoring |
 | `plan.json` has no schedule, release dates or due dates | The Overview shows no dates; the Project management tab would have an empty Gantt | Ali / the platform | See whether the first sync after connecting delivers dates; if not, ask Ali |
 
 ## 7. Timeline
@@ -179,6 +233,7 @@ unbuilt stories are marked "in progress".
 | Date | What happened |
 |---|---|
 | 2026-11-08 | Ali grants builder access on the portal and points Obi at STORY-000 |
+| 2026-11-12 | **Milestone 3 verified.** Groundwork (365ce4d); response submissions (008, 3d3dacd), evaluation and scoring (009, 54ec087) and risk assessment tools (010, 5cbf603) built, one commit per story; procurement criteria compiled by a research agent from public sources; Euna Procurement researched (TxDOT does use it, no public API found, not connected); 62 unit tests and four browser walks pass; **the portal verified all three through the push webhook, 150 points** (650 on this build, 13 of 16 stories); the portal's record committed (382b60b). Release r3 complete; r4 has 010 done and 011, 014, 015 left. New standing rules from Obi: the guided-tour narrator is OBI with co-host Nia, a deeper male voice, a left-docked panel and a voice-synchronised gauge and cursor; a background agent is rebuilding every tour to them. Presentation: https://obianams04.github.io/cris-enhancement/framework/presentations/m3/ |
 | 2026-11-11 | **Milestone 2 verified.** Groundwork (e470493); training (005), reporting engine (006), document management (013) and compliance with laws (007) built, one commit per story; 14 compliance rules compiled by a research agent; 50 unit tests and three browser walks pass, including the cross-story compliance drill; **the portal verified all four within seconds of the push, without Sync from GitHub, 200 points** (500 on this build, 10 of 16 stories); the portal's record committed (afa8035). New standing rules from Obi: male voice narrator on every tour, one to three background agents per milestone, an HTML presentation at every milestone end. Releases r1 and r2 complete. Presentation: https://obianams04.github.io/cris-enhancement/framework/presentations/m2/ |
 | 2026-11-11 | **Milestone 1 verified.** The 18 tables created as proposed (plus AuditEntry and MaintenanceWindow); the workspace built: help desk (001), support dashboard (012), monitoring (002), performance reports (003), feature development (004), audit log; 32 unit tests and both browser walks pass; one commit per story pushed; **the portal verified all five, 250 points** (300 on this build); the portal's record committed; push webhook registered; framework artifact v4 |
 | 2026-11-11 | Obi said "build the rest". Repo `OBIANAMS04/cris-enhancement` created (public) in the browser, pushed, connected to the portal; the other eight tabs built; a browser walk of 9 tabs and 65 cards passes; all five criteria ticked; **STORY-000 verified by the portal, 50 points**; GitHub Pages live at https://obianams04.github.io/cris-enhancement/; the portal's progress record committed. Guided-tour button gets a play icon (standing rule) |
@@ -188,14 +243,19 @@ unbuilt stories are marked "in progress".
 
 | Risk | Effect | Action |
 |---|---|---|
-| 6 stories in the 13 days to 24 Nov | The ship-by date is tight | Releases r0, r1 and r2 done on 11 Nov (10 of 16 stories); M3 (008, 009, 010) and M4 (011, 014, 015, then demo prep) remain |
+| 3 stories in 12 days to 24 Nov | The ship-by date is still tight, but the pace holds | Releases r0 to r3 done and 010 done (13 of 16 stories, 650 points) by 12 Nov; M4 (011, 014, 015, then demo prep) remains |
+| The evaluation weights, the closing time and the risk scale are proposals | They could be read as TxDOT's own | Labelled as proposals on screen and in `content/`; questions to TxDOT are in Blockers |
 | The compliance register is a research compilation | It could be read as legal advice | Shown on screen as to be confirmed by TxDOT legal; rules about records this build does not hold are "not applicable", never a pass |
 | The workspace store is per browser | Two people do not share tickets yet | Said on screen; a shared backend replaces the store's backend without touching the stories' logic |
 | The stories name integrations (TxDOT IT infrastructure, TxDOT financial systems, Euna Procurement, incident management) that this project cannot reach | A demo could imply connections that do not exist | Build against synthetic stand-ins behind a clear interface, label them, and keep every indicator grey and "not checked from here" until a real system reports |
 | The plan's requirements read as written for the delivered CRIS service, and also for handling the solicitation response itself (REQ-012 to 015) | Scope could be misread | Follow the story files as written; raise mismatches with Ali rather than reinterpreting |
 | The repo is public | Anything committed is visible to anyone | No secrets, keys or `.env` files, ever; the push-webhook secret is run once and never saved |
 
-## 9. Screens (2026-11-11)
+## 9. Screens (2026-11-12)
+
+Milestone 3, in `framework/screens/` (`m3-` files): 01 a submission refused with its error (`m3-01-submission-error.png`),
+02 response tracking, 03 evaluation with a flagged score, 04 the evaluation ranking, 05 a risk assessment with its
+heat map, 06 a risk mitigated, 07 the risk page at phone width, 08 the portal showing STORY-010 completed.
 
 Milestone 2, in `framework/screens/` (`m2-` files): 01 a training session, 02 the reporting engine refusing a
 report and logging the incident, 03 a report built to its spec, 04 the documents library, 05 a document opened with
@@ -215,8 +275,9 @@ drill-down, 11 a data-model entity, 12 to 14 sample mode, 15 the stale-data warn
 
 ## 10. Links
 
-- Portal: https://enterprise.colaberry.ai/portal/projects/workspace/a563218c-c3a4-433c-8ed7-4e8e0573f59c/STORY-001 (next: STORY-008: https://enterprise.colaberry.ai/portal/projects/workspace/a563218c-c3a4-433c-8ed7-4e8e0573f59c/STORY-008)
+- Portal: https://enterprise.colaberry.ai/portal/projects/workspace/a563218c-c3a4-433c-8ed7-4e8e0573f59c/STORY-001 (next: STORY-011: https://enterprise.colaberry.ai/portal/projects/workspace/a563218c-c3a4-433c-8ed7-4e8e0573f59c/STORY-011)
 - Workspace (live): https://obianams04.github.io/cris-enhancement/workspace/
+- Milestone 3 presentation: https://obianams04.github.io/cris-enhancement/framework/presentations/m3/
 - Milestone 2 presentation: https://obianams04.github.io/cris-enhancement/framework/presentations/m2/
 - Framework artifact (pinned): https://claude.ai/artifact/AZJzCgHVd2QAr4LnFCRzzf
 - GitHub repo: https://github.com/OBIANAMS04/cris-enhancement
