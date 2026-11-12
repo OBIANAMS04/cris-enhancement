@@ -435,21 +435,28 @@
       "criteria": [
         {
           "text": "Given a response, when evaluated, then it is scored accurately.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Given a scoring error, when it occurs, then it is corrected.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Trust: All scores are archived for transparency.",
-          "passed": false
+          "passed": true
         }
       ],
-      "files_touched": [],
-      "tests_added": [],
-      "notes": null,
-      "updated_at": null,
+      "files_touched": [
+        "content/procurement-rules.json",
+        "lib/evaluation.js",
+        "workspace/js/evaluation.js",
+        "workspace/js/views.js"
+      ],
+      "tests_added": [
+        "tests/story-009-evaluation.test.mjs"
+      ],
+      "notes": "Criteria with weights totalling 100; each evaluator scores each criterion 0 to 10; weighted score = sum of weight x mean / 10, tested against hand calculation. A score more than 4 points from the other evaluators is flagged; corrections are new scores that name the one they replace and why, so nothing is overwritten. The ranking and every score are archived with SHA-256 for transparency.",
+      "updated_at": "2026-11-12T00:38:44.725Z",
       "verification": {
         "state": "in_progress",
         "criteria_passed": 0,

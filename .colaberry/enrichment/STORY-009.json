@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "1",
+  "projectId": "a563218c-c3a4-433c-8ed7-4e8e0573f59c",
+  "storyId": "STORY-009",
+  "projectTruthBaseRevision": 0,
+  "observedAt": "2026-11-12T00:38:44.726Z",
+  "sourceCommitSha": "3d3dacda3a3915162f687f9d76514f2e20ea91bf",
+  "factProposals": [
+    {
+      "dimension": "approval_points",
+      "value": "Evaluators are procurement officers, the contract manager or TxDOT managers; the ranking is archived only when every response is fully scored and flagged scores are resolved.",
+      "evidence": "lib/evaluation.js"
+    },
+    {
+      "dimension": "constraints",
+      "value": "Texas best-value rules and documented TxDOT evaluation practice were compiled from public sources for the criteria; TxDOT procurement must confirm them.",
+      "evidence": "content/procurement-rules.json"
+    }
+  ],
+  "decisions": [
+    {
+      "statement": "Weighted score = sum of weight x (mean evaluator score / 10), out of 100; weights must total 100.",
+      "rationale": "REQ-014 asks for TxDOT's weighted scoring system.",
+      "evidence": "lib/evaluation.js"
+    },
+    {
+      "statement": "Scores are never edited; a correction is a new score linked to the one it replaces, with a reason.",
+      "rationale": "All scores must be archived for transparency.",
+      "evidence": "lib/evaluation.js"
+    }
+  ],
+  "limitations": [
+    {
+      "statement": "The criteria and weights are a demo proposal derived from public sources, not TxDOT's criteria for this solicitation.",
+      "evidence": "content/procurement-rules.json"
+    }
+  ],
+  "demonstrationEvidence": [
+    {
+      "kind": "test",
+      "ref": "tests/story-009-evaluation.test.mjs"
+    },
+    {
+      "kind": "screenshot",
+      "ref": "framework/screens/m3-03-evaluation-flagged.png"
+    },
+    {
+      "kind": "screenshot",
+      "ref": "framework/screens/m3-04-evaluation-ranking.png"
+    }
+  ],
+  "measurementEvents": []
+}

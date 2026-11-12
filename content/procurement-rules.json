@@ -1,0 +1,211 @@
+{
+  "note": "Compiled from public sources on 2026-11-11 for the demo; to be confirmed by TxDOT procurement before any real use. Not legal advice. No CRIS-specific evaluation weights were found publicly; the weights below are documented examples from other TxDOT solicitations, and suggested_demo_criteria is a demo proposal only.",
+  "best_value": {
+    "citation": "Tex. Gov't Code 2155.074 (best value standard), 2155.075 (value factors must be specified in the solicitation), 2157.003 (best value for automated information systems)",
+    "url": "https://statutes.capitol.texas.gov/Docs/GV/htm/GV.2155.htm",
+    "factors": [
+      "Purchase price and whether the goods or services meet specifications are principal considerations, balanced with other relevant factors (2155.074(b))",
+      "Installation costs",
+      "Life cycle costs",
+      "Quality and reliability of the goods and services",
+      "Delivery terms",
+      "Indicators of probable vendor performance: past performance, financial resources and ability to perform, experience or demonstrated capability and responsibility, ability to provide reliable maintenance agreements and support",
+      "Cost of employee training associated with the purchase",
+      "Effect of the purchase on agency productivity",
+      "Vendor's anticipated economic impact to the state or a subdivision (tax revenue, employment)",
+      "Impact of the purchase on the agency's administrative resources",
+      "Other factors relevant to best value in the context of the particular purchase",
+      "IT (2157.003, best value = lowest overall cost of an automated information system): purchase price; compatibility to exchange existing data; capacity for expanding and upgrading; quantitative reliability factors; training level required; technical support requirements for maintaining data across a network platform; compliance with DIR statewide standards; plus applicable 2155.074 and 2155.075 factors"
+    ]
+  },
+  "evaluation_rules": [
+    {
+      "id": "EV-01",
+      "rule": "For competitive sealed proposals the agency must specify in the RFP the known non-price factors it will consider for best value; it may later add factors it identifies after opening if it informs all vendors concurrently.",
+      "source_reference": "Tex. Gov't Code 2155.075(b)",
+      "source_url": "https://statutes.capitol.texas.gov/Docs/GV/htm/GV.2155.htm"
+    },
+    {
+      "id": "EV-02",
+      "rule": "Evaluation criteria that were not included in the solicitation may not be used to rank or select responses.",
+      "source_reference": "State of Texas Procurement and Contract Management Guide v4.0 (Comptroller), evaluation criteria section",
+      "source_url": "https://comptroller.texas.gov/purchasing/docs/96-1809-4.0.pdf"
+    },
+    {
+      "id": "EV-03",
+      "rule": "Solicitations commonly have at least three broad criteria: proposed scope of work/approach, past performance and experience, and price. Price is scored either on reasonableness or by a mathematical formula on objective criteria.",
+      "source_reference": "State of Texas Procurement and Contract Management Guide v4.0 (Comptroller)",
+      "source_url": "https://comptroller.texas.gov/purchasing/docs/96-1809-4.0.pdf"
+    },
+    {
+      "id": "EV-04",
+      "rule": "TxDOT screens responses first: only a complete response with all required submittal documents and meeting minimum qualifications is considered; failures are non-responsive. Pass/fail checks (documents complete, vendor performance rating) precede weighted scoring, and only responses passing pass/fail are scored.",
+      "source_reference": "TxDOT RFO 601440000054109 (Traffic Signal Controller), sec. 17.1 and 17.6; TxDOT RFO 601440000051864 sec. 17.6",
+      "source_url": "https://govtribe.com/file/government-file/esbd-547674-1786137206629-01-dot-rfo-601440000054109-dot-pdf"
+    },
+    {
+      "id": "EV-05",
+      "rule": "TxDOT evaluates written responses by a TxDOT evaluation committee that scores each response against established criteria; respondents must not contact evaluation team members.",
+      "source_reference": "TxDOT IT Services RFO (2013), Response Evaluation Step 2; TxDOT RFO 601440000054109 sec. 17.7",
+      "source_url": "https://ftp.txdot.gov/pub/txdot-info/gsd/rfo_documents/services_rfo.zip"
+    },
+    {
+      "id": "EV-06",
+      "rule": "TxDOT may down-select the highest-scoring respondents for discussions (attendance mandatory), then rescore (e.g., revised approach and revised pricing), and may negotiate and request a Best and Final Offer; TxDOT is sole judge of best value.",
+      "source_reference": "TxDOT RFO 601440000054109 sec. 17.8-17.9; TxDOT RFO 601440000051864 sec. 17.8 and 18; TxDOT IT Services RFO (2013) Steps 3-4",
+      "source_url": "https://govtribe.com/file/government-file/esbd-553793-1787773736231-01-dot-rfo-601440000051864-dot-pdf"
+    },
+    {
+      "id": "EV-07",
+      "rule": "TxDOT RFO/RFP best value also draws on Gov't Code 2156.007 factors (quality, ability and capacity to perform, prior contract performance, compliance with law, financial resources, future maintenance) and, for IT purchases, the 2157.003 factors. Ties are resolved by statutory preferences, then drawing lots.",
+      "source_reference": "TxDOT RFO 601440000051864, Terms and Conditions 2.07 Determining Award",
+      "source_url": "https://govtribe.com/file/government-file/esbd-553793-1787773736231-01-dot-rfo-601440000051864-dot-pdf"
+    },
+    {
+      "id": "EV-08",
+      "rule": "Evaluation team members should each sign a non-disclosure statement and complete a preliminary conflict-of-interest assessment before any discussion of proposals; scoring and non-scoring members are recorded in the procurement file. (Source is the HHS System handbook hosted on the Comptroller site; it is agency-specific, not TxDOT's own policy.)",
+      "source_reference": "HHS Procurement and Contract Management Handbook, sec. 14 Vendor Selection (hosted on comptroller.texas.gov)",
+      "source_url": "https://comptroller.texas.gov/purchasing/docs/sb20/hhs.pdf"
+    },
+    {
+      "id": "EV-09",
+      "rule": "Two scoring methods are recognized in Texas state agency practice: individual scoring by each evaluator then averaged, or consensus scoring where the team agrees points per criterion with a facilitator and scribe; in consensus scoring evaluators do not assign scores in their individual review. Evaluators score each response against the RFP criteria, not against each other (except price). (HHS-specific handbook, shown as a typical example.)",
+      "source_reference": "HHS Procurement and Contract Management Handbook, sec. 8.12.2 Consensus Scoring",
+      "source_url": "https://comptroller.texas.gov/purchasing/docs/sb20/hhs.pdf"
+    },
+    {
+      "id": "EV-10",
+      "rule": "If a contract is awarded to a vendor that did not receive the highest score in a certified assessment process, the agency must state its reasons in writing in the contract file.",
+      "source_reference": "Tex. Gov't Code 2261.054 (as cited in HHS handbook sec. 14)",
+      "source_url": "https://comptroller.texas.gov/purchasing/docs/sb20/hhs.pdf"
+    },
+    {
+      "id": "EV-11",
+      "rule": "Each TxDOT evaluation standard carries its own numerical weighting, communicated in the RFP in advance, and is scored on a numerical scale; standards vary by project.",
+      "source_reference": "TxDOT Scientific Services Contracts Manual, Section 2: Procurement, Evaluation",
+      "source_url": "https://www.txdot.gov/manuals/csd/ncp/scientific_services/procurement-i999517.html"
+    }
+  ],
+  "example_criteria": [
+    {
+      "solicitation": "TxDOT RFO 601440000054109, Traffic Signal Controller (August 2026), initial written evaluation",
+      "url": "https://govtribe.com/file/government-file/esbd-547674-1786137206629-01-dot-rfo-601440000054109-dot-pdf",
+      "criteria": [
+        { "name": "Respondent's approach to meeting requirements in the Specification", "weight_pct": 50 },
+        { "name": "Lead time", "weight_pct": 10 },
+        { "name": "Pricing from original written offer", "weight_pct": 40 }
+      ]
+    },
+    {
+      "solicitation": "TxDOT RFO 601440000054109, Traffic Signal Controller, after discussions (revised scoring)",
+      "url": "https://govtribe.com/file/government-file/esbd-547674-1786137206629-01-dot-rfo-601440000054109-dot-pdf",
+      "criteria": [
+        { "name": "Revised approach to meeting Specification requirements and lead time", "weight_pct": 60 },
+        { "name": "Revised pricing", "weight_pct": 40 }
+      ]
+    },
+    {
+      "solicitation": "TxDOT IT Services (outsourcing) RFO B442013011711000 (2013), initial evaluation",
+      "url": "https://ftp.txdot.gov/pub/txdot-info/gsd/rfo_documents/services_rfo.zip",
+      "criteria": [
+        { "name": "Proposed solution and delivery approach", "weight_pct": null },
+        { "name": "Respondent experience and past performance", "weight_pct": null },
+        { "name": "Qualification and experience of proposed personnel", "weight_pct": null },
+        { "name": "Business impact and innovation", "weight_pct": null },
+        { "name": "Pricing", "weight_pct": 30 }
+      ]
+    }
+  ],
+  "suggested_demo_criteria": [
+    { "name": "Technical approach and compliance with requirements", "weight_pct": 35, "basis": "TxDOT RFO 601440000054109 weights approach at 50 of 100 and the 2013 IT RFO lists 'proposed solution and delivery approach' first; 2155.074 quality and reliability; 2157.003 compatibility, expandability, technical support" },
+    { "name": "Vendor experience and past performance", "weight_pct": 15, "basis": "2155.074(b-1)(5) indicators of vendor performance; 2013 TxDOT IT RFO experience and past performance criterion; Comptroller guide's typical criteria" },
+    { "name": "Key personnel qualifications", "weight_pct": 10, "basis": "2013 TxDOT IT RFO 'qualification and experience of proposed personnel'; TxDOT RFO template Sections 7-8 and 10" },
+    { "name": "Security, delivery schedule and business continuity", "weight_pct": 10, "basis": "2155.074 delivery terms and quality/reliability; TxDOT RFO template Sections 11-13 (security plan, QA plan, BCDR plan); lead time scored 10 in RFO 601440000054109" },
+    { "name": "Price / total cost", "weight_pct": 30, "basis": "2013 TxDOT IT RFO pricing = 30% of total; 2155.074(b) price a principal consideration; 2157.003 lowest overall cost (RFO 601440000054109 uses 40)" }
+  ],
+  "submission_rules": [
+    {
+      "id": "SUB-01",
+      "rule": "TxDOT posts solicitations on the ESBD and runs vendor submission, addenda and Q&A through its Euna Procurement (formerly Bonfire) portal; vendors must register there to respond.",
+      "source_reference": "TxDOT RFO 601440000051864 sec. 2 and 16.1; TxDOT PEPS Euna Procurement page",
+      "source_url": "https://www.txdot.gov/business/peps/opportunities/peps-contract-advertisements.html"
+    },
+    {
+      "id": "SUB-02",
+      "rule": "Responses must be submitted through the Euna Procurement system as one signed and dated response; responses emailed to TxDOT personnel are non-responsive. Documents must not be encrypted or password protected, and each section is a separate document named 'Section #' plus a description of at most 30 characters.",
+      "source_reference": "TxDOT RFO 601440000051864 sec. 16.1-16.3",
+      "source_url": "https://govtribe.com/file/government-file/esbd-553793-1787773736231-01-dot-rfo-601440000051864-dot-pdf"
+    },
+    {
+      "id": "SUB-03",
+      "rule": "Typical required sections in a TxDOT RFO: Pricing Schedule, Execution of Offer, Texas Family Code Schedule, Addenda acknowledgement, Location Schedule, Subcontracting Plan (HUB), Vendor Qualifications and Experience, Vendor Personnel Qualifications, Compliance with Specification, Staffing Plan, Security Plan, Quality Assurance Plan, Business Continuity and Disaster Recovery Plan, Assumptions Schedule. Each is marked required or not applicable per solicitation.",
+      "source_reference": "TxDOT RFO 601440000051864 sec. 16.3 (sections 1-14)",
+      "source_url": "https://govtribe.com/file/government-file/esbd-553793-1787773736231-01-dot-rfo-601440000051864-dot-pdf"
+    },
+    {
+      "id": "SUB-04",
+      "rule": "Late responses are not considered under any circumstances; response submittals are not accepted after the posted due date and time.",
+      "source_reference": "TxDOT Terms and Conditions 2.02(b); ESBD notice text for TxDOT solicitations (e.g., 601440000054263)",
+      "source_url": "https://www.txdot.gov/content/dam/docs/division/fin/txdot-terms-conditions.pdf"
+    },
+    {
+      "id": "SUB-05",
+      "rule": "A response is incomplete and will not be evaluated if any required document is not uploaded before the closing date and time; Euna will not let a submission be completed if a file is in the wrong format.",
+      "source_reference": "TxDOT Bonfire (Euna) FAQ for vendors",
+      "source_url": "https://www.txdot.gov/content/dam/docs/division/ppd/peps-contract-advertisements/faq-bonfire.pdf"
+    },
+    {
+      "id": "SUB-06",
+      "rule": "Vendors can revise a submission while the opportunity is open by unsubmitting, editing and resubmitting; unsubmitted submissions are not reviewed. A vendor may also withdraw before the deadline. After close, submission details and documents cannot be changed.",
+      "source_reference": "Euna Procurement help, Creating and Uploading a Submission; TxDOT Bonfire FAQ",
+      "source_url": "https://procurement-help.eunasolutions.com/hc/en-us/articles/48585321559955-Creating-and-Uploading-a-Submission"
+    },
+    {
+      "id": "SUB-07",
+      "rule": "On submitting, Euna shows a Submission Receipt with a breakdown of the submission and emails a copy (with a Send Email option to resend); the vendor sees the current time and closing time while preparing the submission.",
+      "source_reference": "Euna Procurement help, Creating and Uploading a Submission, Submission Receipt",
+      "source_url": "https://procurement-help.eunasolutions.com/hc/en-us/articles/48585321559955-Creating-and-Uploading-a-Submission"
+    },
+    {
+      "id": "SUB-08",
+      "rule": "Questions go through the portal's Opportunity Q&A / Vendor Discussions before the question deadline; answers and addenda are issued as public notices to vendors who indicated intent to bid. Intent to bid is a prerequisite to preparing a submission and the same person who certifies it must complete the submittal.",
+      "source_reference": "TxDOT Bonfire FAQ; Euna help (Messages, Vendor Discussions, Public Notices)",
+      "source_url": "https://www.txdot.gov/content/dam/docs/division/ppd/peps-contract-advertisements/faq-bonfire.pdf"
+    },
+    {
+      "id": "SUB-09",
+      "rule": "Required documents are listed in the opportunity's Requested Information section with a required file type and file limit; BidTable and Questionnaire templates must match the buyer's current template or the submission cannot be finalized (green/red validation indicators per item).",
+      "source_reference": "Euna Procurement help, Creating and Uploading a Submission; TxDOT Bonfire FAQ",
+      "source_url": "https://procurement-help.eunasolutions.com/hc/en-us/articles/48585321559955-Creating-and-Uploading-a-Submission"
+    },
+    {
+      "id": "SUB-10",
+      "rule": "At opening, only respondent names are made public; prices and proposal details are divulged after award. Accepted responses are not returned and are subject to the Public Information Act, so respondents must mark confidential or proprietary information. (Opening wording is from a 2013 TxDOT IT RFO; Euna's own help pages were not verified to describe sealed opening.)",
+      "source_reference": "TxDOT IT Services RFO (2013) instructions; TxDOT Terms and Conditions 2.05",
+      "source_url": "https://www.txdot.gov/content/dam/docs/division/fin/txdot-terms-conditions.pdf"
+    },
+    {
+      "id": "SUB-11",
+      "rule": "State agency rule: a response received after the published date and time is a late response; the agency returns it unopened or disposes of it per the solicitation, and may accept a late response only under a written internal policy for extenuating circumstances.",
+      "source_reference": "State of Texas Procurement and Contract Management Guide v4.0 (Comptroller)",
+      "source_url": "https://comptroller.texas.gov/purchasing/docs/96-1809-4.0.pdf"
+    }
+  ],
+  "euna": {
+    "txdot_uses_it": true,
+    "evidence_url": "https://www.txdot.gov/business/peps/opportunities/peps-contract-advertisements.html",
+    "public_api": null,
+    "api_url": null,
+    "api_note": "No official public Euna Procurement / Bonfire API documentation was found at eunasolutions.com or the Euna help center. The only API-like result was a third-party community scraper on Apify (https://apify.com/j0401/bonfire-procurement/api/openapi), which is not an Euna API. Integration would need to be confirmed with Euna directly; treat integration in the demo as simulated.",
+    "features": [
+      "Public portal of open opportunities per agency (txdot.bonfirehub.com) with vendor registration per individual user",
+      "Intent to bid before a submission can be prepared",
+      "Opportunity Q&A / Vendor Discussions with a questions-due date; public notices for addenda and Q&A",
+      "Requested Information list with required file types, file limits, and BidTable/Questionnaire templates, validated before submit",
+      "Submit and Finalize with confirmation checkbox; Submission Receipt on screen and by email with copy of files",
+      "Revise by unsubmit and resubmit while the opportunity is open; withdrawal before the deadline",
+      "Closing date and time shown to the vendor; submission details cannot change after close (TxDOT states late responses are not accepted)",
+      "Solicitation Builder for buyers and a newer vendor submission experience (Euna help)"
+    ]
+  }
+}
