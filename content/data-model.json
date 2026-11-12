@@ -777,9 +777,25 @@
           "procurement_reference",
           "text",
           "optional; id in the procurement system"
+        ],
+        [
+          "receipt_hash",
+          "text",
+          "optional; added by STORY-008: SHA-256 over the submitted documents, given to the respondent"
+        ],
+        [
+          "received_by",
+          "Person",
+          "optional; added by STORY-008"
         ]
       ],
-      "relations": []
+      "relations": [
+        [
+          "received_by",
+          "Person",
+          "many to one, optional"
+        ]
+      ]
     },
     {
       "name": "ResponseDocument",
@@ -883,6 +899,11 @@
           "weight",
           "number",
           "share of the total score"
+        ],
+        [
+          "description",
+          "text",
+          "optional; added by STORY-009"
         ]
       ],
       "relations": []
@@ -894,6 +915,11 @@
         "REQ-014"
       ],
       "fields": [
+        [
+          "id",
+          "identifier",
+          "added by STORY-009"
+        ],
         [
           "response",
           "SolicitationResponse",
@@ -912,12 +938,27 @@
         [
           "score",
           "number",
-          ""
+          "0 to 10"
         ],
         [
           "comment",
           "text",
           "optional"
+        ],
+        [
+          "scored_at",
+          "timestamp",
+          "optional; added by STORY-009"
+        ],
+        [
+          "corrects",
+          "EvaluationScore",
+          "optional; added by STORY-009: the score this one replaces"
+        ],
+        [
+          "reason",
+          "text",
+          "optional; added by STORY-009: why a score was corrected"
         ]
       ],
       "relations": [
@@ -935,6 +976,11 @@
           "evaluator",
           "Person",
           "many to one"
+        ],
+        [
+          "corrects",
+          "EvaluationScore",
+          "many to one, optional"
         ]
       ]
     },
@@ -986,6 +1032,36 @@
           "status",
           "choice",
           "open, mitigated, accepted, closed"
+        ],
+        [
+          "source_key",
+          "text",
+          "optional; added by STORY-010: which condition in the system raised it"
+        ],
+        [
+          "score",
+          "number",
+          "optional; added by STORY-010: likelihood times impact, 1 to 9"
+        ],
+        [
+          "evidence",
+          "text",
+          "optional; added by STORY-010"
+        ],
+        [
+          "identified_at",
+          "timestamp",
+          "optional; added by STORY-010"
+        ],
+        [
+          "review_by",
+          "date",
+          "optional; added by STORY-010: when an unmitigated risk must be reviewed"
+        ],
+        [
+          "last_assessed_at",
+          "timestamp",
+          "optional; added by STORY-010"
         ]
       ],
       "relations": [
