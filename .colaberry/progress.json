@@ -3,13 +3,13 @@
   "project": "Crash Records Information System (CRIS) Enhancement",
   "totals": {
     "stories_total": 16,
-    "stories_verified": 10,
+    "stories_verified": 13,
     "stories_submitted": 0,
-    "stories_in_progress": 6,
+    "stories_in_progress": 3,
     "stories_not_started": 0,
-    "criteria_total": 38,
-    "criteria_passed": 20,
-    "points_awarded": 500
+    "criteria_total": 41,
+    "criteria_passed": 32,
+    "points_awarded": 650
   },
   "stories": [
     {
@@ -289,12 +289,12 @@
       "updated_at": "2026-11-11T11:40:15.575Z",
       "verification": {
         "state": "verified",
-        "criteria_passed": 0,
-        "criteria_total": 0,
+        "criteria_passed": 3,
+        "criteria_total": 3,
         "verified_at": "2026-11-11T11:40:53.298Z",
         "commit_sha": "4d2a08a1895778fd200c756022eed5d301029c97",
         "commit_url": "https://github.com/OBIANAMS04/cris-enhancement/commit/4d2a08a1895778fd200c756022eed5d301029c97",
-        "commit_at": null,
+        "commit_at": "2026-11-11T11:40:15Z",
         "points_awarded": 50,
         "outstanding": []
       }
@@ -331,12 +331,12 @@
       "updated_at": "2026-11-11T11:40:16.124Z",
       "verification": {
         "state": "verified",
-        "criteria_passed": 0,
-        "criteria_total": 0,
+        "criteria_passed": 3,
+        "criteria_total": 3,
         "verified_at": "2026-11-11T11:40:53.370Z",
         "commit_sha": "62097befacae61f84f766c9ffc0ef9afd52b69b9",
         "commit_url": "https://github.com/OBIANAMS04/cris-enhancement/commit/62097befacae61f84f766c9ffc0ef9afd52b69b9",
-        "commit_at": null,
+        "commit_at": "2026-11-11T11:40:16Z",
         "points_awarded": 50,
         "outstanding": []
       }
@@ -373,12 +373,12 @@
       "updated_at": "2026-11-11T11:40:17.514Z",
       "verification": {
         "state": "verified",
-        "criteria_passed": 0,
-        "criteria_total": 0,
+        "criteria_passed": 3,
+        "criteria_total": 3,
         "verified_at": "2026-11-11T11:40:53.401Z",
         "commit_sha": "a0fb8ce536896b26578ed810d5af8ed11c478c46",
         "commit_url": "https://github.com/OBIANAMS04/cris-enhancement/commit/a0fb8ce536896b26578ed810d5af8ed11c478c46",
-        "commit_at": null,
+        "commit_at": "2026-11-11T11:40:18Z",
         "points_awarded": 50,
         "outstanding": []
       }
@@ -413,19 +413,15 @@
       "notes": "A response is checked before anything is stored (on time, every required document, accepted files), then every file is stored and read back by hash and the response is saved with its documents and a SHA-256 receipt. A failed submission is logged as an incident and addressed by a later valid submission or by hand. Every submission and status change is tracked in the audit log. Euna Procurement is not connected, so tracking is in the workspace.",
       "updated_at": "2026-11-12T00:38:44.158Z",
       "verification": {
-        "state": "in_progress",
+        "state": "verified",
         "criteria_passed": 0,
-        "criteria_total": 3,
-        "verified_at": null,
-        "commit_sha": null,
-        "commit_url": null,
+        "criteria_total": 0,
+        "verified_at": "2026-11-12T00:39:06.709Z",
+        "commit_sha": "3d3dacda3a3915162f687f9d76514f2e20ea91bf",
+        "commit_url": "https://github.com/OBIANAMS04/cris-enhancement/commit/3d3dacda3a3915162f687f9d76514f2e20ea91bf",
         "commit_at": null,
-        "points_awarded": null,
-        "outstanding": [
-          "Given a response, when submitted, then it is stored correctly.",
-          "Given a submission error, when it occurs, then it is logged and addressed.",
-          "Trust: All submissions are tracked for audit."
-        ]
+        "points_awarded": 50,
+        "outstanding": []
       }
     },
     {
@@ -458,19 +454,15 @@
       "notes": "Criteria with weights totalling 100; each evaluator scores each criterion 0 to 10; weighted score = sum of weight x mean / 10, tested against hand calculation. A score more than 4 points from the other evaluators is flagged; corrections are new scores that name the one they replace and why, so nothing is overwritten. The ranking and every score are archived with SHA-256 for transparency.",
       "updated_at": "2026-11-12T00:38:44.725Z",
       "verification": {
-        "state": "in_progress",
+        "state": "verified",
         "criteria_passed": 0,
-        "criteria_total": 3,
-        "verified_at": null,
-        "commit_sha": null,
-        "commit_url": null,
+        "criteria_total": 0,
+        "verified_at": "2026-11-12T00:39:06.768Z",
+        "commit_sha": "54ec08764a6ffeef9e08e92771c0472b88219640",
+        "commit_url": "https://github.com/OBIANAMS04/cris-enhancement/commit/54ec08764a6ffeef9e08e92771c0472b88219640",
         "commit_at": null,
-        "points_awarded": null,
-        "outstanding": [
-          "Given a response, when evaluated, then it is scored accurately.",
-          "Given a scoring error, when it occurs, then it is corrected.",
-          "Trust: All scores are archived for transparency."
-        ]
+        "points_awarded": 50,
+        "outstanding": []
       }
     },
     {
@@ -503,19 +495,15 @@
       "notes": "An assessment reads the live system for outages (open incidents, availability under 99%), slow performance, user error (reopened tickets, failed checks), operator error (late or overdue maintenance, report errors) and security gaps (lapsed cyber training, compliance violations). Each finding is a Risk with likelihood, impact, score, evidence, owner and mitigation plan; risks are mitigated when the condition is gone or the owner records the action; score-9 or overdue open risks are logged for review. Every assessment is archived with SHA-256.",
       "updated_at": "2026-11-12T00:38:45.261Z",
       "verification": {
-        "state": "in_progress",
+        "state": "verified",
         "criteria_passed": 0,
-        "criteria_total": 3,
-        "verified_at": null,
-        "commit_sha": null,
-        "commit_url": null,
+        "criteria_total": 0,
+        "verified_at": "2026-11-12T00:39:06.802Z",
+        "commit_sha": "5cbf603c9b7c7c699b091f456c7c41a2ff84bb7e",
+        "commit_url": "https://github.com/OBIANAMS04/cris-enhancement/commit/5cbf603c9b7c7c699b091f456c7c41a2ff84bb7e",
         "commit_at": null,
-        "points_awarded": null,
-        "outstanding": [
-          "Given a risk assessment, when conducted, then risks are identified and mitigated.",
-          "Given a risk, when it is not mitigated, then it is logged for review.",
-          "Trust: All risk assessments are archived."
-        ]
+        "points_awarded": 50,
+        "outstanding": []
       }
     },
     {
@@ -626,12 +614,12 @@
       "updated_at": "2026-11-11T11:40:16.708Z",
       "verification": {
         "state": "verified",
-        "criteria_passed": 0,
-        "criteria_total": 0,
+        "criteria_passed": 3,
+        "criteria_total": 3,
         "verified_at": "2026-11-11T11:40:53.454Z",
         "commit_sha": "fe53baaae4f128968a71087f5e0ee81b7d924fff",
         "commit_url": "https://github.com/OBIANAMS04/cris-enhancement/commit/fe53baaae4f128968a71087f5e0ee81b7d924fff",
-        "commit_at": null,
+        "commit_at": "2026-11-11T11:40:17Z",
         "points_awarded": 50,
         "outstanding": []
       }
