@@ -51,7 +51,8 @@ test('STORY-008 failure paths: late, wrong role, bad file, storage failure, doub
   const one = await submitResponse(store, blobs, solicitation, { respondent: 'W', documents: fullSet('w'), actor, key: 'w-1' });
   const two = await submitResponse(store, blobs, solicitation, { respondent: 'W', documents: fullSet('w'), actor, key: 'w-1' });
   assert.equal(one.id, two.id, 'a retried submission is not stored twice');
-  const late = await setup({ now: clock('2026-11-21T15:00:00.000Z') });
+  // One day after the solicitation's own closing time, whatever date the demo data sets.
+  const late = await setup({ now: clock(new Date(Date.parse(solicitation.closes_at) + 86400000).toISOString()) });
   await assert.rejects(submitResponse(late.store, memoryBlobs(), solicitation, { respondent: 'L', documents: fullSet('l'), actor: officer(late.store) }), (e) => /late submissions are not accepted/.test(e.problems.join()));
 });
 
