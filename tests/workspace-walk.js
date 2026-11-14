@@ -30,6 +30,9 @@ async (page) => {
     localStorage.removeItem('cris-workspace-v1');
     localStorage.removeItem('cris-workspace-actor');
   });
+  // A fresh page, so no old store stays in memory.
+  await page.reload();
+  await page.waitForSelector('main h1');
 
   // STORY-001: report, get assistance, check status, see it resolved.
   await go('help-desk');
@@ -65,8 +68,9 @@ async (page) => {
   // STORY-012: queue against service levels, maintenance outside service hours.
   await go('support');
   await as('Riley Demo (system administrator)');
-  const day = new Date(Date.now() + 86400000).toISOString().slice(0, 10);
-  const day2 = new Date(Date.now() + 2 * 86400000).toISOString().slice(0, 10);
+  const weekday = () => { const d = new Date(Date.now() + 86400000); while ([0, 6].includes(d.getDay())) d.setDate(d.getDate() + 1); return d.toISOString().slice(0, 10); };
+  const day = weekday(); // a weekday, so 10:00 falls inside service hours
+  const day2 = new Date(Date.parse(day + 'T12:00:00Z') + 86400000).toISOString().slice(0, 10);
   const schedule = async (from, to) => {
     await page.getByLabel('What', { exact: true }).fill('Apply security patches');
     await page.getByLabel('Component').fill('Web servers');

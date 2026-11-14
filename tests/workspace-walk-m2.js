@@ -43,6 +43,9 @@ async (page) => {
     localStorage.removeItem('cris-workspace-actor');
     await new Promise((r) => { const q = indexedDB.deleteDatabase('cris-workspace-documents'); q.onsuccess = q.onerror = q.onblocked = () => r(); });
   });
+  // A fresh page, so no old store stays in memory.
+  await page.reload();
+  await page.waitForSelector('main h1');
   const later = (days, hm) => new Date(Date.now() + days * 86400000).toISOString().slice(0, 10) + `T${hm}`;
 
   // STORY-005: Sam schedules and holds a session; Jordan passes live; Avery fails, then passes from the recording.
@@ -82,7 +85,7 @@ async (page) => {
   // STORY-006: Taylor generates reports to specification; the cost report is refused and logged; errors get addressed.
   await go('monitoring');
   await page.getByRole('button', { name: 'Run a check now' }).click();
-  await settle();
+  await page.waitForSelector('main .notice[role=status]'); // the check has been saved before any report is asked for
   await go('reporting-engine');
   await as('Taylor Demo (contract manager)');
   for (const spec of ['System performance report', 'Training and cyber security completion']) {

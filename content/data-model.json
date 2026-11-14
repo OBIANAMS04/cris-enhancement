@@ -278,6 +278,21 @@
           "component",
           "text",
           "optional; added by STORY-002: which monitored part it concerns"
+        ],
+        [
+          "personal_data",
+          "yes or no",
+          "optional; added by STORY-011: whether sensitive personal information was involved"
+        ],
+        [
+          "notify_by",
+          "date",
+          "optional; added by STORY-011: notification deadline under Tex. Bus. & Com. Code ch. 521"
+        ],
+        [
+          "containment",
+          "text",
+          "optional; added by STORY-011: what was done to contain it"
         ]
       ],
       "relations": [
@@ -346,6 +361,16 @@
           "spec",
           "text",
           "optional; added by STORY-006: the report specification it was built to"
+        ],
+        [
+          "version",
+          "number",
+          "optional; added by STORY-015: 1 for the first report on a subject, raised by each new version"
+        ],
+        [
+          "subject",
+          "text",
+          "optional; added by STORY-015: the incident or assessment the report is about"
         ]
       ],
       "relations": [

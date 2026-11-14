@@ -32,6 +32,9 @@ async (page) => {
     localStorage.removeItem('cris-workspace-actor');
     await new Promise((r) => { const q = indexedDB.deleteDatabase('cris-workspace-documents'); q.onsuccess = q.onerror = q.onblocked = () => r(); });
   });
+  // A fresh page, so no old store stays in memory.
+  await page.reload();
+  await page.waitForSelector('main h1');
 
   // STORY-008: Quinn records two responses; one is incomplete, logged, then fixed by a full resubmission.
   await go('submissions');

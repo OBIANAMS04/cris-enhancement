@@ -11,7 +11,8 @@ export function reportingEngine(page, rest, ctx) {
   const specs = ctx.specs.specs;
   const today = s.now().toISOString().slice(0, 10);
   const errors = reportErrors(s).reverse();
-  const archived = s.list('Report', (r) => r.spec).reverse();
+  const specIds = new Set(specs.map((x) => x.id));
+  const archived = s.list('Report', (r) => specIds.has(r.spec)).reverse();
   return h(
     'div',
     {},

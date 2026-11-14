@@ -49,6 +49,11 @@
       "display_name": "Rowan Demo (risk manager)",
       "role": "risk manager",
       "organization": "TxDOT"
+    },
+    {
+      "display_name": "Sage Demo (security officer)",
+      "role": "security officer",
+      "organization": "TxDOT"
     }
   ]
 }
