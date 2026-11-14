@@ -2,7 +2,7 @@
 
 **Solicitation:** Crash Records Information System Service Agreement (TxDOT) · **Bidder:** Colaberry
 **Owner:** Obi Anamelechi Kingsley · **Decision makers:** Ali Muwwakkil (Managing Director), Ram Katamaraja
-**Ship-by:** 24 November 2026 · **Last updated:** 2026-11-12 · Updated after every milestone
+**Ship-by:** 24 November 2026 · **Last updated:** 2026-11-14 · Updated after every milestone
 
 > Everything here is built and demonstrated on synthetic data. Nothing is operating in production and nothing is
 > connected to a TxDOT system. The Command Center shows no number, connection or result the project has not produced.
@@ -36,7 +36,7 @@ Dates in this table are the ones the portal's STORY-000 brief gives. The plan fi
 | **r1** Enhancement and Training | 004 Feature Development Module · 005 User Training Sessions | 10 to 12 Nov | **Complete.** 004 and 005 **verified 2026-11-11**, 50 points each |
 | **r2** Reporting and Compliance | 006 Reporting Engine · 007 Compliance with Laws · 013 Required Documentation | 13 to 16 Nov | **Complete.** 006, 007 and 013 **verified 2026-11-11**, 50 points each |
 | **r3** Response Management | 008 Response Submissions · 009 Evaluate and Score Responses | 18 to 20 Nov | **Complete.** 008 and 009 **verified 2026-11-12**, 50 points each |
-| **r4** Risk Management and Security | 010 Risk Assessment Tools · 011 Cybersecurity Compliance · 014 Performance and User-Error Risks · 015 Incident Reports and Risk Documentation | 21 to 24 Nov | **In progress.** 010 **verified 2026-11-12**, 50 points. 011, 014 and 015 left (Milestone 4) |
+| **r4** Risk Management and Security | 010 Risk Assessment Tools · 011 Cybersecurity Compliance · 014 Performance and User-Error Risks · 015 Incident Reports and Risk Documentation | 21 to 24 Nov | **Built and pushed 2026-11-14; portal verification being confirmed.** 010 **verified 2026-11-12**, 50 points. 011, 014 and 015 are pushed (Milestone 4); the portal session expired before they could be checked. If all three verify, that would complete all 16 stories |
 
 ### Milestones (three to five stories at a time)
 
@@ -46,11 +46,38 @@ Dates in this table are the ones the portal's STORY-000 brief gives. The plan fi
 | M1 | STORY-001, 002, 003, 012 and 004: the workspace (help desk, support, monitoring, reports, features) | **Done 2026-11-11**, all five verified, 250 points |
 | M2 | STORY-005, 006, 007, 013: training, reporting engine, compliance, documents | **Done 2026-11-11**, all four verified, 200 points (10 of 16 stories, 500 points on this build) |
 | M3 | STORY-008, 009, 010: response submissions, evaluation and scoring, risk assessment | **Done 2026-11-12**, all three verified, 150 points (13 of 16 stories, 650 points on this build) |
-| M4 | STORY-011, 014, 015, then demo prep | 24 Nov (next) |
+| M4 | STORY-011, 014, 015, then demo prep | **Built 2026-11-14 and pushed; portal verification being confirmed.** Demo prep for 24 Nov is next |
 
 Each milestone ends with: a summary, links, everything committed and pushed, the framework and its artifact
 updated with current screenshots, and a short HTML presentation (three to five minutes, with charts and a story
 line) for the audience.
+
+### Milestone 4 against its nine acceptance criteria (2026-11-14)
+
+Built and pushed on 14 Nov 2026, one commit per story, each naming its story, after a groundwork commit (9660530:
+the data-model fields, the new demo person and the shared pieces). Portal verification: pending confirmation. The
+portal session expired before it could be checked. The push webhook verified every earlier milestone within seconds.
+Status: pushed; portal verification being confirmed. If all three verify, that would complete all 16 stories.
+
+| Story | What passes | Commit | Proof |
+|---|---|---|---|
+| STORY-011 Cybersecurity compliance (REQ-020, `#/security`) | Vendor staff are cleared for protected work only with TxDOT-approved cyber security training completed in the last 365 days. Without it, opening or uploading response documents is refused and logged with the reason (enforced in `lib/documents.js`). A security officer can require retraining after a breach, which suspends clearance until the course is passed again. A breach is logged as a severity-1 security incident, contained, and notified within 60 days when personal data is involved (Tex. Bus. & Com. Code §521.053). It cannot be closed until the notification is recorded. Training completions are archived in versioned reports with SHA-256. New demo person: Sage (security officer) | 341fd4c | `tests/story-011-cyber.test.mjs` (4), `tests/workspace-walk-m4.js` |
+| STORY-014 Performance and user-error risks (REQ-016, `#/performance`) | Each component's response time is compared with its own baseline (median and MAD of earlier samples). An anomaly is over 3x the median, over the median plus 6 MADs, and at least 50 ms above; 5 samples are needed first. One alert per component is raised for investigation and cleared when normal. A slow-response drill records a labelled synthetic sample. Every refused action anywhere in the workspace is logged as a user error with "Try this:" suggestions computed from data: the next valid maintenance window, a period with data, the missing documents, the course to take | 5a1a8d6 | `tests/story-014-anomalies.test.mjs` (4), walk |
+| STORY-015 Incident reports and risk documentation (REQ-019, `#/incident-reports`) | A report per incident with its details, the full timeline from the audit log, hours open, cause and linked risks, with a SHA-256. Each new report on the same incident is a new version that names the one it supersedes. Incident reports, risk assessments and the training archive open only for the compliance officer, risk manager, security officer, TxDOT manager, contract manager and system administrator. Every opening and every refusal is logged | 15a6d44 | `tests/story-015-incident-reports.test.mjs` (3), walk |
+
+TxDOT's incident management system (REQ-018) is not connected; reports are built from the workspace's own incidents.
+
+Checks: 73 unit tests pass and five browser walks pass (`tests/browser-walk.js`, `workspace-walk.js`, `-m2.js`, `-m3.js`
+and `-m4.js`). The walks were made sturdier this milestone: they reload after clearing the demo store (a stale
+in-memory store had masked a timing issue), the M1 walk picks a weekday for its service-hours check, and the M2 walk
+waits for the monitoring check before asking for a report. The Reporting engine archive now lists only reports built
+to its specifications.
+
+The CRIS framework page source now lives in the repo at `framework/PROJECT-FRAMEWORK.html`. The scratchpad copy was
+lost on 14 Nov and was recovered from the published artifact.
+
+Limits: the 365-day and 60-day periods follow the cited rules but are not confirmed by TxDOT; the anomaly thresholds
+are ours; the incident management system (REQ-018) is not connected; the store and the document files are per browser.
 
 ### Milestone 3 against its nine acceptance criteria (2026-11-12)
 
@@ -174,16 +201,23 @@ unbuilt stories are marked "in progress".
   synthetic demo person: Rowan (risk manager). Fields added to the data model for these stories, each marked with
   its story: the receipt, the score id, what it corrects and why, and the risk's source, score, evidence and review
   date.
-- Checks: 62 unit tests (`node --test tests/`): the data layer, the store, and each story's happy path, Trust
-  line and failure paths. Four browser walks through Playwright: `tests/browser-walk.js` (Command Center: 9 tabs,
+- Milestone 4 adds three pages to the workspace: Security (`#/security`), Performance (`#/performance`) and
+  Incident reports (`#/incident-reports`), each drawing only what the functions in `lib/` return. Clearance is
+  enforced where documents are opened or uploaded (`lib/documents.js`), not only shown on a page. Every refused action
+  in the workspace is logged as a user error, with suggestions computed from the data. Incident reports are versioned
+  and hashed. One new synthetic demo person: Sage (security officer).
+- Checks: 73 unit tests (`node --test tests/`): the data layer, the store, and each story's happy path, Trust
+  line and failure paths. Five browser walks through Playwright, all passing 2026-11-14 (the first four are described
+  here as at M3, and `tests/workspace-walk-m4.js` walks the three M4 pages): `tests/browser-walk.js` (Command Center: 9 tabs,
   67 cards, sample labels, stale data, deleted story, missing file, phone width), `tests/workspace-walk.js`
   (every M1 story from an empty store, the outage drill, a tampered audit line, phone width),
   `tests/workspace-walk-m2.js` (the four M2 stories, including the cross-story compliance drill, and phone width)
   and `tests/workspace-walk-m3.js` (the three M3 stories: an incomplete submission logged then fixed, a typo score
   flagged and corrected before archiving, and an outage drill raising a score-9 risk logged for review then
-  mitigated). All pass, 2026-11-12.
+  mitigated).
 - Background agents: each milestone uses one to three, with notifications shown in the chat. M3 used three: the
-  tour rebuild, the procurement research, and this framework update.
+  tour rebuild, the procurement research, and this framework update. M4 used two: the tour fixes (Oge, fixed
+  controls, pointer pacing) and this framework update.
 - This framework lives in `framework/`, not `docs/`: the platform rewrites `docs/` on every sync.
 
 ## 5. Decisions
@@ -214,6 +248,11 @@ unbuilt stories are marked "in progress".
 | 2026-11-12 | Evaluation criteria and weights are a proposal built from public Texas procurement sources and shown as such, until TxDOT gives the real ones | Claude |
 | 2026-11-12 | Risks are tied to live conditions and mitigated automatically when the condition is gone at the next assessment; otherwise the owner records the action | Claude |
 | 2026-11-12 | The guided-tour narrator is "OBI" ("Hi, I am OBI..."), a NotebookLM-style two-host conversation (OBI leads, co-host Nia) in a deeper natural male voice. The narrator panel docks to the left beside the content with no overlay up to 125% zoom. The progress gauge and an animated cursor are synchronised with the voice | Obi |
+| 2026-11-14 | Compliance is enforced at the point of access: opening or uploading a response document is refused and logged without current cyber training, not only reported on a page | Claude |
+| 2026-11-14 | Anomaly thresholds: a component's response time is compared with its own baseline (median and MAD of earlier samples). An anomaly is over 3x the median, over the median plus 6 MADs, and at least 50 ms above, with 5 samples needed. One alert per component, cleared when normal | Claude |
+| 2026-11-14 | "Try this:" suggestions for user errors are computed from the data (next valid maintenance window, a period with data, missing documents, the course to take), never fixed text | Claude |
+| 2026-11-14 | Incident reports are version-controlled: each new report on the same incident is a new version that names the one it supersedes, with its own SHA-256 | Claude |
+| 2026-11-14 | The tour co-host is renamed from Nia to Oge; the narrator panel's controls sit in a fixed bar that never covers text at any zoom; the pointer keeps pace with the voice. A background agent is applying these to every tour | Obi |
 
 ## 6. Blockers and owners
 
@@ -226,6 +265,9 @@ unbuilt stories are marked "in progress".
 | The real evaluation criteria and weights for this solicitation are not known | The evaluation page uses a proposed set built from public sources | TxDOT, through Ali | Send them; replace `content/procurement-rules.json` |
 | Unknown whether submissions must flow through Euna Procurement, and whether an API or export is available | Euna is not connected; submissions are tracked in the workspace | TxDOT, through Ali | Say whether Euna is required and whether an API or export exists |
 | TxDOT's risk matrix is not known | The risk page uses our own likelihood and impact scale (1 to 9) | TxDOT, through Ali | Send the matrix; adjust the scoring |
+| Portal verification of STORY-011, 014 and 015 not yet confirmed | The portal session expired before it could be checked; the status is "pushed; portal verification being confirmed" | Obi / Claude | Sign in to the portal, open each story page and confirm; press Sync from GitHub if the push webhook has not verified them |
+| Ali has not replied to the M1 to M3 updates | The questions to TxDOT above are still open | Ali | Ask again through the portal Messages, with the M4 update |
+| TxDOT's incident management system (REQ-018) is not reachable | Incident reports are built from the workspace's own incidents; the system is not connected | TxDOT, through Ali | Say whether and how access can be given |
 | `plan.json` has no schedule, release dates or due dates | The Overview shows no dates; the Project management tab would have an empty Gantt | Ali / the platform | See whether the first sync after connecting delivers dates; if not, ask Ali |
 
 ## 7. Timeline
@@ -233,6 +275,7 @@ unbuilt stories are marked "in progress".
 | Date | What happened |
 |---|---|
 | 2026-11-08 | Ali grants builder access on the portal and points Obi at STORY-000 |
+| 2026-11-14 | **Milestone 4 built and pushed; portal verification being confirmed.** Groundwork (9660530); cybersecurity compliance (011, 341fd4c), performance and user-error risks (014, 5a1a8d6) and incident reports and risk documentation (015, 15a6d44) built, one commit per story; 73 unit tests and five browser walks pass, the walks made sturdier; the portal session expired before the stories could be checked, so none is claimed verified (if all three verify, that would complete all 16 stories). The CRIS framework page source now lives in the repo (`framework/PROJECT-FRAMEWORK.html`). New standing rules from Obi: co-host renamed from Nia to Oge, the narrator panel's controls in a fixed bar that never covers text, the pointer keeps pace with the voice; a background agent is applying them to every tour. Presentation: https://obianams04.github.io/cris-enhancement/framework/presentations/m4/ |
 | 2026-11-12 | **Milestone 3 verified.** Groundwork (365ce4d); response submissions (008, 3d3dacd), evaluation and scoring (009, 54ec087) and risk assessment tools (010, 5cbf603) built, one commit per story; procurement criteria compiled by a research agent from public sources; Euna Procurement researched (TxDOT does use it, no public API found, not connected); 62 unit tests and four browser walks pass; **the portal verified all three through the push webhook, 150 points** (650 on this build, 13 of 16 stories); the portal's record committed (382b60b). Release r3 complete; r4 has 010 done and 011, 014, 015 left. New standing rules from Obi: the guided-tour narrator is OBI with co-host Nia, a deeper male voice, a left-docked panel and a voice-synchronised gauge and cursor; a background agent is rebuilding every tour to them. Presentation: https://obianams04.github.io/cris-enhancement/framework/presentations/m3/ |
 | 2026-11-11 | **Milestone 2 verified.** Groundwork (e470493); training (005), reporting engine (006), document management (013) and compliance with laws (007) built, one commit per story; 14 compliance rules compiled by a research agent; 50 unit tests and three browser walks pass, including the cross-story compliance drill; **the portal verified all four within seconds of the push, without Sync from GitHub, 200 points** (500 on this build, 10 of 16 stories); the portal's record committed (afa8035). New standing rules from Obi: male voice narrator on every tour, one to three background agents per milestone, an HTML presentation at every milestone end. Releases r1 and r2 complete. Presentation: https://obianams04.github.io/cris-enhancement/framework/presentations/m2/ |
 | 2026-11-11 | **Milestone 1 verified.** The 18 tables created as proposed (plus AuditEntry and MaintenanceWindow); the workspace built: help desk (001), support dashboard (012), monitoring (002), performance reports (003), feature development (004), audit log; 32 unit tests and both browser walks pass; one commit per story pushed; **the portal verified all five, 250 points** (300 on this build); the portal's record committed; push webhook registered; framework artifact v4 |
@@ -243,7 +286,9 @@ unbuilt stories are marked "in progress".
 
 | Risk | Effect | Action |
 |---|---|---|
-| 3 stories in 12 days to 24 Nov | The ship-by date is still tight, but the pace holds | Releases r0 to r3 done and 010 done (13 of 16 stories, 650 points) by 12 Nov; M4 (011, 014, 015, then demo prep) remains |
+| Portal verification of 011, 014 and 015 is not confirmed | The status could be read as verified when it is not | Written everywhere as "pushed; portal verification being confirmed"; confirm in the portal, then update the counts (13 of 16 stories and 650 points are verified so far) |
+| 10 days to 24 Nov with demo preparation left | The ship-by date is still tight, but the pace holds | Releases r0 to r3 and 010 verified (13 of 16 stories, 650 points) by 12 Nov; M4 built and pushed 14 Nov; demo preparation is next |
+| Anomaly thresholds, the 365-day training period and the 60-day notification period are our reading of the rules | They could be read as TxDOT's own | Shown on screen with their sources; questions to TxDOT are in Blockers |
 | The evaluation weights, the closing time and the risk scale are proposals | They could be read as TxDOT's own | Labelled as proposals on screen and in `content/`; questions to TxDOT are in Blockers |
 | The compliance register is a research compilation | It could be read as legal advice | Shown on screen as to be confirmed by TxDOT legal; rules about records this build does not hold are "not applicable", never a pass |
 | The workspace store is per browser | Two people do not share tickets yet | Said on screen; a shared backend replaces the store's backend without touching the stories' logic |
@@ -251,7 +296,12 @@ unbuilt stories are marked "in progress".
 | The plan's requirements read as written for the delivered CRIS service, and also for handling the solicitation response itself (REQ-012 to 015) | Scope could be misread | Follow the story files as written; raise mismatches with Ali rather than reinterpreting |
 | The repo is public | Anything committed is visible to anyone | No secrets, keys or `.env` files, ever; the push-webhook secret is run once and never saved |
 
-## 9. Screens (2026-11-12)
+## 9. Screens (2026-11-14)
+
+Milestone 4, in `framework/screens/` (`m4-` files): 01 a security breach logged (`m4-01-security-breach.png`),
+02 document access blocked without training (`m4-02-access-blocked.png`), 03 a user error with its "Try this:"
+suggestion (`m4-03-user-error-suggestion.png`), 04 a performance anomaly (`m4-04-performance-anomaly.png`),
+05 an incident report (`m4-05-incident-report.png`), 06 the incident-report access log (`m4-06-incident-access-log.png`).
 
 Milestone 3, in `framework/screens/` (`m3-` files): 01 a submission refused with its error (`m3-01-submission-error.png`),
 02 response tracking, 03 evaluation with a flagged score, 04 the evaluation ranking, 05 a risk assessment with its
@@ -275,8 +325,9 @@ drill-down, 11 a data-model entity, 12 to 14 sample mode, 15 the stale-data warn
 
 ## 10. Links
 
-- Portal: https://enterprise.colaberry.ai/portal/projects/workspace/a563218c-c3a4-433c-8ed7-4e8e0573f59c/STORY-001 (next: STORY-011: https://enterprise.colaberry.ai/portal/projects/workspace/a563218c-c3a4-433c-8ed7-4e8e0573f59c/STORY-011)
+- Portal: https://enterprise.colaberry.ai/portal/projects/workspace/a563218c-c3a4-433c-8ed7-4e8e0573f59c/STORY-001 (to confirm: STORY-011: https://enterprise.colaberry.ai/portal/projects/workspace/a563218c-c3a4-433c-8ed7-4e8e0573f59c/STORY-011)
 - Workspace (live): https://obianams04.github.io/cris-enhancement/workspace/
+- Milestone 4 presentation: https://obianams04.github.io/cris-enhancement/framework/presentations/m4/
 - Milestone 3 presentation: https://obianams04.github.io/cris-enhancement/framework/presentations/m3/
 - Milestone 2 presentation: https://obianams04.github.io/cris-enhancement/framework/presentations/m2/
 - Framework artifact (pinned): https://claude.ai/artifact/AZJzCgHVd2QAr4LnFCRzzf

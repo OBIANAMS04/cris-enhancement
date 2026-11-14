@@ -73,6 +73,26 @@ Three more pages, built the same way:
 `tests/workspace-walk-m3.js` walks these three pages in a real browser: an incomplete submission logged then fixed,
 a typo score flagged and corrected before archiving, and an outage drill that raises a score-9 risk.
 
+## The workspace (Milestone 4)
+
+Three more pages, built the same way:
+
+- Security (STORY-011, `#/security`): vendor staff are cleared for protected work only with TxDOT-approved cyber
+  security training completed in the last 365 days. Without it, opening or uploading response documents is refused
+  and logged with the reason (enforced in `lib/documents.js`). A security officer can require retraining after a
+  breach. A breach is logged as a severity-1 incident and cannot be closed until the notification is recorded.
+- Performance (STORY-014, `#/performance`): each component's response time is compared with its own baseline, with
+  one alert per component. Every refused action in the workspace is logged as a user error with "Try this:"
+  suggestions computed from data.
+- Incident reports (STORY-015, `#/incident-reports`): a report per incident with its timeline, hours open, cause and
+  linked risks, with a SHA-256. A new report on the same incident is a new version that names the one it supersedes.
+  Only named roles can open them, and every opening and refusal is logged. TxDOT's incident management system is not
+  connected.
+
+`tests/workspace-walk-m4.js` walks these three pages in a real browser.
+
+The page source of the project framework is in `framework/PROJECT-FRAMEWORK.html`, next to `framework/PROJECT-FRAMEWORK.md`.
+
 ## Run it
 
 It needs Node.js 20 or later and nothing else. There is no build step and there are no dependencies.
@@ -83,7 +103,7 @@ node --test tests/            # the data layer, against the files committed here
 ```
 
 The page has to be served, because a browser will not let a page opened straight from disk read the JSON files.
-`tests/browser-walk.js`, `tests/workspace-walk.js`, `tests/workspace-walk-m2.js` and `tests/workspace-walk-m3.js` are walks through the site in a real browser (every tab, every card, sample labels, the
+`tests/browser-walk.js`, `tests/workspace-walk.js`, `tests/workspace-walk-m2.js`, `tests/workspace-walk-m3.js` and `tests/workspace-walk-m4.js` are walks through the site in a real browser (every tab, every card, sample labels, the
 stale-data warning, a deleted story, a missing file, phone width); it is run through Playwright.
 
 ## Where things are
@@ -91,10 +111,10 @@ stale-data warning, a deleted story, a missing file, phone width); it is run thr
 | Path | What |
 |---|---|
 | `index.html`, `assets/` | The Command Center. `assets/js/data.js` is the only place data is loaded |
-| `workspace/`, `lib/` | The Milestone 1, 2 and 3 workspace: pages in `workspace/js/`, rules and the store in `lib/` |
+| `workspace/`, `lib/` | The Milestone 1 to 4 workspace: pages in `workspace/js/`, rules and the store in `lib/` |
 | `assets/app.css` | Styles. The brand colours are two lines at the top |
 | `content/` | The project's own content: decisions and notes (`notes.json`, appended to) and the proposed data model |
-| `framework/` | The project framework (goals, status, decisions, risks) and its screenshots |
+| `framework/` | The project framework (goals, status, decisions, risks): `PROJECT-FRAMEWORK.md`, the page source `PROJECT-FRAMEWORK.html`, and its screenshots |
 | `docs/`, `.colaberry/`, `CLAUDE.md` | Written by the platform: requirements, stories, traceability, the data files |
 | `tests/`, `scripts/` | Tests and the local server |
 
