@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "1",
+  "projectId": "a563218c-c3a4-433c-8ed7-4e8e0573f59c",
+  "storyId": "STORY-011",
+  "projectTruthBaseRevision": 0,
+  "observedAt": "2026-11-14T07:32:12.569Z",
+  "sourceCommitSha": "96605309f97aa3a9593da086d72a9b26b7d3662d",
+  "factProposals": [
+    {
+      "dimension": "security_context",
+      "value": "Vendor staff without TxDOT-approved cyber security training completed in the last 365 days are blocked from protected actions; a security officer can suspend clearance pending retraining.",
+      "evidence": "lib/cyber.js"
+    },
+    {
+      "dimension": "exceptions",
+      "value": "A security breach is logged as a severity-1 incident; with personal data involved, notification is due within 60 days under Tex. Bus. & Com. Code 521.053, and the breach cannot be closed until it is recorded.",
+      "evidence": "lib/cyber.js"
+    }
+  ],
+  "decisions": [
+    {
+      "statement": "Compliance is enforced at the point of access, not only reported: the document store checks clearance on every upload and opening.",
+      "rationale": "The acceptance asks that completing training ensures compliance.",
+      "evidence": "lib/documents.js"
+    }
+  ],
+  "limitations": [
+    {
+      "statement": "The 365-day validity and the 60-day notice are taken from the plan and the compliance register; TxDOT security and legal should confirm them.",
+      "evidence": "lib/cyber.js"
+    }
+  ],
+  "demonstrationEvidence": [
+    {
+      "kind": "test",
+      "ref": "tests/story-011-cyber.test.mjs"
+    },
+    {
+      "kind": "screenshot",
+      "ref": "framework/screens/m4-01-security-breach.png"
+    },
+    {
+      "kind": "screenshot",
+      "ref": "framework/screens/m4-02-access-blocked.png"
+    }
+  ],
+  "measurementEvents": []
+}

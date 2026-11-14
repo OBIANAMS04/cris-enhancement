@@ -513,21 +513,28 @@
       "criteria": [
         {
           "text": "Given a cybersecurity training, when completed, then compliance is ensured.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Given a security breach, when it occurs, then it is logged and addressed.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Trust: All training completions are archived.",
-          "passed": false
+          "passed": true
         }
       ],
-      "files_touched": [],
-      "tests_added": [],
-      "notes": null,
-      "updated_at": null,
+      "files_touched": [
+        "lib/cyber.js",
+        "lib/documents.js",
+        "workspace/js/security.js",
+        "workspace/js/views.js"
+      ],
+      "tests_added": [
+        "tests/story-011-cyber.test.mjs"
+      ],
+      "notes": "Current cyber training clears a vendor employee for protected work: without a completion in the last 365 days, opening or uploading response documents is refused and logged; a security officer can require retraining after a breach. A breach is logged as a severity-1 security incident, contained, notified within 60 days when personal data is involved (Tex. Bus. & Com. Code 521.053), and closed with its cause. Training completions are archived with SHA-256, versioned.",
+      "updated_at": "2026-11-14T07:32:12.567Z",
       "verification": {
         "state": "in_progress",
         "criteria_passed": 0,
