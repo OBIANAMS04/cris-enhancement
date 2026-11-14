@@ -1,0 +1,129 @@
+<template id="slides">
+<section class="slide" data-say="Milestone four, and the build is complete: sixteen of sixteen stories verified, ten days before the ship date." data-say-script="OBI: Hi, I am OBI. This is Milestone four of the Crash Records build, and it is the last one.||OGE: The last one? So everything is done?||OBI: Sixteen of sixteen stories verified by the portal, eight hundred points, ten days before the twenty fourth of November.">
+  <p class="kicker">Milestone 4 · 14 November 2026</p>
+  <h1>Security, performance and the paper trail</h1>
+  <div class="lane"></div>
+  <p class="lede">Three stories close Release 4. With them, every story in the TxDOT Crash Records plan is verified by the portal, each against the commit that built it.</p>
+  <div class="tiles">
+    <div class="tile ok"><b>16 / 16</b><span>stories verified</span></div>
+    <div class="tile ok"><b>800</b><span>points on this build</span></div>
+    <div class="tile ok"><b>50 / 50</b><span>acceptance criteria passed</span></div>
+    <div class="tile ok"><b>10 days</b><span>ahead of the 24 Nov ship date</span></div>
+  </div>
+</section>
+
+<section class="slide" data-say="The full climb: fifty, three hundred, five hundred, six hundred and fifty, and now eight hundred points." data-say-script="OBI: Here is the whole climb, start to finish.||OGE: Fifty, three hundred, five hundred, six hundred and fifty, and now eight hundred.||OBI: Five milestones in five days, and every point awarded by the portal reading a commit that names its story.">
+  <p class="kicker">The climb</p>
+  <h2>Every point awarded by the portal</h2>
+  <div class="chart" data-chart="points" aria-label="Points after each milestone"></div>
+  <p class="legend"><span><i style="background:var(--s1)"></i>Points after each milestone, from the portal's own record. M0 Command Center; M1 help desk to features; M2 training to compliance; M3 submissions to risk; M4 security to incident reports</span></p>
+</section>
+
+<section class="slide" data-say="Story eleven. Sage, the security officer, logs a breach: a phishing email opened on a vendor account. It is a severity-one incident, and because personal data may be involved, the sixty-day Texas notification clock starts." data-say-script="OBI: Story eleven, security. Sage, our security officer, logs a breach: a phishing email opened on a vendor account.||OGE: How serious is that?||OBI: Severity one. And because personal information may be involved, the Texas sixty day notification clock starts at once.||OGE: Can Sage just close it?||OBI: Not until it is contained and the notification is recorded. Then it closes with its cause.">
+  <p class="kicker">STORY-011 · A breach</p>
+  <h2>Sage logs a breach, and the law sets the clock</h2>
+  <div class="two">
+    <div class="flow">
+      <div class="step bad"><b>Logged</b><span>severity 1 · notify within 60 days</span></div>
+      <div class="step"><b>Contained</b><span>account disabled, sessions revoked</span></div>
+      <div class="step"><b>Notified</b><span>required before closing</span></div>
+      <div class="step ok"><b>Closed</b><span>with its cause: credential phishing</span></div>
+    </div>
+    <figure class="shot"><img src="screens/m4-01-security-breach.png" alt="A security breach logged, contained, notified and closed" width="1280" height="1600"><figcaption>Tex. Bus. &amp; Com. Code §521.053</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-say="Then Sage requires Riley, the vendor administrator, to retake the cyber security training. Until Riley passes, the system refuses Riley's access to the bid documents. After the course, access returns." data-say-script="OBI: Sage then requires Riley, the vendor administrator, to retake the cyber security training.||OGE: And in the meantime?||OBI: The system refuses Riley's access to the bid documents, and tells Riley exactly what to do: take the course on the Training page.||OGE: So compliance is enforced, not just reported.||OBI: Exactly. Riley passes the check, and access comes back on the spot.">
+  <p class="kicker">STORY-011 · Compliance enforced</p>
+  <h2>No current training, no access</h2>
+  <div class="two">
+    <ul class="beats">
+      <li>Vendor staff need the TxDOT-approved cyber course within the last 365 days (REQ-020).</li>
+      <li><span class="pill bad">Refused</span> Riley's upload, with the reason and a "Try this" suggestion.</li>
+      <li>Riley passes the knowledge check; clearance returns at once.</li>
+      <li>Every completion archived in a versioned report.</li>
+    </ul>
+    <figure class="shot"><img src="screens/m4-02-access-blocked.png" alt="Access refused until the cyber course is completed" width="1280" height="900"><figcaption>Enforced at the point of access</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-say="Story fourteen. Each part of the system has its own normal response time. The slow-response drill records a sample far above it, and an alert goes up for investigation." data-say-script="OBI: Story fourteen, performance. Every part of the system has its own normal response time, learned from its own checks.||OGE: So what counts as abnormal?||OBI: Three times the usual, and well outside its normal spread. The slow response drill does exactly that, and an alert goes up for investigation.||OGE: And when it calms down?||OBI: The alert clears itself at the next normal reading.">
+  <p class="kicker">STORY-014 · Anomalies</p>
+  <h2>Abnormal is measured, not guessed</h2>
+  <div class="two">
+    <ul class="beats">
+      <li>Baseline per component: the median and spread of its own earlier checks.</li>
+      <li>Alert when a reading is over 3× the median and far outside the spread.</li>
+      <li>Fewer than 5 readings: no baseline, and the page says so.</li>
+      <li>One alert per component, cleared when it is back to normal.</li>
+    </ul>
+    <figure class="shot"><img src="screens/m4-04-performance-anomaly.png" alt="Baselines per component and an anomaly alert" width="1280" height="1600"><figcaption>The drill is labelled as a drill</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-say="And when someone makes a mistake, the system says what to do instead. Booking maintenance at ten in the morning suggests the next night slot that passes every rule. Every mistake is logged." data-say-script="OBI: And when someone makes a mistake, the system tells them what to do instead.||OGE: Like what?||OBI: Book maintenance at ten in the morning, and it suggests the next overnight slot that passes every rule. Ask for a report on an empty week, and it names the days that have data.||OGE: And all of it is logged?||OBI: Every mistake, with the suggestion given, so we can see where people struggle.">
+  <p class="kicker">STORY-014 · User errors</p>
+  <h2>A mistake comes with the fix</h2>
+  <div class="two">
+    <div class="flow">
+      <div class="step bad"><b>10:00 Monday</b><span>inside service hours: refused</span></div>
+      <div class="step ok"><b>Try this</b><span>the next overnight slot that passes every rule</span></div>
+      <div class="step"><b>Logged</b><span>page, message, suggestion</span></div>
+    </div>
+    <figure class="shot"><img src="screens/m4-03-user-error-suggestion.png" alt="A refused maintenance window with a corrective suggestion" width="1280" height="900"><figcaption>Suggestions worked out from the data</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-say="Story fifteen. Morgan, the compliance officer, produces a detailed report on the anomaly: details, the full timeline, hours open, its cause. When the alert clears, a second version is produced, and the first is kept." data-say-script="OBI: Story fifteen, the paper trail. Morgan, our compliance officer, produces a detailed report on the anomaly.||OGE: What is in it?||OBI: The details, the full timeline from the audit log, how long it was open, its cause, and the risks that cite it.||OGE: And if things change later?||OBI: A new version. Version two names version one, and both are kept with their fingerprints.">
+  <p class="kicker">STORY-015 · Incident reports</p>
+  <h2>Every incident, documented and versioned</h2>
+  <div class="two">
+    <ul class="beats">
+      <li>Details, timeline, hours open, cause and linked risks.</li>
+      <li>Version 2 supersedes version 1; both kept unchanged.</li>
+      <li><span class="pill ok">Matches its archived hash</span></li>
+    </ul>
+    <figure class="shot"><img src="screens/m4-05-incident-report.png" alt="An incident report with versions and its hash check" width="1280" height="1600"><figcaption>Version control for every report</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-say="Only authorised roles can open incident and risk documentation. When Avery, a TxDOT user, tries, access is refused, and both the openings and the refusal are on record." data-say-script="OBI: Incident and risk documents are for the people who need them.||OGE: What happens if someone else tries?||OBI: Avery, a TxDOT user, tries to open one. Access is refused, and the attempt goes on the access log next to every authorised opening.">
+  <p class="kicker">STORY-015 · Access</p>
+  <h2>Opened by the right people, every time on record</h2>
+  <figure class="shot"><img src="screens/m4-06-incident-access-log.png" alt="The access log with openings and a refusal" width="1280" height="1600"><figcaption>Compliance, risk, security, managers and administrators only</figcaption></figure>
+</section>
+
+<section class="slide" data-say="The whole build: five releases, every one complete, seventy-three unit tests and five browser walks passing." data-say-script="OBI: And here is the whole build.||OGE: Every release complete?||OBI: All five. Seventy three unit tests and five browser walks pass, and each of the sixteen stories is tied to the commit the portal verified.">
+  <p class="kicker">Scoreboard · 14 November</p>
+  <h2>Five releases, all complete</h2>
+  <div class="chart" data-chart="releases" aria-label="Stories verified per release"></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Story</th><th>Commit</th><th>Tests</th><th>Portal</th></tr></thead>
+    <tbody>
+      <tr><td>011 Cybersecurity compliance</td><td class="n">341fd4c</td><td class="n">4</td><td><span class="pill ok">Verified · 50</span></td></tr>
+      <tr><td>014 Performance and user error</td><td class="n">5a1a8d6</td><td class="n">4</td><td><span class="pill ok">Verified · 50</span></td></tr>
+      <tr><td>015 Incident reports</td><td class="n">15a6d44</td><td class="n">3</td><td><span class="pill ok">Verified · 50</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="slide" data-say="Two helpers worked alongside: one rebuilt this tour with Oge and a fixed control bar, the other kept the framework up to date." data-say-script="OGE: Who helped this time?||OBI: Two background agents. One rebuilt this tour: you became Oge, the buttons got a fixed bar, and the pointer now keeps pace with our voices. The other kept the project framework up to date.">
+  <p class="kicker">Working in parallel</p>
+  <h2>Two background agents</h2>
+  <div class="tiles">
+    <div class="tile"><b>Tour</b><span>co-host Oge, a fixed control bar that never covers text, the pointer in step with the voice</span></div>
+    <div class="tile"><b>Framework</b><span>updated the project framework text for Milestone 4</span></div>
+  </div>
+</section>
+
+<section class="slide" data-say="Next is the demo for the twenty-fourth, and the questions for TxDOT through Ali are still open. Thanks for listening. This was OBI and Oge." data-say-script="OBI: Next, we prepare the demo for the twenty fourth.||OGE: And anything we still need from TxDOT?||OBI: The questions from earlier milestones are still open with Ali: the real scoring criteria, Euna access, the risk matrix, the required reports, financial system access, the legal review, and the service levels.||OGE: Thanks for listening.||OBI: This was OBI, with Oge.">
+  <p class="kicker">What comes next</p>
+  <h2>The demo, 24 November</h2>
+  <div class="lane"></div>
+  <ul class="beats">
+    <li>A rehearsed walk through all 16 stories, in the order the audience would meet them.</li>
+    <li>For TxDOT, through Ali: scoring criteria, Euna access, risk matrix, required reports, financial system access, legal review, service levels.</li>
+  </ul>
+  <p><a href="https://obianams04.github.io/cris-enhancement/workspace/">Try the workspace</a> · <a href="https://obianams04.github.io/cris-enhancement/">Command Center</a> · <a href="https://github.com/OBIANAMS04/cris-enhancement">GitHub</a></p>
+</section>
+</template>

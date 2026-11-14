@@ -1,0 +1,872 @@
+<title>CRIS Milestone 4 Story</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one slide at a time on a road-sign field: navy panel, safety-amber accent, a lane line under the title. */
+:root {
+  --bg: #eef1f5; --panel: #ffffff; --ink: #121a26; --muted: #4d5a6c; --rule: #d3d9e2;
+  --navy: #14365e; --amber: #c27a00; --amber-soft: #fbefd6;
+  --ok: #1f6b45; --ok-bg: #e2f1e7; --bad: #a3262a; --bad-bg: #fbe4e4; --idle: #b8c1cd;
+  --s1: #2a78d6; --tour: #c8102e; --tour-ink: #ffffff;
+  --display: "Archivo", "Arial Narrow", Arial, sans-serif;
+  --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0e141c; --panel: #17202b; --ink: #edf1f6; --muted: #a6b1c0; --rule: #2c3846;
+  --navy: #9cc0ea; --amber: #f2b441; --amber-soft: #3a2c10;
+  --ok: #86d4a6; --ok-bg: #163222; --bad: #f2a0a3; --bad-bg: #3d1b1d; --idle: #4a5666;
+  --s1: #3987e5; --tour: #e5383b; --tour-ink: #ffffff; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0e141c; --panel: #17202b; --ink: #edf1f6; --muted: #a6b1c0; --rule: #2c3846;
+  --navy: #9cc0ea; --amber: #f2b441; --amber-soft: #3a2c10;
+  --ok: #86d4a6; --ok-bg: #163222; --bad: #f2a0a3; --bad-bg: #3d1b1d; --idle: #4a5666;
+  --s1: #3987e5; --tour: #e5383b; --tour-ink: #ffffff; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 17px/1.5 var(--body); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 16px; }
+.wrap { max-width: 1100px; margin: 0 auto; display: grid; gap: 14px; }
+.bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+.brand { font: 800 0.8rem/1 var(--display); letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+button { font: 600 0.95rem var(--body); cursor: pointer; border-radius: 8px; min-height: 40px; padding: 8px 14px; border: 1px solid var(--rule); background: var(--panel); color: var(--ink); }
+button:focus-visible, a:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+.tour-launch { display: inline-flex; align-items: center; gap: 9px; background: var(--tour); color: var(--tour-ink); border-color: var(--tour); }
+.tour-play { width: 16px; height: 16px; flex: none; }
+.count { font: 500 0.85rem var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.stage { background: var(--panel); border: 1px solid var(--rule); border-radius: 14px; padding: clamp(18px, 4vw, 44px); min-height: 560px; display: grid; }
+.slide { display: grid; gap: 18px; align-content: start; }
+.kicker { font: 600 0.8rem var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+h1, h2 { font-family: var(--display); font-weight: 800; line-height: 1.08; margin: 0; text-wrap: balance; color: var(--navy); }
+h1 { font-size: clamp(2rem, 5.5vw, 3.6rem); }
+h2 { font-size: clamp(1.6rem, 3.6vw, 2.4rem); }
+.lane { height: 6px; width: 120px; background: repeating-linear-gradient(90deg, var(--amber) 0 26px, transparent 26px 40px); }
+p { margin: 0; max-width: 64ch; }
+.lede { font-size: 1.2rem; color: var(--muted); }
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 26px; align-items: start; }
+@media (max-width: 760px) { .two { grid-template-columns: 1fr; } .stage { min-height: 0; } }
+.shot { margin: 0; border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; background: var(--bg); }
+.shot img { display: block; width: 100%; height: auto; max-height: 420px; object-fit: cover; object-position: top; }
+.shot figcaption { font-size: 0.85rem; color: var(--muted); padding: 8px 12px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.tile { border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px; display: grid; gap: 4px; }
+.tile b { font: 800 2.1rem/1 var(--display); color: var(--navy); font-variant-numeric: tabular-nums; }
+.tile span { font-size: 0.9rem; color: var(--muted); }
+.tile.ok { border-color: var(--ok); background: var(--ok-bg); }
+.tile.warn { border-color: var(--amber); background: var(--amber-soft); }
+.flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
+.step { border: 1px solid var(--rule); border-radius: 10px; padding: 12px 14px; display: grid; gap: 4px; position: relative; }
+.step b { font: 800 1.05rem var(--display); color: var(--navy); }
+.step span { font-size: 0.9rem; color: var(--muted); }
+.step.ok { background: var(--ok-bg); border-color: var(--ok); }
+.step.bad { background: var(--bad-bg); border-color: var(--bad); }
+.cells { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+.cell { border-radius: 8px; padding: 10px 12px; display: grid; gap: 2px; border: 1px solid var(--rule); }
+.cell b { font: 600 0.8rem var(--mono); }
+.cell span { font-size: 0.88rem; }
+.cell em { font-style: normal; font-size: 0.78rem; font-weight: 600; }
+.cell.pass { background: var(--ok-bg); border-color: var(--ok); }
+.cell.pass em { color: var(--ok); }
+.cell.na { background: var(--panel); border-style: dashed; }
+.cell.na em { color: var(--muted); }
+.cell.fail { background: var(--bad-bg); border-color: var(--bad); }
+.cell.fail em { color: var(--bad); }
+.heatgrid { display: grid; grid-template-columns: auto repeat(3, minmax(56px, 1fr)); gap: 6px; max-width: 420px; }
+.hg-head { font-size: 0.8rem; color: var(--muted); display: flex; align-items: center; justify-content: center; text-transform: capitalize; }
+.hg-cell { border-radius: 8px; min-height: 52px; display: grid; place-items: center; font: 800 1.3rem var(--display); border: 1px solid var(--rule); }
+.hg-cell.ok { background: var(--ok-bg); border-color: var(--ok); color: var(--ok); }
+.hg-cell.warn { background: var(--amber-soft); border-color: var(--amber); color: var(--amber); }
+.hg-cell.bad { background: var(--bad-bg); border-color: var(--bad); color: var(--bad); }
+.hg-cell.empty { opacity: 0.45; font-weight: 400; }
+.cell:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+ul.beats { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+ul.beats li { padding-left: 16px; border-left: 4px solid var(--amber); }
+.pill { display: inline-block; font: 600 0.78rem var(--body); padding: 2px 10px; border-radius: 999px; }
+.pill.ok { color: var(--ok); background: var(--ok-bg); }
+.pill.bad { color: var(--bad); background: var(--bad-bg); }
+.quote { font: 600 1.25rem/1.4 var(--body); border-left: 4px solid var(--navy); padding-left: 14px; }
+.chart { overflow-x: auto; }
+.chart svg { display: block; width: 100%; min-width: 420px; height: auto; }
+.chart text { font-family: var(--body); font-size: 13px; fill: var(--ink); }
+.chart .muted { fill: var(--muted); }
+.chart .num { font-family: var(--mono); font-size: 12px; fill: var(--ink); }
+.chart .track { fill: var(--idle); opacity: 0.45; }
+.chart .fill { fill: var(--s1); }
+.chart .hit:hover + .fill, .chart g:hover .fill { opacity: 0.8; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.85rem; color: var(--muted); }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.tip { position: fixed; pointer-events: none; background: var(--ink); color: var(--panel); font-size: 0.85rem; padding: 6px 10px; border-radius: 6px; }
+table { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font: 600 0.75rem var(--mono); text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.tbl { overflow-x: auto; }
+.foot { font-size: 0.85rem; color: var(--muted); }
+@media (prefers-reduced-motion: no-preference) { .slide { animation: in 0.35s ease-out; } @keyframes in { from { opacity: 0.4; transform: translateY(6px); } to { opacity: 1; transform: none; } } }
+</style>
+
+<div class="wrap">
+  <div class="bar">
+    <span class="brand">CRIS Enhancement · TxDOT</span>
+    <div class="controls">
+      <button type="button" class="tour-launch" id="tour-launch" aria-haspopup="dialog"><svg class="tour-play" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4.5 2.6v10.8L13.6 8z" fill="currentColor"></path></svg>Take the guided tour</button>
+      <button type="button" id="prev" aria-label="Previous slide">← Back</button>
+      <span class="count" id="count" aria-live="polite">1 / 12</span>
+      <button type="button" id="next" aria-label="Next slide">Next →</button>
+    </div>
+  </div>
+  <main class="stage" id="stage"></main>
+  <p class="foot">Arrow keys or the buttons move between slides. Everything shown was produced by the project on 10–11 November 2026; the workspace runs on synthetic people and data.</p>
+</div>
+
+<div class="tip" id="tip" hidden></div>
+
+<template id="slides">
+<section class="slide" data-say="Milestone four, and the build is complete: sixteen of sixteen stories verified, ten days before the ship date." data-say-script="OBI: Hi, I am OBI. This is Milestone four of the Crash Records build, and it is the last one.||OGE: The last one? So everything is done?||OBI: Sixteen of sixteen stories verified by the portal, eight hundred points, ten days before the twenty fourth of November.">
+  <p class="kicker">Milestone 4 · 14 November 2026</p>
+  <h1>Security, performance and the paper trail</h1>
+  <div class="lane"></div>
+  <p class="lede">Three stories close Release 4. With them, every story in the TxDOT Crash Records plan is verified by the portal, each against the commit that built it.</p>
+  <div class="tiles">
+    <div class="tile ok"><b>16 / 16</b><span>stories verified</span></div>
+    <div class="tile ok"><b>800</b><span>points on this build</span></div>
+    <div class="tile ok"><b>50 / 50</b><span>acceptance criteria passed</span></div>
+    <div class="tile ok"><b>10 days</b><span>ahead of the 24 Nov ship date</span></div>
+  </div>
+</section>
+
+<section class="slide" data-say="The full climb: fifty, three hundred, five hundred, six hundred and fifty, and now eight hundred points." data-say-script="OBI: Here is the whole climb, start to finish.||OGE: Fifty, three hundred, five hundred, six hundred and fifty, and now eight hundred.||OBI: Five milestones in five days, and every point awarded by the portal reading a commit that names its story.">
+  <p class="kicker">The climb</p>
+  <h2>Every point awarded by the portal</h2>
+  <div class="chart" data-chart="points" aria-label="Points after each milestone"></div>
+  <p class="legend"><span><i style="background:var(--s1)"></i>Points after each milestone, from the portal's own record. M0 Command Center; M1 help desk to features; M2 training to compliance; M3 submissions to risk; M4 security to incident reports</span></p>
+</section>
+
+<section class="slide" data-say="Story eleven. Sage, the security officer, logs a breach: a phishing email opened on a vendor account. It is a severity-one incident, and because personal data may be involved, the sixty-day Texas notification clock starts." data-say-script="OBI: Story eleven, security. Sage, our security officer, logs a breach: a phishing email opened on a vendor account.||OGE: How serious is that?||OBI: Severity one. And because personal information may be involved, the Texas sixty day notification clock starts at once.||OGE: Can Sage just close it?||OBI: Not until it is contained and the notification is recorded. Then it closes with its cause.">
+  <p class="kicker">STORY-011 · A breach</p>
+  <h2>Sage logs a breach, and the law sets the clock</h2>
+  <div class="two">
+    <div class="flow">
+      <div class="step bad"><b>Logged</b><span>severity 1 · notify within 60 days</span></div>
+      <div class="step"><b>Contained</b><span>account disabled, sessions revoked</span></div>
+      <div class="step"><b>Notified</b><span>required before closing</span></div>
+      <div class="step ok"><b>Closed</b><span>with its cause: credential phishing</span></div>
+    </div>
+    <figure class="shot"><img src="screens/m4-01-security-breach.png" alt="A security breach logged, contained, notified and closed" width="1280" height="1600"><figcaption>Tex. Bus. &amp; Com. Code §521.053</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-say="Then Sage requires Riley, the vendor administrator, to retake the cyber security training. Until Riley passes, the system refuses Riley's access to the bid documents. After the course, access returns." data-say-script="OBI: Sage then requires Riley, the vendor administrator, to retake the cyber security training.||OGE: And in the meantime?||OBI: The system refuses Riley's access to the bid documents, and tells Riley exactly what to do: take the course on the Training page.||OGE: So compliance is enforced, not just reported.||OBI: Exactly. Riley passes the check, and access comes back on the spot.">
+  <p class="kicker">STORY-011 · Compliance enforced</p>
+  <h2>No current training, no access</h2>
+  <div class="two">
+    <ul class="beats">
+      <li>Vendor staff need the TxDOT-approved cyber course within the last 365 days (REQ-020).</li>
+      <li><span class="pill bad">Refused</span> Riley's upload, with the reason and a "Try this" suggestion.</li>
+      <li>Riley passes the knowledge check; clearance returns at once.</li>
+      <li>Every completion archived in a versioned report.</li>
+    </ul>
+    <figure class="shot"><img src="screens/m4-02-access-blocked.png" alt="Access refused until the cyber course is completed" width="1280" height="900"><figcaption>Enforced at the point of access</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-say="Story fourteen. Each part of the system has its own normal response time. The slow-response drill records a sample far above it, and an alert goes up for investigation." data-say-script="OBI: Story fourteen, performance. Every part of the system has its own normal response time, learned from its own checks.||OGE: So what counts as abnormal?||OBI: Three times the usual, and well outside its normal spread. The slow response drill does exactly that, and an alert goes up for investigation.||OGE: And when it calms down?||OBI: The alert clears itself at the next normal reading.">
+  <p class="kicker">STORY-014 · Anomalies</p>
+  <h2>Abnormal is measured, not guessed</h2>
+  <div class="two">
+    <ul class="beats">
+      <li>Baseline per component: the median and spread of its own earlier checks.</li>
+      <li>Alert when a reading is over 3× the median and far outside the spread.</li>
+      <li>Fewer than 5 readings: no baseline, and the page says so.</li>
+      <li>One alert per component, cleared when it is back to normal.</li>
+    </ul>
+    <figure class="shot"><img src="screens/m4-04-performance-anomaly.png" alt="Baselines per component and an anomaly alert" width="1280" height="1600"><figcaption>The drill is labelled as a drill</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-say="And when someone makes a mistake, the system says what to do instead. Booking maintenance at ten in the morning suggests the next night slot that passes every rule. Every mistake is logged." data-say-script="OBI: And when someone makes a mistake, the system tells them what to do instead.||OGE: Like what?||OBI: Book maintenance at ten in the morning, and it suggests the next overnight slot that passes every rule. Ask for a report on an empty week, and it names the days that have data.||OGE: And all of it is logged?||OBI: Every mistake, with the suggestion given, so we can see where people struggle.">
+  <p class="kicker">STORY-014 · User errors</p>
+  <h2>A mistake comes with the fix</h2>
+  <div class="two">
+    <div class="flow">
+      <div class="step bad"><b>10:00 Monday</b><span>inside service hours: refused</span></div>
+      <div class="step ok"><b>Try this</b><span>the next overnight slot that passes every rule</span></div>
+      <div class="step"><b>Logged</b><span>page, message, suggestion</span></div>
+    </div>
+    <figure class="shot"><img src="screens/m4-03-user-error-suggestion.png" alt="A refused maintenance window with a corrective suggestion" width="1280" height="900"><figcaption>Suggestions worked out from the data</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-say="Story fifteen. Morgan, the compliance officer, produces a detailed report on the anomaly: details, the full timeline, hours open, its cause. When the alert clears, a second version is produced, and the first is kept." data-say-script="OBI: Story fifteen, the paper trail. Morgan, our compliance officer, produces a detailed report on the anomaly.||OGE: What is in it?||OBI: The details, the full timeline from the audit log, how long it was open, its cause, and the risks that cite it.||OGE: And if things change later?||OBI: A new version. Version two names version one, and both are kept with their fingerprints.">
+  <p class="kicker">STORY-015 · Incident reports</p>
+  <h2>Every incident, documented and versioned</h2>
+  <div class="two">
+    <ul class="beats">
+      <li>Details, timeline, hours open, cause and linked risks.</li>
+      <li>Version 2 supersedes version 1; both kept unchanged.</li>
+      <li><span class="pill ok">Matches its archived hash</span></li>
+    </ul>
+    <figure class="shot"><img src="screens/m4-05-incident-report.png" alt="An incident report with versions and its hash check" width="1280" height="1600"><figcaption>Version control for every report</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-say="Only authorised roles can open incident and risk documentation. When Avery, a TxDOT user, tries, access is refused, and both the openings and the refusal are on record." data-say-script="OBI: Incident and risk documents are for the people who need them.||OGE: What happens if someone else tries?||OBI: Avery, a TxDOT user, tries to open one. Access is refused, and the attempt goes on the access log next to every authorised opening.">
+  <p class="kicker">STORY-015 · Access</p>
+  <h2>Opened by the right people, every time on record</h2>
+  <figure class="shot"><img src="screens/m4-06-incident-access-log.png" alt="The access log with openings and a refusal" width="1280" height="1600"><figcaption>Compliance, risk, security, managers and administrators only</figcaption></figure>
+</section>
+
+<section class="slide" data-say="The whole build: five releases, every one complete, seventy-three unit tests and five browser walks passing." data-say-script="OBI: And here is the whole build.||OGE: Every release complete?||OBI: All five. Seventy three unit tests and five browser walks pass, and each of the sixteen stories is tied to the commit the portal verified.">
+  <p class="kicker">Scoreboard · 14 November</p>
+  <h2>Five releases, all complete</h2>
+  <div class="chart" data-chart="releases" aria-label="Stories verified per release"></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Story</th><th>Commit</th><th>Tests</th><th>Portal</th></tr></thead>
+    <tbody>
+      <tr><td>011 Cybersecurity compliance</td><td class="n">341fd4c</td><td class="n">4</td><td><span class="pill ok">Verified · 50</span></td></tr>
+      <tr><td>014 Performance and user error</td><td class="n">5a1a8d6</td><td class="n">4</td><td><span class="pill ok">Verified · 50</span></td></tr>
+      <tr><td>015 Incident reports</td><td class="n">15a6d44</td><td class="n">3</td><td><span class="pill ok">Verified · 50</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="slide" data-say="Two helpers worked alongside: one rebuilt this tour with Oge and a fixed control bar, the other kept the framework up to date." data-say-script="OGE: Who helped this time?||OBI: Two background agents. One rebuilt this tour: you became Oge, the buttons got a fixed bar, and the pointer now keeps pace with our voices. The other kept the project framework up to date.">
+  <p class="kicker">Working in parallel</p>
+  <h2>Two background agents</h2>
+  <div class="tiles">
+    <div class="tile"><b>Tour</b><span>co-host Oge, a fixed control bar that never covers text, the pointer in step with the voice</span></div>
+    <div class="tile"><b>Framework</b><span>updated the project framework text for Milestone 4</span></div>
+  </div>
+</section>
+
+<section class="slide" data-say="Next is the demo for the twenty-fourth, and the questions for TxDOT through Ali are still open. Thanks for listening. This was OBI and Oge." data-say-script="OBI: Next, we prepare the demo for the twenty fourth.||OGE: And anything we still need from TxDOT?||OBI: The questions from earlier milestones are still open with Ali: the real scoring criteria, Euna access, the risk matrix, the required reports, financial system access, the legal review, and the service levels.||OGE: Thanks for listening.||OBI: This was OBI, with Oge.">
+  <p class="kicker">What comes next</p>
+  <h2>The demo, 24 November</h2>
+  <div class="lane"></div>
+  <ul class="beats">
+    <li>A rehearsed walk through all 16 stories, in the order the audience would meet them.</li>
+    <li>For TxDOT, through Ali: scoring criteria, Euna access, risk matrix, required reports, financial system access, legal review, service levels.</li>
+  </ul>
+  <p><a href="https://obianams04.github.io/cris-enhancement/workspace/">Try the workspace</a> · <a href="https://obianams04.github.io/cris-enhancement/">Command Center</a> · <a href="https://github.com/OBIANAMS04/cris-enhancement">GitHub</a></p>
+</section>
+</template>
+
+<script>
+(function () {
+  var slides = Array.prototype.slice.call(document.getElementById('slides').content.querySelectorAll('.slide'))
+    .filter(function (s) { return s.parentNode && s.parentNode.nodeType === 11; });
+  var stage = document.getElementById('stage'), count = document.getElementById('count');
+  var i = 0;
+  var NS = 'http://www.w3.org/2000/svg';
+  var tip = document.getElementById('tip');
+  function el(tag, attrs, text) { var e = document.createElementNS(NS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; return e; }
+  function showTip(evt, text) { tip.textContent = text; tip.hidden = false; tip.style.left = (evt.clientX + 12) + 'px'; tip.style.top = (evt.clientY + 12) + 'px'; }
+  function hbars(host, rows, max, fmt) {
+    var labelW = 190, w = 560, rowH = 34, h = rows.length * rowH + 10, plot = w - labelW - 60;
+    var svg = el('svg', { viewBox: '0 0 ' + w + ' ' + h, role: 'img', 'aria-label': host.getAttribute('aria-label') });
+    rows.forEach(function (r, k) {
+      var y = 6 + k * rowH, g = el('g', {});
+      g.appendChild(el('text', { x: 0, y: y + 15 }, r.label));
+      if (r.total != null) g.appendChild(el('rect', { class: 'track', x: labelW, y: y + 3, width: plot * r.total / max, height: 16, rx: 4 }));
+      if (r.value > 0) g.appendChild(el('rect', { class: 'fill', x: labelW, y: y + 3, width: plot * r.value / max, height: 16, rx: 4 }));
+      g.appendChild(el('text', { class: 'num', x: labelW + plot * Math.max(r.value, r.total || 0) / max + 8, y: y + 15 }, fmt(r)));
+      var hit = el('rect', { x: 0, y: y, width: w, height: rowH, fill: 'transparent' });
+      hit.addEventListener('mousemove', function (e) { showTip(e, r.label + ': ' + fmt(r)); });
+      hit.addEventListener('mouseleave', function () { tip.hidden = true; });
+      g.appendChild(hit);
+      svg.appendChild(g);
+    });
+    host.appendChild(svg);
+  }
+  function points(host) {
+    var data = [['Start', 0, 'Start'], ['M0', 50, 'M0: Command Center'], ['M1', 300, 'M1: help desk to features'], ['M2', 500, 'M2: training to compliance'], ['M3', 650, 'M3: submissions to risk'], ['M4', 800, 'M4: security to incident reports']];
+    var w = 620, hgt = 260, l = 50, r = 20, t = 20, b = 50, max = 800;
+    var svg = el('svg', { viewBox: '0 0 ' + w + ' ' + hgt, role: 'img', 'aria-label': host.getAttribute('aria-label') });
+    var x = function (k) { return l + k * (w - l - r) / (data.length - 1); };
+    var y = function (v) { return t + (hgt - t - b) * (1 - v / max); };
+    [0, 200, 400, 600, 800].forEach(function (v) { svg.appendChild(el('line', { x1: l, x2: w - r, y1: y(v), y2: y(v), stroke: 'var(--rule)' })); svg.appendChild(el('text', { class: 'num muted', x: l - 8, y: y(v) + 4, 'text-anchor': 'end' }, String(v))); });
+    var pts = data.map(function (p, k) { return x(k) + ',' + y(p[1]); }).join(' ');
+    svg.appendChild(el('polygon', { points: l + ',' + y(0) + ' ' + pts + ' ' + x(data.length - 1) + ',' + y(0), fill: 'var(--s1)', opacity: '0.12' }));
+    svg.appendChild(el('polyline', { points: pts, fill: 'none', stroke: 'var(--s1)', 'stroke-width': 2 }));
+    data.forEach(function (p, k) {
+      var c = el('circle', { cx: x(k), cy: y(p[1]), r: k === data.length - 1 ? 6 : 4, fill: 'var(--s1)', stroke: 'var(--panel)', 'stroke-width': 2 });
+      c.addEventListener('mousemove', function (e) { showTip(e, p[2] + ': ' + p[1] + ' points'); });
+      c.addEventListener('mouseleave', function () { tip.hidden = true; });
+      svg.appendChild(c);
+      if (k) svg.appendChild(el('text', { class: 'num', x: x(k), y: y(p[1]) - 12, 'text-anchor': 'middle' }, String(p[1])));
+      svg.appendChild(el('text', { class: 'muted', x: x(k), y: hgt - 18, 'text-anchor': k === 0 ? 'start' : k === data.length - 1 ? 'end' : 'middle' }, p[0]));
+    });
+    host.appendChild(svg);
+  }
+  var charts = {
+    points: points,
+    releases: function (h) { hbars(h, [{ label: 'STORY-000 (first)', value: 1, total: 1 }, { label: 'r0 Setup and support', value: 4, total: 4 }, { label: 'r1 Enhancement, training', value: 2, total: 2 }, { label: 'r2 Reporting, compliance', value: 3, total: 3 }, { label: 'r3 Response management', value: 2, total: 2 }, { label: 'r4 Risk and security', value: 4, total: 4 }], 4, function (r) { return r.value + ' of ' + r.total; }); }
+  };
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    var s = slides[i].cloneNode(true);
+    stage.replaceChildren(s);
+    s.querySelectorAll('[data-chart]').forEach(function (h) { charts[h.getAttribute('data-chart')](h); });
+    count.textContent = (i + 1) + ' / ' + slides.length;
+    if (location.hash !== '#s' + (i + 1)) history.replaceState(null, '', '#s' + (i + 1));
+    if (window.__deckOnShow) window.__deckOnShow(i);
+  }
+  document.getElementById('prev').onclick = function () { show(i - 1); };
+  document.getElementById('next').onclick = function () { show(i + 1); };
+  document.addEventListener('keydown', function (e) {
+    if (e.target.closest && e.target.closest('input,textarea')) return;
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') show(i + 1);
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') show(i - 1);
+  });
+  window.addEventListener('hashchange', function () { var m = /^#s(\d+)$/.exec(location.hash); if (m) show(+m[1] - 1); });
+
+  // The deck tour (the deck-tour block below) drives the slides through this handle.
+  window.__deck = { slides: slides, stage: stage, go: show, index: function () { return i; } };
+
+  var m = /^#s(\d+)$/.exec(location.hash);
+  show(m ? +m[1] - 1 : 0);
+})();
+</script>
+
+<!-- deck-tour start -->
+<!-- Deck tour (same engine as framework/tour-snippet.html, deck mode). Standing rules (Obi): 2026-11-10 red tour button,
+     2026-11-11 play icon and male narrator, 2026-11-12 OBI two-host narration, docked left panel (the stage reflows beside
+     it), gauge synced to the voice, pointer synced to the voice; 2026-11-14 co-host Oge, fixed control bar that never covers
+     the dialogue, pointer pacing on boundary events or a word-timing estimate. Each slide carries
+     data-say-script="OBI: ... || OGE: ..."; the deck script exposes window.__deck = { slides, stage, go(n), index() } and calls
+     window.__deckOnShow(i) from show(). The deck's own toolbar holds the red tour button (id tour-launch).
+     Reuse: copy everything between deck-tour start and deck-tour end into a deck built the same way. -->
+<style>
+:root { --tp-w: clamp(260px, 26vw, 360px); --tp-red: #c8102e; --tp-red-ink: #ffffff; --tp-bg: #ffffff; --tp-ink: #1b1d21; --tp-muted: #5a606b; --tp-line: #d9dde3; --tp-soft: #eef0f3; --tp-obi: #b00d28; --tp-oge: #1d5fa8; --tp-now: #fdf1f3; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --tp-red: #ff5a6e; --tp-red-ink: #1a0a0d; --tp-bg: #1b1f25; --tp-ink: #eceef2; --tp-muted: #a3aab6; --tp-line: #343b45; --tp-soft: #262b33; --tp-obi: #ff8796; --tp-oge: #8ab9ff; --tp-now: #2e2024; } }
+:root[data-theme="dark"] { --tp-red: #ff5a6e; --tp-red-ink: #1a0a0d; --tp-bg: #1b1f25; --tp-ink: #eceef2; --tp-muted: #a3aab6; --tp-line: #343b45; --tp-soft: #262b33; --tp-obi: #ff8796; --tp-oge: #8ab9ff; --tp-now: #2e2024; }
+.tour-launch[hidden], .tour-panel[hidden], .tour-cursor[hidden], .tour-desc[hidden] { display: none !important; }
+/* Docked: the page reflows beside the panel instead of under it. */
+html.tour-on { padding-left: var(--tp-w) !important; }
+html.tour-on .tour-target { outline: 3px solid var(--tp-red) !important; outline-offset: 4px; }
+/* The panel is one vertical column in normal flow; only the dialogue area scrolls, the control bar is always last. */
+.tour-panel { position: fixed; z-index: 2147483001; top: 0; left: 0; bottom: 0; width: var(--tp-w); margin: 0; overflow: hidden;
+  display: flex; flex-direction: column; gap: 10px; box-sizing: border-box; text-align: left;
+  padding: 12px 14px calc(12px + env(safe-area-inset-bottom, 0px)) max(14px, env(safe-area-inset-left, 0px));
+  background: var(--tp-bg); color: var(--tp-ink); border-right: 1px solid var(--tp-line); border-top: 5px solid var(--tp-red); box-shadow: 4px 0 18px rgba(0, 0, 0, 0.12);
+  font: 14px/1.45 system-ui, "Segoe UI", Roboto, sans-serif; letter-spacing: normal; text-transform: none; }
+.tour-panel * { box-sizing: border-box; }
+.tour-panel > * { flex: none; min-width: 0; margin: 0; }
+.tour-panel p, .tour-panel ol { margin: 0; max-width: none; }
+.tour-head { display: flex; flex-direction: column; gap: 1px; font-size: 11.5px; line-height: 1.3; color: var(--tp-muted); }
+.tour-head > span { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tour-brand { color: var(--tp-red); font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; }
+.tour-brand svg { width: 10px; height: 10px; margin-right: 5px; vertical-align: -1px; }
+.tour-hosts { color: var(--tp-muted); font-weight: 700; }
+.tour-count { font-weight: 600; }
+.tour-panel h2.tour-title { margin: 0; font: 700 17px/1.25 system-ui, "Segoe UI", Roboto, sans-serif; color: var(--tp-ink); letter-spacing: normal; text-transform: none;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; overflow-wrap: anywhere; }
+.tour-desc { font-size: 13px; line-height: 1.4; color: var(--tp-muted); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
+.tour-gauge { height: 8px; border-radius: 999px; background: var(--tp-soft); border: 1px solid var(--tp-line); overflow: hidden; }
+.tour-gauge i { display: block; height: 100%; background: var(--tp-red); transform: scaleX(0); transform-origin: left center; }
+.tour-panel .tour-dialog { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; display: flex; flex-direction: column; gap: 8px; }
+.tour-dialog > * { flex: none; }
+.tour-caption { padding: 8px 10px; border-radius: 10px; background: var(--tp-now); border-left: 4px solid var(--tp-red); font-size: 15px; line-height: 1.45; overflow-wrap: anywhere; }
+.tour-who { margin-right: 6px; font-size: 11.5px; font-weight: 800; letter-spacing: 0.06em; }
+.tour-who.is-obi, .tour-script .is-obi b { color: var(--tp-obi); }
+.tour-who.is-oge, .tour-script .is-oge b { color: var(--tp-oge); }
+.tour-script { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 4px; font-size: 13px; line-height: 1.4; color: var(--tp-muted); }
+.tour-script li { padding: 5px 8px; border-radius: 8px; border: 0; overflow-wrap: anywhere; }
+.tour-script li.is-now { background: var(--tp-soft); color: var(--tp-ink); }
+.tour-script b { font-size: 11px; letter-spacing: 0.05em; }
+.tour-keys { font-size: 11.5px; color: var(--tp-muted); }
+.tour-ctrl { display: flex; flex-wrap: wrap; gap: 6px; padding-top: 10px; border-top: 1px solid var(--tp-line); }
+.tour-panel .tour-ctrl button { flex: 1 1 auto; }
+.tour-panel button { font: 600 13.5px/1.1 system-ui, "Segoe UI", Roboto, sans-serif; letter-spacing: normal; text-transform: none; white-space: nowrap; border-radius: 8px; padding: 8px 10px; min-height: 36px; min-width: 0; margin: 0; cursor: pointer;
+  border: 1px solid var(--tp-muted); background: transparent; color: var(--tp-ink); box-shadow: none; position: static; }
+.tour-panel button:disabled { opacity: 0.45; cursor: default; }
+.tour-panel button.tour-next { background: var(--tp-red); border-color: var(--tp-red); color: var(--tp-red-ink); }
+.tour-panel button.tour-voice[aria-pressed="true"] { border-color: var(--tp-red); }
+.tour-panel button:focus-visible { outline: 3px solid var(--tp-ink); outline-offset: 2px; }
+.tour-panel.is-paused .tour-gauge i { opacity: 0.55; }
+@media (min-width: 700px) and (max-height: 560px) { .tour-desc { display: none !important; } .tour-panel h2.tour-title { -webkit-line-clamp: 2; } .tour-panel { gap: 8px; } }
+/* Narrow screens: a compact strip at the top; the page is pushed down by its measured height. */
+@media (max-width: 699.98px) {
+  html.tour-on { padding-left: 0 !important; padding-top: var(--tour-strip, 168px) !important; scroll-padding-top: calc(var(--tour-strip, 168px) + 12px); }
+  .tour-panel { right: 0; bottom: auto; width: auto; max-height: min(55vh, 360px); gap: 6px; padding: 8px max(12px, env(safe-area-inset-right, 0px)) 10px max(12px, env(safe-area-inset-left, 0px));
+    border-right: 0; border-bottom: 1px solid var(--tp-line); box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14); }
+  .tour-head { flex-direction: row; justify-content: space-between; gap: 8px; }
+  .tour-panel h2.tour-title { font-size: 15px; -webkit-line-clamp: 1; }
+  .tour-desc, .tour-script, .tour-keys { display: none !important; }
+  .tour-caption { font-size: 14px; padding: 6px 10px; }
+  .tour-gauge { height: 6px; }
+  .tour-ctrl { padding-top: 6px; }
+  .tour-panel button { min-height: 32px; padding: 6px 8px; font-size: 13px; }
+}
+/* The synced pointer: drawn above the page, never over the panel, never clickable. */
+.tour-cursor { position: fixed; left: 0; top: 0; z-index: 2147483000; width: 24px; height: 30px; pointer-events: none; will-change: transform; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4)); }
+.tour-cursor svg { display: block; width: 24px; height: 30px; transform-origin: 3px 3px; }
+.tour-cursor.is-click svg { animation: tp-press 0.35s ease; }
+.tour-ripple { position: fixed; z-index: 2147482999; width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 50%; border: 3px solid var(--tp-red); pointer-events: none; animation: tp-ripple 0.7s ease-out forwards; }
+@keyframes tp-press { 50% { transform: scale(0.8); } }
+@keyframes tp-ripple { from { transform: scale(0.2); opacity: 0.95; } to { transform: scale(1.3); opacity: 0; } }
+@keyframes tp-fade { from { opacity: 0.9; } to { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .tour-ripple { animation: tp-fade 0.7s linear forwards; transform: none; } .tour-cursor.is-click svg { animation: none; } }
+</style>
+<aside class="tour-panel" id="tour-panel" data-mode="deck" role="dialog" aria-modal="false" aria-labelledby="tour-title" hidden>
+  <div class="tour-head"><span class="tour-brand"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4.5 2.6v10.8L13.6 8z" fill="currentColor"></path></svg>Guided tour <span class="tour-hosts">· OBI and Oge</span></span><span class="tour-count" id="tour-count"></span></div>
+  <h2 class="tour-title" id="tour-title"></h2>
+  <p class="tour-desc" id="tour-desc"></p>
+  <div class="tour-gauge" id="tour-gauge" role="progressbar" aria-label="Progress through this part of the tour" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="tour-fill"></i></div>
+  <div class="tour-dialog" id="tour-dialog">
+    <p class="tour-caption" id="tour-caption" aria-live="polite"><b class="tour-who is-obi" id="tour-who">OBI</b><span id="tour-line"></span></p>
+    <ol class="tour-script" id="tour-script" aria-label="What OBI and Oge say here"></ol>
+    <p class="tour-keys">Left and right arrows move, Space pauses, Esc closes.</p>
+  </div>
+  <div class="tour-ctrl" id="tour-ctrl">
+    <button type="button" id="tour-back">Back</button>
+    <button type="button" id="tour-pause" aria-pressed="false">Pause</button>
+    <button type="button" class="tour-next" id="tour-next">Next</button>
+    <button type="button" class="tour-voice" id="tour-voice" aria-pressed="true">Voice on</button>
+    <button type="button" id="tour-close" aria-label="Close the tour">Close</button>
+  </div>
+</aside>
+<div class="tour-cursor" id="tour-cursor" aria-hidden="true" hidden><svg viewBox="0 0 24 30" focusable="false"><path d="M3 2.5v21.5l5.6-5.3 3.9 8.6 3.6-1.6-3.8-8.4h7.7z" fill="#ffffff" stroke="#111418" stroke-width="1.6" stroke-linejoin="round"></path></svg></div>
+<script>
+(() => {
+  'use strict';
+  const panel = document.getElementById('tour-panel');
+  if (!panel || panel.dataset.ready) return;
+  panel.dataset.ready = '1';
+  const mode = panel.getAttribute('data-mode') || 'page';
+  const $ = (id) => document.getElementById(id);
+  const html = document.documentElement;
+  const launch = $('tour-launch'), cursor = $('tour-cursor'), gauge = $('tour-gauge'), fill = $('tour-fill');
+  const capWho = $('tour-who'), capLine = $('tour-line'), scriptList = $('tour-script'), dialog = $('tour-dialog');
+  const btnBack = $('tour-back'), btnPause = $('tour-pause'), btnNext = $('tour-next'), btnClose = $('tour-close'), btnVoice = $('tour-voice');
+  const PAUSE_AFTER = 600, READ_CPS = 15, START_DELAY = 350, GLIDE = 380;
+  const mq = (q) => { try { return matchMedia(q).matches; } catch (e) { return false; } };
+  const reduce = () => mq('(prefers-reduced-motion: reduce)');
+  const isTop = () => mq('(max-width: 699.98px)');
+
+  // ---- Voices: OBI leads (male, natural, low), Oge answers (a different, preferably natural voice).
+  const synth = 'speechSynthesis' in window ? window.speechSynthesis : null;
+  const canSpeak = !!synth && typeof window.SpeechSynthesisUtterance === 'function';
+  const MALE = ['andrew', 'guy', 'christopher', 'eric', 'davis', 'brian', 'roger', 'steffan', 'ryan', 'thomas'];
+  const OGE_NAMES = ['jenny', 'aria', 'ava', 'emma'];
+  const FEMALE = /\b(zira|susan|hazel|samantha|victoria|karen|aria|jenny|libby|sonia|emma|michelle|catherine|ava|emily|female)\b/i;
+  const NATURAL = /natural|online/i;
+  const named = (v, n) => new RegExp('\\b' + n + '\\b', 'i').test(v.name || '');
+  let cast = { obi: null, oge: null, obiPitch: 0.75, ogePitch: 1.15 };
+  function pickVoices() {
+    let all = [];
+    try { all = (synth && synth.getVoices()) || []; } catch (e) { all = []; }
+    const en = all.filter((v) => /^en([-_]|$)/i.test(v.lang || ''));
+    const pool = en.length ? en : all;
+    let obi = null, natural = false;
+    for (const n of MALE) { obi = pool.find((v) => NATURAL.test(v.name) && named(v, n)); if (obi) { natural = true; break; } }
+    obi = obi || pool.find((v) => /google uk english male/i.test(v.name)) || pool.find((v) => /microsoft (david|mark)\b/i.test(v.name))
+      || pool.find((v) => !FEMALE.test(v.name)) || pool[0] || null;
+    let oge = null;
+    for (const n of OGE_NAMES) { oge = pool.find((v) => v !== obi && NATURAL.test(v.name) && named(v, n)); if (oge) break; }
+    oge = oge || pool.find((v) => v !== obi && /google us english/i.test(v.name)) || pool.find((v) => v !== obi && /zira/i.test(v.name))
+      || pool.find((v) => v !== obi && FEMALE.test(v.name)) || pool.find((v) => v !== obi) || obi;
+    cast = { obi, oge, obiPitch: natural ? 0.82 : 0.75, ogePitch: oge === obi ? 1.15 : 1.0 };
+  }
+  if (canSpeak) {
+    pickVoices();
+    try { if (synth.addEventListener) synth.addEventListener('voiceschanged', pickVoices); else synth.onvoiceschanged = pickVoices; } catch (e) {}
+  }
+  let voiceOn = true;
+  try { voiceOn = localStorage.getItem('tour-voice') !== 'off'; } catch (e) {}
+  const paintVoice = () => {
+    if (!canSpeak) { btnVoice.textContent = 'No voice'; btnVoice.disabled = true; btnVoice.setAttribute('aria-pressed', 'false'); return; }
+    btnVoice.textContent = voiceOn ? 'Voice on' : 'Voice off';
+    btnVoice.setAttribute('aria-pressed', String(voiceOn));
+  };
+  paintVoice();
+
+  // ---- Stops. Dialogue: "OBI: text || OGE: text || ...". Without a script, OBI reads the short description.
+  function parse(script, fallback) {
+    const out = [];
+    String(script || '').split('||').forEach((raw) => {
+      const s = raw.trim();
+      if (!s) return;
+      const m = /^(OBI|OGE)\s*:\s*([\s\S]*)$/i.exec(s);
+      out.push(m ? { who: m[1].toUpperCase(), text: m[2].trim() } : { who: 'OBI', text: s });
+    });
+    if (!out.length && fallback && fallback.trim()) out.push({ who: 'OBI', text: fallback.trim() });
+    return out.filter((l) => l.text);
+  }
+  const clean = (s) => String(s || '').replace(/\s+/g, ' ').trim();
+  const wordCount = (s) => (String(s || '').match(/\S+/g) || []).length;
+  let bringing = false;
+  const adapter = mode === 'deck' ? {
+    noun: 'Slide',
+    stops() {
+      const D = window.__deck;
+      if (!D) return [];
+      return D.slides.map((s, k) => {
+        const h = s.querySelector('h1, h2');
+        const title = clean(h && h.textContent) || 'Slide ' + (k + 1);
+        return { title, desc: '', lines: parse(s.getAttribute('data-say-script'), s.getAttribute('data-say') || title) };
+      });
+    },
+    bring(stop, k) {
+      const D = window.__deck;
+      bringing = true;
+      try { if (D.index() !== k) D.go(k); } finally { bringing = false; }
+      return D.stage;
+    }
+  } : {
+    noun: 'Stop',
+    stops() {
+      return Array.prototype.filter.call(document.querySelectorAll('[data-tour]'), (el) => el.getClientRects().length && !panel.contains(el))
+        .map((el) => {
+          const h = el.querySelector('h1, h2, h3');
+          const desc = el.getAttribute('data-tour') || '';
+          return { el, title: el.getAttribute('data-tour-title') || clean(h && h.textContent) || '', desc, lines: parse(el.getAttribute('data-tour-script'), desc) };
+        });
+    },
+    bring(stop) { return stop.el; }
+  };
+
+  // ---- State. Every async callback carries the token it was started with; a newer token cancels it.
+  let running = false, paused = false, list = [], idx = 0, lines = [], lineIdx = 0, phase = 'line', tok = 0;
+  let target = null, items = null, anchor = null, speechBroken = false, keepUtt = null;
+  const timers = new Set();
+  const later = (fn, ms) => { const id = setTimeout(() => { timers.delete(id); fn(); }, ms); timers.add(id); return id; };
+  const clearTimers = () => { timers.forEach((id) => clearTimeout(id)); timers.clear(); };
+  const cancelSpeech = () => { keepUtt = null; if (canSpeak) { try { synth.cancel(); } catch (e) {} } };
+
+  // ---- Pacing. One clock per line (L) drives both the gauge and the pointer. Progress p (0..1) follows 'boundary'
+  // events when the voice sends them, else a word-timing estimate: wpr words a second per unit of rate (2.6 at 0.95),
+  // re-measured from every line that is spoken to its end. p never goes back and stays below 0.97 until 'end'.
+  let wpr = 2.6 / 0.95;
+  let L = { mode: 'idle', words: 1, len: 1, text: '', rate: 1, t0: 0, spoke: 0, started: false, bw: -1, bt: 0, dur: 1, p: 0, subs: [], sub: -1 };
+  let g = { shown: 0, done: 0, total: 1, final: false };
+  function setFill(p) {
+    g.shown = p;
+    fill.style.transform = 'scaleX(' + p + ')';
+    gauge.setAttribute('aria-valuenow', String(Math.floor(p * 100)));
+    gauge.dataset.progress = String(p);
+  }
+  function lineProgress(now) {
+    if (L.mode === 'timer') return Math.min(1, (now - L.t0) / L.dur);
+    if (L.mode !== 'speech' || now < L.t0) return 0;
+    const wps = wpr * L.rate;
+    const w = L.bw >= 0 ? L.bw + Math.min(1.5, (now - L.bt) / 1000 * wps) : (now - L.t0) / 1000 * wps;
+    return Math.min(0.97, w / Math.max(1, L.words));
+  }
+  function tickPace(now) {
+    if (!running || paused || g.final || phase !== 'line') return;
+    L.p = Math.max(L.p, lineProgress(now));
+    const p = Math.min(0.995, (g.done + L.p * L.len) / g.total);
+    if (p > g.shown) setFill(p);
+  }
+
+  // ---- Content area (everything right of the docked panel, or below the top strip) and the synced pointer.
+  function area() {
+    const r = panel.getBoundingClientRect(), w = html.clientWidth || innerWidth, h = innerHeight;
+    return isTop() ? { l: 0, t: Math.max(0, r.bottom), r: w, b: h } : { l: Math.max(0, r.right), t: 0, r: w, b: h };
+  }
+  // A point on el: u (0..1) sweeps along the element as its words are spoken, like a finger following the text.
+  function pointOn(el, u) {
+    const a = area(), r = el.getBoundingClientRect();
+    const span = Math.max(40, Math.min(r.width * 0.6, 240));
+    let x = r.left + Math.min(28, r.width * 0.2) + span * u;
+    let y = r.top + Math.min(22, r.height * 0.5) + (r.height > 80 ? Math.min(r.height * 0.25, 36) * u : 0);
+    x = Math.max(a.l + 8, Math.min(x, a.r - 30));
+    y = Math.max(a.t + 8, Math.min(y, a.b - 34));
+    return [x, y];
+  }
+  let cx = 0, cy = 0, raf = 0, glide = null, lastU = 0;
+  const ease = (k) => 1 - Math.pow(1 - k, 3);
+  function frame(now) {
+    raf = requestAnimationFrame(frame);
+    now = performance.now();
+    tickPace(now);
+    if (!L.subs.length) return;
+    const live = running && !paused && phase === 'line' && L.mode !== 'idle';
+    // Which of the line's items the voice has reached, and how far along it.
+    let u = lastU;
+    if (live) {
+      const k = L.subs.length, f = L.p * k, j = Math.min(k - 1, Math.floor(f));
+      u = Math.min(1, f - j);
+      if (j !== L.sub) { L.sub = j; anchor = L.subs[j]; glide = { x: cx, y: cy, t0: now }; if (j > 0 && !isTop()) reveal(anchor); }
+      lastU = u;
+    }
+    if (!anchor || !anchor.isConnected) return;
+    const p = pointOn(anchor, u);
+    // A small drift while someone is talking, so the pointer is never frozen even when the estimate runs ahead.
+    if (running && !paused && !reduce()) { p[0] += 4 * Math.sin(now / 480); p[1] += 2.5 * Math.cos(now / 640); } // also while the first line is about to start
+    if (glide && !reduce()) {
+      const k = Math.min(1, (now - glide.t0) / GLIDE), e = ease(k);
+      cx = glide.x + (p[0] - glide.x) * e; cy = glide.y + (p[1] - glide.y) * e;
+      if (k >= 1) glide = null;
+    } else if (reduce()) { cx = p[0]; cy = p[1]; glide = null; }
+    else { cx += (p[0] - cx) * 0.35; cy += (p[1] - cy) * 0.35; }
+    const a = area();
+    cx = Math.max(a.l + 8, cx); cy = Math.max(a.t + 8, cy);
+    cursor.style.transform = 'translate(' + cx.toFixed(1) + 'px, ' + cy.toFixed(1) + 'px)';
+  }
+  function click() {
+    if (!anchor) return;
+    const p = pointOn(anchor, 0), r = document.createElement('span');
+    r.className = 'tour-ripple';
+    r.setAttribute('aria-hidden', 'true');
+    r.style.left = p[0] + 'px'; r.style.top = p[1] + 'px';
+    document.body.appendChild(r);
+    setTimeout(() => r.remove(), 800);
+    cursor.classList.remove('is-click'); void cursor.offsetWidth; cursor.classList.add('is-click');
+    cursor.dataset.clicks = String((+cursor.dataset.clicks || 0) + 1);
+  }
+  const ITEMS = 'li, tbody tr, figure, button, .tile, .step, .cell, .card, [class*="card"], article, dl > div';
+  function itemsIn(el) {
+    let els = Array.prototype.filter.call(el.querySelectorAll(ITEMS), (e) => e.getClientRects().length && !panel.contains(e));
+    els = els.filter((e) => !els.some((o) => o !== e && e.contains(o)));
+    if (isTop()) {
+      // On the top strip, never scroll the target up under the strip: only point at items already in view.
+      const a = area();
+      return els.filter((e) => { const r = e.getBoundingClientRect(); return r.top >= a.t && r.top < a.b - 40; }).slice(0, 12);
+    }
+    const top = el.getBoundingClientRect().top, limit = top + Math.max(innerHeight * 1.2, 600);
+    const near = els.filter((e) => e.getBoundingClientRect().top < limit);
+    return (near.length ? near : els.slice(0, 6)).slice(0, 12);
+  }
+  // The items a line walks through: the heading for the opening line, then an even share of the stop's items.
+  function headOf(el) { const h = el.querySelector('h1, h2, h3'); return h && h.getClientRects().length ? h : el; }
+  function subsFor(n) {
+    if (n === 0) return [headOf(target)];
+    if (!items) items = itemsIn(target);
+    const K = items.length, m = Math.max(1, lines.length - 1);
+    if (!K) return [target];
+    const a = Math.floor((n - 1) * K / m), b = Math.max(a + 1, Math.floor(n * K / m));
+    return items.slice(a, Math.min(b, a + 4));
+  }
+  function reveal(el) {
+    const a = area(), r = el.getBoundingClientRect();
+    if (r.top < a.t + 4 || r.bottom > a.b - 4) {
+      try { el.scrollIntoView({ block: r.height > a.b - a.t ? 'start' : 'nearest', behavior: reduce() ? 'auto' : 'smooth' }); } catch (e) { el.scrollIntoView(); }
+    }
+  }
+
+  // ---- Panel rendering.
+  const label = (who) => (who === 'OGE' ? 'OGE' : 'OBI');
+  function renderStop(stop) {
+    $('tour-count').textContent = adapter.noun + ' ' + (idx + 1) + ' of ' + list.length;
+    $('tour-title').textContent = stop.title || adapter.noun + ' ' + (idx + 1);
+    const d = $('tour-desc');
+    d.textContent = stop.desc && stop.lines.length > 1 ? stop.desc : '';
+    d.hidden = !d.textContent;
+    scriptList.replaceChildren(...lines.map((l) => {
+      const li = document.createElement('li'), b = document.createElement('b');
+      li.className = 'is-' + l.who.toLowerCase();
+      b.textContent = label(l.who);
+      li.append(b, ' ', l.text);
+      return li;
+    }));
+    btnBack.disabled = idx === 0;
+    btnNext.textContent = idx === list.length - 1 ? 'Finish' : 'Next';
+  }
+  function renderLine(n) {
+    const l = lines[n];
+    capWho.textContent = label(l.who);
+    capWho.className = 'tour-who is-' + l.who.toLowerCase();
+    capLine.textContent = l.text;
+    Array.prototype.forEach.call(scriptList.children, (li, k) => { li.classList.toggle('is-now', k === n); if (k === n) li.setAttribute('aria-current', 'true'); else li.removeAttribute('aria-current'); });
+    dialog.scrollTop = 0;
+  }
+
+  // ---- Playback.
+  function startStop(k) {
+    if (!list.length) return;
+    k = Math.max(0, Math.min(list.length - 1, k));
+    tok++; clearTimers(); cancelSpeech();
+    idx = k;
+    const stop = list[k];
+    lines = stop.lines.length ? stop.lines : [{ who: 'OBI', text: stop.title || adapter.noun + ' ' + (k + 1) }];
+    g = { shown: 0, done: 0, total: Math.max(1, lines.reduce((s, l) => s + l.text.length, 0)), final: false };
+    setFill(0);
+    renderStop(stop);
+    renderLine(0);
+    if (target) target.classList.remove('tour-target');
+    target = adapter.bring(stop, k);
+    target.classList.add('tour-target');
+    items = null; lineIdx = 0; phase = 'line';
+    L = { mode: 'idle', words: 1, len: 1, text: '', rate: 1, t0: 0, spoke: 0, started: false, bw: -1, bt: 0, dur: 1, p: 0, subs: [headOf(target)], sub: 0 };
+    anchor = L.subs[0]; lastU = 0; glide = { x: cx, y: cy, t0: performance.now() };
+    try { target.scrollIntoView({ block: 'start', behavior: reduce() ? 'auto' : 'smooth' }); } catch (e) { target.scrollIntoView(); }
+    const t = tok;
+    if (!paused) later(() => settle(t, () => playLine(0)), reduce() ? 200 : START_DELAY);
+  }
+  // Wait until the page has stopped scrolling (smooth scrolls on long pages), so later scrolls do not cut it short.
+  function settle(t, fn) {
+    let last = -1, still = 0;
+    const t0 = performance.now();
+    const step = () => {
+      if (t !== tok) return;
+      const key = Math.round(window.scrollY) + ':' + (target ? Math.round(target.getBoundingClientRect().top) : 0);
+      still = key === last ? still + 1 : 0;
+      last = key;
+      if (still >= 4 || performance.now() - t0 > 900) fn(); else requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+  function playLine(n) {
+    clearTimers();
+    const t = ++tok;
+    lineIdx = n; phase = 'line';
+    const line = lines[n];
+    renderLine(n);
+    L = { mode: 'idle', words: wordCount(line.text), len: line.text.length, text: line.text, rate: 1, t0: 0, spoke: 0, started: false, bw: -1, bt: 0, dur: 1, p: 0, subs: subsFor(n), sub: 0 };
+    lastU = 0; g.final = false;
+    // Glide (under 400 ms) to the line's first item; the click comes when the voice starts.
+    L.sub = 0; anchor = L.subs[0]; glide = { x: cx, y: cy, t0: performance.now() };
+    if (!isTop() && n > 0) reveal(anchor);
+    if (voiceOn && canSpeak && !speechBroken) speakLine(t, n, line); else timerLine(t, n, line);
+  }
+  function timerLine(t, n, line) {
+    L.mode = 'timer'; L.t0 = performance.now(); L.dur = Math.max(1200, line.text.length / READ_CPS * 1000); L.p = 0; L.bw = -1;
+    click();
+    later(() => lineDone(t, n), L.dur);
+  }
+  function speakLine(t, n, line) {
+    let u;
+    try { u = new SpeechSynthesisUtterance(line.text); } catch (e) { timerLine(t, n, line); return; }
+    pickVoices();
+    const oge = line.who === 'OGE', v = oge ? cast.oge : cast.obi;
+    if (v) { u.voice = v; u.lang = v.lang; } else u.lang = 'en-US';
+    u.pitch = oge ? cast.ogePitch : cast.obiPitch;
+    u.rate = oge ? 1.0 : 0.95;
+    L.rate = u.rate;
+    const begin = () => {
+      if (L.started) return;
+      const now = performance.now();
+      L.started = true; L.spoke = now; L.t0 = now; L.mode = 'speech';
+      click();
+    };
+    u.onstart = () => { if (t === tok) begin(); };
+    u.onboundary = (e) => {
+      if (t !== tok) return;
+      begin();
+      const ci = Math.max(0, Math.min(line.text.length, e.charIndex || 0));
+      L.bw = Math.max(L.bw, wordCount(line.text.slice(0, ci)));
+      L.bt = performance.now();
+    };
+    u.onend = () => {
+      if (t !== tok) return;
+      // Learn the voice's real pace from this line, so the estimate fits the next one.
+      const secs = (performance.now() - (L.spoke || performance.now())) / 1000;
+      if (L.started && secs > 0.8 && L.words >= 4) { const m = L.words / secs / L.rate; if (m > 0.8 && m < 6) wpr = wpr * 0.5 + m * 0.5; }
+      lineDone(t, n);
+    };
+    u.onerror = (e) => {
+      if (t !== tok) return;
+      if (e && (e.error === 'interrupted' || e.error === 'canceled')) return;
+      const t2 = ++tok; timerLine(t2, n, line);
+    };
+    keepUtt = u;
+    try { synth.cancel(); } catch (e) {}
+    later(() => {
+      if (t !== tok) return;
+      // The estimate starts with the request; 'start' (or the first boundary) re-times it to the real start.
+      L.mode = 'speech'; L.t0 = performance.now() + 150;
+      try { synth.speak(u); } catch (e) { const t2 = ++tok; timerLine(t2, n, line); }
+    }, 40);
+    // Some browsers expose speechSynthesis but never speak (no voices, blocked audio): fall back to reading time.
+    later(() => {
+      if (t !== tok || L.started) return;
+      speechBroken = true;
+      const t2 = ++tok; cancelSpeech(); timerLine(t2, n, line);
+    }, 3500);
+  }
+  function lineDone(t, n) {
+    if (t !== tok) return;
+    clearTimers();
+    g.done += L.len;
+    L.len = 0; L.p = 0; L.mode = 'idle'; // counted once: the gap before the next line must not add it again
+    const t2 = ++tok;
+    if (n + 1 < lines.length) {
+      lineIdx = n + 1;
+      later(() => { if (t2 === tok) playLine(n + 1); }, 120);
+    } else {
+      g.final = true; setFill(1); phase = 'after';
+      later(() => { if (t2 === tok) advance(); }, PAUSE_AFTER);
+    }
+  }
+  const advance = () => (idx + 1 < list.length ? startStop(idx + 1) : end());
+  function go(k) { if (k >= list.length) end(); else startStop(Math.max(0, k)); }
+  function setPaused(p) {
+    paused = p;
+    btnPause.textContent = p ? 'Resume' : 'Pause';
+    btnPause.setAttribute('aria-pressed', String(p));
+    panel.classList.toggle('is-paused', p);
+    if (p) { tok++; clearTimers(); cancelSpeech(); }
+    else if (phase === 'after') advance();
+    else playLine(lineIdx);
+  }
+
+  // ---- Docking: the panel is a fixed left column and the page reflows beside it (html.tour-on adds the padding);
+  // under 700px it is a strip at the top and the page is pushed down by its measured height.
+  function syncStrip() { if (running) html.style.setProperty('--tour-strip', Math.ceil(panel.getBoundingClientRect().height) + 'px'); }
+  let ro = null;
+  try { ro = new ResizeObserver(syncStrip); } catch (e) { ro = null; }
+  function start() {
+    list = adapter.stops();
+    if (!list.length) return;
+    running = true; speechBroken = false;
+    panel.hidden = false; cursor.hidden = false;
+    if (launch) launch.hidden = true;
+    html.classList.add('tour-on');
+    syncStrip();
+    if (ro) ro.observe(panel);
+    paused = false;
+    btnPause.textContent = 'Pause';
+    btnPause.setAttribute('aria-pressed', 'false');
+    panel.classList.remove('is-paused');
+    const a = area();
+    cx = a.l + 24; cy = isTop() ? a.t + 24 : innerHeight * 0.45;
+    if (!raf) raf = requestAnimationFrame(frame);
+    startStop(0);
+    try { btnPause.focus({ preventScroll: true }); } catch (e) {}
+  }
+  function end() {
+    if (!running) return;
+    running = false; paused = false; tok++;
+    clearTimers(); cancelSpeech();
+    if (raf) cancelAnimationFrame(raf);
+    raf = 0;
+    if (ro) ro.disconnect();
+    html.classList.remove('tour-on');
+    html.style.removeProperty('--tour-strip');
+    if (target) target.classList.remove('tour-target');
+    target = null; anchor = null; items = null; L.subs = []; glide = null;
+    panel.hidden = true; cursor.hidden = true;
+    if (launch) { launch.hidden = false; try { launch.focus({ preventScroll: true }); } catch (e) {} }
+  }
+
+  if (launch) launch.addEventListener('click', () => (running ? end() : start()));
+  btnBack.addEventListener('click', () => go(idx - 1));
+  btnNext.addEventListener('click', () => go(idx + 1));
+  btnPause.addEventListener('click', () => setPaused(!paused));
+  btnClose.addEventListener('click', end);
+  btnVoice.addEventListener('click', () => {
+    if (!canSpeak) return;
+    voiceOn = !voiceOn; speechBroken = false; paintVoice();
+    try { localStorage.setItem('tour-voice', voiceOn ? 'on' : 'off'); } catch (e) {}
+    if (running && !paused && phase === 'line') { tok++; clearTimers(); cancelSpeech(); playLine(lineIdx); }
+  });
+  const typing = (el) => !!el && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName || ''));
+  window.addEventListener('keydown', (e) => {
+    if (!running || typing(e.target) || e.altKey || e.ctrlKey || e.metaKey) return;
+    let used = true;
+    if (e.key === 'ArrowRight') go(idx + 1);
+    else if (e.key === 'ArrowLeft') go(idx - 1);
+    else if (e.key === ' ' || e.key === 'Spacebar') { if (!e.repeat) setPaused(!paused); }
+    else if (e.key === 'Escape') end();
+    else used = false;
+    if (used) { e.preventDefault(); e.stopPropagation(); }
+  }, true);
+  window.addEventListener('keyup', (e) => { if (running && (e.key === ' ' || e.key === 'Spacebar') && !typing(e.target)) { e.preventDefault(); e.stopPropagation(); } }, true);
+  addEventListener('resize', syncStrip);
+  if (mode === 'deck') window.__deckOnShow = (n) => { if (running && !bringing && n !== idx) startStop(n); };
+  window.__tour = { start, end, go: (k) => { if (running) go(k); }, state: () => ({ running, paused, idx, lineIdx, phase, count: list.length, lines: lines.length, p: L.p, sub: L.sub, subs: L.subs.length, wps: wpr * 0.95, voice: cast.obi && cast.obi.name, oge: cast.oge && cast.oge.name, obiPitch: cast.obiPitch, ogePitch: cast.ogePitch }) };
+})();
+</script>
+<!-- deck-tour end -->
