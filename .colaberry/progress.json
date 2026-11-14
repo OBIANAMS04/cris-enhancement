@@ -3,13 +3,13 @@
   "project": "Crash Records Information System (CRIS) Enhancement",
   "totals": {
     "stories_total": 16,
-    "stories_verified": 13,
+    "stories_verified": 16,
     "stories_submitted": 0,
-    "stories_in_progress": 3,
+    "stories_in_progress": 0,
     "stories_not_started": 0,
-    "criteria_total": 41,
-    "criteria_passed": 32,
-    "points_awarded": 650
+    "criteria_total": 50,
+    "criteria_passed": 50,
+    "points_awarded": 800
   },
   "stories": [
     {
@@ -414,12 +414,12 @@
       "updated_at": "2026-11-12T00:38:44.158Z",
       "verification": {
         "state": "verified",
-        "criteria_passed": 0,
-        "criteria_total": 0,
+        "criteria_passed": 3,
+        "criteria_total": 3,
         "verified_at": "2026-11-12T00:39:06.709Z",
         "commit_sha": "3d3dacda3a3915162f687f9d76514f2e20ea91bf",
         "commit_url": "https://github.com/OBIANAMS04/cris-enhancement/commit/3d3dacda3a3915162f687f9d76514f2e20ea91bf",
-        "commit_at": null,
+        "commit_at": "2026-11-12T00:38:44Z",
         "points_awarded": 50,
         "outstanding": []
       }
@@ -455,12 +455,12 @@
       "updated_at": "2026-11-12T00:38:44.725Z",
       "verification": {
         "state": "verified",
-        "criteria_passed": 0,
-        "criteria_total": 0,
+        "criteria_passed": 3,
+        "criteria_total": 3,
         "verified_at": "2026-11-12T00:39:06.768Z",
         "commit_sha": "54ec08764a6ffeef9e08e92771c0472b88219640",
         "commit_url": "https://github.com/OBIANAMS04/cris-enhancement/commit/54ec08764a6ffeef9e08e92771c0472b88219640",
-        "commit_at": null,
+        "commit_at": "2026-11-12T00:38:45Z",
         "points_awarded": 50,
         "outstanding": []
       }
@@ -496,12 +496,12 @@
       "updated_at": "2026-11-12T00:38:45.261Z",
       "verification": {
         "state": "verified",
-        "criteria_passed": 0,
-        "criteria_total": 0,
+        "criteria_passed": 3,
+        "criteria_total": 3,
         "verified_at": "2026-11-12T00:39:06.802Z",
         "commit_sha": "5cbf603c9b7c7c699b091f456c7c41a2ff84bb7e",
         "commit_url": "https://github.com/OBIANAMS04/cris-enhancement/commit/5cbf603c9b7c7c699b091f456c7c41a2ff84bb7e",
-        "commit_at": null,
+        "commit_at": "2026-11-12T00:38:45Z",
         "points_awarded": 50,
         "outstanding": []
       }
@@ -536,19 +536,15 @@
       "notes": "Current cyber training clears a vendor employee for protected work: without a completion in the last 365 days, opening or uploading response documents is refused and logged; a security officer can require retraining after a breach. A breach is logged as a severity-1 security incident, contained, notified within 60 days when personal data is involved (Tex. Bus. & Com. Code 521.053), and closed with its cause. Training completions are archived with SHA-256, versioned.",
       "updated_at": "2026-11-14T07:32:12.567Z",
       "verification": {
-        "state": "in_progress",
-        "criteria_passed": 0,
+        "state": "verified",
+        "criteria_passed": 3,
         "criteria_total": 3,
-        "verified_at": null,
-        "commit_sha": null,
-        "commit_url": null,
-        "commit_at": null,
-        "points_awarded": null,
-        "outstanding": [
-          "Given a cybersecurity training, when completed, then compliance is ensured.",
-          "Given a security breach, when it occurs, then it is logged and addressed.",
-          "Trust: All training completions are archived."
-        ]
+        "verified_at": "2026-11-14T07:32:38.353Z",
+        "commit_sha": "341fd4c6667ffcc2fca2bbc5c50a1920c647fd30",
+        "commit_url": "https://github.com/OBIANAMS04/cris-enhancement/commit/341fd4c6667ffcc2fca2bbc5c50a1920c647fd30",
+        "commit_at": "2026-11-14T07:32:13Z",
+        "points_awarded": 50,
+        "outstanding": []
       }
     },
     {
@@ -663,19 +659,15 @@
       "notes": "Each component's response time is compared with its own baseline (median and median absolute deviation of earlier samples); a sample far outside it raises one alert per component for investigation, cleared when back to normal. Every refused action in the workspace is logged as a user error with corrective suggestions worked out from the data (a valid maintenance slot, a period with data, the missing documents). Anomalies and user errors are in the audit log.",
       "updated_at": "2026-11-14T07:32:13.169Z",
       "verification": {
-        "state": "in_progress",
-        "criteria_passed": 0,
+        "state": "verified",
+        "criteria_passed": 3,
         "criteria_total": 3,
-        "verified_at": null,
-        "commit_sha": null,
-        "commit_url": null,
-        "commit_at": null,
-        "points_awarded": null,
-        "outstanding": [
-          "Given system performance metrics, when anomalies are detected, then alerts must be generated for investigation.",
-          "Given user actions, when an error is made, then the system must provide corrective suggestions.",
-          "Trust: All anomalies and user errors must be logged for audit purposes."
-        ]
+        "verified_at": "2026-11-14T07:32:38.457Z",
+        "commit_sha": "5a1a8d6455d30a4fe41c55cf9a049f5485e0fa70",
+        "commit_url": "https://github.com/OBIANAMS04/cris-enhancement/commit/5a1a8d6455d30a4fe41c55cf9a049f5485e0fa70",
+        "commit_at": "2026-11-14T07:32:13Z",
+        "points_awarded": 50,
+        "outstanding": []
       }
     },
     {
@@ -708,19 +700,15 @@
       "notes": "A report on any incident gathers its details, full timeline from the audit log, hours open, cause and the risks that cite it; stored with SHA-256, and each new report on the same incident is a new version, all kept. Incident reports, risk assessments and the training archive open only for authorised roles; every opening and refusal is logged.",
       "updated_at": "2026-11-14T07:32:13.685Z",
       "verification": {
-        "state": "in_progress",
-        "criteria_passed": 0,
+        "state": "verified",
+        "criteria_passed": 3,
         "criteria_total": 3,
-        "verified_at": null,
-        "commit_sha": null,
-        "commit_url": null,
-        "commit_at": null,
-        "points_awarded": null,
-        "outstanding": [
-          "Given an incident, when it is reported, then a detailed report must be generated and stored.",
-          "Given a risk assessment, when it is completed, then the documentation must be accessible to authorized users.",
-          "Trust: All reports and assessments must be version-controlled and logged."
-        ]
+        "verified_at": "2026-11-14T07:32:38.518Z",
+        "commit_sha": "15a6d44b2e6094cec6dbedb2d099641407c6c029",
+        "commit_url": "https://github.com/OBIANAMS04/cris-enhancement/commit/15a6d44b2e6094cec6dbedb2d099641407c6c029",
+        "commit_at": "2026-11-14T07:32:14Z",
+        "points_awarded": 50,
+        "outstanding": []
       }
     }
   ]
