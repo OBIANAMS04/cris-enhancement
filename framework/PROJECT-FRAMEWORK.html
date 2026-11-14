@@ -1,0 +1,875 @@
+
+<title>CRIS Enhancement Framework</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:wght@600;700;800&family=Overpass+Mono:wght@400;600&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: a status report for a dated bid. What needs the owner comes first, then the release timeline, then the record. */
+:root {
+  --bg: #f2f5f3;
+  --surface: #ffffff;
+  --ink: #16201b;
+  --muted: #55625b;
+  --rule: #d5ddd8;
+  --sign: #0b6b45;        /* highway guide-sign green: the one accent */
+  --sign-soft: #e0efe7;
+  --ok: #17663f;     --ok-bg: #dff0e6;
+  --warn: #7a4a00;   --warn-bg: #fcefcf;
+  --bad: #9a2228;    --bad-bg: #fae3e4;
+  --idle: #55625b;   --idle-bg: #e7ece9;
+  --display: "Overpass", "Segoe UI", system-ui, sans-serif;
+  --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --mono: "Overpass Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111613; --surface: #19201c; --ink: #e8eeea; --muted: #a2b0a8; --rule: #2f3a34;
+    --sign: #6fcf9f; --sign-soft: #17302a;
+    --ok: #7fd3a5; --ok-bg: #153023; --warn: #f0c36a; --warn-bg: #3a2c0e; --bad: #f2a0a3; --bad-bg: #3d1b1d; --idle: #a2b0a8; --idle-bg: #232c27;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111613; --surface: #19201c; --ink: #e8eeea; --muted: #a2b0a8; --rule: #2f3a34;
+  --sign: #6fcf9f; --sign-soft: #17302a;
+  --ok: #7fd3a5; --ok-bg: #153023; --warn: #f0c36a; --warn-bg: #3a2c0e; --bad: #f2a0a3; --bad-bg: #3d1b1d; --idle: #a2b0a8; --idle-bg: #232c27;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 16px/1.55 var(--body); padding-block: 0 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.wrap { max-width: 1040px; margin-inline: auto; display: grid; gap: 36px; }
+a { color: var(--sign); text-underline-offset: 2px; }
+a:focus-visible { outline: 3px solid var(--sign); outline-offset: 2px; border-radius: 3px; }
+h1, h2, h3 { font-family: var(--display); margin: 0; text-wrap: balance; line-height: 1.15; }
+p { margin: 0; }
+code, .mono { font-family: var(--mono); font-size: 0.88em; }
+
+.mast { padding-top: 32px; display: grid; gap: 10px; }
+.eyebrow { font-family: var(--display); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sign); }
+h1 { font-size: clamp(1.9rem, 4.2vw, 2.7rem); font-weight: 800; letter-spacing: -0.01em; }
+.lede { color: var(--muted); max-width: 66ch; font-size: 1.05rem; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px 20px; font-size: 0.9rem; color: var(--muted); }
+.meta strong { color: var(--ink); }
+.claim { border-left: 4px solid var(--sign); background: var(--sign-soft); padding: 10px 14px; max-width: 78ch; font-size: 0.95rem; }
+
+section { display: grid; gap: 14px; }
+h2 { font-size: 1.3rem; font-weight: 700; }
+.sub { color: var(--muted); max-width: 72ch; font-size: 0.95rem; }
+
+.strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0; border: 1px solid var(--rule); background: var(--surface); }
+.strip div { padding: 14px 16px; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin: 0 -1px -1px 0; display: grid; gap: 2px; min-width: 0; }
+.strip .k { font-family: var(--display); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.strip .v { font-family: var(--display); font-size: 1.35rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.strip .n { font-size: 0.88rem; color: var(--muted); }
+
+.steps { margin: 0; padding: 0; list-style: none; counter-reset: step; display: grid; gap: 8px; }
+.steps li { counter-increment: step; display: grid; grid-template-columns: 34px 1fr; gap: 12px; background: var(--surface); border: 1px solid var(--rule); padding: 12px 14px; }
+.steps li::before { content: counter(step); font-family: var(--display); font-weight: 800; color: var(--sign); font-size: 1.2rem; }
+.steps strong { display: block; }
+.steps span { color: var(--muted); font-size: 0.93rem; }
+
+.pill { display: inline-block; white-space: nowrap; font-size: 0.76rem; font-weight: 700; padding: 2px 9px; border-radius: 999px; }
+.pill.ok { color: var(--ok); background: var(--ok-bg); }
+.pill.warn { color: var(--warn); background: var(--warn-bg); }
+.pill.bad { color: var(--bad); background: var(--bad-bg); }
+.pill.idle { color: var(--idle); background: var(--idle-bg); }
+
+.scroll { overflow-x: auto; background: var(--surface); border: 1px solid var(--rule); }
+table { width: 100%; border-collapse: collapse; font-size: 0.93rem; min-width: 620px; }
+th, td { text-align: left; vertical-align: top; padding: 9px 13px; border-bottom: 1px solid var(--rule); }
+th { font-family: var(--display); font-size: 0.72rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); background: var(--bg); }
+tr:last-child td { border-bottom: 0; }
+td.id { font-family: var(--mono); white-space: nowrap; color: var(--muted); }
+/* Conditional formatting: a row takes its edge colour from its state. */
+tr.is-late td:first-child { box-shadow: inset 4px 0 0 var(--bad); }
+tr.is-active td:first-child { box-shadow: inset 4px 0 0 var(--warn); }
+tr.is-done td:first-child { box-shadow: inset 4px 0 0 var(--ok); }
+
+.chart { background: var(--surface); border: 1px solid var(--rule); padding: 14px; overflow-x: auto; }
+.chart svg { display: block; min-width: 640px; width: 100%; height: auto; }
+.chart text { font-family: var(--body); fill: var(--ink); font-size: 12px; }
+.chart .tick { fill: var(--muted); font-family: var(--mono); font-size: 11px; }
+.chart .grid { stroke: var(--rule); stroke-width: 1; }
+.chart .bar-late { fill: var(--bad); }
+.chart .bar-todo { fill: var(--idle); opacity: 0.55; }
+.chart .bar-done { fill: var(--ok); }
+.chart .bar-part { fill: var(--warn); }
+.chart .today { stroke: var(--sign); stroke-width: 2; stroke-dasharray: 4 3; }
+.chart .today-label { fill: var(--sign); font-weight: 700; }
+.chart .ship { stroke: var(--ink); stroke-width: 2; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 0.88rem; color: var(--muted); }
+.legend i { display: inline-block; width: 12px; height: 12px; margin-right: 6px; vertical-align: -1px; }
+.legend .late { background: var(--bad); }
+.legend .todo { background: var(--idle); opacity: 0.55; }
+.legend .done { background: var(--ok); }
+.legend .part { background: var(--warn); }
+
+.shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.shots figure { margin: 0; background: var(--surface); border: 1px solid var(--rule); display: grid; align-content: start; min-width: 0; }
+.shots img { display: block; width: 100%; max-width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border-bottom: 1px solid var(--rule); }
+.shots figcaption { padding: 10px 12px; font-size: 0.88rem; color: var(--muted); }
+.shots figcaption strong { color: var(--ink); display: block; }
+.links { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.links li { overflow-wrap: anywhere; }
+footer { color: var(--muted); font-size: 0.86rem; border-top: 1px solid var(--rule); padding-top: 14px; }
+</style>
+
+<div class="wrap">
+  <header class="mast" data-tour="What this project is: the TxDOT Crash Records Information System bid, its ship-by date and who decides. Everything runs on synthetic data." data-tour-script="OBI: Hi, I am OBI. This is the framework for the CRIS Enhancement build: the TxDOT Crash Records Information System service agreement, ship-by 24 November 2026. || OGE: And who decides on it? || OBI: Ali Muwwakkil and Ram Katamaraja; I own it. Everything here is built and demonstrated on synthetic data, and nothing is connected to a TxDOT system." data-tour-title="The project">
+    <p class="eyebrow">Colaberry · TxDOT solicitation · ship-by 24 November 2026</p>
+    <h1>CRIS Enhancement Framework</h1>
+    <p class="lede">The Crash Records Information System Service Agreement build: 20 requirements, 15 stories in five releases, and a Command Center that shows only what the project has produced.</p>
+    <div class="meta">
+      <span>Last updated <strong>12 November 2026</strong></span>
+      <span>Owner <strong>Obi Anamelechi Kingsley</strong></span>
+      <span>Decision makers <strong>Ali Muwwakkil, Ram Katamaraja</strong></span>
+    </div>
+    <p class="claim">Built and demonstrated on synthetic data. Nothing here is operating in production, and nothing is connected to a TxDOT system.</p>
+  </header>
+
+  <section aria-labelledby="now-h" data-tour="Four numbers that say where the build is today. Stories count only once the portal verifies them from the repo." data-tour-script="OBI: Here is where the build stands. Milestone 3 is verified: stories 008, 009 and 010, worth 150 points. || OGE: So how many stories in all? || OBI: Thirteen of sixteen, as the portal records it. Releases 0 to 3 are complete, with 650 points, 62 unit tests and four browser walks passing, and 12 days to ship-by.">
+    <h2 id="now-h">Where it stands</h2>
+    <div class="strip">
+      <div><span class="k">Milestone 3</span><span class="v">Verified</span><span class="n">STORY-008, 009 and 010 verified by the portal on 12 Nov through the push webhook, 150 points</span></div>
+      <div><span class="k">Stories verified</span><span class="v">13 of 16</span><span class="n">As the portal records it; Releases 0 to 3 complete; 650 points on this build</span></div>
+      <div><span class="k">Checks</span><span class="v">62 + 4 walks</span><span class="n">62 unit tests; browser walks of the Command Center and the M1, M2 and M3 workspace, all passing</span></div>
+      <div><span class="k">Days to ship-by</span><span class="v">12</span><span class="n">From 12 November to 24 November</span></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="you-h" data-tour="What the build is waiting on, and who has to act. This list changes after every milestone." data-tour-script="OBI: This list says who has to act. Next for me is Milestone 4. || OGE: And what does TxDOT need to give us? || OBI: Through Ali: the solicitation's real scoring criteria, Euna export or API access, TxDOT's risk matrix, the list of required reports, financial-system access, legal review of the compliance register, and the service levels.">
+    <h2 id="you-h">Waiting on</h2>
+    <ol class="steps">
+      <li><div><strong>Obi: nothing blocking</strong><span>The push webhook is registered (11 Nov), so criteria tick themselves on push; <code>gh</code> is no longer needed.</span></div></li>
+      <li><div><strong>Next: Milestone 4</strong><span>STORY-011 Cybersecurity Compliance, 014 Performance and User-Error Risks, 015 Incident Reports and Risk Documentation, then demo prep. The portal's next step is STORY-011.</span></div></li>
+      <li><div><strong>TxDOT, through Ali: the solicitation's real scoring criteria, Euna export or API access, and TxDOT's risk matrix</strong><span>The evaluation uses a demo proposal of five weighted criteria from Texas best-value law; submissions are tracked in the workspace because no public Euna API was found.</span></div></li>
+      <li><div><strong>TxDOT, through Ali: the real list of required reports, financial-system access, and legal review of the compliance register</strong><span>The reporting engine runs five demo specifications; the cost summary waits on the TxDOT financial system; the 14-rule register must be confirmed by TxDOT legal.</span></div></li>
+      <li><div><strong>TxDOT, through Ali: confirm service levels and service hours</strong><span>The workspace uses proposed values (4, 8, 24 and 72 hours to a first answer; Monday to Friday 6:00 to 20:00 Central). The plan sets none.</span></div></li>
+      <li><div><strong>Ali or the platform: dates in the plan file</strong><span>The story brief lists release and due dates, but <code>plan.json</code> holds none, so the Command Center shows none. The first sync after connecting may deliver them.</span></div></li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="time-h" data-tour="The five releases on one timeline. Red means a release is past its dates with nothing verified; the dashed line is today." data-tour-script="OBI: The five releases on one timeline, with the dates the story brief gives them. || OGE: Which ones are finished? || OBI: Releases 0 to 3, all complete by 12 November, ahead of their dates. Release 4 has one of four stories done, with ship-by on the 24th.">
+    <h2 id="time-h">Release timeline</h2>
+    <p class="sub">Dates as the story brief gives them. Releases 0, 1 and 2 are complete on 11 November, ahead of Release 2's dates; Releases 3 and 4 remain.</p>
+    <div class="chart">
+      <svg viewBox="0 0 760 236" role="img" aria-label="Five releases from 5 to 24 November 2026. Releases 0, 1 and 2 are complete. Today is 11 November. Ship-by is 24 November.">
+        <g class="grid-lines">
+          <line class="grid" x1="178" y1="24" x2="178" y2="196"></line>
+          <line class="grid" x1="318" y1="24" x2="318" y2="196"></line>
+          <line class="grid" x1="458" y1="24" x2="458" y2="196"></line>
+          <line class="grid" x1="598" y1="24" x2="598" y2="196"></line>
+        </g>
+        <text x="0" y="48">r0 · Setup and Support</text>
+        <rect class="bar-done" x="178" y="34" width="112" height="20"></rect>
+        <text x="0" y="82">r1 · Enhancement, Training</text>
+        <rect class="bar-done" x="318" y="68" width="84" height="20"></rect>
+        <text x="0" y="116">r2 · Reporting, Compliance</text>
+        <rect class="bar-done" x="402" y="102" width="112" height="20"></rect>
+        <text x="0" y="150">r3 · Response Management</text>
+        <rect class="bar-done" x="542" y="136" width="84" height="20"></rect>
+        <text x="0" y="184">r4 · Risk and Security</text>
+        <rect class="bar-done" x="626" y="170" width="28" height="20"></rect><rect class="bar-todo" x="654" y="170" width="84" height="20"></rect>
+        <line class="today" x1="374" y1="14" x2="374" y2="200"></line>
+        <text class="today-label" x="380" y="22">Today, 12 Nov</text>
+        <line class="ship" x1="738" y1="24" x2="738" y2="200"></line>
+        <text x="734" y="22" text-anchor="end">Ship-by, 24 Nov</text>
+        <text class="tick" x="178" y="216">5 Nov</text>
+        <text class="tick" x="318" y="216">10 Nov</text>
+        <text class="tick" x="458" y="216">15 Nov</text>
+        <text class="tick" x="598" y="216">20 Nov</text>
+      </svg>
+    </div>
+    <p class="legend"><span><i class="done"></i>Verified</span><span><i class="todo"></i>Not started</span></p>
+  </section>
+
+  <section aria-labelledby="status-h" data-tour="Every story by release. The coloured edge on each row is its state: red past due, amber in progress, green done." data-tour-script="OBI: Every story by release. STORY-000, the Command Center, came first and was verified on 11 November. || OGE: And the rest? || OBI: Releases 0 to 3 are verified. In Release 4, risk assessment is done; cybersecurity compliance, performance and user-error risks, and incident reports remain.">
+    <h2 id="status-h">Stories and status</h2>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Release</th><th>Stories</th><th>Dates in the brief</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr class="is-done"><td class="id">first</td><td><strong>STORY-000</strong> Build your Command Center</td><td>Before anything else</td><td><span class="pill ok">Verified</span> 11 Nov by the portal, 50 points. Live on GitHub Pages</td></tr>
+          <tr class="is-done"><td class="id">r0</td><td>001 Help Desk Support Module · 002 System Monitoring Tools · 003 Performance Reports · 012 Ongoing Technical Support and Maintenance</td><td>5 to 8 Nov</td><td><span class="pill ok">Verified</span> 11 Nov, all four, 50 points each</td></tr>
+          <tr class="is-done"><td class="id">r1</td><td>004 Feature Development Module · 005 User Training Sessions</td><td>10 to 12 Nov</td><td><span class="pill ok">Verified</span> 11 Nov, both</td></tr>
+          <tr class="is-done"><td class="id">r2</td><td>006 Reporting Engine · 007 Compliance with Laws · 013 Required Documentation</td><td>13 to 16 Nov</td><td><span class="pill ok">Verified</span> 11 Nov, all three, through the push webhook</td></tr>
+          <tr class="is-done"><td class="id">r3</td><td>008 Response Submissions · 009 Evaluate and Score Responses</td><td>18 to 20 Nov</td><td><span class="pill ok">Verified</span> 12 Nov, both</td></tr>
+          <tr class="is-active"><td class="id">r4</td><td>010 Risk Assessment Tools · 011 Cybersecurity Compliance · 014 Performance and User-Error Risks · 015 Incident Reports and Risk Documentation</td><td>21 to 24 Nov</td><td><span class="pill warn">1 of 4</span> 010 verified 12 Nov; 011, 014, 015 in Milestone 4</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="crit-h" data-tour="Milestone 3 checked line by line: each story's three criteria, what proves it, and the commit the portal verified." data-tour-script="OBI: Milestone 3, checked line by line against its nine criteria. || OGE: Give me one example. || OBI: Scoring: a typo of 1 instead of 8 is flagged, and the evaluation cannot be archived until the evaluator corrects it with a reason. The original score stays on record. || OGE: And all three stories were verified through the push webhook.">
+    <h2 id="crit-h">Milestone 3 against its nine criteria</h2>
+    <p class="sub">All three verified by the portal on 12 November through the push webhook, each against the commit that names it. Milestones 1 and 2 were verified on 11 November.</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Story</th><th>What passes</th><th>Proof</th></tr></thead>
+        <tbody>
+          <tr class="is-done"><td><strong>008</strong> Submissions</td><td>A response is checked first (closing time, all four required documents, file types), stored with its documents and a SHA-256 receipt; a failed submission is logged and addressed; every step tracked</td><td><span class="pill ok">Verified</span> 3d3dacd · 4 tests + walk</td></tr>
+          <tr class="is-done"><td><strong>009</strong> Evaluation</td><td>Five weighted criteria total 100; weighted score tested against hand calculation; an out-of-line score is flagged and corrected without overwriting; ranking and every score archived</td><td><span class="pill ok">Verified</span> 54ec087 · 4 tests + walk</td></tr>
+          <tr class="is-done"><td><strong>010</strong> Risk</td><td>Six live conditions assessed; each risk scored with evidence, owner and mitigation; mitigated when the condition is gone or the action is recorded; score 9 or overdue logged for review; assessments archived</td><td><span class="pill ok">Verified</span> 5cbf603 · 4 tests + walk</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="ms-h" data-tour="The plan of work: three to five stories per milestone, each ending with a pushed commit, new screenshots and a short presentation." data-tour-script="OBI: The plan of work: three to five stories at a time. || OGE: What closes a milestone? || OBI: A summary, links, everything pushed, this framework updated with new screenshots, and a short HTML presentation. M0 to M3 are done; M4 is next, then the demo, by 24 November.">
+    <h2 id="ms-h">Milestones</h2>
+    <p class="sub">Three to five stories at a time. Each ends with a summary, links, everything pushed, this framework updated with new screenshots, and a short HTML presentation with charts and a story line.</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Milestone</th><th>Contents</th><th>Target</th></tr></thead>
+        <tbody>
+          <tr class="is-done"><td class="id">M0</td><td>STORY-000: the Command Center, all nine tabs, verified by the portal</td><td>Done 11 Nov</td></tr>
+          <tr class="is-done"><td class="id">M1</td><td>STORY-001, 002, 003, 012 and 004: the workspace</td><td>Done 11 Nov</td></tr>
+          <tr class="is-done"><td class="id">M2</td><td>STORY-005, 006, 013 and 007: training, reporting engine, documents, compliance</td><td>Done 11 Nov</td></tr>
+          <tr class="is-done"><td class="id">M3</td><td>STORY-008, 009 and 010: submissions, evaluation, risk</td><td>Done 12 Nov</td></tr>
+          <tr class="is-active"><td class="id">M4</td><td>STORY-011, 014, 015, then demo prep</td><td>24 Nov · next</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="dec-h" data-tour="Who decided what, and when. New decisions are added at the bottom of the timeline as they are made." data-tour-script="OBI: Every decision, with its date and who made it. || OGE: Which one started it all? || OBI: On 8 November Ali moved us from SSS to Crash Records. A recent one: a compliance rule this build cannot check is marked not applicable, never a pass.">
+    <h2 id="dec-h">Decisions</h2>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Date</th><th>Decision</th><th>By</th></tr></thead>
+        <tbody>
+          <tr><td class="id">2026-11-08</td><td>SSS is finished; move to Crash Records, the live solicitation, ship-by 24 Nov. STORY-000 first, then the Release 0 stories in order</td><td>Ali</td></tr>
+          <tr><td class="id">2026-11-10</td><td>The repo lives under Obi's own GitHub account and is public, as the portal requires for verification and GitHub Pages. It is separate from the closed SSS repo</td><td>Obi</td></tr>
+          <tr><td class="id">2026-11-10</td><td>The Command Center is a static site with no dependencies, read from the <code>.colaberry/</code> files at runtime through one data layer</td><td>Claude</td></tr>
+          <tr><td class="id">2026-11-10</td><td>The page shows what the plan file holds. The brief's dates are not typed into the code; the missing dates are an empty state that says so</td><td>Claude</td></tr>
+          <tr><td class="id">2026-11-10</td><td>Neutral colours until a brand is chosen; the brand is two lines at the top of the stylesheet</td><td>Claude</td></tr>
+          <tr><td class="id">2026-11-10</td><td>Milestones of three to five stories, each ending with an HTML presentation of three to five minutes</td><td>Obi</td></tr>
+          <tr><td class="id">2026-11-10</td><td>Every framework, artifact and presentation carries a red "Take the guided tour" button; a play icon added to it on 11 Nov</td><td>Obi</td></tr>
+          <tr><td class="id">2026-11-11</td><td>Repo created as <code>OBIANAMS04/cris-enhancement</code> (public), connected to the portal, and published with GitHub Pages</td><td>Obi</td></tr>
+          <tr><td class="id">2026-11-11</td><td>The portal's progress record is committed unedited, since the portal can read the repo but not write to it</td><td>Claude</td></tr>
+          <tr><td class="id">2026-11-11</td><td>The 18 proposed tables are created as proposed, with no changes; AuditEntry and MaintenanceWindow added because the M1 stories need them</td><td>Obi</td></tr>
+          <tr><td class="id">2026-11-11</td><td>The workspace runs in the browser with a localStorage store and synthetic people, so the public site demonstrates every story with nothing reaching TxDOT</td><td>Claude</td></tr>
+          <tr><td class="id">2026-11-11</td><td>Every write is saved together with a hash-chained audit line or not at all; events, samples and reports are append-only</td><td>Claude</td></tr>
+          <tr><td class="id">2026-11-11</td><td>Service levels and service hours are proposals in one file, marked as such on screen, until TxDOT confirms them</td><td>Claude</td></tr>
+          <tr><td class="id">2026-11-11</td><td>No Basecamp ticket for CRIS: milestone updates go through the portal, as Ali indicated</td><td>Ali</td></tr>
+          <tr><td class="id">2026-11-11</td><td>Push webhook registered from GitHub's settings page, so <code>gh</code> is not needed</td><td>Obi</td></tr>
+          <tr><td class="id">2026-11-11</td><td>Every guided tour has a male voice narrator; each milestone runs one to three background agents, shown as notifications in the chat</td><td>Obi</td></tr>
+          <tr><td class="id">2026-11-11</td><td>Training counts only when the knowledge check is passed (80%), and a session cannot be held without a recording</td><td>Claude</td></tr>
+          <tr><td class="id">2026-11-11</td><td>Report errors are logged as incidents on the reporting engine and addressed by a successful retry or by hand with the cause</td><td>Claude</td></tr>
+          <tr><td class="id">2026-11-11</td><td>A compliance rule whose records the build does not hold is "not applicable" with that reason, never a pass; the register must be confirmed by TxDOT legal</td><td>Claude</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="risk-h" data-tour="What could stop the ship-by date or mislead a reviewer, and what is being done about each." data-tour-script="OBI: What could stop the ship-by date or mislead a reviewer. || OGE: What is the biggest one? || OBI: Three stories left in 12 days, which is on track. Another: the scoring weights, closing time and risk scale are demo proposals, so they are labelled until TxDOT confirms them.">
+    <h2 id="risk-h">Risks</h2>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Risk</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr class="is-active"><td>6 stories in the 13 days to 24 Nov</td><td>Releases 0 to 2 done on 11 Nov; milestones of three and three stories remain</td></tr>
+          <tr class="is-active"><td>The compliance register is compiled from public sources</td><td>Labelled on the page as not legal advice; TxDOT legal to confirm before any real use</td></tr>
+          <tr class="is-active"><td>The workspace store is per browser, so two people do not share tickets yet</td><td>Said on screen; a shared backend replaces <code>lib/store.js</code>'s backend without touching the stories' logic</td></tr>
+          <tr class="is-active"><td>The stories name integrations this project cannot reach: TxDOT IT infrastructure and financial systems, Euna Procurement, incident management</td><td>Build against labelled synthetic stand-ins behind a clear interface; every indicator stays grey and "not checked from here" until a real system reports</td></tr>
+          <tr class="is-active"><td>Some requirements read as the delivered CRIS service and others as handling the solicitation response itself (REQ-012 to 015)</td><td>Follow the story files as written; raise mismatches with Ali</td></tr>
+          <tr><td>The repo is public</td><td>No secrets, keys or <code>.env</code> files; the push-webhook secret is run once and never saved</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="shots-h" data-tour="Current screenshots of the work: the Milestone 3 workspace. They are replaced at every milestone." data-tour-script="OBI: Finally, current screenshots of the Milestone 3 workspace. They are replaced at every milestone. || OGE: What do they show? || OBI: Missing documents caught at the door, a receipt that proves nothing changed, a flagged score corrected, the best value ranking, and a risk found and mitigated. That is the tour. Thanks for listening.">
+    <h2 id="shots-h">Screens, 12 November: Milestone 3</h2>
+    <div class="shots">
+      <figure><img src="screens/m3-01-submission-error.png" width="1280" height="1600" alt="A refused submission listing the missing documents" loading="lazy"><figcaption><strong>Submissions (008)</strong>Missing documents caught at the door; the error logged, then addressed.</figcaption></figure>
+      <figure><img src="screens/m3-02-response-tracking.png" width="1280" height="1500" alt="A response with its receipt check and tracking log" loading="lazy"><figcaption><strong>Tracking (008)</strong>Documents match the receipt; every step on record.</figcaption></figure>
+      <figure><img src="screens/m3-03-evaluation-flagged.png" width="1280" height="2000" alt="A flagged score holding up the archive" loading="lazy"><figcaption><strong>Evaluation (009)</strong>A typo flagged before it can change the winner.</figcaption></figure>
+      <figure><img src="screens/m3-04-evaluation-ranking.png" width="1280" height="2000" alt="The ranking with the best value offer" loading="lazy"><figcaption><strong>Ranking (009)</strong>Best value named; ranking and every score archived.</figcaption></figure>
+      <figure><img src="screens/m3-05-risk-assessment.png" width="1280" height="1500" alt="A risk assessment with a heat map and a score-9 risk for review" loading="lazy"><figcaption><strong>Risk (010)</strong>The system reads itself; a score-9 risk goes to review.</figcaption></figure>
+      <figure><img src="screens/m3-06-risk-mitigated.png" width="1280" height="1300" alt="The risk register after mitigation" loading="lazy"><figcaption><strong>Mitigated (010)</strong>The owner records the action; the archive verifies.</figcaption></figure>
+    </div>
+  </section>
+
+  <section aria-labelledby="links-h">
+    <h2 id="links-h">Links</h2>
+    <ul class="links">
+      <li>Portal: <a href="https://enterprise.colaberry.ai/portal/projects/workspace/a563218c-c3a4-433c-8ed7-4e8e0573f59c/STORY-010">STORY-010 in Project Studio</a> (next: <a href="https://enterprise.colaberry.ai/portal/projects/workspace/a563218c-c3a4-433c-8ed7-4e8e0573f59c/STORY-011">STORY-011</a>)</li>
+      <li>Milestone 3 presentation: <a href="https://obianams04.github.io/cris-enhancement/framework/presentations/m3/">obianams04.github.io/cris-enhancement/framework/presentations/m3</a></li>
+      <li>Workspace, live: <a href="https://obianams04.github.io/cris-enhancement/workspace/">obianams04.github.io/cris-enhancement/workspace</a></li>
+      <li>Command Center, live: <a href="https://obianams04.github.io/cris-enhancement/">obianams04.github.io/cris-enhancement</a></li>
+      <li>GitHub repo: <a href="https://github.com/OBIANAMS04/cris-enhancement">OBIANAMS04/cris-enhancement</a></li>
+      <li>Text version: <span class="mono">framework/PROJECT-FRAMEWORK.md</span> in the project folder</li>
+    </ul>
+  </section>
+
+  <footer>Updated after every milestone, together with the text version in the repo.</footer>
+</div>
+
+<!-- Guided tour. Standing rules (Obi): 2026-11-10 every framework page, artifact and presentation carries a red
+     "Take the guided tour" button (fixed, bottom-right); 2026-11-11 a play icon on it; 2026-11-11 a male voice narrator;
+     2026-11-12 OBI two-host narration, docked side panel, gauge synced to the voice, pointer synced to the voice;
+     2026-11-14 the co-host is Oge, a fixed control bar that never covers the dialogue, and pointer pacing that keeps moving
+     with the voice even when the browser sends no word 'boundary' events.
+     Use: paste this block at the end of a page. Mark each stop with data-tour="short description" (optional
+     data-tour-title="Short title") and its dialogue in data-tour-script="OBI: line || OGE: line || OBI: line" (2 to 4 short
+     lines, OBI first; the first stop opens "Hi, I am OBI."). Without data-tour-script, OBI reads the data-tour text. Stops run
+     in document order. No libraries; light and dark; safe in a sandboxed iframe (no alert/confirm, storage in try/catch).
+     Voices (Web Speech API): OBI = first natural/online male (Andrew, Guy, Christopher, Eric, Davis, Brian, Roger, Steffan,
+     Ryan, Thomas), else Google UK English Male, else Microsoft David/Mark, else any English voice not on the female list;
+     pitch 0.82 (0.75 if not natural), rate 0.95. Oge = a different voice (Jenny/Aria/Ava/Emma natural, else Google US
+     English, else Zira), pitch 1.0, rate 1.0; with only one voice she uses it at pitch 1.15. Voice on/off is remembered.
+     Layout: the panel docks to the left (clamp(260px, 26vw, 360px)) and html.tour-on pads the page so it reflows beside it;
+     under 700px it is a strip at the top that pushes the page down. Inside the panel everything is one vertical column in
+     normal flow: a two-line header, the title, the gauge, the dialogue (current line, then the transcript) which takes the
+     remaining height and scrolls inside itself, and a control bar at the bottom that wraps onto two rows when narrow. Nothing
+     is absolutely positioned, so the buttons can never sit on top of the text at any browser zoom.
+     Pacing: one clock per line drives the gauge and the pointer. It follows the voice's 'boundary' events when they arrive,
+     else a word-timing estimate (2.6 words a second at rate 0.95, re-measured from each spoken line). The pointer glides to
+     the line's target and clicks as the line starts, then walks the line's items and sweeps along each one as the words go
+     by, so it never stands still while someone is talking. The gauge reaches 100% only on the last line's 'end'; voice off,
+     it runs at 15 characters a second. Pause freezes both. Keys: Left/Right move, Space pauses, Esc closes. -->
+<style>
+/* tour-launch: page only (start) */
+.tour-launch { position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 50;
+  display: inline-flex; align-items: center; gap: 9px; font: 700 15px/1 system-ui, "Segoe UI", sans-serif; color: var(--tp-red-ink); background: var(--tp-red);
+  border: 0; border-radius: 999px; padding: 13px 20px; min-height: 44px; cursor: pointer; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22); }
+.tour-launch:hover { filter: brightness(1.08); }
+.tour-launch:focus-visible { outline: 3px solid var(--tp-ink); outline-offset: 3px; }
+.tour-play { width: 16px; height: 16px; flex: none; }
+[data-tour] { scroll-margin-top: 72px; }
+/* tour-launch: page only (end) */
+:root { --tp-w: clamp(260px, 26vw, 360px); --tp-red: #c8102e; --tp-red-ink: #ffffff; --tp-bg: #ffffff; --tp-ink: #1b1d21; --tp-muted: #5a606b; --tp-line: #d9dde3; --tp-soft: #eef0f3; --tp-obi: #b00d28; --tp-oge: #1d5fa8; --tp-now: #fdf1f3; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --tp-red: #ff5a6e; --tp-red-ink: #1a0a0d; --tp-bg: #1b1f25; --tp-ink: #eceef2; --tp-muted: #a3aab6; --tp-line: #343b45; --tp-soft: #262b33; --tp-obi: #ff8796; --tp-oge: #8ab9ff; --tp-now: #2e2024; } }
+:root[data-theme="dark"] { --tp-red: #ff5a6e; --tp-red-ink: #1a0a0d; --tp-bg: #1b1f25; --tp-ink: #eceef2; --tp-muted: #a3aab6; --tp-line: #343b45; --tp-soft: #262b33; --tp-obi: #ff8796; --tp-oge: #8ab9ff; --tp-now: #2e2024; }
+.tour-launch[hidden], .tour-panel[hidden], .tour-cursor[hidden], .tour-desc[hidden] { display: none !important; }
+/* Docked: the page reflows beside the panel instead of under it. */
+html.tour-on { padding-left: var(--tp-w) !important; }
+html.tour-on .tour-target { outline: 3px solid var(--tp-red) !important; outline-offset: 4px; }
+/* The panel is one vertical column in normal flow; only the dialogue area scrolls, the control bar is always last. */
+.tour-panel { position: fixed; z-index: 2147483001; top: 0; left: 0; bottom: 0; width: var(--tp-w); margin: 0; overflow: hidden;
+  display: flex; flex-direction: column; gap: 10px; box-sizing: border-box; text-align: left;
+  padding: 12px 14px calc(12px + env(safe-area-inset-bottom, 0px)) max(14px, env(safe-area-inset-left, 0px));
+  background: var(--tp-bg); color: var(--tp-ink); border-right: 1px solid var(--tp-line); border-top: 5px solid var(--tp-red); box-shadow: 4px 0 18px rgba(0, 0, 0, 0.12);
+  font: 14px/1.45 system-ui, "Segoe UI", Roboto, sans-serif; letter-spacing: normal; text-transform: none; }
+.tour-panel * { box-sizing: border-box; }
+.tour-panel > * { flex: none; min-width: 0; margin: 0; }
+.tour-panel p, .tour-panel ol { margin: 0; max-width: none; }
+.tour-head { display: flex; flex-direction: column; gap: 1px; font-size: 11.5px; line-height: 1.3; color: var(--tp-muted); }
+.tour-head > span { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tour-brand { color: var(--tp-red); font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; }
+.tour-brand svg { width: 10px; height: 10px; margin-right: 5px; vertical-align: -1px; }
+.tour-hosts { color: var(--tp-muted); font-weight: 700; }
+.tour-count { font-weight: 600; }
+.tour-panel h2.tour-title { margin: 0; font: 700 17px/1.25 system-ui, "Segoe UI", Roboto, sans-serif; color: var(--tp-ink); letter-spacing: normal; text-transform: none;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; overflow-wrap: anywhere; }
+.tour-desc { font-size: 13px; line-height: 1.4; color: var(--tp-muted); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
+.tour-gauge { height: 8px; border-radius: 999px; background: var(--tp-soft); border: 1px solid var(--tp-line); overflow: hidden; }
+.tour-gauge i { display: block; height: 100%; background: var(--tp-red); transform: scaleX(0); transform-origin: left center; }
+.tour-panel .tour-dialog { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; display: flex; flex-direction: column; gap: 8px; }
+.tour-dialog > * { flex: none; }
+.tour-caption { padding: 8px 10px; border-radius: 10px; background: var(--tp-now); border-left: 4px solid var(--tp-red); font-size: 15px; line-height: 1.45; overflow-wrap: anywhere; }
+.tour-who { margin-right: 6px; font-size: 11.5px; font-weight: 800; letter-spacing: 0.06em; }
+.tour-who.is-obi, .tour-script .is-obi b { color: var(--tp-obi); }
+.tour-who.is-oge, .tour-script .is-oge b { color: var(--tp-oge); }
+.tour-script { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 4px; font-size: 13px; line-height: 1.4; color: var(--tp-muted); }
+.tour-script li { padding: 5px 8px; border-radius: 8px; border: 0; overflow-wrap: anywhere; }
+.tour-script li.is-now { background: var(--tp-soft); color: var(--tp-ink); }
+.tour-script b { font-size: 11px; letter-spacing: 0.05em; }
+.tour-keys { font-size: 11.5px; color: var(--tp-muted); }
+.tour-ctrl { display: flex; flex-wrap: wrap; gap: 6px; padding-top: 10px; border-top: 1px solid var(--tp-line); }
+.tour-panel .tour-ctrl button { flex: 1 1 auto; }
+.tour-panel button { font: 600 13.5px/1.1 system-ui, "Segoe UI", Roboto, sans-serif; letter-spacing: normal; text-transform: none; white-space: nowrap; border-radius: 8px; padding: 8px 10px; min-height: 36px; min-width: 0; margin: 0; cursor: pointer;
+  border: 1px solid var(--tp-muted); background: transparent; color: var(--tp-ink); box-shadow: none; position: static; }
+.tour-panel button:disabled { opacity: 0.45; cursor: default; }
+.tour-panel button.tour-next { background: var(--tp-red); border-color: var(--tp-red); color: var(--tp-red-ink); }
+.tour-panel button.tour-voice[aria-pressed="true"] { border-color: var(--tp-red); }
+.tour-panel button:focus-visible { outline: 3px solid var(--tp-ink); outline-offset: 2px; }
+.tour-panel.is-paused .tour-gauge i { opacity: 0.55; }
+@media (min-width: 700px) and (max-height: 560px) { .tour-desc { display: none !important; } .tour-panel h2.tour-title { -webkit-line-clamp: 2; } .tour-panel { gap: 8px; } }
+/* Narrow screens: a compact strip at the top; the page is pushed down by its measured height. */
+@media (max-width: 699.98px) {
+  html.tour-on { padding-left: 0 !important; padding-top: var(--tour-strip, 168px) !important; scroll-padding-top: calc(var(--tour-strip, 168px) + 12px); }
+  .tour-panel { right: 0; bottom: auto; width: auto; max-height: min(55vh, 360px); gap: 6px; padding: 8px max(12px, env(safe-area-inset-right, 0px)) 10px max(12px, env(safe-area-inset-left, 0px));
+    border-right: 0; border-bottom: 1px solid var(--tp-line); box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14); }
+  .tour-head { flex-direction: row; justify-content: space-between; gap: 8px; }
+  .tour-panel h2.tour-title { font-size: 15px; -webkit-line-clamp: 1; }
+  .tour-desc, .tour-script, .tour-keys { display: none !important; }
+  .tour-caption { font-size: 14px; padding: 6px 10px; }
+  .tour-gauge { height: 6px; }
+  .tour-ctrl { padding-top: 6px; }
+  .tour-panel button { min-height: 32px; padding: 6px 8px; font-size: 13px; }
+}
+/* The synced pointer: drawn above the page, never over the panel, never clickable. */
+.tour-cursor { position: fixed; left: 0; top: 0; z-index: 2147483000; width: 24px; height: 30px; pointer-events: none; will-change: transform; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4)); }
+.tour-cursor svg { display: block; width: 24px; height: 30px; transform-origin: 3px 3px; }
+.tour-cursor.is-click svg { animation: tp-press 0.35s ease; }
+.tour-ripple { position: fixed; z-index: 2147482999; width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 50%; border: 3px solid var(--tp-red); pointer-events: none; animation: tp-ripple 0.7s ease-out forwards; }
+@keyframes tp-press { 50% { transform: scale(0.8); } }
+@keyframes tp-ripple { from { transform: scale(0.2); opacity: 0.95; } to { transform: scale(1.3); opacity: 0; } }
+@keyframes tp-fade { from { opacity: 0.9; } to { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .tour-ripple { animation: tp-fade 0.7s linear forwards; transform: none; } .tour-cursor.is-click svg { animation: none; } }
+</style>
+<button type="button" class="tour-launch" id="tour-launch" aria-haspopup="dialog"><svg class="tour-play" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4.5 2.6v10.8L13.6 8z" fill="currentColor"></path></svg>Take the guided tour</button>
+<aside class="tour-panel" id="tour-panel" data-mode="page" role="dialog" aria-modal="false" aria-labelledby="tour-title" hidden>
+  <div class="tour-head"><span class="tour-brand"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4.5 2.6v10.8L13.6 8z" fill="currentColor"></path></svg>Guided tour <span class="tour-hosts">· OBI and Oge</span></span><span class="tour-count" id="tour-count"></span></div>
+  <h2 class="tour-title" id="tour-title"></h2>
+  <p class="tour-desc" id="tour-desc"></p>
+  <div class="tour-gauge" id="tour-gauge" role="progressbar" aria-label="Progress through this part of the tour" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="tour-fill"></i></div>
+  <div class="tour-dialog" id="tour-dialog">
+    <p class="tour-caption" id="tour-caption" aria-live="polite"><b class="tour-who is-obi" id="tour-who">OBI</b><span id="tour-line"></span></p>
+    <ol class="tour-script" id="tour-script" aria-label="What OBI and Oge say here"></ol>
+    <p class="tour-keys">Left and right arrows move, Space pauses, Esc closes.</p>
+  </div>
+  <div class="tour-ctrl" id="tour-ctrl">
+    <button type="button" id="tour-back">Back</button>
+    <button type="button" id="tour-pause" aria-pressed="false">Pause</button>
+    <button type="button" class="tour-next" id="tour-next">Next</button>
+    <button type="button" class="tour-voice" id="tour-voice" aria-pressed="true">Voice on</button>
+    <button type="button" id="tour-close" aria-label="Close the tour">Close</button>
+  </div>
+</aside>
+<div class="tour-cursor" id="tour-cursor" aria-hidden="true" hidden><svg viewBox="0 0 24 30" focusable="false"><path d="M3 2.5v21.5l5.6-5.3 3.9 8.6 3.6-1.6-3.8-8.4h7.7z" fill="#ffffff" stroke="#111418" stroke-width="1.6" stroke-linejoin="round"></path></svg></div>
+<script>
+(() => {
+  'use strict';
+  const panel = document.getElementById('tour-panel');
+  if (!panel || panel.dataset.ready) return;
+  panel.dataset.ready = '1';
+  const mode = panel.getAttribute('data-mode') || 'page';
+  const $ = (id) => document.getElementById(id);
+  const html = document.documentElement;
+  const launch = $('tour-launch'), cursor = $('tour-cursor'), gauge = $('tour-gauge'), fill = $('tour-fill');
+  const capWho = $('tour-who'), capLine = $('tour-line'), scriptList = $('tour-script'), dialog = $('tour-dialog');
+  const btnBack = $('tour-back'), btnPause = $('tour-pause'), btnNext = $('tour-next'), btnClose = $('tour-close'), btnVoice = $('tour-voice');
+  const PAUSE_AFTER = 600, READ_CPS = 15, START_DELAY = 650, GLIDE = 380;
+  const mq = (q) => { try { return matchMedia(q).matches; } catch (e) { return false; } };
+  const reduce = () => mq('(prefers-reduced-motion: reduce)');
+  const isTop = () => mq('(max-width: 699.98px)');
+
+  // ---- Voices: OBI leads (male, natural, low), Oge answers (a different, preferably natural voice).
+  const synth = 'speechSynthesis' in window ? window.speechSynthesis : null;
+  const canSpeak = !!synth && typeof window.SpeechSynthesisUtterance === 'function';
+  const MALE = ['andrew', 'guy', 'christopher', 'eric', 'davis', 'brian', 'roger', 'steffan', 'ryan', 'thomas'];
+  const OGE_NAMES = ['jenny', 'aria', 'ava', 'emma'];
+  const FEMALE = /\b(zira|susan|hazel|samantha|victoria|karen|aria|jenny|libby|sonia|emma|michelle|catherine|ava|emily|female)\b/i;
+  const NATURAL = /natural|online/i;
+  const named = (v, n) => new RegExp('\\b' + n + '\\b', 'i').test(v.name || '');
+  let cast = { obi: null, oge: null, obiPitch: 0.75, ogePitch: 1.15 };
+  function pickVoices() {
+    let all = [];
+    try { all = (synth && synth.getVoices()) || []; } catch (e) { all = []; }
+    const en = all.filter((v) => /^en([-_]|$)/i.test(v.lang || ''));
+    const pool = en.length ? en : all;
+    let obi = null, natural = false;
+    for (const n of MALE) { obi = pool.find((v) => NATURAL.test(v.name) && named(v, n)); if (obi) { natural = true; break; } }
+    obi = obi || pool.find((v) => /google uk english male/i.test(v.name)) || pool.find((v) => /microsoft (david|mark)\b/i.test(v.name))
+      || pool.find((v) => !FEMALE.test(v.name)) || pool[0] || null;
+    let oge = null;
+    for (const n of OGE_NAMES) { oge = pool.find((v) => v !== obi && NATURAL.test(v.name) && named(v, n)); if (oge) break; }
+    oge = oge || pool.find((v) => v !== obi && /google us english/i.test(v.name)) || pool.find((v) => v !== obi && /zira/i.test(v.name))
+      || pool.find((v) => v !== obi && FEMALE.test(v.name)) || pool.find((v) => v !== obi) || obi;
+    cast = { obi, oge, obiPitch: natural ? 0.82 : 0.75, ogePitch: oge === obi ? 1.15 : 1.0 };
+  }
+  if (canSpeak) {
+    pickVoices();
+    try { if (synth.addEventListener) synth.addEventListener('voiceschanged', pickVoices); else synth.onvoiceschanged = pickVoices; } catch (e) {}
+  }
+  let voiceOn = true;
+  try { voiceOn = localStorage.getItem('tour-voice') !== 'off'; } catch (e) {}
+  const paintVoice = () => {
+    if (!canSpeak) { btnVoice.textContent = 'No voice'; btnVoice.disabled = true; btnVoice.setAttribute('aria-pressed', 'false'); return; }
+    btnVoice.textContent = voiceOn ? 'Voice on' : 'Voice off';
+    btnVoice.setAttribute('aria-pressed', String(voiceOn));
+  };
+  paintVoice();
+
+  // ---- Stops. Dialogue: "OBI: text || OGE: text || ...". Without a script, OBI reads the short description.
+  function parse(script, fallback) {
+    const out = [];
+    String(script || '').split('||').forEach((raw) => {
+      const s = raw.trim();
+      if (!s) return;
+      const m = /^(OBI|OGE)\s*:\s*([\s\S]*)$/i.exec(s);
+      out.push(m ? { who: m[1].toUpperCase(), text: m[2].trim() } : { who: 'OBI', text: s });
+    });
+    if (!out.length && fallback && fallback.trim()) out.push({ who: 'OBI', text: fallback.trim() });
+    return out.filter((l) => l.text);
+  }
+  const clean = (s) => String(s || '').replace(/\s+/g, ' ').trim();
+  const wordCount = (s) => (String(s || '').match(/\S+/g) || []).length;
+  let bringing = false;
+  const adapter = mode === 'deck' ? {
+    noun: 'Slide',
+    stops() {
+      const D = window.__deck;
+      if (!D) return [];
+      return D.slides.map((s, k) => {
+        const h = s.querySelector('h1, h2');
+        const title = clean(h && h.textContent) || 'Slide ' + (k + 1);
+        return { title, desc: '', lines: parse(s.getAttribute('data-say-script'), s.getAttribute('data-say') || title) };
+      });
+    },
+    bring(stop, k) {
+      const D = window.__deck;
+      bringing = true;
+      try { if (D.index() !== k) D.go(k); } finally { bringing = false; }
+      return D.stage;
+    }
+  } : {
+    noun: 'Stop',
+    stops() {
+      return Array.prototype.filter.call(document.querySelectorAll('[data-tour]'), (el) => el.getClientRects().length && !panel.contains(el))
+        .map((el) => {
+          const h = el.querySelector('h1, h2, h3');
+          const desc = el.getAttribute('data-tour') || '';
+          return { el, title: el.getAttribute('data-tour-title') || clean(h && h.textContent) || '', desc, lines: parse(el.getAttribute('data-tour-script'), desc) };
+        });
+    },
+    bring(stop) { return stop.el; }
+  };
+
+  // ---- State. Every async callback carries the token it was started with; a newer token cancels it.
+  let running = false, paused = false, list = [], idx = 0, lines = [], lineIdx = 0, phase = 'line', tok = 0;
+  let target = null, items = null, anchor = null, speechBroken = false, keepUtt = null;
+  const timers = new Set();
+  const later = (fn, ms) => { const id = setTimeout(() => { timers.delete(id); fn(); }, ms); timers.add(id); return id; };
+  const clearTimers = () => { timers.forEach((id) => clearTimeout(id)); timers.clear(); };
+  const cancelSpeech = () => { keepUtt = null; if (canSpeak) { try { synth.cancel(); } catch (e) {} } };
+
+  // ---- Pacing. One clock per line (L) drives both the gauge and the pointer. Progress p (0..1) follows 'boundary'
+  // events when the voice sends them, else a word-timing estimate: wpr words a second per unit of rate (2.6 at 0.95),
+  // re-measured from every line that is spoken to its end. p never goes back and stays below 0.97 until 'end'.
+  let wpr = 2.6 / 0.95;
+  let L = { mode: 'idle', words: 1, len: 1, text: '', rate: 1, t0: 0, spoke: 0, started: false, bw: -1, bt: 0, dur: 1, p: 0, subs: [], sub: -1 };
+  let g = { shown: 0, done: 0, total: 1, final: false };
+  function setFill(p) {
+    g.shown = p;
+    fill.style.transform = 'scaleX(' + p + ')';
+    gauge.setAttribute('aria-valuenow', String(Math.floor(p * 100)));
+    gauge.dataset.progress = String(p);
+  }
+  function lineProgress(now) {
+    if (L.mode === 'timer') return Math.min(1, (now - L.t0) / L.dur);
+    if (L.mode !== 'speech' || now < L.t0) return 0;
+    const wps = wpr * L.rate;
+    const w = L.bw >= 0 ? L.bw + Math.min(1.5, (now - L.bt) / 1000 * wps) : (now - L.t0) / 1000 * wps;
+    return Math.min(0.97, w / Math.max(1, L.words));
+  }
+  function tickPace(now) {
+    if (!running || paused || g.final || phase !== 'line') return;
+    L.p = Math.max(L.p, lineProgress(now));
+    const p = Math.min(0.995, (g.done + L.p * L.len) / g.total);
+    if (p > g.shown) setFill(p);
+  }
+
+  // ---- Content area (everything right of the docked panel, or below the top strip) and the synced pointer.
+  function area() {
+    const r = panel.getBoundingClientRect(), w = html.clientWidth || innerWidth, h = innerHeight;
+    return isTop() ? { l: 0, t: Math.max(0, r.bottom), r: w, b: h } : { l: Math.max(0, r.right), t: 0, r: w, b: h };
+  }
+  // A point on el: u (0..1) sweeps along the element as its words are spoken, like a finger following the text.
+  function pointOn(el, u) {
+    const a = area(), r = el.getBoundingClientRect();
+    const span = Math.max(40, Math.min(r.width * 0.6, 240));
+    let x = r.left + Math.min(28, r.width * 0.2) + span * u;
+    let y = r.top + Math.min(22, r.height * 0.5) + (r.height > 80 ? Math.min(r.height * 0.25, 36) * u : 0);
+    x = Math.max(a.l + 8, Math.min(x, a.r - 30));
+    y = Math.max(a.t + 8, Math.min(y, a.b - 34));
+    return [x, y];
+  }
+  let cx = 0, cy = 0, raf = 0, glide = null, lastU = 0;
+  const ease = (k) => 1 - Math.pow(1 - k, 3);
+  function frame(now) {
+    raf = requestAnimationFrame(frame);
+    now = performance.now();
+    tickPace(now);
+    if (!L.subs.length) return;
+    const live = running && !paused && phase === 'line' && L.mode !== 'idle';
+    // Which of the line's items the voice has reached, and how far along it.
+    let u = lastU;
+    if (live) {
+      const k = L.subs.length, f = L.p * k, j = Math.min(k - 1, Math.floor(f));
+      u = Math.min(1, f - j);
+      if (j !== L.sub) { L.sub = j; anchor = L.subs[j]; glide = { x: cx, y: cy, t0: now }; if (j > 0 && !isTop()) reveal(anchor); }
+      lastU = u;
+    }
+    if (!anchor || !anchor.isConnected) return;
+    const p = pointOn(anchor, u);
+    // A small drift while someone is talking, so the pointer is never frozen even when the estimate runs ahead.
+    if (live && !reduce()) { p[0] += 2.5 * Math.sin(now / 520); p[1] += 1.5 * Math.cos(now / 690); }
+    if (glide && !reduce()) {
+      const k = Math.min(1, (now - glide.t0) / GLIDE), e = ease(k);
+      cx = glide.x + (p[0] - glide.x) * e; cy = glide.y + (p[1] - glide.y) * e;
+      if (k >= 1) glide = null;
+    } else if (reduce()) { cx = p[0]; cy = p[1]; glide = null; }
+    else { cx += (p[0] - cx) * 0.35; cy += (p[1] - cy) * 0.35; }
+    const a = area();
+    cx = Math.max(a.l + 8, cx); cy = Math.max(a.t + 8, cy);
+    cursor.style.transform = 'translate(' + cx.toFixed(1) + 'px, ' + cy.toFixed(1) + 'px)';
+  }
+  function click() {
+    if (!anchor) return;
+    const p = pointOn(anchor, 0), r = document.createElement('span');
+    r.className = 'tour-ripple';
+    r.setAttribute('aria-hidden', 'true');
+    r.style.left = p[0] + 'px'; r.style.top = p[1] + 'px';
+    document.body.appendChild(r);
+    setTimeout(() => r.remove(), 800);
+    cursor.classList.remove('is-click'); void cursor.offsetWidth; cursor.classList.add('is-click');
+    cursor.dataset.clicks = String((+cursor.dataset.clicks || 0) + 1);
+  }
+  const ITEMS = 'li, tbody tr, figure, button, .tile, .step, .cell, .card, [class*="card"], article, dl > div';
+  function itemsIn(el) {
+    let els = Array.prototype.filter.call(el.querySelectorAll(ITEMS), (e) => e.getClientRects().length && !panel.contains(e));
+    els = els.filter((e) => !els.some((o) => o !== e && e.contains(o)));
+    if (isTop()) {
+      // On the top strip, never scroll the target up under the strip: only point at items already in view.
+      const a = area();
+      return els.filter((e) => { const r = e.getBoundingClientRect(); return r.top >= a.t && r.top < a.b - 40; }).slice(0, 12);
+    }
+    const top = el.getBoundingClientRect().top, limit = top + Math.max(innerHeight * 1.2, 600);
+    const near = els.filter((e) => e.getBoundingClientRect().top < limit);
+    return (near.length ? near : els.slice(0, 6)).slice(0, 12);
+  }
+  // The items a line walks through: the heading for the opening line, then an even share of the stop's items.
+  function headOf(el) { const h = el.querySelector('h1, h2, h3'); return h && h.getClientRects().length ? h : el; }
+  function subsFor(n) {
+    if (n === 0) return [headOf(target)];
+    if (!items) items = itemsIn(target);
+    const K = items.length, m = Math.max(1, lines.length - 1);
+    if (!K) return [target];
+    const a = Math.floor((n - 1) * K / m), b = Math.max(a + 1, Math.floor(n * K / m));
+    return items.slice(a, Math.min(b, a + 4));
+  }
+  function reveal(el) {
+    const a = area(), r = el.getBoundingClientRect();
+    if (r.top < a.t + 4 || r.bottom > a.b - 4) {
+      try { el.scrollIntoView({ block: r.height > a.b - a.t ? 'start' : 'nearest', behavior: reduce() ? 'auto' : 'smooth' }); } catch (e) { el.scrollIntoView(); }
+    }
+  }
+
+  // ---- Panel rendering.
+  const label = (who) => (who === 'OGE' ? 'OGE' : 'OBI');
+  function renderStop(stop) {
+    $('tour-count').textContent = adapter.noun + ' ' + (idx + 1) + ' of ' + list.length;
+    $('tour-title').textContent = stop.title || adapter.noun + ' ' + (idx + 1);
+    const d = $('tour-desc');
+    d.textContent = stop.desc && stop.lines.length > 1 ? stop.desc : '';
+    d.hidden = !d.textContent;
+    scriptList.replaceChildren(...lines.map((l) => {
+      const li = document.createElement('li'), b = document.createElement('b');
+      li.className = 'is-' + l.who.toLowerCase();
+      b.textContent = label(l.who);
+      li.append(b, ' ', l.text);
+      return li;
+    }));
+    btnBack.disabled = idx === 0;
+    btnNext.textContent = idx === list.length - 1 ? 'Finish' : 'Next';
+  }
+  function renderLine(n) {
+    const l = lines[n];
+    capWho.textContent = label(l.who);
+    capWho.className = 'tour-who is-' + l.who.toLowerCase();
+    capLine.textContent = l.text;
+    Array.prototype.forEach.call(scriptList.children, (li, k) => { li.classList.toggle('is-now', k === n); if (k === n) li.setAttribute('aria-current', 'true'); else li.removeAttribute('aria-current'); });
+    dialog.scrollTop = 0;
+  }
+
+  // ---- Playback.
+  function startStop(k) {
+    if (!list.length) return;
+    k = Math.max(0, Math.min(list.length - 1, k));
+    tok++; clearTimers(); cancelSpeech();
+    idx = k;
+    const stop = list[k];
+    lines = stop.lines.length ? stop.lines : [{ who: 'OBI', text: stop.title || adapter.noun + ' ' + (k + 1) }];
+    g = { shown: 0, done: 0, total: Math.max(1, lines.reduce((s, l) => s + l.text.length, 0)), final: false };
+    setFill(0);
+    renderStop(stop);
+    renderLine(0);
+    if (target) target.classList.remove('tour-target');
+    target = adapter.bring(stop, k);
+    target.classList.add('tour-target');
+    items = null; lineIdx = 0; phase = 'line';
+    L = { mode: 'idle', words: 1, len: 1, text: '', rate: 1, t0: 0, spoke: 0, started: false, bw: -1, bt: 0, dur: 1, p: 0, subs: [headOf(target)], sub: 0 };
+    anchor = L.subs[0]; lastU = 0; glide = { x: cx, y: cy, t0: performance.now() };
+    try { target.scrollIntoView({ block: 'start', behavior: reduce() ? 'auto' : 'smooth' }); } catch (e) { target.scrollIntoView(); }
+    const t = tok;
+    if (!paused) later(() => settle(t, () => playLine(0)), reduce() ? 200 : START_DELAY);
+  }
+  // Wait until the page has stopped scrolling (smooth scrolls on long pages), so later scrolls do not cut it short.
+  function settle(t, fn) {
+    let last = -1, still = 0;
+    const t0 = performance.now();
+    const step = () => {
+      if (t !== tok) return;
+      const key = Math.round(window.scrollY) + ':' + (target ? Math.round(target.getBoundingClientRect().top) : 0);
+      still = key === last ? still + 1 : 0;
+      last = key;
+      if (still >= 6 || performance.now() - t0 > 2500) fn(); else requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+  function playLine(n) {
+    clearTimers();
+    const t = ++tok;
+    lineIdx = n; phase = 'line';
+    const line = lines[n];
+    renderLine(n);
+    L = { mode: 'idle', words: wordCount(line.text), len: line.text.length, text: line.text, rate: 1, t0: 0, spoke: 0, started: false, bw: -1, bt: 0, dur: 1, p: 0, subs: subsFor(n), sub: 0 };
+    lastU = 0; g.final = false;
+    // Glide (under 400 ms) to the line's first item; the click comes when the voice starts.
+    L.sub = 0; anchor = L.subs[0]; glide = { x: cx, y: cy, t0: performance.now() };
+    if (!isTop() && n > 0) reveal(anchor);
+    if (voiceOn && canSpeak && !speechBroken) speakLine(t, n, line); else timerLine(t, n, line);
+  }
+  function timerLine(t, n, line) {
+    L.mode = 'timer'; L.t0 = performance.now(); L.dur = Math.max(1200, line.text.length / READ_CPS * 1000); L.p = 0; L.bw = -1;
+    click();
+    later(() => lineDone(t, n), L.dur);
+  }
+  function speakLine(t, n, line) {
+    let u;
+    try { u = new SpeechSynthesisUtterance(line.text); } catch (e) { timerLine(t, n, line); return; }
+    pickVoices();
+    const oge = line.who === 'OGE', v = oge ? cast.oge : cast.obi;
+    if (v) { u.voice = v; u.lang = v.lang; } else u.lang = 'en-US';
+    u.pitch = oge ? cast.ogePitch : cast.obiPitch;
+    u.rate = oge ? 1.0 : 0.95;
+    L.rate = u.rate;
+    const begin = () => {
+      if (L.started) return;
+      const now = performance.now();
+      L.started = true; L.spoke = now; L.t0 = now; L.mode = 'speech';
+      click();
+    };
+    u.onstart = () => { if (t === tok) begin(); };
+    u.onboundary = (e) => {
+      if (t !== tok) return;
+      begin();
+      const ci = Math.max(0, Math.min(line.text.length, e.charIndex || 0));
+      L.bw = Math.max(L.bw, wordCount(line.text.slice(0, ci)));
+      L.bt = performance.now();
+    };
+    u.onend = () => {
+      if (t !== tok) return;
+      // Learn the voice's real pace from this line, so the estimate fits the next one.
+      const secs = (performance.now() - (L.spoke || performance.now())) / 1000;
+      if (L.started && secs > 0.8 && L.words >= 4) { const m = L.words / secs / L.rate; if (m > 0.8 && m < 6) wpr = wpr * 0.5 + m * 0.5; }
+      lineDone(t, n);
+    };
+    u.onerror = (e) => {
+      if (t !== tok) return;
+      if (e && (e.error === 'interrupted' || e.error === 'canceled')) return;
+      const t2 = ++tok; timerLine(t2, n, line);
+    };
+    keepUtt = u;
+    try { synth.cancel(); } catch (e) {}
+    later(() => {
+      if (t !== tok) return;
+      // The estimate starts with the request; 'start' (or the first boundary) re-times it to the real start.
+      L.mode = 'speech'; L.t0 = performance.now() + 150;
+      try { synth.speak(u); } catch (e) { const t2 = ++tok; timerLine(t2, n, line); }
+    }, 40);
+    // Some browsers expose speechSynthesis but never speak (no voices, blocked audio): fall back to reading time.
+    later(() => {
+      if (t !== tok || L.started) return;
+      speechBroken = true;
+      const t2 = ++tok; cancelSpeech(); timerLine(t2, n, line);
+    }, 3500);
+  }
+  function lineDone(t, n) {
+    if (t !== tok) return;
+    clearTimers();
+    g.done += L.len;
+    L.len = 0; L.p = 0; L.mode = 'idle'; // counted once: the gap before the next line must not add it again
+    const t2 = ++tok;
+    if (n + 1 < lines.length) {
+      lineIdx = n + 1;
+      later(() => { if (t2 === tok) playLine(n + 1); }, 120);
+    } else {
+      g.final = true; setFill(1); phase = 'after';
+      later(() => { if (t2 === tok) advance(); }, PAUSE_AFTER);
+    }
+  }
+  const advance = () => (idx + 1 < list.length ? startStop(idx + 1) : end());
+  function go(k) { if (k >= list.length) end(); else startStop(Math.max(0, k)); }
+  function setPaused(p) {
+    paused = p;
+    btnPause.textContent = p ? 'Resume' : 'Pause';
+    btnPause.setAttribute('aria-pressed', String(p));
+    panel.classList.toggle('is-paused', p);
+    if (p) { tok++; clearTimers(); cancelSpeech(); }
+    else if (phase === 'after') advance();
+    else playLine(lineIdx);
+  }
+
+  // ---- Docking: the panel is a fixed left column and the page reflows beside it (html.tour-on adds the padding);
+  // under 700px it is a strip at the top and the page is pushed down by its measured height.
+  function syncStrip() { if (running) html.style.setProperty('--tour-strip', Math.ceil(panel.getBoundingClientRect().height) + 'px'); }
+  let ro = null;
+  try { ro = new ResizeObserver(syncStrip); } catch (e) { ro = null; }
+  function start() {
+    list = adapter.stops();
+    if (!list.length) return;
+    running = true; speechBroken = false;
+    panel.hidden = false; cursor.hidden = false;
+    if (launch) launch.hidden = true;
+    html.classList.add('tour-on');
+    syncStrip();
+    if (ro) ro.observe(panel);
+    paused = false;
+    btnPause.textContent = 'Pause';
+    btnPause.setAttribute('aria-pressed', 'false');
+    panel.classList.remove('is-paused');
+    const a = area();
+    cx = a.l + 24; cy = isTop() ? a.t + 24 : innerHeight * 0.45;
+    if (!raf) raf = requestAnimationFrame(frame);
+    startStop(0);
+    try { btnPause.focus({ preventScroll: true }); } catch (e) {}
+  }
+  function end() {
+    if (!running) return;
+    running = false; paused = false; tok++;
+    clearTimers(); cancelSpeech();
+    if (raf) cancelAnimationFrame(raf);
+    raf = 0;
+    if (ro) ro.disconnect();
+    html.classList.remove('tour-on');
+    html.style.removeProperty('--tour-strip');
+    if (target) target.classList.remove('tour-target');
+    target = null; anchor = null; items = null; L.subs = []; glide = null;
+    panel.hidden = true; cursor.hidden = true;
+    if (launch) { launch.hidden = false; try { launch.focus({ preventScroll: true }); } catch (e) {} }
+  }
+
+  if (launch) launch.addEventListener('click', () => (running ? end() : start()));
+  btnBack.addEventListener('click', () => go(idx - 1));
+  btnNext.addEventListener('click', () => go(idx + 1));
+  btnPause.addEventListener('click', () => setPaused(!paused));
+  btnClose.addEventListener('click', end);
+  btnVoice.addEventListener('click', () => {
+    if (!canSpeak) return;
+    voiceOn = !voiceOn; speechBroken = false; paintVoice();
+    try { localStorage.setItem('tour-voice', voiceOn ? 'on' : 'off'); } catch (e) {}
+    if (running && !paused && phase === 'line') { tok++; clearTimers(); cancelSpeech(); playLine(lineIdx); }
+  });
+  const typing = (el) => !!el && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName || ''));
+  window.addEventListener('keydown', (e) => {
+    if (!running || typing(e.target) || e.altKey || e.ctrlKey || e.metaKey) return;
+    let used = true;
+    if (e.key === 'ArrowRight') go(idx + 1);
+    else if (e.key === 'ArrowLeft') go(idx - 1);
+    else if (e.key === ' ' || e.key === 'Spacebar') { if (!e.repeat) setPaused(!paused); }
+    else if (e.key === 'Escape') end();
+    else used = false;
+    if (used) { e.preventDefault(); e.stopPropagation(); }
+  }, true);
+  window.addEventListener('keyup', (e) => { if (running && (e.key === ' ' || e.key === 'Spacebar') && !typing(e.target)) { e.preventDefault(); e.stopPropagation(); } }, true);
+  addEventListener('resize', syncStrip);
+  if (mode === 'deck') window.__deckOnShow = (n) => { if (running && !bringing && n !== idx) startStop(n); };
+  window.__tour = { start, end, go: (k) => { if (running) go(k); }, state: () => ({ running, paused, idx, lineIdx, phase, count: list.length, lines: lines.length, p: L.p, sub: L.sub, subs: L.subs.length, wps: wpr * 0.95, voice: cast.obi && cast.obi.name, oge: cast.oge && cast.oge.name, obiPitch: cast.obiPitch, ogePitch: cast.ogePitch }) };
+})();
+</script>
