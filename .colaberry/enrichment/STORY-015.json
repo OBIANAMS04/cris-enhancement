@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "1",
+  "projectId": "a563218c-c3a4-433c-8ed7-4e8e0573f59c",
+  "storyId": "STORY-015",
+  "projectTruthBaseRevision": 0,
+  "observedAt": "2026-11-14T07:32:13.686Z",
+  "sourceCommitSha": "5a1a8d6455d30a4fe41c55cf9a049f5485e0fa70",
+  "factProposals": [
+    {
+      "dimension": "outputs",
+      "value": "Incident reports contain the incident details, its timeline, hours open, cause and linked risks, versioned per incident.",
+      "evidence": "lib/incidentreports.js"
+    },
+    {
+      "dimension": "approval_points",
+      "value": "Incident and risk documentation is open to compliance officers, risk managers, security officers, TxDOT managers, the contract manager and system administrators only.",
+      "evidence": "lib/incidentreports.js"
+    }
+  ],
+  "decisions": [
+    {
+      "statement": "Version control: a new report on an incident never replaces the old one; it is a new version that names the one it supersedes.",
+      "rationale": "All reports must be version-controlled and logged.",
+      "evidence": "lib/incidentreports.js"
+    }
+  ],
+  "limitations": [
+    {
+      "statement": "TxDOT's own incident management system (REQ-018) is not connected; reports draw on the incidents recorded in the workspace.",
+      "evidence": "lib/incidentreports.js"
+    }
+  ],
+  "demonstrationEvidence": [
+    {
+      "kind": "test",
+      "ref": "tests/story-015-incident-reports.test.mjs"
+    },
+    {
+      "kind": "test",
+      "ref": "tests/workspace-walk-m4.js"
+    },
+    {
+      "kind": "screenshot",
+      "ref": "framework/screens/m4-05-incident-report.png"
+    }
+  ],
+  "measurementEvents": []
+}

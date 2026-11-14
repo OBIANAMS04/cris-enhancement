@@ -685,21 +685,28 @@
       "criteria": [
         {
           "text": "Given an incident, when it is reported, then a detailed report must be generated and stored.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Given a risk assessment, when it is completed, then the documentation must be accessible to authorized users.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Trust: All reports and assessments must be version-controlled and logged.",
-          "passed": false
+          "passed": true
         }
       ],
-      "files_touched": [],
-      "tests_added": [],
-      "notes": null,
-      "updated_at": null,
+      "files_touched": [
+        "lib/incidentreports.js",
+        "workspace/js/incidentreports.js",
+        "workspace/js/views.js"
+      ],
+      "tests_added": [
+        "tests/story-015-incident-reports.test.mjs",
+        "tests/workspace-walk-m4.js"
+      ],
+      "notes": "A report on any incident gathers its details, full timeline from the audit log, hours open, cause and the risks that cite it; stored with SHA-256, and each new report on the same incident is a new version, all kept. Incident reports, risk assessments and the training archive open only for authorised roles; every opening and refusal is logged.",
+      "updated_at": "2026-11-14T07:32:13.685Z",
       "verification": {
         "state": "in_progress",
         "criteria_passed": 0,
