@@ -7,6 +7,7 @@ import { createStore, localStorageBackend, memoryBackend } from '../../lib/store
 import { seedPeople } from '../../lib/seed.js';
 import { PAGES, renderPage } from './views.js';
 import { openBlobs } from './blobs.js';
+import { recordUserError } from '../../lib/usererrors.js';
 
 const STORE_KEY = 'cris-workspace-v1';
 const ACTOR_KEY = 'cris-workspace-actor';
@@ -54,6 +55,7 @@ async function open() {
   const optional = (path) => json(path).catch((err) => ({ error: err.message }));
   [ctx.materials, ctx.specs, ctx.compliance, ctx.solicitation, ctx.procurement] = await Promise.all([optional('../content/training-materials.json'), optional('../content/report-specs.json'), optional('../content/compliance-rules.json'), optional('../content/solicitation.json'), optional('../content/procurement-rules.json')]);
   ctx.blobs = await openBlobs();
+  ctx.onUserError = (err) => recordUserError(ctx.store, { actor: ctx.actor, where: (location.hash.slice(2).split('/')[0] || 'help-desk'), message: err.message, problems: err.problems ?? [] });
   await seedPeople(ctx.store, people.people);
   ctx.actor = readActor();
 }
@@ -99,7 +101,7 @@ export function render({ moveFocus = false } = {}) {
     h(
       'header',
       { class: 'top' },
-      h('div', { class: 'top__row' }, h('a', { class: 'top__brand', href: '#/help-desk' }, h('span', { class: 'top__kicker' }, 'Workspace · Milestones 1 to 3'), h('span', { class: 'top__name' }, 'Crash Records Information System (CRIS) Enhancement')), actorPicker()),
+      h('div', { class: 'top__row' }, h('a', { class: 'top__brand', href: '#/help-desk' }, h('span', { class: 'top__kicker' }, 'Workspace · Milestones 1 to 4'), h('span', { class: 'top__name' }, 'Crash Records Information System (CRIS) Enhancement')), actorPicker()),
       h('p', { class: 'stamp' }, h('a', { href: '../' }, '← Command Center'), ' · Every action here is checked against the data model and written to the audit log.'),
       h('nav', { class: 'tabs', 'aria-label': 'Workspace pages' }, PAGES.map((p) => h('a', { href: `#/${p.id}`, 'aria-current': p.id === pageId ? 'page' : null }, p.label))),
     ),

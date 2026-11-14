@@ -14,6 +14,7 @@ import { submissionsPage } from './submissions.js';
 import { evaluationPage } from './evaluation.js';
 import { riskPage } from './risk.js';
 import { securityPage } from './security.js';
+import { performancePage } from './performance.js';
 import { audit, tables } from './audit.js';
 
 export const PAGES = [
@@ -30,11 +31,12 @@ export const PAGES = [
   { id: 'evaluation', label: 'Evaluation', story: 'STORY-009', req: 'REQ-014' },
   { id: 'risk', label: 'Risk', story: 'STORY-010', req: 'REQ-017' },
   { id: 'security', label: 'Security', story: 'STORY-011', req: 'REQ-020' },
+  { id: 'performance', label: 'Performance and errors', story: 'STORY-014', req: 'REQ-016' },
   { id: 'audit', label: 'Audit log' },
   { id: 'tables', label: 'Tables' },
 ];
 
-const RENDER = { 'help-desk': helpDesk, support, monitoring, reports, features, training, 'reporting-engine': reportingEngine, documents, compliance, submissions: submissionsPage, evaluation: evaluationPage, risk: riskPage, security: securityPage, audit, tables };
+const RENDER = { 'help-desk': helpDesk, support, monitoring, reports, features, training, 'reporting-engine': reportingEngine, documents, compliance, submissions: submissionsPage, evaluation: evaluationPage, risk: riskPage, security: securityPage, performance: performancePage, audit, tables };
 
 export function renderPage(page, rest, ctx) {
   if (!page) return h('div', {}, h('h1', { tabindex: '-1' }, 'Page not found'), h('p', {}, 'There is no workspace page at this address. ', h('a', { href: '#/help-desk' }, 'Go to the Help desk'), '.'));

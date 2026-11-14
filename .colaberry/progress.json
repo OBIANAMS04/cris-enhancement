@@ -638,21 +638,30 @@
       "criteria": [
         {
           "text": "Given system performance metrics, when anomalies are detected, then alerts must be generated for investigation.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Given user actions, when an error is made, then the system must provide corrective suggestions.",
-          "passed": false
+          "passed": true
         },
         {
           "text": "Trust: All anomalies and user errors must be logged for audit purposes.",
-          "passed": false
+          "passed": true
         }
       ],
-      "files_touched": [],
-      "tests_added": [],
-      "notes": null,
-      "updated_at": null,
+      "files_touched": [
+        "lib/anomaly.js",
+        "lib/usererrors.js",
+        "workspace/js/performance.js",
+        "workspace/js/common.js",
+        "workspace/js/main.js",
+        "workspace/js/views.js"
+      ],
+      "tests_added": [
+        "tests/story-014-anomalies.test.mjs"
+      ],
+      "notes": "Each component's response time is compared with its own baseline (median and median absolute deviation of earlier samples); a sample far outside it raises one alert per component for investigation, cleared when back to normal. Every refused action in the workspace is logged as a user error with corrective suggestions worked out from the data (a valid maintenance slot, a period with data, the missing documents). Anomalies and user errors are in the audit log.",
+      "updated_at": "2026-11-14T07:32:13.169Z",
       "verification": {
         "state": "in_progress",
         "criteria_passed": 0,

@@ -17,7 +17,7 @@ export function head(page, title, lede) {
 export function flash(ctx) {
   const f = ctx.flash;
   if (!f) return null;
-  return h('div', { class: `notice notice--${f.tone}`, role: f.tone === 'bad' ? 'alert' : 'status' }, h('strong', {}, f.title), f.body ? h('p', {}, f.body) : null, f.items?.length ? h('ul', {}, f.items.map((x) => h('li', {}, x))) : null);
+  return h('div', { class: `notice notice--${f.tone}`, role: f.tone === 'bad' ? 'alert' : 'status' }, h('strong', {}, f.title), f.body ? h('p', {}, f.body) : null, f.items?.length ? h('ul', {}, f.items.map((x) => h('li', {}, x))) : null, f.suggestions?.length ? h('div', { class: 'suggest' }, h('strong', {}, 'Try this: '), h('ul', {}, f.suggestions.map((x) => h('li', {}, x)))) : null);
 }
 
 /** Run an action, then show what happened: the success message, or exactly why it was refused. */
@@ -27,6 +27,14 @@ export async function act(ctx, work, success) {
     ctx.flash = typeof success === 'function' ? success(result) : { tone: 'ok', title: success };
   } catch (err) {
     ctx.flash = { tone: 'bad', title: err.message, items: err.problems ?? [] };
+    // STORY-014: a refused action is a user error: log it and show what to do instead.
+    if (ctx.onUserError && err.name !== 'StoreError') {
+      try {
+        ctx.flash.suggestions = await ctx.onUserError(err);
+      } catch {
+        // logging a user error must never hide the original message
+      }
+    }
   }
   ctx.rerender();
 }

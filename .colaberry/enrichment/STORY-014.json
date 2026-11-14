@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "1",
+  "projectId": "a563218c-c3a4-433c-8ed7-4e8e0573f59c",
+  "storyId": "STORY-014",
+  "projectTruthBaseRevision": 0,
+  "observedAt": "2026-11-14T07:32:13.169Z",
+  "sourceCommitSha": "341fd4c6667ffcc2fca2bbc5c50a1920c647fd30",
+  "factProposals": [
+    {
+      "dimension": "exceptions",
+      "value": "Performance anomalies are detected against each component's own baseline and raise alerts for investigation.",
+      "evidence": "lib/anomaly.js"
+    },
+    {
+      "dimension": "pain_points",
+      "value": "User errors across the workspace are logged with the page, the message and the suggestion given, and counted per page.",
+      "evidence": "lib/usererrors.js"
+    }
+  ],
+  "decisions": [
+    {
+      "statement": "An anomaly is a sample over 3x the baseline median and over median + 6 MADs (and at least 50 ms above); at least 5 earlier samples are needed for a baseline.",
+      "rationale": "Avoids alerting on noise; no baseline means no guess.",
+      "evidence": "lib/anomaly.js"
+    },
+    {
+      "statement": "Suggestions are computed from data where possible, e.g. the next maintenance window that passes every rule.",
+      "rationale": "The acceptance asks for corrective suggestions, not generic advice.",
+      "evidence": "lib/usererrors.js"
+    }
+  ],
+  "limitations": [
+    {
+      "statement": "The monitored components are the site's own files; the slow-response drill records a labelled synthetic sample to show the alert.",
+      "evidence": "workspace/js/performance.js"
+    }
+  ],
+  "demonstrationEvidence": [
+    {
+      "kind": "test",
+      "ref": "tests/story-014-anomalies.test.mjs"
+    },
+    {
+      "kind": "screenshot",
+      "ref": "framework/screens/m4-03-user-error-suggestion.png"
+    },
+    {
+      "kind": "screenshot",
+      "ref": "framework/screens/m4-04-performance-anomaly.png"
+    }
+  ],
+  "measurementEvents": []
+}
