@@ -1,0 +1,132 @@
+<template id="slides">
+<section class="slide" data-say="Demo day is the twenty-fourth of November: twenty minutes, sixteen stories, rehearsed twice from a clean start." data-say-script="OBI: Hi, I am OBI. This is the plan for demo day, the twenty fourth of November.||OGE: How long do we get?||OBI: Twenty minutes for sixteen stories, then ten minutes of questions.||OGE: And has it been tried?||OBI: Two clean rehearsals, every story passing, from a blank start.">
+  <p class="kicker">Demo prep · 14 November 2026</p>
+  <h1>Twenty minutes, sixteen stories</h1>
+  <div class="lane"></div>
+  <p class="lede">The live demo for Ali and Ram walks the TxDOT Crash Records workspace in the order a user meets it, and ends on the proof that nothing was quietly changed.</p>
+  <div class="tiles">
+    <div class="tile ok"><b>16</b><span>stories in the run of show</span></div>
+    <div class="tile"><b>20 min</b><span>plus 10 minutes of questions</span></div>
+    <div class="tile ok"><b>2 of 2</b><span>clean rehearsals passed</span></div>
+    <div class="tile ok"><b>24 Nov</b><span>demo day</span></div>
+  </div>
+</section>
+
+<section class="slide" data-say="The run of show in six acts: Command Center, operations, people and records, procurement, security and trust, and the audit trail." data-say-script="OBI: Here is the run of show, in six acts.||OGE: Where does the time go?||OBI: Operations takes five minutes: help desk, support, monitoring, reports and features. People and records take four.||OGE: And the end?||OBI: Security and trust, then one minute on the audit trail, the closing proof.">
+  <p class="kicker">Run of show</p>
+  <h2>Six acts, twenty minutes</h2>
+  <div class="chart" data-chart="acts" aria-label="Minutes per act of the demo"></div>
+  <p class="legend"><span><i style="background:var(--s1)"></i>Minutes per act, from the demo script: opening 1, Command Center 2, operations 5, people and records 4, procurement 3, security and trust 3.5, audit trail 1, close 0.5</span></p>
+</section>
+
+<section class="slide" data-say="Act one: the Command Center shows only what the project produced, then the help desk resolves a request inside its service level." data-say-script="OBI: Act one opens on the Command Center, which shows only what the project has produced.||OGE: Then the first real user?||OBI: The help desk. Avery asks for help, Sam resolves it, and the service level clock is shown all the way.">
+  <p class="kicker">Act 1 · STORY-000 and 001</p>
+  <h2>Command Center, then the help desk</h2>
+  <div class="two">
+    <ul class="beats">
+      <li>Command Center: outcomes, users, guardrails and the plan, from the project's own files.</li>
+      <li>Help desk: Avery's request, resolved by Sam inside its service level.</li>
+      <li>Say it out loud: every person and record is synthetic.</li>
+    </ul>
+    <figure class="shot"><img src="screens/02-help-desk-resolved.png" alt="A help desk request resolved within its service level" width="1406" height="1240"><figcaption>Help desk, from the rehearsal</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-say="Act two, operations: support, monitoring that raises an alert, performance reports and a feature released." data-say-script="OBI: Act two is operations. Monitoring runs its checks and raises an alert when one fails.||OGE: Who sees it?||OBI: Riley, on the support dashboard. Then the monthly performance report and a feature taken from request to release.">
+  <p class="kicker">Act 2 · STORY-012, 002, 003, 004</p>
+  <h2>Operations: support, monitoring, reports, features</h2>
+  <div class="two">
+    <ul class="beats">
+      <li>Support dashboard: tickets against their service levels; maintenance only outside service hours.</li>
+      <li>Monitoring: a failed check raises an alert.</li>
+      <li>Performance report: uptime and response times for the month.</li>
+      <li>Feature: from request to release, with its test evidence.</li>
+    </ul>
+    <figure class="shot"><img src="screens/04-monitoring-alert.png" alt="Monitoring raises an alert on a failed check" width="1406" height="1438"><figcaption>Monitoring alert, from the rehearsal</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-say="Act three, people and records: training, the reporting engine, documents and compliance." data-say-script="OBI: Act three is people and records. A training session is scheduled and attended.||OGE: And the paperwork?||OBI: The reporting engine, the document store, and compliance, where a legal update is checked against every record.">
+  <p class="kicker">Act 3 · STORY-005, 006, 013, 007</p>
+  <h2>Training, reporting, documents, compliance</h2>
+  <div class="two">
+    <ul class="beats">
+      <li>Training: a session scheduled, attended and passed.</li>
+      <li>Reporting engine: required reports generated and archived.</li>
+      <li>Documents: stored with a hash, opened in under two seconds.</li>
+      <li>Compliance: a legal update checked against every record.</li>
+    </ul>
+    <figure class="shot"><img src="screens/07-training-session.png" alt="A training session scheduled and attended" width="1406" height="2120"><figcaption>Training, from the rehearsal</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-say="Act four, procurement: responses submitted with every document, scored on the weighted system, and ranked, with risks assessed." data-say-script="OBI: Act four is procurement. Quinn records two vendor responses, each with every required document.||OGE: Then scoring?||OBI: Scored on the weighted system and ranked. A wrong score is corrected, and the original stays on record. Then Rowan runs the risk assessment.">
+  <p class="kicker">Act 4 · STORY-008, 009, 010</p>
+  <h2>Submissions, evaluation, risk</h2>
+  <div class="two">
+    <ul class="beats">
+      <li>Submissions: every required document, a receipt, a tracked status.</li>
+      <li>Evaluation: weighted scores and a ranking; corrections keep the original.</li>
+      <li>Risk: outage and user-error risks found from the live system.</li>
+    </ul>
+    <figure class="shot"><img src="screens/15-evaluation-ranking.png" alt="Responses scored on the weighted system and ranked" width="1406" height="1734"><figcaption>Evaluation ranking, from the rehearsal</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-say="Act five, security and trust: a breach logged and closed with its cause, an anomaly alert, a mistake that comes with its fix, and versioned incident reports." data-say-script="OBI: Act five is security and trust. Sage logs a breach, contains it, records the notification and closes it with its cause.||OGE: And performance?||OBI: An anomaly alert against the component's own baseline, a mistake that comes with its fix, and an incident report kept in versions.">
+  <p class="kicker">Act 5 · STORY-011, 014, 015</p>
+  <h2>Security, anomalies, incident reports</h2>
+  <div class="two">
+    <ul class="beats">
+      <li>Breach: logged, contained, notified, closed with its cause.</li>
+      <li>Anomaly alert against the component's own baseline.</li>
+      <li>A mistake comes with a "Try this" fix.</li>
+      <li>Incident report: every version kept.</li>
+    </ul>
+    <figure class="shot"><img src="screens/17-security-breach.png" alt="A security breach from logging to close" width="1406" height="1721"><figcaption>Security, from the rehearsal</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-say="The closing proof: every action in the demo is in the audit trail, each entry chained to the one before, and the chain is intact." data-say-script="OBI: The last minute is the audit trail. Every action in the demo is in it.||OGE: Why end there?||OBI: Each entry is chained to the one before by its hash. The page checks the chain and says: the chain is intact. Change one record, and it says so.">
+  <p class="kicker">The closing proof</p>
+  <h2>The chain is intact</h2>
+  <div class="flow">
+    <div class="step"><b>Every action</b><span>written to the audit trail with the record it changed</span></div>
+    <div class="step"><b>Chained</b><span>each entry carries the hash of the one before</span></div>
+    <div class="step ok"><b>Checked</b><span>the page re-checks the whole chain</span></div>
+    <div class="step bad"><b>Tamper test</b><span>change one record and the check fails</span></div>
+  </div>
+</section>
+
+<section class="slide" data-say="The rehearsal: an automated walk through all sixteen stories in demo order, passed twice in a row in about ninety seconds of clicks." data-say-script="OBI: Here is the rehearsal. A browser walk clicks through all sixteen stories in demo order.||OGE: How long does it take?||OBI: About ninety seconds of clicks. People and records take the longest, about twenty four seconds, then security and trust. It passed twice in a row, and found no bugs in the app.">
+  <p class="kicker">Rehearsal · 14 November</p>
+  <h2>Two clean runs, no app bugs</h2>
+  <div class="chart" data-chart="rehearsal" aria-label="Seconds per act in the second rehearsal run"></div>
+  <p class="legend"><span><i style="background:var(--s1)"></i>Seconds of clicks per act, second run: 87 seconds in all. The live demo is slower on purpose: the presenter explains each step.</span></p>
+</section>
+
+<section class="slide" data-say="Before demo day: one blocker already fixed, and four things to do on the morning." data-say-script="OBI: Before demo day, one blocker is already fixed. The solicitation closed on the twentieth, so every submission would have been refused as late. It now closes on the fourth of December.||OGE: And on the morning?||OBI: Sync the Command Center from the portal, set the laptop to Central time, have four PDF files ready, and start a new, empty demo.">
+  <p class="kicker">Checklist</p>
+  <h2>Before demo day</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Item</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Solicitation closes 4 December, after the demo</td><td><span class="pill ok">Fixed</span></td></tr>
+      <tr><td>Sync the Command Center from the portal (stale-data warning)</td><td><span class="pill warn">Morning of</span></td></tr>
+      <tr><td>Laptop on Central time (service-hours checks)</td><td><span class="pill warn">Morning of</span></td></tr>
+      <tr><td>Four PDF files for the vendor response</td><td><span class="pill warn">Morning of</span></td></tr>
+      <tr><td>Start a new, empty demo on the Audit log page</td><td><span class="pill warn">Morning of</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="slide" data-say="Two background agents prepared this: one wrote the demo script, the other built the rehearsal. Thanks for listening." data-say-script="OGE: Who prepared all this?||OBI: Two background agents. One wrote the demo script, with clicks, fallbacks and likely questions. The other built the rehearsal and its screenshots.||OGE: Thanks for listening.||OBI: This was OBI, with Oge. See you on the twenty fourth.">
+  <p class="kicker">Working in parallel</p>
+  <h2>Two background agents</h2>
+  <div class="tiles">
+    <div class="tile"><b>Demo script</b><span>run of show, clicks, fallbacks, caveats and likely questions</span></div>
+    <div class="tile"><b>Rehearsal</b><span>a browser walk through all 16 stories, with 23 screenshots</span></div>
+  </div>
+  <p><a href="https://github.com/OBIANAMS04/cris-enhancement/blob/main/docs/demo/DEMO-SCRIPT.md">Demo script</a> · <a href="https://obianams04.github.io/cris-enhancement/workspace/">Workspace</a> · <a href="https://obianams04.github.io/cris-enhancement/">Command Center</a></p>
+</section>
+</template>
