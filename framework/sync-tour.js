@@ -45,6 +45,9 @@ const sss = path.resolve(root, '..', 'SSS-Proposal-Library-Standard-Context', 'd
 const files = [
   path.join(root, 'framework', 'PROJECT-FRAMEWORK.html'),
   ...['m1', 'm2', 'm3', 'm4'].flatMap((m) => ['index.html', 'artifact.html'].map((f) => path.join(root, 'framework', 'presentations', m, f))),
+  path.join(root, 'framework', 'presentations', 'demo', 'index.html'),
+  path.join(root, 'framework', 'presentations', 'demo', 'artifact.html'),
+  path.join(root, 'framework', 'recordings', '02-working-system-demo', 'presentation.html'),
   path.join(sss, 'PROJECT-FRAMEWORK.html'),
   path.join(sss, 'demo', 'SSS-DEMO-BRIEFING.html'),
   ...process.argv.slice(2).map((p) => path.resolve(p)),

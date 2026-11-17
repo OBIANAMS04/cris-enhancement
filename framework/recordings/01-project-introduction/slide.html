@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CRIS Project Introduction</title>
+<style>
+  :root {
+    --bg: #eef1f5;
+    --slide: #ffffff;
+    --ink: #0f1720;
+    --muted: #46505c;
+    --line: #d5dbe3;
+    --accent: #0b4f8a;
+    --accent-ink: #ffffff;
+    --cost: #a3261b;
+    --cost-bg: #fbeceb;
+    --human: #1d5e2e;
+    --human-bg: #e8f4ec;
+    --panel: #f5f7fa;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #05080c;
+      --slide: #0f151c;
+      --ink: #f2f5f8;
+      --muted: #b4bec9;
+      --line: #2a3542;
+      --accent: #6cb4f5;
+      --accent-ink: #05121f;
+      --cost: #ff9a8f;
+      --cost-bg: #2a1513;
+      --human: #8fdca4;
+      --human-bg: #11251a;
+      --panel: #16202a;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #05080c; --slide: #0f151c; --ink: #f2f5f8; --muted: #b4bec9; --line: #2a3542;
+    --accent: #6cb4f5; --accent-ink: #05121f; --cost: #ff9a8f; --cost-bg: #2a1513;
+    --human: #8fdca4; --human-bg: #11251a; --panel: #16202a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+  }
+  .slide {
+    width: min(100vw, calc(100vh * 16 / 9));
+    aspect-ratio: 16 / 9;
+    background: var(--slide);
+    container-type: inline-size;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 1.6cqw;
+    padding: 2.2cqw 3.2cqw 1.8cqw;
+    overflow: hidden;
+  }
+  header { display: flex; justify-content: space-between; align-items: flex-end; gap: 2cqw;
+           border-bottom: 0.25cqw solid var(--accent); padding-bottom: 1.1cqw; }
+  .kicker { font-size: 1.25cqw; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+  h1 { font-size: 2.7cqw; line-height: 1.1; font-weight: 800; margin-top: 0.4cqw; }
+  .byline { text-align: right; font-size: 1.3cqw; color: var(--muted); line-height: 1.35; white-space: nowrap; }
+  .byline strong { color: var(--ink); }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    grid-template-areas: "who change change" "cost human next";
+    gap: 1.4cqw;
+    min-height: 0;
+  }
+  .card {
+    background: var(--panel);
+    border: 0.12cqw solid var(--line);
+    border-left: 0.6cqw solid var(--accent);
+    border-radius: 0.8cqw;
+    padding: 1.3cqw 1.5cqw;
+    display: flex; flex-direction: column; gap: 0.6cqw;
+    min-height: 0;
+  }
+  .label { font-size: 1.15cqw; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+  .big { font-size: 2.15cqw; font-weight: 750; line-height: 1.18; }
+  .small { font-size: 1.3cqw; line-height: 1.35; color: var(--muted); }
+  .card.cost { border-left-color: var(--cost); background: var(--cost-bg); }
+  .card.cost .label { color: var(--cost); }
+  .card.human { border-left-color: var(--human); background: var(--human-bg); }
+  .card.human .label { color: var(--human); }
+  .card.who { grid-area: who; } .card.change { grid-area: change; } .card.cost { grid-area: cost; }
+  .card.human { grid-area: human; } .card.next { grid-area: next; }
+  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 0.7cqw; font-size: 1.55cqw; font-weight: 650; }
+  .flow span { background: var(--slide); border: 0.12cqw solid var(--line); border-radius: 0.5cqw; padding: 0.35cqw 0.8cqw; }
+  .flow .arrow { background: none; border: 0; padding: 0; color: var(--muted); }
+  .flow .bad { color: var(--cost); border-color: var(--cost); }
+  .chips { display: flex; flex-wrap: wrap; gap: 0.6cqw; }
+  .chips span { font-size: 1.2cqw; font-weight: 650; padding: 0.3cqw 0.9cqw; border-radius: 2cqw;
+                background: var(--accent); color: var(--accent-ink); }
+
+  .card.next .big { font-size: 1.9cqw; }
+  .card.next { gap: 0.5cqw; }
+  footer { display: flex; justify-content: space-between; gap: 2cqw; font-size: 1.1cqw; color: var(--muted);
+           border-top: 0.12cqw solid var(--line); padding-top: 0.9cqw; }
+
+  @page { size: 13.333in 7.5in; margin: 0; }
+  @media print {
+    :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+      --bg: #ffffff; --slide: #ffffff; --ink: #000000; --muted: #333333; --line: #bbbbbb;
+      --accent: #0b4f8a; --accent-ink: #ffffff; --cost: #a3261b; --cost-bg: #fbeceb;
+      --human: #1d5e2e; --human-bg: #e8f4ec; --panel: #f5f7fa;
+    }
+    html, body { height: auto; min-height: 0; background: #ffffff; }
+    body { display: block; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .slide { width: 13.333in; height: 7.5in; aspect-ratio: auto; page-break-inside: avoid; break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<main class="slide" aria-label="CRIS Enhancement project introduction slide">
+  <header>
+    <div>
+      <div class="kicker">CRIS Enhancement · Project introduction</div>
+      <h1>A response missing one document is caught, explained and tracked</h1>
+    </div>
+    <div class="byline"><strong>Obi Anamelechi Kingsley</strong><br>TxDOT Crash Records Information System (CRIS)<br>Service Agreement solicitation</div>
+  </header>
+
+  <section class="grid">
+    <article class="card who">
+      <div class="label">Who</div>
+      <div class="big">A TxDOT procurement officer</div>
+      <div class="small">receiving vendor responses on closing day. Must catch the one missing a required document, and show why it was turned away.</div>
+    </article>
+
+    <article class="card change">
+      <div class="label">What changes</div>
+      <div class="big">Every response is checked before it is stored.</div>
+      <div class="flow">
+        <span>All documents, on time</span><span class="arrow">&rarr;</span><span>Stored with a fingerprinted receipt</span>
+      </div>
+      <div class="flow">
+        <span class="bad">One missing</span><span class="arrow">&rarr;</span><span>Refused with the reason</span><span class="arrow">&rarr;</span><span>Logged</span><span class="arrow">&rarr;</span><span>Tracked to resubmission</span>
+      </div>
+    </article>
+
+    <article class="card cost">
+      <div class="label">The cost of a miss</div>
+      <div class="big">One missing file = the whole response is never scored</div>
+      <div class="small">Late responses are not considered at all. Source: TxDOT published terms (RFO 601440000054109 sec. 17.1, 17.6; Terms and Conditions 2.02(b)).</div>
+    </article>
+
+    <article class="card human">
+      <div class="label">What people still decide</div>
+      <div class="big">Every score, every flagged score, and the award</div>
+      <div class="small">The system does the arithmetic. TxDOT alone makes the award.</div>
+    </article>
+
+    <article class="card next">
+      <div class="label">Next milestone</div>
+      <div class="big">Replace my proposals with TxDOT's answers</div>
+      <div class="chips"><span>Scoring weights</span><span>Euna Procurement access</span><span>Risk matrix</span><span>Required reports</span><span>Service levels</span></div>
+      <div class="small">Done: no "proposal" label left. Then: real TxDOT connections.</div>
+    </article>
+  </section>
+
+  <footer>
+    <span>Built on synthetic data only. Nothing is connected to TxDOT.</span>
+    <span>Demo Day: 24 November 2026</span>
+  </footer>
+</main>
+</body>
+</html>
