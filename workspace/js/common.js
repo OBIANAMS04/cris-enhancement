@@ -17,7 +17,7 @@ export function head(page, title, lede) {
 export function flash(ctx) {
   const f = ctx.flash;
   if (!f) return null;
-  return h('div', { class: `notice notice--${f.tone}`, role: f.tone === 'bad' ? 'alert' : 'status' }, h('strong', {}, f.title), f.body ? h('p', {}, f.body) : null, f.items?.length ? h('ul', {}, f.items.map((x) => h('li', {}, x))) : null, f.suggestions?.length ? h('div', { class: 'suggest' }, h('strong', {}, 'Try this: '), h('ul', {}, f.suggestions.map((x) => h('li', {}, x)))) : null);
+  return h('div', { class: `notice notice--${f.tone}`, role: f.tone === 'bad' ? 'alert' : 'status', 'data-flash': '' }, h('strong', {}, f.title), f.body ? h('p', {}, f.body) : null, f.items?.length ? h('ul', {}, f.items.map((x) => h('li', {}, x))) : null, f.suggestions?.length ? h('div', { class: 'suggest' }, h('strong', {}, 'Try this: '), h('ul', {}, f.suggestions.map((x) => h('li', {}, x)))) : null);
 }
 
 /** Run an action, then show what happened: the success message, or exactly why it was refused. */
@@ -37,6 +37,19 @@ export async function act(ctx, work, success) {
     }
   }
   ctx.rerender();
+  showResult();
+}
+
+// The result of an action is drawn at the top of the page; when the form that was used sits lower down, bring the
+// result into view, or the person (and anyone watching a demo) never sees why it was refused.
+function showResult() {
+  if (typeof document === 'undefined') return;
+  const n = document.querySelector('[data-flash]');
+  if (!n) return;
+  const r = n.getBoundingClientRect();
+  if (r.top >= 0 && r.bottom <= (window.innerHeight || 0)) return;
+  const smooth = !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  n.scrollIntoView({ block: 'center', behavior: smooth ? 'smooth' : 'auto' });
 }
 
 export function field(label, control, hint) {
