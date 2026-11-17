@@ -2,7 +2,7 @@
 
 **Solicitation:** Crash Records Information System Service Agreement (TxDOT) · **Bidder:** Colaberry
 **Owner:** Obi Anamelechi Kingsley · **Decision makers:** Ali Muwwakkil (Managing Director), Ram Katamaraja
-**Ship-by:** 24 November 2026 · **Last updated:** 2026-11-14 · Updated after every milestone
+**Ship-by:** 24 November 2026 · **Last updated:** 2026-11-16 · Updated after every milestone
 
 > Everything here is built and demonstrated on synthetic data. Nothing is operating in production and nothing is
 > connected to a TxDOT system. The Command Center shows no number, connection or result the project has not produced.
@@ -46,7 +46,9 @@ Dates in this table are the ones the portal's STORY-000 brief gives. The plan fi
 | M1 | STORY-001, 002, 003, 012 and 004: the workspace (help desk, support, monitoring, reports, features) | **Done 2026-11-11**, all five verified, 250 points |
 | M2 | STORY-005, 006, 007, 013: training, reporting engine, compliance, documents | **Done 2026-11-11**, all four verified, 200 points (10 of 16 stories, 500 points on this build) |
 | M3 | STORY-008, 009, 010: response submissions, evaluation and scoring, risk assessment | **Done 2026-11-12**, all three verified, 150 points (13 of 16 stories, 650 points on this build) |
-| M4 | STORY-011, 014, 015, then demo prep | **Done 2026-11-14: all three verified by the portal, 150 points; 16 of 16 stories, 800 points, 50 of 50 criteria.** Demo prep for 24 Nov is next |
+| M4 | STORY-011, 014, 015, then demo prep | **Done 2026-11-14: all three verified by the portal, 150 points; 16 of 16 stories, 800 points, 50 of 50 criteria.** |
+| Demo prep | Demo script, 16-story rehearsal walk, demo-day presentation | **Done 2026-11-16**: run of show `framework/demo/DEMO-SCRIPT.md`, rehearsal `tests/demo-rehearsal.js` passing from a clean start, presentation https://claude.ai/artifact/6MWHTtxHbZyjUErZrjGjDy |
+| R1 Recordings | The six case-study videos Ali asked for (portal tasks PREP-1 to PREP-6, 10 points each): PREP-2 working-system demo and PREP-1 project introduction first | **In progress.** Kits ready 2026-11-16 in `framework/recordings/`; Obi records them. Then PREP-3 AI visual presentation, PREP-4 stakeholder update, PREP-5 final showcase, PREP-6 present at Demo Day |
 
 Each milestone ends with: a summary, links, everything committed and pushed, the framework and its artifact
 updated with current screenshots, and a short HTML presentation (three to five minutes, with charts and a story
@@ -265,7 +267,8 @@ unbuilt stories are marked "in progress".
 | The real evaluation criteria and weights for this solicitation are not known | The evaluation page uses a proposed set built from public sources | TxDOT, through Ali | Send them; replace `content/procurement-rules.json` |
 | Unknown whether submissions must flow through Euna Procurement, and whether an API or export is available | Euna is not connected; submissions are tracked in the workspace | TxDOT, through Ali | Say whether Euna is required and whether an API or export exists |
 | TxDOT's risk matrix is not known | The risk page uses our own likelihood and impact scale (1 to 9) | TxDOT, through Ali | Send the matrix; adjust the scoring |
-| Ali has not replied to the M1 to M3 updates | The questions to TxDOT above are still open | Ali | Ask again through the portal Messages, with the M4 update |
+| The six case-study recordings are overdue (due 30 Oct; Ali, 14 Nov) | The case-study package is incomplete; 60 portal points outstanding | **Obi** (records); Claude prepares each kit | Record PREP-2 then PREP-1 from `framework/recordings/`; reply to Ali with the date both will be up |
+| Ali has not replied on the TxDOT questions | The questions to TxDOT above are still open | Ali | Ask again with the recordings reply |
 | TxDOT's incident management system (REQ-018) is not reachable | Incident reports are built from the workspace's own incidents; the system is not connected | TxDOT, through Ali | Say whether and how access can be given |
 | `plan.json` has no schedule, release dates or due dates | The Overview shows no dates; the Project management tab would have an empty Gantt | Ali / the platform | See whether the first sync after connecting delivers dates; if not, ask Ali |
 
@@ -273,6 +276,7 @@ unbuilt stories are marked "in progress".
 
 | Date | What happened |
 |---|---|
+| 2026-11-16 | **Recordings become the priority.** Ali's email (14 Nov, "Crash Records is built. The recordings are the whole gap now"): six recordings were due on 30 October and none is submitted; record the Working-System Demo first, locally with the server running (not the Command Center, not GitHub Pages); reply with the date the first two will be up. The portal lists them as Demo prep tasks PREP-1 to PREP-6, each with Learn, Prepare, Build, Practice and Present & Share stages. Kits built: PREP-2 (presentation, speaker notes, runbook, rehearsal checklist, sample PDFs, screenshots of a live run) and PREP-1 (90-second script, one slide, Prepare hand-in). Rehearsing PREP-2 found two app defects, both fixed at the root: a refused action's reason was drawn off screen, and "Addressed:" was doubled (9821141). Demo-day presentation published; demo script moved out of `docs/`, which the platform rewrites. Tour: the pointer now follows what is said (it had shared out the boxes in page order), neural voices first (Edge), Oge said natively, "OH-geh" (7e42b92) |
 | 2026-11-08 | Ali grants builder access on the portal and points Obi at STORY-000 |
 | 2026-11-14 | **Milestone 4 verified; the build is complete: 16 of 16 stories, 800 points.** Groundwork (9660530); cybersecurity compliance (011, 341fd4c), performance and user-error risks (014, 5a1a8d6) and incident reports and risk documentation (015, 15a6d44) built, one commit per story; 73 unit tests and five browser walks pass, the walks made sturdier; after Obi signed the portal back in, all three were confirmed verified: 16 of 16 stories, 50 of 50 criteria, 800 points. The CRIS framework page source now lives in the repo (`framework/PROJECT-FRAMEWORK.html`). New standing rules from Obi: co-host renamed from Nia to Oge, the narrator panel's controls in a fixed bar that never covers text, the pointer keeps pace with the voice; a background agent is applying them to every tour. Presentation: https://obianams04.github.io/cris-enhancement/framework/presentations/m4/ |
 | 2026-11-12 | **Milestone 3 verified.** Groundwork (365ce4d); response submissions (008, 3d3dacd), evaluation and scoring (009, 54ec087) and risk assessment tools (010, 5cbf603) built, one commit per story; procurement criteria compiled by a research agent from public sources; Euna Procurement researched (TxDOT does use it, no public API found, not connected); 62 unit tests and four browser walks pass; **the portal verified all three through the push webhook, 150 points** (650 on this build, 13 of 16 stories); the portal's record committed (382b60b). Release r3 complete; r4 has 010 done and 011, 014, 015 left. New standing rules from Obi: the guided-tour narrator is OBI with co-host Nia, a deeper male voice, a left-docked panel and a voice-synchronised gauge and cursor; a background agent is rebuilding every tour to them. Presentation: https://obianams04.github.io/cris-enhancement/framework/presentations/m3/ |
