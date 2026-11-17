@@ -2,6 +2,7 @@
 import { h, table, section, empty } from '../../assets/js/ui.js';
 import { head, when, person, badge, flash, act, field, form, button, onClick } from './common.js';
 import { uploadDocument, openDocument, library, documentLog, CATEGORIES, ACCESS_ROLES, MAX_BYTES, TARGET_MS, ALLOWED_TYPES } from '../../lib/documents.js';
+import { clearance } from '../../lib/cyber.js';
 
 const size = (n) => (n >= 1048576 ? `${(n / 1048576).toFixed(1)} MB` : n >= 1024 ? `${Math.round(n / 1024)} KB` : `${n} bytes`);
 
@@ -11,13 +12,17 @@ export function documents(page, rest, ctx) {
   const lib = library(s);
   const current = lib.flatMap((c) => c.docs);
   const me = s.get('Person', ctx.actor);
-  const mayUse = me && ACCESS_ROLES.has(me.role);
+  // The banner states the same rule the library enforces: the right role AND, for vendor staff, current cyber training
+  // (STORY-011). It used to check the role only, so a blocked vendor saw "may upload" above the refusal.
+  const roleOk = me && ACCESS_ROLES.has(me.role);
+  const cleared = roleOk ? clearance(s, ctx.actor) : null;
+  const mayUse = roleOk && cleared.cleared;
   const fileInput = h('input', { name: 'file', type: 'file', required: true, accept: Object.keys(ALLOWED_TYPES).map((x) => `.${x}`).join(',') });
   return h(
     'div',
     {},
     ...head(page, 'Documents', 'Every document the response needs, stored by category. Each file is kept with its fingerprint, opened against a 2 second target, and every upload, opening and refused attempt is logged.'),
-    h('p', { class: `notice notice--${mayUse ? 'ok' : 'warn'}`, role: 'note' }, mayUse ? `${me.display_name} may upload and open response documents.` : `Only ${[...ACCESS_ROLES].join(', ')} may upload or open response documents. As ${me?.display_name ?? 'this person'}, any attempt is refused and logged.`),
+    h('p', { class: `notice notice--${mayUse ? 'ok' : 'warn'}`, role: 'note' }, mayUse ? `${me.display_name} may upload and open response documents.` : roleOk ? `${cleared.reason} Until it is completed, any upload or opening is refused and logged.` : `Only ${[...ACCESS_ROLES].join(', ')} may upload or open response documents. As ${me?.display_name ?? 'this person'}, any attempt is refused and logged.`),
     ctx.blobs?.persistent === false ? h('p', { class: 'notice notice--warn' }, 'This browser refuses file storage, so uploaded files last only until the page is closed.') : null,
     flash(ctx),
     section(
