@@ -47,7 +47,7 @@ const files = [
   ...['m1', 'm2', 'm3', 'm4'].flatMap((m) => ['index.html', 'artifact.html'].map((f) => path.join(root, 'framework', 'presentations', m, f))),
   path.join(root, 'framework', 'presentations', 'demo', 'index.html'),
   path.join(root, 'framework', 'presentations', 'demo', 'artifact.html'),
-  path.join(root, 'framework', 'recordings', '02-working-system-demo', 'presentation.html'),
+  ...['02-working-system-demo', '03-ai-visual-presentation', '04-stakeholder-update', '05-final-showcase'].map((d) => path.join(root, 'framework', 'recordings', d, 'presentation.html')),
   path.join(sss, 'PROJECT-FRAMEWORK.html'),
   path.join(sss, 'demo', 'SSS-DEMO-BRIEFING.html'),
   ...process.argv.slice(2).map((p) => path.resolve(p)),
