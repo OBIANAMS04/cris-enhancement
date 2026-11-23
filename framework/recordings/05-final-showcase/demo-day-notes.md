@@ -4,8 +4,8 @@ PREP-6 "Present at Demo Day" uses the same final-showcase format as PREP-5: 8 mi
 the same six beats, the same deck (`presentation.html`), the same live proof (`demo-runbook.md`). This page covers only
 what changes when it is live in front of an audience.
 
-*(Needs Obi's input: confirm with Ali which slot you have on 24 November: this 8-minute showcase, or the 20-minute
-run of show in `framework/demo/DEMO-SCRIPT.md`. This page assumes the 8-minute showcase.)*
+**Slot:** the slot Colaberry assigns on 24 November. This page covers the 8-minute showcase; if the slot is longer,
+the 20-minute run of show is in `framework/demo/DEMO-SCRIPT.md`.
 
 ## What changes when it is live
 

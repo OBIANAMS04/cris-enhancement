@@ -48,26 +48,31 @@
 2. **"How much time does this save TxDOT?"**
    **I do not know yet.** It is not measured: no figure for how long TxDOT procurement staff spend checking a response
    today is in the build. What I can show is measured: the check runs before anything is stored, and the refusal is
-   named and logged. The evidence that would settle it is the timed trial on slide 7.
+   named and logged. No timed trial was run in this rehearsal; for any live engagement, the next step on slide 7 is one
+   timed trial with a procurement officer to measure it.
 3. **"Is it connected to TxDOT or Euna Procurement?"**
-   No. Synthetic data, in one browser. TxDOT does use Euna (its RFOs require submission through it), but we found no
-   public API documentation, so submissions are tracked in the workspace. Whether submissions must flow through Euna,
-   and whether an API or export exists, is an open question to TxDOT through Ali (framework, Blockers).
-   *(Needs Obi's input if Ali has an answer by then.)*
+   No. Synthetic data, in one browser. TxDOT does use Euna (its RFOs require submission through it), but this
+   rehearsal has no Euna access and we found no public API documentation. So it is closed by a working assumption: the
+   workspace records submissions itself, the Submissions page says Euna is not connected, and any import format is an
+   assumption. It lives in `content/solicitation.json`; a live engagement would replace that file with the agency's
+   own process and Euna's export documentation.
 4. **"What if your rules are wrong: the documents, the weights, the closing time?"**
-   They are proposals and labelled as such on screen. Required documents and closing time are in
+   They are working assumptions, drawn from TxDOT's published terms and public Texas procurement practice, and
+   labelled as proposals on screen. Required documents and closing time are in
    `content/solicitation.json`; evaluation weights (35 / 15 / 10 / 10 / 30) in `content/procurement-rules.json`, built
    from public Texas procurement sources; service levels in `lib/sla.js` and `lib/support.js`. Each lives in one file,
-   so TxDOT's answers replace them without touching the logic, and the tests and rehearsal are re-run.
+   so in a live engagement the agency's real values replace that file without touching the logic, and the tests and
+   rehearsal are re-run.
 5. **"Who can see the documents, and how do you know nothing was changed?"**
    Only four roles can upload or open response documents: compliance officer, procurement officer, TxDOT contract
-   manager and the vendor's system administrator (`lib/documents.js`); vendor staff also need TxDOT-approved cyber training in the last 365 days (a value from
-   cited Texas rules, unconfirmed by TxDOT). Every refusal is logged. Each file is stored and read back by its SHA-256
+   manager and the vendor's system administrator (`lib/documents.js`); vendor staff also need TxDOT-approved cyber training in the last 365 days (a working
+   assumption from cited Texas rules). Every refusal is logged. Each file is stored and read back by its SHA-256
    hash; the receipt re-checks it ("Documents match the receipt"), and every action is on an audit log chained by
    hashes, so a changed line is reported. There is no real sign-in: the "Acting as" picker stands in for it.
 
-**If asked about cost or hosting:** "I do not know yet. No cost or hosting estimate exists in the build; that is a
-Colaberry commercial discussion with Ali and Ram." *(Needs Obi's input: say this only if Ali agrees.)*
+**If asked about cost or hosting:** "There is no hosting cost in this rehearsal. It is a static site with no server and
+no database, run locally (`node scripts/serve.mjs`) or on GitHub Pages. What a live deployment would cost is out of
+scope for the rehearsal." Do not raise pricing or commercial terms.
 
 ## Shortened run order (if you have 5 minutes)
 
@@ -77,22 +82,26 @@ Colaberry commercial discussion with Ali and Ram." *(Needs Obi's input: say this
 3. The rule, 50 s: slide 4, read the two boxes.
 4. Results, 40 s: slide 5, the six tiles, "time saved: not measured yet".
 5. Limits, 40 s: slide 6, the first three limits.
-6. Next step, 30 s: slide 7, the decision and the timed trial.
+6. Next step, 30 s: slide 7, option A (accept the case study, assumptions documented) and the timed trial for any
+   live engagement.
 
 ## Reflection to end on
 
 **"Which limit were you most tempted to leave out, and why does that make it the important one?"**
-Proposed answer (slide 8): that there is no AI model inside; the checks are fixed rules. It matters most because
-fixed rules only catch what was written down, which is why people score, TxDOT decides the award, and every refusal
-is logged for a person to see. *(Needs Obi's input: it must be your own answer. The other strong candidate is "time
-saved is not measured yet", because it is the value claim and it is unproven.)*
+My answer (slide 8): "That there is no AI model inside; the checks are fixed rules. I was tempted to leave it out
+because 'AI' is what people expect to hear. It matters most because fixed rules only catch what was written down,
+which is why people score, TxDOT decides the award, and every refusal is logged for a person to see."
 
-## Needs Obi's input (summary)
+## Decisions made (rehearsal)
 
-- The next decision on slide 7 (ask TxDOT for real rules and a timed trial): confirm Ali and Ram are the right
-  deciders and this is the decision you want to put.
-- Your own answer to the reflection (slide 8).
-- Question 3 if Ali has heard from TxDOT about Euna.
-- Whether to say anything about cost or hosting (none exists in the build).
-- Which slot you have on 24 November: this 8-minute showcase, or the 20-minute run of show in
-  `framework/demo/DEMO-SCRIPT.md` (see `demo-day-notes.md`).
+- **Slide 7:** Ali and Ram are asked to accept the CRIS case study as complete with its working assumptions documented
+  (option A, recommended), or to hold it open (option B). One timed trial with a procurement officer is the stated next
+  step for any live engagement. Time saved stays "not measured yet".
+- **Open points:** closed by working assumptions from TxDOT's published terms and public Texas procurement practice,
+  each labelled on screen and kept in one file. Nothing waits on TxDOT.
+- **Euna:** no Euna access in the rehearsal; the workspace records submissions itself; the import format is an
+  assumption.
+- **Cost and hosting:** no hosting cost in the rehearsal (a static site, run locally or on GitHub Pages); a live
+  deployment's cost is out of scope. Pricing and commercial terms are not raised.
+- **Reflection (slide 8):** no AI model inside; the answer above is final.
+- **Demo Day slot:** the slot Colaberry assigns on 24 November (see `demo-day-notes.md`).

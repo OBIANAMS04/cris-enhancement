@@ -3,8 +3,10 @@
 **Project:** CRIS Enhancement, a workspace built for the TxDOT Crash Records Information System (CRIS) Service
 Agreement solicitation · **Owner:** Obi Anamelechi Kingsley · **Demo Day:** 24 November 2026
 
-Paste the three sections below into the portal. Everything in the build runs on synthetic data; nothing is connected
-to TxDOT.
+Paste the three sections below into the portal. CRIS is a Colaberry rehearsal case study: everything in the build
+runs on synthetic data, nothing is connected to TxDOT, and TxDOT is not consulted. Where the solicitation's own
+values are not public, the build uses working assumptions taken from TxDOT's published terms, each labelled on screen
+and kept in one file.
 
 ---
 
@@ -18,10 +20,9 @@ file costs a vendor its whole bid, and costs TxDOT a competitor.
 
 *Sources (in `content/procurement-rules.json`): rule EV-04, TxDOT RFO 601440000054109 sec. 17.1 and 17.6 and RFO
 601440000051864 sec. 17.6 (incomplete responses are non-responsive and are not scored); rule SUB-04, TxDOT Terms and
-Conditions 2.02(b) (late responses are not considered). These are TxDOT's published terms for other solicitations;
-the CRIS solicitation's own terms replace them. (source needed: the time TxDOT procurement staff spend checking each
-response today, or how many responses to recent TxDOT solicitations were ruled non-responsive. No such figure is in
-the repo, so none is claimed.)*
+Conditions 2.02(b) (late responses are not considered). These are TxDOT's published terms for other solicitations,
+used here as working assumptions for CRIS. No time figure is claimed: how long a hand check takes is not measured yet,
+and measuring it is the next milestone.)*
 
 ## The one moment
 
@@ -40,8 +41,8 @@ officer records the cause by hand). Files are checked for type and size, stored 
 submission is never stored twice. Every action is written to an audit log chained by SHA-256 in the same save, so a
 changed record is caught. People keep the decisions: evaluators score every criterion, a score far from the others is
 flagged and must be resolved before the evaluation can be archived, a correction never overwrites the original, and
-TxDOT alone decides the award. Values TxDOT has not confirmed (closing time, required documents, scoring weights) are
-labelled as proposals on screen.
+TxDOT alone decides the award. Values that are working assumptions (closing time, required documents, scoring
+weights) are labelled as proposals on screen.
 
 **How I will show it:** the refused Vendor B response with its reason and logged incident (above), then on the Audit
 log I change one line in the browser console and reload: the page says "line 4 was changed after it was written".

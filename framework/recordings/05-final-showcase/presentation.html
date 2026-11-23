@@ -62,7 +62,7 @@ ul.beats li { padding-left: 14px; border-left: 4px solid var(--amber); }
 .rule ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
 .pill { display: inline-block; font: 600 13px var(--body); padding: 2px 10px; border-radius: 999px; }
 .pill.bad { color: var(--bad); background: var(--bad-bg); } .pill.ok { color: var(--ok); background: var(--ok-bg); }
-/* Every number carries one of these: measured, estimated, target (a proposal awaiting TxDOT), or not measured yet. */
+/* Every number carries one of these: measured, estimated, target (a working assumption or criterion), or not measured yet. */
 .tag { display: inline-block; font: 700 11.5px/1.4 var(--body); letter-spacing: 0.05em; text-transform: uppercase; padding: 1px 8px; border-radius: 999px; vertical-align: 2px; white-space: nowrap; }
 .tag.m { color: var(--ok); background: var(--ok-bg); } .tag.e { color: var(--est); background: var(--est-bg); }
 .tag.t { color: var(--amber); background: var(--amber-soft); } .tag.n { color: var(--bad); background: var(--bad-bg); }
@@ -170,7 +170,7 @@ ul.beats li { padding-left: 14px; border-left: 4px solid var(--amber); }
   <p class="watch" style="margin-top:14px"><b>No AI model inside.</b> Its checks are fixed rules in <code>lib/</code>. The build itself was made with AI assistance (Claude Code) and checked by tests.</p>
 </section>
 
-<section class="slide" aria-label="Slide 5" data-say-script="OBI: Results. What was measured: sixteen of sixteen stories verified by the portal, fifty of fifty acceptance criteria, eight hundred points.||OGE: And the checks?||OBI: Seventy-three unit tests passing, and a sixteen-story browser rehearsal passing from a clean start, about eighty-seven seconds of clicks. A stored document retrieved within the two-second criterion.||OGE: Does it save TxDOT staff time?||OBI: Time saved: not measured yet. And the service levels, scoring weights, required documents and closing time are targets, proposals awaiting TxDOT.">
+<section class="slide" aria-label="Slide 5" data-say-script="OBI: Results. What was measured: sixteen of sixteen stories verified by the portal, fifty of fifty acceptance criteria, eight hundred points.||OGE: And the checks?||OBI: Seventy-three unit tests passing, and a sixteen-story browser rehearsal passing from a clean start, about eighty-seven seconds of clicks. A stored document retrieved within the two-second criterion.||OGE: Does it save TxDOT staff time?||OBI: Time saved: not measured yet. And the service levels, scoring weights, required documents and closing time are targets: working assumptions from TxDOT's published terms, labelled on screen.">
   <p class="kicker">Beat 4 · Results · 80 s</p>
   <h2>Results: what was measured, and what was not</h2>
   <div class="tiles">
@@ -181,35 +181,35 @@ ul.beats li { padding-left: 14px; border-left: 4px solid var(--amber); }
     <div class="tile ok"><b>Within 2 s</b><span>a stored document retrieved within the 2-second criterion (STORY-013 check) <span class="tag m">measured</span> against a <span class="tag t">target</span></span></div>
     <div class="tile bad todo"><b>Time saved</b><span>for TxDOT procurement staff <span class="tag n">not measured yet</span></span></div>
   </div>
-  <p class="foot" style="margin-top:12px"><b>Targets, proposals awaiting TxDOT</b> <span class="tag t">target</span>: service levels 4 / 8 / 24 / 72 hours; scoring weights 35 / 15 / 10 / 10 / 30; 4 required documents; demo closing time 3 pm Central, 4 Dec 2026.</p>
+  <p class="foot" style="margin-top:12px"><b>Targets, working assumptions from published terms</b> <span class="tag t">target</span>: service levels 4 / 8 / 24 / 72 hours; scoring weights 35 / 15 / 10 / 10 / 30; 4 required documents; demo closing time 3 pm Central, 4 Dec 2026.</p>
   <p class="legend"><span><span class="tag m">measured</span> seen in the repo or the portal</span><span><span class="tag e">estimated</span> a judgement, not a count</span><span><span class="tag t">target</span> a proposal or criterion</span><span><span class="tag n">not measured yet</span></span></p>
 </section>
 
-<section class="slide" aria-label="Slide 6" data-say-script="OBI: Limits. Synthetic data only: no real vendor, person or TxDOT record.||OGE: Is it connected?||OBI: Nothing is connected to TxDOT, Euna Procurement, or TxDOT's financial and incident systems. It runs in one browser, with no server-side storage, accounts or sign-in.||OGE: And the rules?||OBI: Required documents, scoring weights, service levels and the risk matrix are proposals awaiting TxDOT. And no cost or hosting estimate exists.">
+<section class="slide" aria-label="Slide 6" data-say-script="OBI: Limits. Synthetic data only: no real vendor, person or TxDOT record.||OGE: Is it connected?||OBI: Nothing is connected to TxDOT, Euna Procurement, or TxDOT's financial and incident systems. It runs in one browser, with no server-side storage, accounts or sign-in.||OGE: And the rules?||OBI: Required documents, scoring weights, service levels and the risk matrix are working assumptions from TxDOT's published terms, each in one file. And there is no hosting cost: it is a static site, run locally or on GitHub Pages.">
   <p class="kicker">Beat 5 · Limits · 60 s</p>
   <h2>Limits: what it does not handle yet</h2>
   <ul class="limits">
     <li class="headrow"><span>It does not handle</span><span>What it would take</span></li>
-    <li><span>Real data: synthetic data only</span><span>TxDOT's approval to use real responses, after the items below</span></li>
-    <li><span>Connections: nothing connected to TxDOT, Euna Procurement, or TxDOT's financial and incident systems</span><span>TxDOT says whether and how access can be given; Euna API or export confirmed</span></li>
+    <li><span>Real data: synthetic data only</span><span>A live engagement, with the agency's approval to use real responses</span></li>
+    <li><span>Connections: nothing connected to TxDOT, Euna Procurement, or TxDOT's financial and incident systems</span><span>A live engagement: agency access and Euna's export documentation. Today a working assumption: the workspace records submissions</span></li>
     <li><span>Shared use: one browser, no server-side storage, accounts or sign-in</span><span>A shared backend and real sign-in; the rules in <code>lib/</code> stay as they are</span></li>
-    <li><span>TxDOT's rules: required documents, scoring weights, service levels and risk matrix are proposals</span><span>TxDOT's answers; each value lives in one file</span></li>
-    <li><span>Cost: no cost or hosting estimate exists</span><span>A hosting plan and a Colaberry estimate</span></li>
+    <li><span>TxDOT's rules: required documents, scoring weights, service levels and risk matrix are working assumptions from published terms</span><span>Each lives in one file; a live engagement replaces that file, not the logic</span></li>
+    <li><span>Hosting: a static site, no server and no database, run locally or on GitHub Pages; no hosting cost</span><span>A live deployment's cost is out of scope for this rehearsal</span></li>
   </ul>
 </section>
 
-<section class="slide" aria-label="Slide 7" data-say-script="OBI: The next step. One decision: put TxDOT's real rules and a timed trial in front of a procurement officer.||OGE: What evidence would settle it?||OBI: First, TxDOT's answers replace every proposal label on screen, and the sixteen-story rehearsal still passes. Second, a timed trial: minutes per response checked by hand against minutes in the workspace.||OGE: Who decides?||OBI: Ali and Ram decide whether to ask TxDOT. Until that trial, time saved stays not measured yet.">
+<section class="slide" aria-label="Slide 7" data-say-script="OBI: The next step. One decision for Ali and Ram: accept the CRIS case study as complete, with its working assumptions documented. That is option A, and I recommend it.||OGE: And option B?||OBI: Hold the case study open. The evidence today: every working assumption is labelled on screen and lives in one file, and the sixteen-story rehearsal passes from a clean start.||OGE: And for a live engagement?||OBI: One timed trial with a procurement officer, to measure time saved. Until then, time saved stays not measured yet.">
   <p class="kicker">Beat 6 · The next step · 60 s</p>
-  <h2>The next decision, and the evidence that settles it</h2>
+  <h2>The next decision: accept the case study, assumptions documented</h2>
   <div class="two">
     <div class="rule alone">
       <h3>The decision (Ali and Ram)</h3>
-      <p style="margin:0">Ask TxDOT for its real rules and one timed trial with a procurement officer, or stop at the demo.</p>
+      <p style="margin:0"><b>Option A (recommended):</b> accept the CRIS case study as complete, with its working assumptions documented. <b>Option B:</b> hold the case study open.</p>
     </div>
     <ul class="beats">
-      <li><b>Evidence 1:</b> TxDOT's answers replace every proposal label on screen, and the 16-story rehearsal still passes <span class="tag m">measured today</span> from a clean start.</li>
-      <li><b>Evidence 2:</b> a timed trial: minutes per response checked by hand against minutes in the workspace, on synthetic responses <span class="tag n">not measured yet</span>.</li>
-      <li><b>Done means:</b> no "proposal" label left, and a time figure that is measured, not estimated.</li>
+      <li><b>Evidence 1:</b> every working assumption is labelled on screen and lives in one file, and the 16-story rehearsal passes from a clean start <span class="tag m">measured today</span>.</li>
+      <li><b>Evidence 2, the next step for any live engagement:</b> one timed trial with a procurement officer, minutes per response by hand against minutes in the workspace <span class="tag n">not measured yet</span>.</li>
+      <li><b>Time saved:</b> not measured yet. No timed trial happened, so no figure is given.</li>
     </ul>
   </div>
 </section>

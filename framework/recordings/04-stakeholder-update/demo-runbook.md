@@ -6,8 +6,8 @@ backup.
 ## Starting state
 
 1. Open `framework/recordings/04-stakeholder-update/presentation.html` (double-click it in File Explorer).
-2. Fill in the number: on the portal (Projects → Demo prep) note how many of the six recordings are complete. Say it
-   on slide 1 in place of `[n]`. Do not edit the slide; say it.
+2. Check slide 1 is still true on the day (portal → Projects → Demo prep shows "n of 6 complete"); if more has been
+   handed in, say so.
 3. Press **F** for full screen and **T** to start the timer when you begin. Amber at 2:30, red at 3:00.
 4. Hide notifications (Focus / Do not disturb), close other tabs.
 

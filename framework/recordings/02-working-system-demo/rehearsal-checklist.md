@@ -38,16 +38,17 @@ comes before the words, you are showing rather than teaching: move the words ear
    response re-checks them: "Documents match the receipt". Every action is also on the audit log, chained by hashes;
    change one line and the log page says the chain is broken.
 3. **"Is this connected to TxDOT or Euna Procurement?"**
-   No. It runs on synthetic data in the browser, and the page says so. Whether TxDOT requires submissions through Euna
-   Procurement, and whether Euna offers an export or API, is one of the open questions for TxDOT through Ali.
-   *(Needs Obi's input if Ali has an answer by then.)*
+   No. CRIS is a Colaberry rehearsal case study: it runs on synthetic data in the browser, and the page says so.
+   There is no Euna access in the rehearsal; the workspace records submissions itself, and any Euna import format is a
+   working assumption.
 4. **"Who decides what, the system or a person?"**
    The system checks completeness and keeps the record. People score every criterion, a score far from the others is
    flagged and must be resolved before the evaluation can be archived, and TxDOT alone decides the award.
 5. **"What would it take to use this for real?"**
-   TxDOT's answers to the open questions (the real required documents and closing time, scoring weights, Euna access,
-   the risk matrix, required reports, service levels), then hosting and sign-in on TxDOT's systems.
-   *(Needs Obi's input: no hosting plan or cost estimate exists in the build.)*
+   The client's own values in place of the working assumptions (required documents, closing time, scoring weights,
+   service levels): each lives in one file, so the logic does not change. Then hosting and sign-in on the client's
+   systems. In the rehearsal there is no hosting cost: it is a static site with no server and no database, run locally
+   or on GitHub Pages.
 
 ## Shortened run order (if you have 4 minutes)
 

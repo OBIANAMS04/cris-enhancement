@@ -17,9 +17,9 @@ never heard of the project.
 
 ## What do you want to happen afterwards?
 
-1. Ali and Ram take the open questions to TxDOT: the scoring criteria and weights, whether responses must go through
-   Euna Procurement (and whether an API or export exists), TxDOT's risk matrix, the contract manager's list of
-   required reports, and the service levels and service hours. Each answer replaces one proposal file in the build.
+1. Ali and Ram accept the CRIS rehearsal as complete, with its working assumptions (scoring weights, required
+   documents, closing time, service levels) labelled on screen and kept in one file each, since TxDOT is not consulted
+   in a rehearsal.
 2. Ali and Ram confirm that the 24 November Demo Day runs on the response-submission moment: a complete response
    recorded with its receipt, an incomplete one refused, logged and resubmitted, ending on the audit log showing "The
    chain is intact".

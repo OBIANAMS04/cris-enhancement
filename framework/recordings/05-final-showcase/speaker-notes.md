@@ -83,7 +83,7 @@ four screens in the same words, and say "this is the same run, recorded on 16 No
 > What is not measured: time saved for TxDOT procurement staff. Not measured yet. I have no figure, so I will not
 > give you one.
 > And the values along the bottom are targets: the service levels, the scoring weights, the four required documents
-> and the closing time are my proposals, waiting for TxDOT."
+> and the closing time are working assumptions, drawn from TxDOT's published terms and labelled on screen."
 
 *Cue:* point at each green tile, then the red dashed tile, then the bottom line. Say the word "measured" or "target"
 aloud with each number.
@@ -94,31 +94,32 @@ aloud with each number.
 Say it plainly. No "unfortunately", no "just a demo". Each limit, then what it would take.
 
 > "Five limits. One: synthetic data only. Two: nothing is connected: not TxDOT, not Euna Procurement, not TxDOT's
-> financial or incident systems. TxDOT has to say whether and how access can be given. Three: it runs in one browser,
+> financial or incident systems. In this rehearsal the workspace records submissions itself; a live engagement would
+> need the agency's access and Euna's export documentation. Three: it runs in one browser,
 > with no server-side storage, no accounts and no sign-in; that takes a shared backend and real sign-in, and the rules
-> stay as they are. Four: the required documents, scoring weights, service levels and risk matrix are proposals; each
-> lives in one file, waiting for TxDOT's answers. Five: no cost or hosting estimate exists yet."
+> stay as they are. Four: the required documents, scoring weights, service levels and risk matrix are working
+> assumptions from TxDOT's published terms; each lives in one file, so a live engagement replaces that file and
+> nothing else. Five: there is no hosting cost. It is a static site with no server and no database, run locally or on
+> GitHub Pages. What a live deployment would cost is out of scope for this rehearsal."
 
 *Transition:* "So what is the next decision?"
 
-### Slide 7 · The next decision, and the evidence that settles it (7:00 to 8:00)
+### Slide 7 · The next decision: accept the case study, assumptions documented (7:00 to 8:00)
 
-> "The next decision belongs to Ali and Ram: ask TxDOT for its real rules and one timed trial with a procurement
-> officer, or stop at the demo. Two pieces of evidence settle it. First: TxDOT's answers replace every 'proposal'
-> label on screen, and the sixteen-story rehearsal still passes from a clean start. Second: a timed trial, minutes per
-> response checked by hand against minutes in the workspace, on synthetic responses. Done means no proposal label
-> left, and a time figure that is measured, not estimated. Thank you."
-
-*(Needs Obi's input: confirm with Ali that this is the decision you want to put to him; see `rehearsal-checklist.md`.)*
+> "The next decision belongs to Ali and Ram. Option A, which I recommend: accept the CRIS case study as complete, with
+> its working assumptions documented. Option B: hold it open. The evidence today: every working assumption is labelled
+> on screen and lives in one file, and the sixteen-story rehearsal passes from a clean start. For any live engagement,
+> the next step is one timed trial with a procurement officer: minutes per response checked by hand against minutes
+> in the workspace. Until that trial, time saved is not measured, and I give no figure. Thank you."
 
 ### Slide 8 · Which limit was I most tempted to leave out? (question time)
 
-> "Which limit was I most tempted to leave out? That there is no AI model inside: the checks are fixed rules. It is the
-> important one because fixed rules only catch what was written down. That is exactly why people score every response,
-> TxDOT alone decides the award, and every refusal is logged for a person to see."
+> "Which limit was I most tempted to leave out? That there is no AI model inside: the checks are fixed rules. I was
+> tempted because 'AI' is what people expect to hear in a showcase like this. It is the important one because fixed
+> rules only catch what was written down. That is exactly why people score every response, TxDOT alone decides the
+> award, and every refusal is logged for a person to see."
 
-Then: "Questions?" (answers in `rehearsal-checklist.md`). *(Obi: if a different limit tempted you more, for example
-"time saved is not measured yet", say that one instead: it must be your own.)*
+Then: "Questions?" (answers in `rehearsal-checklist.md`).
 
 ## Pronunciation
 
@@ -140,4 +141,8 @@ Then: "Questions?" (answers in `rehearsal-checklist.md`). *(Obi: if a different 
 - Synthetic people and data; nothing is connected to TxDOT or Euna Procurement.
 - No AI model runs in the workspace. AI (Claude Code) helped build it; tests check it.
 - Time saved for TxDOT staff: "not measured yet". If pressed: "I do not know yet."
-- The four required documents, the closing time, weights, service levels and risk matrix are proposals.
+- The four required documents, the closing time, weights, service levels and risk matrix are working assumptions from
+  TxDOT's published terms, labelled on screen, each in one file.
+- This is a rehearsal case study. Never present it as blocked by TxDOT: the open points are closed by documented working
+  assumptions, and a live engagement would replace the files that hold them.
+- Do not raise pricing or commercial terms.
