@@ -112,7 +112,30 @@ async function record(name) {
 
   // 3. The plan.
   const frame = () => page.frame({ name: 'screen' });
-  let deckUrl = null;
+  let deckUrl = null, ringed = false;
+  // Spot-zoom on deck slides (standing rule 2026-11-24): before each line, find the box on the current slide that the
+  // line names (shared words, rarer words weigh more, numbers count), and zoom in on it; a line that names nothing
+  // specific zooms back out. Workspace steps keep their explicit rings.
+  const autoSpot = async (text) => {
+    const box = await frame().evaluate((line) => {
+      const STOP = new Set('a an the and or but of to in on at by for from with as is are was were be been it its this that these those there here we you i our your their they he she his her them me my so do does did not no yes than then too very can will would just also into over what which who how when where why all any each every has have had if let now one two'.split(' '));
+      const toks = (s) => (s.toLowerCase().match(/[a-z0-9][a-z0-9-]*/g) || []).filter((w) => w.length > 2 && !STOP.has(w)).map((w) => w.replace(/(ies)$/, 'y').replace(/(s)$/, ''));
+      const slide = [...document.querySelectorAll('.slide')].find((s) => !s.hidden && s.getClientRects().length) || document.querySelector('main') || document.body;
+      const cand = [...slide.querySelectorAll('.tile, .step, .cell, .card, .box, figure, li, tr, pre, blockquote, .col > div, .two > div, h3')]
+        .filter((e) => { const r = e.getBoundingClientRect(); return r.width > 40 && r.height > 20 && r.width * r.height < innerWidth * innerHeight * 0.45; });
+      if (!cand.length) return null;
+      const docs = cand.map((e) => new Set(toks(e.innerText || '')));
+      const df = new Map(); docs.forEach((d) => d.forEach((w) => df.set(w, (df.get(w) || 0) + 1)));
+      const want = new Set(toks(line));
+      let best = null, bestS = 0;
+      docs.forEach((d, i) => { let s = 0; want.forEach((w) => { if (d.has(w)) s += Math.log(1 + cand.length / df.get(w)); }); s /= 1 + 0.1 * Math.log2(1 + d.size); if (s > bestS) { bestS = s; best = cand[i]; } });
+      if (!best || bestS < 1.2) return null;
+      // prefer the smallest box that carries the match
+      const r = best.getBoundingClientRect();
+      return { x: Math.max(4, r.x), y: Math.max(4, r.y), width: Math.min(r.width, 1270 - Math.max(4, r.x)), height: Math.min(r.height, innerHeight - 10 - Math.max(4, r.y)) };
+    }, text).catch(() => null);
+    await page.evaluate((b) => window.studio.ring(b), box);
+  };
   const hideTour = async () => frame().addStyleTag({ content: '.tour-launch,#tour-launch,.tour-panel{display:none!important}' }).catch(() => {});
   const target = (t) => {
     const f = frame();
@@ -132,13 +155,15 @@ async function record(name) {
     if (s.deck) {
       if (deckUrl !== s.deck) { await page.evaluate((u) => window.studio.load(u), ORIGIN + s.deck); deckUrl = s.deck; await hideTour(); await settle(600); }
       await frame().evaluate((n) => { location.hash = '#s' + n; }, s.slide);
+      ringed = false; await page.evaluate(() => window.studio.ring(null));
       await settle(600);
     } else if (s.slide) {
+      ringed = false; await page.evaluate(() => window.studio.ring(null));
       await frame().evaluate((n) => { location.hash = '#s' + n; }, s.slide);
       await settle(700);
     }
     if (s.ws) {
-      deckUrl = null;
+      deckUrl = null; ringed = false;
       await page.evaluate((u) => window.studio.load(u), `${ORIGIN}workspace/#/${s.ws}`);
       await frame().waitForSelector('main h1');
       await settle(900);
@@ -161,6 +186,7 @@ async function record(name) {
       await settle(900);
     }
     if (s.ring !== undefined) {
+      ringed = s.ring !== null;
       if (s.ring === null) await page.evaluate(() => window.studio.ring(null));
       else {
         const el = target(s.ring);
@@ -174,6 +200,7 @@ async function record(name) {
       }
     }
     if (s.say) {
+      if (deckUrl && !ringed) await autoSpot(s.text);
       const ok = await page.evaluate(([w, t, src]) => window.studio.say(w, t, src), [s.say, s.text, `${ORIGIN}__studio_audio/${s.wav}`]);
       if (!ok) throw new Error(`Line did not play: ${s.text.slice(0, 50)}`);
       await settle(350);
