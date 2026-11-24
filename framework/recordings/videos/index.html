@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CRIS rehearsal videos</title>
+<meta name="description" content="The CRIS rehearsal case-study recordings (PREP-2, PREP-4, PREP-5), narrated by OBI and Oge in synthetic Windows voices. Plays in Google Chrome, Microsoft Edge and Firefox.">
+<style>
+  :root { --navy: #0b1f3a; --amber: #f2a900; --red: #e5242b; --ink: #14213d; --muted: #5b6577; --bg: #f4f6fb; --card: #fff; --line: #dde3ee; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --ink: #eef2fa; --muted: #a9b4c8; --bg: #0b1424; --card: #13213a; --line: #24344f; } }
+  :root[data-theme="dark"] { --ink: #eef2fa; --muted: #a9b4c8; --bg: #0b1424; --card: #13213a; --line: #24344f; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Segoe UI", system-ui, sans-serif; line-height: 1.5; }
+  header { background: var(--navy); color: #fff; padding: 28px 16px; border-bottom: 4px solid var(--amber); }
+  header .in, main { max-width: 1000px; margin: 0 auto; }
+  header p { margin: 6px 0 0; color: #c8d1e0; }
+  h1 { margin: 0; font-size: 28px; }
+  main { padding: 20px 16px 48px; }
+  .video { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin: 0 0 22px; }
+  .video h2 { margin: 0 0 4px; font-size: 20px; }
+  .meta { color: var(--muted); font-size: 14px; margin: 0 0 12px; }
+  video { width: 100%; height: auto; border-radius: 8px; background: #000; display: block; }
+  .links { margin-top: 10px; font-size: 14px; }
+  a { color: #1f5fbf; } @media (prefers-color-scheme: dark) { a { color: #8bb8ff; } }
+  .note { border-left: 4px solid var(--amber); padding: 8px 12px; background: var(--card); border-radius: 6px; font-size: 14px; color: var(--muted); }
+</style>
+</head>
+<body>
+<header><div class="in">
+  <h1>CRIS rehearsal videos</h1>
+  <p>Crash Records Information System, a Colaberry rehearsal case study on synthetic data. Nothing is connected to TxDOT.</p>
+</div></header>
+<main>
+  <p class="note">Narrated by OBI with co-host Oge in synthetic Windows voices (Microsoft David and Mark). Every click in the
+  live parts is real, in the workspace running locally. The videos are WebM (VP9 + Opus), which Google Chrome, Microsoft Edge
+  and Firefox play directly; press play, or open the file link to watch full screen.</p>
+
+  <section class="video" id="prep-1">
+    <h2>PREP-1 · Project introduction</h2>
+    <p class="meta">Ninety seconds: who it helps, what a miss costs, what stays human, the next milestone.</p>
+    <video controls preload="metadata" src="prep-1-project-introduction.webm"></video>
+    <div class="links"><a href="prep-1-project-introduction.webm">Open the video file</a></div>
+  </section>
+
+  <section class="video" id="prep-3">
+    <h2>PREP-3 · AI visual presentation</h2>
+    <p class="meta">A visual argument you can follow with the sound off: rules check the facts, people decide.</p>
+    <video controls preload="metadata" src="prep-3-ai-visual-presentation.webm"></video>
+    <div class="links"><a href="prep-3-ai-visual-presentation.webm">Open the video file</a></div>
+  </section>
+
+  <section class="video" id="prep-2">
+    <h2>PREP-2 · Working-system demo</h2>
+    <p class="meta" id="d-prep-2">One vendor response from inbox to evaluation, and the one it refuses.</p>
+    <video controls preload="metadata" src="prep-2-working-system-demo.webm"></video>
+    <div class="links"><a href="prep-2-working-system-demo.webm">Open the video file</a></div>
+  </section>
+
+  <section class="video" id="prep-4">
+    <h2>PREP-4 · Stakeholder update</h2>
+    <p class="meta">Three minutes for Ali: what is done, what is stuck, and one decision.</p>
+    <video controls preload="metadata" src="prep-4-stakeholder-update.webm"></video>
+    <div class="links"><a href="prep-4-stakeholder-update.webm">Open the video file</a></div>
+  </section>
+
+  <section class="video" id="prep-5">
+    <h2>PREP-5 · Final showcase</h2>
+    <p class="meta">The story, the live proof, and the limits; also the backup for Demo Day (PREP-6).</p>
+    <video controls preload="metadata" src="prep-5-final-showcase.webm"></video>
+    <div class="links"><a href="prep-5-final-showcase.webm">Open the video file</a></div>
+  </section>
+</main>
+<script>
+  // Show each video's length once it is known.
+  document.querySelectorAll('video').forEach((v) => v.addEventListener('loadedmetadata', () => {
+    const s = Math.round(v.duration); if (!isFinite(s)) return;
+    const m = v.closest('.video').querySelector('.meta');
+    m.textContent += ` (${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')})`;
+  }));
+</script>
+</body>
+</html>

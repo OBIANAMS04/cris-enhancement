@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recording stage</title>
+<!-- The recording stage for the CRIS rehearsal videos (framework/recordings/studio/record.mjs drives it).
+     The screen (a deck or the live workspace) fills the top; the narration plays here and is captioned below.
+     The whole tab is captured with its sound, so what you see in the video is exactly this page. -->
+<style>
+  :root { --navy: #0b1f3a; --amber: #f2a900; --red: #e5242b; --ink: #f4f6fb; --muted: #a9b4c8; }
+  html, body { margin: 0; height: 100%; background: var(--navy); color: var(--ink); font-family: "Segoe UI", system-ui, sans-serif; overflow: hidden; }
+  #screen { position: absolute; left: 0; top: 0; width: 1280px; height: 636px; border: 0; background: #fff; }
+  #bar { position: absolute; left: 0; top: 636px; width: 1280px; height: 84px; display: flex; align-items: center; gap: 16px; padding: 0 20px; box-sizing: border-box; background: var(--navy); border-top: 3px solid var(--amber); }
+  #who { flex: none; width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 17px; letter-spacing: .5px; background: var(--red); color: #fff; }
+  #who.oge { background: var(--amber); color: var(--navy); }
+  #who.none { visibility: hidden; }
+  #line { flex: 1; font-size: 19px; line-height: 1.3; max-height: 76px; overflow: hidden; }
+  #tag { flex: none; text-align: right; font-size: 12px; color: var(--muted); line-height: 1.4; }
+  #tag b { color: var(--ink); }
+  #ring { position: absolute; border: 4px solid var(--amber); border-radius: 10px; box-shadow: 0 0 0 9999px rgba(11, 31, 58, .18), 0 0 18px rgba(242, 169, 0, .9); pointer-events: none; transition: all .35s ease; opacity: 0; z-index: 5; }
+  #card { position: absolute; inset: 0; display: none; flex-direction: column; justify-content: center; padding: 0 110px; background: linear-gradient(135deg, #0b1f3a 0%, #13325e 100%); z-index: 10; }
+  #card.on { display: flex; }
+  #card .kicker { color: var(--amber); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-size: 18px; }
+  #card h1 { font-size: 52px; margin: 14px 0 18px; line-height: 1.1; }
+  #card p { font-size: 22px; color: var(--muted); margin: 6px 0; max-width: 980px; }
+  #card .play { display: inline-block; width: 0; height: 0; border-left: 26px solid var(--red); border-top: 16px solid transparent; border-bottom: 16px solid transparent; margin-right: 14px; vertical-align: middle; }
+</style>
+</head>
+<body>
+<iframe id="screen" name="screen" title="Screen"></iframe>
+<div id="ring"></div>
+<div id="bar">
+  <div id="who" class="none">OBI</div>
+  <div id="line"></div>
+  <div id="tag"><b id="tag-title"></b><br>Narrated by OBI and Oge<br>(<span id="tag-voices">synthetic Windows voices</span>)</div>
+</div>
+<div id="card"><div class="kicker" id="card-kicker"></div><h1 id="card-title"></h1><div id="card-body"></div></div>
+<script>
+  const $ = (id) => document.getElementById(id);
+  window.studio = {
+    // Show a title card over everything (kicker, title, lines of body text); hide it with card(null).
+    card(c) {
+      if (!c) { $('card').classList.remove('on'); return; }
+      $('card-kicker').textContent = c.kicker || '';
+      $('card-title').innerHTML = '<span class="play"></span>' + c.title;
+      $('card-body').innerHTML = (c.body || []).map((t) => '<p>' + t + '</p>').join('');
+      $('card').classList.add('on');
+    },
+    tag(t) { $('tag-title').textContent = t; },
+    load(url) {
+      return new Promise((res) => { $('screen').onload = () => res(); $('screen').src = url; });
+    },
+    ring(box) {
+      const r = $('ring');
+      if (!box) { r.style.opacity = 0; return; }
+      const pad = 6;
+      Object.assign(r.style, { left: box.x - pad + 'px', top: box.y - pad + 'px', width: box.width + pad * 2 + 'px', height: box.height + pad * 2 + 'px', opacity: 1 });
+    },
+    caption(who, text) {
+      const w = $('who');
+      w.className = who ? who.toLowerCase() : 'none';
+      w.textContent = who === 'OGE' ? 'Oge' : (who || '');
+      $('line').textContent = text || '';
+    },
+    // Play one narration line (a WAV served by the recorder) and resolve when it ends.
+    say(who, text, src) {
+      this.caption(who, text);
+      return new Promise((res) => {
+        const a = new Audio(src);
+        a.onended = () => res(true);
+        a.onerror = () => res(false);
+        a.play().catch(() => res(false));
+      });
+    },
+  };
+</script>
+</body>
+</html>
