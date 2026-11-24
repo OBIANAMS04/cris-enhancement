@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Selective Service rehearsal · Client handoff</title>
+<style>
+:root{--navy:#14284b;--ink:#1d2433;--soft:#5b6476;--line:#d9dee8;--teal:#0f7b6c;--amber:#b45309;--red:#b42318;--bg:#f6f7fa}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:17px/1.4 "Segoe UI",system-ui,sans-serif}
+.slide{position:absolute;inset:0;padding:34px 48px 30px;display:flex;flex-direction:column;overflow:hidden}
+.slide[hidden]{display:none}
+.kicker{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--red);font-weight:700}
+h2{margin:6px 0 4px;font-size:32px;line-height:1.3;padding-bottom:2px;color:var(--navy)}
+.lede{margin:2px 0 10px;color:var(--soft);font-size:18px;max-width:1100px}
+.grid{display:grid;gap:14px;flex:1;min-height:0;align-content:start;margin-top:8px}
+.tile{background:#fff;border:1px solid var(--line);border-top:5px solid var(--navy);border-radius:10px;padding:14px 16px;min-width:0;overflow-wrap:anywhere}
+.tile.ok{border-top-color:var(--teal)}.tile.warn{border-top-color:var(--amber)}.tile.no{border-top-color:var(--red)}
+.tile h3{margin:0 0 6px;font-size:19px;color:var(--navy)}
+.tile p{margin:0 0 6px;font-size:15.5px;color:var(--ink)}
+.tile.pic{display:flex;flex-direction:column;min-height:0}
+.tile.pic img{display:block;max-width:100%;max-height:330px;object-fit:contain;object-position:left top;border:1px solid var(--line);border-radius:6px;margin:2px 0 8px}
+.foot{margin:8px 0 0;font-size:13px;color:var(--soft)}
+code{font-family:Consolas,monospace;font-size:.92em}
+</style></head><body>
+<section class="slide" id="s1" aria-label="Slide 1" data-say-script="OBI: I'm OBI. This is the handoff of the Selective Service rehearsal: how to run it locally, where things live, and what to do when it misbehaves. It is on synthetic data, and the hosted site is retired.||OGE: I'm the new owner. Where do I start?">
+<div class="kicker">Client handoff · Selective Service rehearsal · 1 / 7</div>
+<h2>Run it, find it, fix it</h2><p class="lede">A Colaberry rehearsal case study on synthetic data. Not connected to the real Selective Service System.</p>
+<div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tile"><h3>Run it</h3><p>Postgres, a build, a start. The hosted site is retired, so it runs locally.</p></div><div class="tile"><h3>Where things live</h3><p>Backend, frontend, scripts, docs.</p></div><div class="tile warn"><h3>When it misbehaves</h3><p>What to check first, and what the new owner owns.</p></div></div>
+
+</section>
+<section class="slide" id="s2" aria-label="Slide 2" data-say-script="OBI: Run it locally. You need Node twenty or later, and PostgreSQL fourteen or later on port fifty-four thirty-two. On Windows, clone to a short path.||OGE: And then?||OBI: Clone the public repository. In the backend folder run npm c i, npm run build, and npx jest. Then npm c i in the frontend. Create the database called sss demo, and run npm start in the backend. It applies all twenty-eight migrations by itself." hidden>
+<div class="kicker">Client handoff · Selective Service rehearsal · 2 / 7</div>
+<h2>Run it locally</h2>
+<div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tile"><h3>1. You need</h3><p>Node 20 or later, and npm.</p><p>PostgreSQL 14 or later on localhost port 5432.</p><p>On Windows, clone to a short path.</p></div><div class="tile ok"><h3>2. Build and test</h3><p>Clone the public repository, then in backend: npm ci, npm run build, npx jest.</p><p>Then npm ci in frontend.</p></div><div class="tile"><h3>3. Start the API</h3><p>createdb sss_demo, then npm start in backend.</p><p>It applies all 28 migrations itself.</p></div></div>
+
+</section>
+<section class="slide" id="s3" aria-label="Slide 3" data-say-script="OBI: Settings are environment variables, and I give only their names. The database uses DATABASE HOST, PORT, NAME, USER and PASSWORD. The local defaults are for development only.||OBI: CASE MANAGER EMAILS and ADMIN EMAILS set up the first staff. JWT SECRET signs the tokens. ANTHROPIC API KEY turns on AI answers; without it, the assistant shows policy passages. Never paste a value into a chat or a ticket." hidden>
+<div class="kicker">Client handoff · Selective Service rehearsal · 3 / 7</div>
+<h2>Settings are environment variables, set by name</h2>
+<div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tile"><h3>Database</h3><p>DATABASE_HOST, DATABASE_PORT, DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD.</p><p>The local defaults are development values only.</p></div><div class="tile ok"><h3>First staff</h3><p>CASE_MANAGER_EMAILS and ADMIN_EMAILS set up the first case manager and administrator.</p></div><div class="tile warn"><h3>Secrets and AI</h3><p>JWT_SECRET signs sign-in tokens. ANTHROPIC_API_KEY turns on AI answers; without it the assistant shows policy passages.</p><p>Never paste a value anywhere.</p></div></div>
+
+</section>
+<section class="slide" id="s4" aria-label="Slide 4" data-say-script="OBI: To load synthetic data, run the end-to-end scripts in scripts slash e2e: access, workflow, compliance, dashboards and training. They refuse to run on anything but localhost. Then npm run dev in the frontend, and open localhost, port fifty-one seventy-three.||OGE: Anything that trips people up?||OBI: Yes. Do not follow the local-run section of the README. It dates from before the build and mentions Redis and Docker, which this project does not use. Use RUN-LOCALLY dot m d." hidden>
+<div class="kicker">Client handoff · Selective Service rehearsal · 4 / 7</div>
+<h2>Load synthetic data, then open the site</h2>
+<div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tile"><h3>Load data</h3><p>From the project folder, run the end-to-end scripts in scripts/e2e: access, workflow, compliance, dashboards, training.</p><p>They refuse to run on anything but localhost.</p></div><div class="tile ok"><h3>Open the site</h3><p>In frontend, npm run dev. Open localhost port 5173.</p></div><div class="tile no"><h3>Trap</h3><p>Do not follow the local-run section of the README. It dates from before the build and mentions Redis and Docker.</p></div></div>
+
+</section>
+<section class="slide" id="s5" aria-label="Slide 5" data-say-script="OBI: Four places. backend slash src holds the API: routes, services, security and the migrations. frontend slash src holds the pages for each role.||OBI: scripts holds the end-to-end, accessibility, load and attack checks. And docs holds the runbook, the incident playbook, the readiness review and the evidence." hidden>
+<div class="kicker">Client handoff · Selective Service rehearsal · 5 / 7</div>
+<h2>Where things live</h2>
+<div class="grid" style="grid-template-columns:repeat(4,minmax(0,1fr))"><div class="tile"><h3>backend/src</h3><p>The API: routes, services, security, and the migrations.</p></div><div class="tile"><h3>frontend/src</h3><p>The React pages for each role.</p></div><div class="tile ok"><h3>scripts/</h3><p>End-to-end, accessibility, load and attack checks.</p></div><div class="tile warn"><h3>docs/</h3><p>Runbook, incident playbook, readiness review, evidence.</p></div></div>
+
+</section>
+<section class="slide" id="s6" aria-label="Slide 6" data-say-script="OGE: What if it misbehaves?||OBI: Check health first. Open slash health on the API and read the database value: ok, down or starting. When it is down, data routes answer five oh three and recover by themselves when the database returns.||OBI: Then administrators open the Observability page. Each alert has a runbook entry. For sign-in failures, an invalid token often means an expired token or a wrong JWT SECRET.||OBI: The older troubleshooting guide is a day-one document that describes AWS and Redis. Trust the operator runbook and the incident playbook." hidden>
+<div class="kicker">Client handoff · Selective Service rehearsal · 6 / 7</div>
+<h2>When it misbehaves</h2>
+<div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tile warn"><h3>Check health first</h3><p>Open /health on the API. database &quot;ok&quot;, &quot;down&quot; or &quot;starting&quot;.</p><p>Down: data routes answer 503 and recover by themselves.</p></div><div class="tile"><h3>Read the alerts</h3><p>Administrators open Observability. Each alert has a runbook entry in docs/RUNBOOK-ALERTS.md.</p></div><div class="tile no"><h3>Sign-in failures</h3><p>&quot;Invalid token&quot; often means an expired token or a wrong JWT_SECRET. The older troubleshooting guide is a day-one document; trust the runbook.</p></div></div>
+
+</section>
+<section class="slide" id="s7" aria-label="Slide 7" data-say-script="OGE: So what do I own now?||OBI: The tests, the migrations, the access rules and the runbook. Every new route needs its access rule in the same change, and a test fails the build if one is missing.||OBI: You do not own real applicants, real policy, or any claim of production. And the open gaps are parked: a screen-reader test, an independent security test, and AWS GovCloud, which is closed. Thank you." hidden>
+<div class="kicker">Client handoff · Selective Service rehearsal · 7 / 7</div>
+<h2>What the new owner owns</h2>
+<div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tile ok"><h3>You own</h3><p>The tests, the migrations, the access rules and the runbook.</p><p>Every new route needs its access rule in the same change.</p></div><div class="tile no"><h3>You do not own</h3><p>Real applicants, real policy, or any claim of production. This is a case study.</p></div><div class="tile warn"><h3>Open gaps, parked</h3><p>A hands-on screen-reader test and an independent security test. AWS GovCloud is closed.</p></div></div>
+
+</section>
+<script>
+(function(){var all=[].slice.call(document.querySelectorAll('.slide'));
+function show(){var n=parseInt((location.hash.match(/s(\d+)/)||[0,1])[1],10);all.forEach(function(s,i){s.hidden=i!==n-1;});}
+window.addEventListener('hashchange',show);show();
+document.addEventListener('keydown',function(e){var n=parseInt((location.hash.match(/s(\d+)/)||[0,1])[1],10);
+if(e.key==='ArrowRight'&&n<all.length)location.hash='#s'+(n+1);if(e.key==='ArrowLeft'&&n>1)location.hash='#s'+(n-1);});})();
+</script></body></html>

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Selective Service rehearsal · Final showcase</title>
+<style>
+:root{--navy:#14284b;--ink:#1d2433;--soft:#5b6476;--line:#d9dee8;--teal:#0f7b6c;--amber:#b45309;--red:#b42318;--bg:#f6f7fa}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:17px/1.4 "Segoe UI",system-ui,sans-serif}
+.slide{position:absolute;inset:0;padding:34px 48px 30px;display:flex;flex-direction:column;overflow:hidden}
+.slide[hidden]{display:none}
+.kicker{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--red);font-weight:700}
+h2{margin:6px 0 4px;font-size:32px;line-height:1.3;padding-bottom:2px;color:var(--navy)}
+.lede{margin:2px 0 10px;color:var(--soft);font-size:18px;max-width:1100px}
+.grid{display:grid;gap:14px;flex:1;min-height:0;align-content:start;margin-top:8px}
+.tile{background:#fff;border:1px solid var(--line);border-top:5px solid var(--navy);border-radius:10px;padding:14px 16px;min-width:0;overflow-wrap:anywhere}
+.tile.ok{border-top-color:var(--teal)}.tile.warn{border-top-color:var(--amber)}.tile.no{border-top-color:var(--red)}
+.tile h3{margin:0 0 6px;font-size:19px;color:var(--navy)}
+.tile p{margin:0 0 6px;font-size:15.5px;color:var(--ink)}
+.tile.pic{display:flex;flex-direction:column;min-height:0}
+.tile.pic img{display:block;max-width:100%;max-height:330px;object-fit:contain;object-position:left top;border:1px solid var(--line);border-radius:6px;margin:2px 0 8px}
+.foot{margin:8px 0 0;font-size:13px;color:var(--soft)}
+code{font-family:Consolas,monospace;font-size:.92em}
+</style></head><body>
+<section class="slide" id="s1" aria-label="Slide 1" data-say-script="OBI: I'm OBI. This is the final showcase of a Colaberry rehearsal case study: Selective Service modernization, on synthetic data. It was never submitted and is not connected to the real system.||OGE: What problem did it solve?||OBI: Exemption decisions that nobody can explain, check or appeal.||OGE: And what was built?||OBI: Forty-six stories in four releases, from registration to a go-live review. All forty-six are addressed: forty-five are working, and one is written as code and was never applied. The one it describes is the cloud setup.">
+<div class="kicker">Final showcase · Selective Service rehearsal · 1 / 11</div>
+<h2>The story: a decision a citizen can follow</h2><p class="lede">A Colaberry rehearsal case study on synthetic data. Not connected to the real Selective Service System.</p>
+<div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tile"><h3>The problem</h3><p>Exemption decisions that nobody can explain, check or appeal.</p></div><div class="tile ok"><h3>What we built</h3><p>46 stories in 4 releases: registration to go-live review.</p><p>All 46 addressed; 45 working, one written and not applied.</p></div><div class="tile warn"><h3>What it is</h3><p>A rehearsal that was never submitted. Synthetic data only.</p></div></div>
+
+</section>
+<section class="slide" id="s2" aria-label="Slide 2" data-say-script="OGE: How was it built?||OBI: In four releases. R0, the walking skeleton: registration, profile, two-step sign-in and data status. Its cloud story is written, not applied.||OBI: R1, the core: eligibility, cases, compliance, freshness, the audit log, accessibility, dashboards and access policies. Eleven of eleven.||OBI: R2, AI and governance: the policy assistant, human oversight, drift, fairness and observability. Eleven of eleven. And R3, scale and launch: load, outage survival, security testing, training and the readiness review. Seventeen of seventeen." hidden>
+<div class="kicker">Final showcase · Selective Service rehearsal · 2 / 11</div>
+<h2>How it was built: four releases</h2>
+<div class="grid" style="grid-template-columns:repeat(4,minmax(0,1fr))"><div class="tile warn"><h3>R0 Walking skeleton</h3><p>Registration, profile, two-step sign-in, data status. The cloud story is written, not applied.</p></div><div class="tile ok"><h3>R1 Core</h3><p>Eligibility, cases, compliance, freshness, audit, accessibility, dashboards, access policies. 11 of 11.</p></div><div class="tile ok"><h3>R2 AI and governance</h3><p>Policy assistant, oversight, drift, fairness, observability. 11 of 11.</p></div><div class="tile ok"><h3>R3 Scale and launch</h3><p>Load, outage survival, security testing, training, readiness review. 17 of 17.</p></div></div>
+
+</section>
+<section class="slide" id="s3" aria-label="Slide 3" data-say-script="OBI: Proof. A denial gives its reason: proof of age was not provided, and the citizen can appeal.||OGE: And when a decision is wrong?||OBI: A failed check goes to a second person. Here two controls failed, so a different case manager must justify the outcome in writing. That is recorded in the audit log." hidden>
+<div class="kicker">Final showcase · Selective Service rehearsal · 3 / 11</div>
+<h2>Proof: the failure path, end to end</h2>
+<div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))"><div class="tile no pic"><h3>A denial gives its reason</h3><img src="../screens/deck-denial.png" alt="Denied case with reason and appeal"><p>Proof of age was not provided. The citizen can appeal.</p></div><div class="tile warn pic"><h3>A failed check goes to a second person</h3><img src="../screens/deck-review.png" alt="Compliance review with two failed controls"><p>Two controls failed. A different case manager must justify the outcome.</p></div></div>
+
+</section>
+<section class="slide" id="s4" aria-label="Slide 4" data-say-script="OBI: More proof. The audit trail: every failed control with its evidence. The database itself refuses to change or delete the log, and each entry is kept for seven years.||OGE: Where is the AI?||OBI: A cited answer. The assistant answers only from synthetic policy passages, with numbered citations, and it never decides eligibility." hidden>
+<div class="kicker">Final showcase · Selective Service rehearsal · 4 / 11</div>
+<h2>Proof: the record, and the AI kept in its lane</h2>
+<div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))"><div class="tile ok pic"><h3>The audit trail</h3><img src="../screens/deck-audit.png" alt="Compliance audit log with two failed controls"><p>Every failed control with its evidence. The audit log is write-once and kept 7 years.</p></div><div class="tile ok pic"><h3>A cited answer</h3><img src="../screens/tour-24-assistant-answer.png" alt="Policy assistant answer with citations"><p>The assistant answers from synthetic policy with citations, and never decides eligibility.</p></div></div>
+
+</section>
+<section class="slide" id="s5" aria-label="Slide 5" data-say-script="OGE: Did you find problems in your own work?||OBI: Yes, and we said so. The old immutable audit table used CHECK true, a check that cannot fail. It was replaced by database triggers.||OBI: A pending two-step sign-in could be redeemed twice; it is now single use, and a test reproduces the gap. And a so-called API governance service claimed to enforce policy but never ran, so it was removed. A check that cannot fail is worse than no check." hidden>
+<div class="kicker">Final showcase · Selective Service rehearsal · 5 / 11</div>
+<h2>What our own review found</h2>
+<div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tile no"><h3>A check that could not fail</h3><p>The old &quot;immutable&quot; audit table used CHECK (true). Replaced by database triggers.</p></div><div class="tile no"><h3>A sign-in redeemed twice</h3><p>A pending two-step sign-in could be used twice. Now single use.</p></div><div class="tile warn"><h3>A service that did nothing</h3><p>An &quot;API governance&quot; service claimed to enforce policy but never ran. It was removed.</p></div></div>
+
+</section>
+<section class="slide" id="s6" aria-label="Slide 6" data-say-script="OGE: Where is the line between the machine and people?||OBI: The system decides alone only whether a rule-based eligibility result applies, and whether a decision passed its eight controls.||OBI: People decide every approval, denial and override, who gets staff access with a reason, and the review of any answer the assistant withheld.||OBI: And two things are never delegated: the assistant never decides eligibility, and a decider never reviews their own decision." hidden>
+<div class="kicker">Final showcase · Selective Service rehearsal · 6 / 11</div>
+<h2>Who decides what</h2>
+<div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tile ok"><h3>The system decides alone</h3><p>Whether a rule-based eligibility result applies.</p><p>Whether a decision passed its eight controls.</p></div><div class="tile warn"><h3>People decide</h3><p>Every approval, denial and override.</p><p>Who gets staff access, with a reason.</p><p>Reviews of answers the assistant withheld.</p></div><div class="tile no"><h3>Nobody delegates</h3><p>The assistant never decides eligibility.</p><p>A decider never reviews their own decision.</p></div></div>
+
+</section>
+<section class="slide" id="s7" aria-label="Slide 7" data-say-script="OGE: Which numbers can I trust?||OBI: Measured: seventeen hundred and thirty-seven unit tests, twenty-eight migrations on an empty database, an attack suite of fifty-two of fifty-two, an AI evaluation of thirty-three of thirty-three, fairness on sixty of sixty pairs, a rollback in thirty-two seconds, and a restore in ten and a half.||OBI: Derived or estimate: the sizing for ten thousand users is derived, and the cloud cost of about fifty-eight hundred and fifty dollars a month is an estimate, plus or minus forty percent.||OBI: Not measured: real users, load past one hundred and twenty-eight connections, a screen-reader user, and an independent security test." hidden>
+<div class="kicker">Final showcase · Selective Service rehearsal · 7 / 11</div>
+<h2>Measured, derived and not measured</h2>
+<div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tile ok"><h3>Measured</h3><p>1,737 unit tests; 28 migrations on an empty database.</p><p>Attack suite 52 of 52.</p><p>AI evaluation 33 of 33; fairness 60 of 60 pairs.</p><p>Rollback 32 s; restore 10.5 s.</p></div><div class="tile warn"><h3>Derived or estimate</h3><p>Sizing for 10,000 users is derived.</p><p>GovCloud cost about $5,850 a month, plus or minus 40%: an estimate.</p></div><div class="tile no"><h3>Not measured</h3><p>Real users. Load past 128 connections. A screen-reader user. An independent security test.</p></div></div>
+
+</section>
+<section class="slide" id="s8" aria-label="Slide 8" data-say-script="OGE: And what did it cost to run?||OBI: Hosting: the database was six dollars a month and the final charge was one dollar twelve. The running cost is now zero.||OBI: The AI is capped. A quality evaluation costs about thirty cents and a fairness run about seventy, which are estimates from the runbook. Answers are limited to three hundred a day, with a default spend objective of two dollars a day." hidden>
+<div class="kicker">Final showcase · Selective Service rehearsal · 8 / 11</div>
+<h2>What it cost to run</h2>
+<div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tile ok"><h3>Hosting</h3><p>Database $6 a month while hosted. Final charge $1.12. Running cost is now zero.</p></div><div class="tile warn"><h3>AI, per run</h3><p>An evaluation costs about 30 cents, a fairness run about 70 cents: estimates from the runbook.</p></div><div class="tile ok"><h3>AI, capped</h3><p>300 AI answers a day, and a daily spend objective of $2 by default.</p></div></div>
+
+</section>
+<section class="slide" id="s9" aria-label="Slide 9" data-say-script="OGE: What are the limits?||OBI: No real anything. It is synthetic data, and the exemption rules are illustrative, not Selective Service policy.||OBI: Production is a no-go. The ten criteria are not met, and AWS GovCloud is closed, so that code was written but never applied.||OBI: It had one operator, no staging and no second region, and the hosted site is retired. And our security and accessibility results are our own testing, not independent." hidden>
+<div class="kicker">Final showcase · Selective Service rehearsal · 9 / 11</div>
+<h2>The limits, plainly</h2>
+<div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))"><div class="tile no"><h3>No real anything</h3><p>Synthetic data. The exemption rules are illustrative, not Selective Service policy.</p></div><div class="tile no"><h3>Production is a no-go</h3><p>Ten go/no-go criteria are not met. AWS GovCloud is closed: the code is written, never applied.</p></div><div class="tile warn"><h3>One operator</h3><p>No staging, one environment, no second region. The hosted site is retired.</p></div><div class="tile warn"><h3>Our own testing</h3><p>Security and accessibility are our assessments, not independent ones.</p></div></div>
+
+</section>
+<section class="slide" id="s10" aria-label="Slide 10" data-say-script="OBI: The next decision was between two options. Option A: accept the rehearsal as a completed case study, with its working assumptions documented. Option B: hold it open until the gaps are closed.||OGE: Which did the owner pick?||OBI: Option A. It is chosen. The gaps stay listed, and the next work moves to Crash Records." hidden>
+<div class="kicker">Final showcase · Selective Service rehearsal · 10 / 11</div>
+<h2>Next decision: Option A, chosen</h2>
+<div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))"><div class="tile ok"><h3>Option A (recommended, chosen)</h3><p>Accept the rehearsal as a completed case study, with its working assumptions documented.</p></div><div class="tile no"><h3>Option B (not chosen)</h3><p>Hold it open until the open gaps are closed.</p></div></div>
+
+</section>
+<section class="slide" id="s11" aria-label="Slide 11" data-say-script="OGE: Which limit were you tempted to leave out?||OBI: The ten-thousand-user number. It is a clean headline, and it is derived, not measured.||OBI: What we measured is smaller: no request failed at any step up to one hundred and twenty-eight connections on one laptop, and one live run of twenty-five connections for sixty seconds gave a p95 of one point two four seconds with no errors. I left the headline in the sizing document, labelled derived. Thank you." hidden>
+<div class="kicker">Final showcase · Selective Service rehearsal · 11 / 11</div>
+<h2>The limit I was tempted to leave out</h2>
+<div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))"><div class="tile warn"><h3>The 10,000-user number</h3><p>It is a clean headline, and it is derived, not measured.</p></div><div class="tile ok"><h3>What was measured</h3><p>No request failed at any step up to 128 connections on one laptop. One live run: 25 connections for 60 seconds, p95 1.24 s, 0 errors.</p></div></div>
+
+</section>
+<script>
+(function(){var all=[].slice.call(document.querySelectorAll('.slide'));
+function show(){var n=parseInt((location.hash.match(/s(\d+)/)||[0,1])[1],10);all.forEach(function(s,i){s.hidden=i!==n-1;});}
+window.addEventListener('hashchange',show);show();
+document.addEventListener('keydown',function(e){var n=parseInt((location.hash.match(/s(\d+)/)||[0,1])[1],10);
+if(e.key==='ArrowRight'&&n<all.length)location.hash='#s'+(n+1);if(e.key==='ArrowLeft'&&n>1)location.hash='#s'+(n-1);});})();
+</script></body></html>

@@ -68,7 +68,7 @@ const liveSubmissions = (long) => [
 ];
 
 // A deck whose slides carry their own OBI/OGE lines (data-say-script="OBI: …||OGE: …"): one step list per slide.
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 const repoFile = (p) => new URL(`../../../${p}`, import.meta.url);
 const unescape = (s) => s.replace(/&#39;/g, "'").replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
 const deckSteps = (deck) => {
@@ -216,6 +216,54 @@ plans['prep-6-demo-day'] = {
   ],
 };
 
+// The two portfolio types no PREP task names (built by extra-decks.mjs from the repo's own README and code).
+const DECK6 = 'framework/recordings/06-architecture-review/presentation.html';
+const DECK7 = 'framework/recordings/07-client-handoff/presentation.html';
+const NARR = 'Narrated by OBI with co-host Oge in synthetic Windows voices (OBI male, Oge female).';
+plans['prep-arch-architecture-review'] = {
+  title: 'Architecture review',
+  steps: [
+    { card: { kicker: 'Architecture review · CRIS', title: 'What I chose, what I rejected, what would change my mind', body: [REHEARSAL, NARR] }, hold: 4000 },
+    ...deckSteps(DECK6),
+    { card: { kicker: 'Architecture review', title: 'The rules move; the store is one module', body: ['Static site, rules in lib/, audit in the same save, assumptions one file each.', NARR] }, hold: 3500 },
+  ],
+};
+plans['prep-handoff-client-handoff'] = {
+  title: 'Client handoff',
+  steps: [
+    { card: { kicker: 'Client handoff · CRIS', title: 'Run it, own it, fix it when it misbehaves', body: [REHEARSAL, NARR] }, hold: 4000 },
+    ...deckSteps(DECK7),
+    { card: { kicker: 'Client handoff', title: 'People score; TxDOT awards', body: ['Run: node scripts/serve.mjs 4321. Prove a change: node --test tests/ and the 16-story rehearsal.', NARR] }, hold: 3500 },
+  ],
+};
+
+// The Selective Service System (SSS) rehearsal build's demo prep, from decks written in the SSS repo
+// (docs/demo/recordings/sss-decks.mjs) and built into framework/recordings/sss/ (not committed here) for recording.
+const SSS_R = 'Selective Service System Modernization: a Colaberry rehearsal demo on synthetic data. Not connected to the real Selective Service System.';
+const sssTitles = {
+  'sss-1-project-introduction': ['SSS · Project introduction', 'Project introduction'],
+  'sss-2-working-system-demo': ['SSS · Working-system demo', 'Working-system demo'],
+  'sss-3-ai-visual-presentation': ['SSS · AI visual presentation', 'AI visual presentation'],
+  'sss-4-stakeholder-update': ['SSS · Stakeholder update', 'Stakeholder update'],
+  'sss-5-final-showcase': ['SSS · Final showcase', 'Final showcase'],
+  'sss-6-demo-day': ['SSS · Demo Day', 'Demo Day'],
+  'sss-arch-architecture-review': ['SSS · Architecture review', 'Architecture review'],
+  'sss-handoff-client-handoff': ['SSS · Client handoff', 'Client handoff'],
+};
+for (const [key, [title, kind]] of Object.entries(sssTitles)) {
+  const deck = `framework/recordings/sss/${key}/presentation.html`;
+  if (!existsSync(repoFile(deck))) continue;
+  plans[key] = {
+    ...(key === 'sss-1-project-introduction' ? { rate: 1.3 } : {}), // the brief is ninety seconds
+    title,
+    steps: [
+      { card: { kicker: `${kind} · Selective Service rehearsal`, title, body: [SSS_R, NARR] }, hold: 4000 },
+      ...deckSteps(deck),
+      { card: { kicker: kind, title: 'Selective Service Modernization (rehearsal)', body: [SSS_R, NARR] }, hold: 3000 },
+    ],
+  };
+}
+
 // Spoken forms, so the voices say the names the way the kits' pronunciation tables ask.
 export const say = (text) => text
   .replace(/TxDOT's/g, "Tex Dot's").replace(/TxDOT/g, 'Tex Dot')
@@ -225,4 +273,5 @@ export const say = (text) => text
   .replace(/\bEuna\b/g, 'Yoo-nuh')
   .replace(/\bHUB\b/g, 'hub')
   .replace(/RSP-0001/g, 'R S P one')
-  .replace(/Claude Code/g, 'Clawd Code');
+  .replace(/Claude Code/g, 'Clawd Code')
+  .replace(/\bSSS\b/g, 'S S S').replace(/\bJWT_SECRET\b/g, 'J W T secret').replace(/\bJWT\b/g, 'J W T').replace(/\bMFA\b/g, 'M F A').replace(/GovCloud/g, 'Gov Cloud');

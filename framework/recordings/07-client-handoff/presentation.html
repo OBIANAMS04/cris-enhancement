@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CRIS · Client handoff</title>
+<style>
+:root{--navy:#14284b;--ink:#1d2433;--soft:#5b6476;--line:#d9dee8;--teal:#0f7b6c;--amber:#b45309;--red:#b42318;--bg:#f6f7fa}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:17px/1.4 "Segoe UI",system-ui,sans-serif}
+.slide{position:absolute;inset:0;padding:34px 48px 30px;display:flex;flex-direction:column;overflow:hidden}
+.slide[hidden]{display:none}
+.kicker{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--red);font-weight:700}
+h2{margin:6px 0 4px;font-size:32px;line-height:1.3;padding-bottom:2px;color:var(--navy)}
+.lede{margin:2px 0 10px;color:var(--soft);font-size:18px;max-width:1100px}
+.grid{display:grid;gap:14px;flex:1;min-height:0;align-content:start;margin-top:8px}
+.tile{background:#fff;border:1px solid var(--line);border-top:5px solid var(--navy);border-radius:10px;padding:14px 16px;min-width:0;overflow-wrap:anywhere}
+.tile.ok{border-top-color:var(--teal)}.tile.warn{border-top-color:var(--amber)}.tile.no{border-top-color:var(--red)}
+.tile h3{margin:0 0 6px;font-size:19px;color:var(--navy)}
+.tile p{margin:0 0 6px;font-size:15.5px;color:var(--ink)}
+.foot{margin:8px 0 0;font-size:13px;color:var(--soft)}
+code{font-family:Consolas,monospace;font-size:.92em}
+</style></head><body>
+<section class="slide" id="s1" aria-label="Slide 1" data-say-script="OBI: I'm OBI. This is the handoff of the Crash Records workspace: how to run it, how to change it safely, and what to do when it misbehaves.||OGE: I'm the new owner. Where do I start?">
+<div class="kicker">Client handoff · CRIS · 1 / 6</div>
+<h2>Run it, own it, and fix it when it misbehaves</h2><p class="lede">CRIS is a Colaberry rehearsal case study on synthetic data. Nothing is connected to TxDOT.</p>
+<div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tile"><h3>Run it</h3><p>One command, one browser.</p></div><div class="tile"><h3>Change it</h3><p>Settings in content/, rules in lib/, tests prove both.</p></div><div class="tile warn"><h3>When it misbehaves</h3><p>What each warning means, and what to do.</p></div></div>
+
+</section>
+<section class="slide" id="s2" aria-label="Slide 2" data-say-script="OBI: Clone the repository. Node is the only tool you need. Run node scripts slash serve, port forty-three twenty-one, and open the workspace.||OGE: And without installing anything?||OBI: GitHub Pages serves the same files. Remember that each browser keeps its own synthetic data, so two people never see each other's work." hidden>
+<div class="kicker">Client handoff · CRIS · 2 / 6</div>
+<h2>Run it</h2>
+<div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tile"><h3>1. Get the code</h3><p>Clone github.com/OBIANAMS04/cris-enhancement.</p><p>Node is the only tool needed.</p></div><div class="tile"><h3>2. Serve it</h3><p>node scripts/serve.mjs 4321</p><p>Open localhost:4321/workspace/.</p></div><div class="tile"><h3>3. Or the public copy</h3><p>GitHub Pages serves the same files.</p><p>Each browser keeps its own synthetic data.</p></div></div>
+
+</section>
+<section class="slide" id="s3" aria-label="Slide 3" data-say-script="OBI: Four folders. lib holds the rules: change behaviour there. workspace js holds the pages, which only draw.||OBI: content holds the settings: the required documents, the scoring weights, the report specifications. And tests holds the unit tests and the sixteen-story rehearsal." hidden>
+<div class="kicker">Client handoff · CRIS · 3 / 6</div>
+<h2>Where things live</h2>
+<div class="grid" style="grid-template-columns:repeat(4,minmax(0,1fr))"><div class="tile"><h3>lib/</h3><p>The rules, one file per story. Change behaviour here.</p></div><div class="tile"><h3>workspace/js/</h3><p>The pages. They draw; they never decide.</p></div><div class="tile warn"><h3>content/</h3><p>Settings and seed data: documents, weights, report specs.</p></div><div class="tile ok"><h3>tests/</h3><p>Unit tests and the 16-story rehearsal.</p></div></div>
+
+</section>
+<section class="slide" id="s4" aria-label="Slide 4" data-say-script="OGE: Say the client adds a fifth required document.||OBI: Add it to content slash solicitation dot json. Then run node dash dash test on the tests folder: seventy-three should pass.||OBI: Then run the rehearsal, which walks all sixteen stories from an empty store. If both pass, the change is safe to publish." hidden>
+<div class="kicker">Client handoff · CRIS · 4 / 6</div>
+<h2>Change a setting safely</h2>
+<div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tile"><h3>Edit one file</h3><p>Example: a fifth required document goes in content/solicitation.json.</p></div><div class="tile ok"><h3>Run the tests</h3><p>node --test tests/</p><p>73 should pass before and after.</p></div><div class="tile ok"><h3>Run the rehearsal</h3><p>tests/demo-rehearsal.js walks all 16 stories from an empty store.</p></div></div>
+
+</section>
+<section class="slide" id="s5" aria-label="Slide 5" data-say-script="OGE: What if it says the chain is broken?||OBI: A stored audit line was changed. Download the audit log first, from the Audit log page; it names the line. Do not edit it back by hand: that is the evidence.||OGE: And a refused response?||OBI: That is the system working: the message names the missing documents, and it stays logged as an incident until the vendor puts it right. A document that will not store is over ten megabytes, a refused file type, or a role without access, and the message says which." hidden>
+<div class="kicker">Client handoff · CRIS · 5 / 6</div>
+<h2>When it misbehaves</h2>
+<div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tile no"><h3>&quot;The chain is broken&quot;</h3><p>A stored audit line was changed.</p><p>Download the audit log first; it names the line. Do not edit it back by hand.</p></div><div class="tile warn"><h3>A response is refused</h3><p>Working as designed: the message names what is missing.</p><p>It is logged as an incident until put right.</p></div><div class="tile warn"><h3>A document will not store</h3><p>Over 10 MB, a refused file type, or a role without access.</p><p>The message says which.</p></div></div>
+
+</section>
+<section class="slide" id="s6" aria-label="Slide 6" data-say-script="OBI: To start over, the Audit log page has Keep or start over. Press it twice to wipe this browser's demo data, and download the audit log first if you need it.||OGE: So what do I own now?||OBI: The settings files, the tests, and one rule that does not change: people score every response, and TxDOT alone decides the award. Thank you." hidden>
+<div class="kicker">Client handoff · CRIS · 6 / 6</div>
+<h2>Start over, and what you own</h2>
+<div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))"><div class="tile warn"><h3>Start over</h3><p>Audit log page: &quot;Keep or start over&quot;. Press twice to wipe this browser's demo data.</p><p>Download the audit log first if you need it.</p></div><div class="tile ok"><h3>What you own now</h3><p>The settings files in content/, the tests, and the rule that people score and TxDOT awards.</p></div></div>
+
+</section>
+<script>
+(function(){var all=[].slice.call(document.querySelectorAll('.slide'));
+function show(){var n=parseInt((location.hash.match(/s(\d+)/)||[0,1])[1],10);all.forEach(function(s,i){s.hidden=i!==n-1;});}
+window.addEventListener('hashchange',show);show();
+document.addEventListener('keydown',function(e){var n=parseInt((location.hash.match(/s(\d+)/)||[0,1])[1],10);
+if(e.key==='ArrowRight'&&n<all.length)location.hash='#s'+(n+1);if(e.key==='ArrowLeft'&&n>1)location.hash='#s'+(n-1);});})();
+</script></body></html>

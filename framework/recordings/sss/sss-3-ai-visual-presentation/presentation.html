@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Selective Service rehearsal · AI visual presentation</title>
+<style>
+:root{--navy:#14284b;--ink:#1d2433;--soft:#5b6476;--line:#d9dee8;--teal:#0f7b6c;--amber:#b45309;--red:#b42318;--bg:#f6f7fa}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:17px/1.4 "Segoe UI",system-ui,sans-serif}
+.slide{position:absolute;inset:0;padding:34px 48px 30px;display:flex;flex-direction:column;overflow:hidden}
+.slide[hidden]{display:none}
+.kicker{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--red);font-weight:700}
+h2{margin:6px 0 4px;font-size:32px;line-height:1.3;padding-bottom:2px;color:var(--navy)}
+.lede{margin:2px 0 10px;color:var(--soft);font-size:18px;max-width:1100px}
+.grid{display:grid;gap:14px;flex:1;min-height:0;align-content:start;margin-top:8px}
+.tile{background:#fff;border:1px solid var(--line);border-top:5px solid var(--navy);border-radius:10px;padding:14px 16px;min-width:0;overflow-wrap:anywhere}
+.tile.ok{border-top-color:var(--teal)}.tile.warn{border-top-color:var(--amber)}.tile.no{border-top-color:var(--red)}
+.tile h3{margin:0 0 6px;font-size:19px;color:var(--navy)}
+.tile p{margin:0 0 6px;font-size:15.5px;color:var(--ink)}
+.tile.pic{display:flex;flex-direction:column;min-height:0}
+.tile.pic img{display:block;max-width:100%;max-height:330px;object-fit:contain;object-position:left top;border:1px solid var(--line);border-radius:6px;margin:2px 0 8px}
+.foot{margin:8px 0 0;font-size:13px;color:var(--soft)}
+code{font-family:Consolas,monospace;font-size:.92em}
+</style></head><body>
+<section class="slide" id="s1" aria-label="Slide 1" data-say-script="OBI: I'm OBI. This is a visual argument with three claims, and every claim is a screen. This is a Colaberry rehearsal on synthetic data, not connected to the real Selective Service System.||OGE: What are the three claims?||OBI: Claim one: a citizen sees why, not just what. Claim two: a failed check goes to a second person. Claim three: the AI answers from cited policy and never decides.">
+<div class="kicker">AI visual presentation · Selective Service rehearsal · 1 / 8</div>
+<h2>Every decision shows its reason, and a person can overrule it</h2><p class="lede">A Colaberry rehearsal case study on synthetic data. Not connected to the real Selective Service System.</p>
+<div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tile"><h3>Claim 1</h3><p>A citizen sees why, not just what.</p></div><div class="tile warn"><h3>Claim 2</h3><p>A failed check goes to a second person.</p></div><div class="tile ok"><h3>Claim 3</h3><p>The AI answers from cited policy and never decides.</p></div></div>
+
+</section>
+<section class="slide" id="s2" aria-label="Slide 2" data-say-script="OBI: Claim one. On the left, the eligibility check: eligible because the applicant is sixty-five or older, and a reason for each type that is not.||OBI: On the right, a denial. It names its reason, proof of age was not provided, and offers an appeal.||OGE: Is that the whole point?||OBI: Yes. Nobody should have to guess why. The reason is on the screen, in plain words." hidden>
+<div class="kicker">AI visual presentation · Selective Service rehearsal · 2 / 8</div>
+<h2>Claim 1: the citizen sees why</h2>
+<div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))"><div class="tile pic"><h3>Eligibility with reasons</h3><img src="../screens/deck-eligibility.png" alt="Eligibility results with reasons"><p>Type A eligible: applicant is 65 or older. B and C: not eligible, with the reason.</p></div><div class="tile no pic"><h3>Denial with its reason</h3><img src="../screens/deck-denial.png" alt="Denied case with reason and appeal"><p>Denied: proof of age was not provided. Appeal button shown.</p></div></div>
+
+</section>
+<section class="slide" id="s3" aria-label="Slide 3" data-say-script="OBI: Claim two. On the left, a review that is open because two controls failed. Another case manager must justify the outcome in writing.||OBI: On the right, the dashboard. Sixty-six point six seven percent against a ninety-nine percent target, so the alert is red, and one review is open. The system raises its own hand." hidden>
+<div class="kicker">AI visual presentation · Selective Service rehearsal · 3 / 8</div>
+<h2>Claim 2: a failed check goes to a second person</h2>
+<div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))"><div class="tile no pic"><h3>Review open</h3><img src="../screens/deck-review.png" alt="Compliance review with two failed controls and a justification box"><p>Two controls failed. Another case manager must justify the outcome.</p></div><div class="tile pic"><h3>Dashboard alert</h3><img src="../screens/deck-checks.png" alt="Compliance dashboard below target"><p>66.67% against a 99% target. One open review.</p></div></div>
+
+</section>
+<section class="slide" id="s4" aria-label="Slide 4" data-say-script="OBI: Claim three. On the left, a cited answer. The assistant answers only from the policy passages, with numbered citations that open the quoted text.||OGE: And what about a personal question?||OBI: On the right, the review queue. A question about a person's own case is withheld and waits for a case manager. The assistant never decides eligibility. Twenty questions an hour per person, and a daily cap, keep it bounded." hidden>
+<div class="kicker">AI visual presentation · Selective Service rehearsal · 4 / 8</div>
+<h2>Claim 3: the AI answers from cited policy</h2>
+<div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))"><div class="tile ok pic"><h3>A cited answer</h3><img src="../screens/tour-24-assistant-answer.png" alt="Policy assistant answer with two numbered citations and their quoted passages"><p>Numbered citations that open the quoted policy text. The policy is synthetic.</p></div><div class="tile warn pic"><h3>The review queue</h3><img src="../screens/tour-25-review-queue.png" alt="Assistant Reviews queue with a reported answer and a withheld personal question"><p>Personal questions and answers that fail the check wait for a case manager.</p></div></div>
+
+</section>
+<section class="slide" id="s5" aria-label="Slide 5" data-say-script="OBI: Two checks on the AI itself. On the left, quality signals: the last seven days against the twenty-eight before, with drift flagged. This screen uses fixture data to show the alert.||OBI: On the right, the fairness check: the same question must find the same passages, whatever name or wording is used. Also fixture data. The live evaluation scored one hundred percent in October, on thirty-three questions." hidden>
+<div class="kicker">AI visual presentation · Selective Service rehearsal · 5 / 8</div>
+<h2>Is the AI drifting, and is it fair?</h2>
+<div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))"><div class="tile warn pic"><h3>Quality signals</h3><img src="../screens/tour-29-drift-signals.png" alt="AI quality signals with drift flagged, fixture data"><p>Last 7 days against the 28 before. Drift flagged. Fixture data.</p></div><div class="tile ok pic"><h3>Fairness check</h3><img src="../screens/tour-30-fairness.png" alt="Fairness page with the counterfactual check and four-fifths rule, fixture data"><p>Same passages for the same question, whatever the name or wording. Fixture data.</p></div></div>
+
+</section>
+<section class="slide" id="s6" aria-label="Slide 6" data-say-script="OBI: Each role sees only what it needs. The case manager has My Work: open cases, what is waiting on them, and what is overdue.||OBI: The administrator has Access Policies, where rules are switched on and off with a reason. Leadership has totals and trends, with no applicant data. A rule stops a case manager opening a case assigned to someone else." hidden>
+<div class="kicker">AI visual presentation · Selective Service rehearsal · 6 / 8</div>
+<h2>The people who run it see only what they need</h2>
+<div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tile pic"><h3>Case manager</h3><img src="../screens/tour-19-case-manager-dashboard-crop.png" alt="Case manager dashboard"><p>My Work: open cases, waiting on me, overdue.</p></div><div class="tile pic"><h3>Administrator</h3><img src="../screens/tour-23-access-policies-crop.png" alt="Access policies page"><p>Access Policies: switch rules, with a reason.</p></div><div class="tile pic"><h3>Leadership</h3><img src="../screens/tour-21-leadership-dashboard-crop.png" alt="Leadership dashboard with KPIs and trends"><p>Totals and trends. No applicant data.</p></div></div>
+
+</section>
+<section class="slide" id="s7" aria-label="Slide 7" data-say-script="OGE: How do we know the screens are not just pictures?||OBI: Because scripts attack and break the system on purpose. On the left, the attack suite: fifty-two of fifty-two checks pass, covering sign-in bypass, tampered tokens, records belonging to other people, and injection.||OBI: On the right, the database outage check: twenty-two of twenty-two. The API stays up without its database and recovers by itself. These are our own tests, not independent ones." hidden>
+<div class="kicker">AI visual presentation · Selective Service rehearsal · 7 / 8</div>
+<h2>The checks behind the screens</h2>
+<div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))"><div class="tile ok pic"><h3>Attack suite</h3><img src="../screens/tour-44-attack-suite.png" alt="Attack suite results, 52 of 52 checks pass"><p>52 of 52 checks pass: sign-in bypass, tampered tokens, records of other people, injection.</p></div><div class="tile ok pic"><h3>Database outage</h3><img src="../screens/tour-41-database-outage.png" alt="Database outage results, 22 of 22 checks pass"><p>22 of 22 checks: the API stays up without its database and recovers by itself.</p></div></div>
+
+</section>
+<section class="slide" id="s8" aria-label="Slide 8" data-say-script="OBI: Sign-in is protected by two steps: an authenticator app and a six-digit code, with ten one-time recovery codes.||OGE: What does the argument not prove?||OBI: That it works on real applicants or real policy. There has been no independent security test and no hands-on screen-reader test. Everything you saw is on synthetic data. Thank you." hidden>
+<div class="kicker">AI visual presentation · Selective Service rehearsal · 8 / 8</div>
+<h2>Sign-in protects it, and the limits are plain</h2>
+<div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))"><div class="tile ok pic"><h3>Two-step sign-in</h3><img src="../screens/tour-17-mfa-setup-crop.png" alt="Authenticator setup with a QR code and key"><p>An authenticator app, a 6-digit code, and ten one-time recovery codes.</p></div><div class="tile no"><h3>What this does not prove</h3><p>No real applicants or policy. No independent security test. No hands-on screen-reader test.</p></div></div>
+
+</section>
+<script>
+(function(){var all=[].slice.call(document.querySelectorAll('.slide'));
+function show(){var n=parseInt((location.hash.match(/s(\d+)/)||[0,1])[1],10);all.forEach(function(s,i){s.hidden=i!==n-1;});}
+window.addEventListener('hashchange',show);show();
+document.addEventListener('keydown',function(e){var n=parseInt((location.hash.match(/s(\d+)/)||[0,1])[1],10);
+if(e.key==='ArrowRight'&&n<all.length)location.hash='#s'+(n+1);if(e.key==='ArrowLeft'&&n>1)location.hash='#s'+(n-1);});})();
+</script></body></html>

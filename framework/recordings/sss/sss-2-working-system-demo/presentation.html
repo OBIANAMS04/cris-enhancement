@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Selective Service rehearsal · Working system demo</title>
+<style>
+:root{--navy:#14284b;--ink:#1d2433;--soft:#5b6476;--line:#d9dee8;--teal:#0f7b6c;--amber:#b45309;--red:#b42318;--bg:#f6f7fa}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:17px/1.4 "Segoe UI",system-ui,sans-serif}
+.slide{position:absolute;inset:0;padding:34px 48px 30px;display:flex;flex-direction:column;overflow:hidden}
+.slide[hidden]{display:none}
+.kicker{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--red);font-weight:700}
+h2{margin:6px 0 4px;font-size:32px;line-height:1.3;padding-bottom:2px;color:var(--navy)}
+.lede{margin:2px 0 10px;color:var(--soft);font-size:18px;max-width:1100px}
+.grid{display:grid;gap:14px;flex:1;min-height:0;align-content:start;margin-top:8px}
+.tile{background:#fff;border:1px solid var(--line);border-top:5px solid var(--navy);border-radius:10px;padding:14px 16px;min-width:0;overflow-wrap:anywhere}
+.tile.ok{border-top-color:var(--teal)}.tile.warn{border-top-color:var(--amber)}.tile.no{border-top-color:var(--red)}
+.tile h3{margin:0 0 6px;font-size:19px;color:var(--navy)}
+.tile p{margin:0 0 6px;font-size:15.5px;color:var(--ink)}
+.tile.pic{display:flex;flex-direction:column;min-height:0}
+.tile.pic img{display:block;max-width:100%;max-height:330px;object-fit:contain;object-position:left top;border:1px solid var(--line);border-radius:6px;margin:2px 0 8px}
+.foot{margin:8px 0 0;font-size:13px;color:var(--soft)}
+code{font-family:Consolas,monospace;font-size:.92em}
+</style></head><body>
+<section class="slide" id="s1" aria-label="Slide 1" data-say-script="OBI: I'm OBI. This is the working system, one outcome from start to finish, including what happens when it fails.||OGE: What are we watching?||OBI: A citizen registers, is checked for an exemption, and gets a decision with a reason. Then a decision made without its evidence, which the system catches. These are screens from the working build on synthetic data. The hosted site is retired, and it runs locally.||OGE: Who is involved?||OBI: A citizen, a case manager who decides, and a second case manager who reviews when a check fails. Three people, and the system between them.">
+<div class="kicker">Working system demo · Selective Service rehearsal · 1 / 8</div>
+<h2>One outcome, end to end, including the failure</h2><p class="lede">A Colaberry rehearsal case study on synthetic data. Not connected to the real Selective Service System.</p>
+<div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tile"><h3>The outcome</h3><p>A citizen registers, is checked for an exemption, and gets a decision with a reason.</p></div><div class="tile no"><h3>The failure</h3><p>A decision made without its evidence is caught and sent to a second case manager.</p></div><div class="tile warn"><h3>How it runs</h3><p>Screens from the working build, captured on synthetic data. The hosted site is retired; it runs locally.</p></div></div>
+
+</section>
+<section class="slide" id="s2" aria-label="Slide 2" data-say-script="OBI: Step one: the registration form. The banner says synthetic data only, so nobody enters a real number.||OGE: And the Social Security number?||OBI: It is masked, with a Show control. The password needs twelve characters, an uppercase letter, a digit and a special character. The number is stored as a one-way hash, and never logged." hidden>
+<div class="kicker">Working system demo · Selective Service rehearsal · 2 / 8</div>
+<h2>Step 1: register, with the number protected</h2>
+<div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))"><div class="tile pic"><h3>Registration form</h3><img src="../screens/deck-register.png" alt="Registration form with a masked Social Security number field and a demo-data banner"><p>Banner: synthetic data only.</p></div><div class="tile ok"><h3>What it protects</h3><p>The number is masked, with a Show control.</p><p>Password: 12 characters, an uppercase letter, a digit and a special character.</p><p>The number is stored as a one-way hash, never logged.</p><p>The first screen the citizen meets already says what this is.</p></div></div>
+
+</section>
+<section class="slide" id="s3" aria-label="Slide 3" data-say-script="OBI: Step two: the citizen presses Check Eligibility. Type A, the senior exemption, comes back eligible because the applicant is sixty-five or older.||OGE: And the other two?||OBI: Not eligible, each with its reason: no income on file for the income-based type, and no documented hardship. Type B is income under twenty thousand dollars. Type C is a hardship that a case worker reviews. These are illustrative rules, not Selective Service policy.||OBI: The profile also has a compliance check: age eighteen or older, a phone number and an address." hidden>
+<div class="kicker">Working system demo · Selective Service rehearsal · 3 / 8</div>
+<h2>Step 2: the exemption check gives a reason</h2>
+<div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))"><div class="tile pic"><h3>My Profile and eligibility</h3><img src="../screens/deck-eligibility.png" alt="Eligibility results: Type A senior exemption eligible, Types B and C not eligible with reasons"><p>Type A eligible. Types B and C not eligible, each with a reason.</p></div><div class="tile warn"><h3>The rules, as illustrations</h3><p>Type A: age 65 or older.</p><p>Type B: income under $20,000.</p><p>Type C: hardship, which needs a case worker.</p><p>Illustrative rules, not Selective Service policy.</p></div></div>
+
+</section>
+<section class="slide" id="s4" aria-label="Slide 4" data-say-script="OBI: Step three: when the answer is no. This case is denied, and the timeline gives the reason: proof of age was not provided.||OGE: Can the case manager just deny it?||OBI: A denial needs a reason. The citizen sees it, and an appeal button is right there. The refusal is never silent. The timeline shows the case moved from submitted, to in review, to denied, each step with who did it and when." hidden>
+<div class="kicker">Working system demo · Selective Service rehearsal · 4 / 8</div>
+<h2>Step 3: when the answer is no</h2>
+<div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))"><div class="tile no pic"><h3>A denied case, with its reason</h3><img src="../screens/deck-denial.png" alt="Denied Type A case with the timeline showing the reason and an Appeal this decision button"><p>Reason on the timeline: proof of age was not provided.</p></div><div class="tile warn"><h3>Refused, not silent</h3><p>A denial needs a reason; the case manager cannot skip it.</p><p>The citizen sees the reason and can appeal.</p><p>The timeline: submitted, in review, denied, each with who and when.</p></div></div>
+
+</section>
+<section class="slide" id="s5" aria-label="Slide 5" data-say-script="OBI: Step four: the failure. A case manager approved this case, but two decision controls failed: the case was assigned to nobody, and no proof of age was on file.||OGE: What happens now?||OBI: A compliance review opens. A second person resolves it, never the person who decided, with a written justification kept in the audit trail. They can accept the exception or reopen the case. Here the case is reopened so the applicant can provide proof.||OGE: How many things are checked?||OBI: Eight controls on every decision, from whether it matches the eligibility result to whether it is in the audit log with who, what and when." hidden>
+<div class="kicker">Working system demo · Selective Service rehearsal · 5 / 8</div>
+<h2>Step 4: a decision that fails its checks</h2>
+<div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))"><div class="tile no pic"><h3>Compliance review open</h3><img src="../screens/deck-review.png" alt="Compliance review open showing controls five and seven failed, with Accept exception and Reopen case"><p>Approval failed two controls: no assigned reviewer, no proof of age on file.</p></div><div class="tile ok"><h3>A second person resolves it</h3><p>Not the person who decided.</p><p>A written justification, kept in the audit trail.</p><p>Accept the exception, or reopen the case.</p><p>Eight controls are checked on every decision.</p></div></div>
+
+</section>
+<section class="slide" id="s6" aria-label="Slide 6" data-say-script="OBI: Step five: the dashboard. Sixty-six point six seven percent against a ninety-nine percent target. That is three decisions with one open review, so the alert is red.||OGE: Is the failure recorded?||OBI: Yes. The compliance audit log lists every failed control with its evidence: no assigned reviewer, and no proof of age on file.||OBI: A caution: that percentage is arithmetic on three decisions. Read it as a demonstration of the alert, not as a measured statistic." hidden>
+<div class="kicker">Working system demo · Selective Service rehearsal · 6 / 8</div>
+<h2>Step 5: the dashboard and the record</h2>
+<div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))"><div class="tile no pic"><h3>Compliance dashboard</h3><img src="../screens/deck-checks.png" alt="Compliance dashboard with a below-target alert, 66.67 percent against 99, and one open review"><p>66.67% against a 99% target: three decisions, one open review.</p></div><div class="tile pic"><h3>Compliance audit log</h3><img src="../screens/deck-audit.png" alt="Compliance audit log listing the two failed controls for the approved case"><p>Every failed control, with its evidence.</p></div></div>
+
+</section>
+<section class="slide" id="s7" aria-label="Slide 7" data-say-script="OBI: Step six: the citizen is told. The dashboard shows each step as a notification, including that the case was reopened for another review.||OGE: So what does that prove?||OBI: That the decision, the check, the second review and the notice are linked and recorded, and that a failure is caught rather than hidden. The citizen sees only the events meant for the applicant; internal notes stay with case managers." hidden>
+<div class="kicker">Working system demo · Selective Service rehearsal · 7 / 8</div>
+<h2>Step 6: the citizen is told</h2>
+<div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))"><div class="tile pic"><h3>Citizen dashboard</h3><img src="../screens/deck-informed.png" alt="Citizen dashboard with notifications showing the case being reopened for another review"><p>Five new notifications, in order: submitted, in review, approved, reopened, approved.</p></div><div class="tile ok"><h3>What this proves</h3><p>The decision, the check, the second review and the notice are all linked and recorded.</p></div></div>
+
+</section>
+<section class="slide" id="s8" aria-label="Slide 8" data-say-script="OBI: What this shows: one outcome, end to end, with its failure path, on synthetic data. What it does not show: real applicants, real policy, or a live public site. The Render site was deleted on 6 November 2026.||OGE: How do I see more?||OBI: Run it locally from the repository. The steps are in RUN-LOCALLY dot m d. Thank you." hidden>
+<div class="kicker">Working system demo · Selective Service rehearsal · 8 / 8</div>
+<h2>What this does and does not show</h2>
+<div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tile ok"><h3>Shown</h3><p>One outcome, end to end, with its failure path, on synthetic data.</p></div><div class="tile no"><h3>Not shown</h3><p>Real applicants, real policy, or a live public site. The Render site was deleted on 2026-11-06.</p></div><div class="tile"><h3>Where to see more</h3><p>Run it locally from the repository: docs/RUN-LOCALLY.md.</p></div></div>
+
+</section>
+<script>
+(function(){var all=[].slice.call(document.querySelectorAll('.slide'));
+function show(){var n=parseInt((location.hash.match(/s(\d+)/)||[0,1])[1],10);all.forEach(function(s,i){s.hidden=i!==n-1;});}
+window.addEventListener('hashchange',show);show();
+document.addEventListener('keydown',function(e){var n=parseInt((location.hash.match(/s(\d+)/)||[0,1])[1],10);
+if(e.key==='ArrowRight'&&n<all.length)location.hash='#s'+(n+1);if(e.key==='ArrowLeft'&&n>1)location.hash='#s'+(n-1);});})();
+</script></body></html>

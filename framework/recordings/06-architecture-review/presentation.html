@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CRIS · Architecture review</title>
+<style>
+:root{--navy:#14284b;--ink:#1d2433;--soft:#5b6476;--line:#d9dee8;--teal:#0f7b6c;--amber:#b45309;--red:#b42318;--bg:#f6f7fa}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:17px/1.4 "Segoe UI",system-ui,sans-serif}
+.slide{position:absolute;inset:0;padding:34px 48px 30px;display:flex;flex-direction:column;overflow:hidden}
+.slide[hidden]{display:none}
+.kicker{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--red);font-weight:700}
+h2{margin:6px 0 4px;font-size:32px;line-height:1.3;padding-bottom:2px;color:var(--navy)}
+.lede{margin:2px 0 10px;color:var(--soft);font-size:18px;max-width:1100px}
+.grid{display:grid;gap:14px;flex:1;min-height:0;align-content:start;margin-top:8px}
+.tile{background:#fff;border:1px solid var(--line);border-top:5px solid var(--navy);border-radius:10px;padding:14px 16px;min-width:0;overflow-wrap:anywhere}
+.tile.ok{border-top-color:var(--teal)}.tile.warn{border-top-color:var(--amber)}.tile.no{border-top-color:var(--red)}
+.tile h3{margin:0 0 6px;font-size:19px;color:var(--navy)}
+.tile p{margin:0 0 6px;font-size:15.5px;color:var(--ink)}
+.foot{margin:8px 0 0;font-size:13px;color:var(--soft)}
+code{font-family:Consolas,monospace;font-size:.92em}
+</style></head><body>
+<section class="slide" id="s1" aria-label="Slide 1" data-say-script="OBI: I'm OBI. This is the architecture review of the Crash Records workspace: four choices I made, what I rejected for each, and what would make me change my mind.||OGE: Four choices. Start with the shape.">
+<div class="kicker">Architecture review · CRIS · 1 / 8</div>
+<h2>What I chose, what I rejected, and what would change my mind</h2><p class="lede">CRIS is a Colaberry rehearsal case study on synthetic data. Nothing is connected to TxDOT.</p>
+<div class="grid" style="grid-template-columns:repeat(4,minmax(0,1fr))"><div class="tile"><h3>Static site</h3><p>No server, no dependencies. Runs locally or on GitHub Pages.</p></div><div class="tile"><h3>Rules apart from pages</h3><p>lib/ holds the rules, one file per story. Pages only draw.</p></div><div class="tile"><h3>Audit in the same save</h3><p>Every write appends a SHA-256 chained audit line, atomically.</p></div><div class="tile warn"><h3>Assumptions in one file</h3><p>Documents, weights, closing time and service levels: one file each.</p></div></div>
+
+</section>
+<section class="slide" id="s2" aria-label="Slide 2" data-say-script="OBI: The Command Center reads the files the platform writes and shows only what the project has produced.||OBI: The workspace pages call the rules and draw what comes back. The rules are plain functions in lib, one file per story, with seventy-three unit tests.||OGE: And the store?||OBI: The store keeps the tables of the data model in the browser and checks every write against them. Documents are kept by their SHA-256 hash." hidden>
+<div class="kicker">Architecture review · CRIS · 2 / 8</div>
+<h2>The shape: four parts, one direction</h2>
+<div class="grid" style="grid-template-columns:repeat(4,minmax(0,1fr))"><div class="tile"><h3>Command Center</h3><p>index.html reads the plan and progress files the Colaberry platform writes.</p><p>Shows only what the project produced.</p></div><div class="tile"><h3>Workspace pages</h3><p>workspace/js: one page per story.</p><p>They call rules and draw what comes back.</p></div><div class="tile ok"><h3>Rules</h3><p>lib/: nineteen small files, plain functions.</p><p>73 unit tests run with node --test.</p></div><div class="tile"><h3>Store</h3><p>Browser storage, checked against the data model on every write.</p><p>Documents in IndexedDB by SHA-256.</p></div></div>
+
+</section>
+<section class="slide" id="s3" aria-label="Slide 3" data-say-script="OBI: First choice: a static site. No server, no build step, no packages, so there is no hosting cost and nothing to patch.||OGE: What did you turn down?||OBI: A Node and Postgres server, which I used for the Selective Service rehearsal. Here it would have meant sign-in, hosting and secrets, to hold synthetic data.||OBI: The price: it runs in one browser for one person at a time, and there is no real sign-in. The Acting as picker stands in for it, and every screen says so." hidden>
+<div class="kicker">Architecture review · CRIS · 3 / 8</div>
+<h2>Choice 1: a static site, no server</h2>
+<div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tile ok"><h3>Chosen</h3><p>Static files, no build step, no packages.</p><p>Zero hosting cost; nothing to patch or secure.</p></div><div class="tile no"><h3>Rejected</h3><p>A Node and Postgres server, like the Selective Service rehearsal.</p><p>Sign-in, hosting and secrets for synthetic data only.</p></div><div class="tile warn"><h3>Price paid</h3><p>One browser, one person at a time.</p><p>No real sign-in: an &quot;Acting as&quot; picker stands in.</p></div></div>
+
+</section>
+<section class="slide" id="s4" aria-label="Slide 4" data-say-script="OBI: Second choice: every decision lives in a rule function, never in a page. The page shows the answer and the reason.||OGE: And the alternative?||OBI: Checks inside the page scripts. Quicker to start, but only testable by clicking through. Keeping them apart bought seventy-three unit tests that run in seconds, with the sixteen-story browser rehearsal on top." hidden>
+<div class="kicker">Architecture review · CRIS · 4 / 8</div>
+<h2>Choice 2: rules apart from pages</h2>
+<div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tile ok"><h3>Chosen</h3><p>Every decision is a function in lib/.</p><p>The page never decides; it shows the answer and the reason.</p></div><div class="tile no"><h3>Rejected</h3><p>Checks written inside page scripts.</p><p>Quick to start, but only testable by clicking.</p></div><div class="tile"><h3>What it bought</h3><p>73 unit tests in seconds.</p><p>A 16-story browser rehearsal on top.</p></div></div>
+
+</section>
+<section class="slide" id="s5" aria-label="Slide 5" data-say-script="OBI: Third choice: the audit line is saved in the same write as the record, and each line carries the hash of the line before it.||OGE: Why not log afterwards?||OBI: Because a failure between the two would store an action nobody can see. With the chain, the Audit log page checks every line, and if one is changed it says the chain is broken." hidden>
+<div class="kicker">Architecture review · CRIS · 5 / 8</div>
+<h2>Choice 3: the audit line is written in the same save</h2>
+<div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tile ok"><h3>Chosen</h3><p>Record and audit line saved together.</p><p>Each line carries the hash of the one before.</p></div><div class="tile no"><h3>Rejected</h3><p>Write the record, then log it.</p><p>A failure in between stores an action nobody can see.</p></div><div class="tile"><h3>How it shows</h3><p>The Audit log page checks the chain.</p><p>&quot;The chain is broken&quot; names the line that changed.</p></div></div>
+
+</section>
+<section class="slide" id="s6" aria-label="Slide 6" data-say-script="OBI: Fourth choice: the values a client must own are working assumptions from TxDOT's published terms, one file each. The required documents and closing time in one, the scoring weights in another.||OGE: Why not just wait for the real values?||OBI: Because the method can be proved now. Each value is labelled as a proposal on screen, and a live engagement replaces the file without touching the rules." hidden>
+<div class="kicker">Architecture review · CRIS · 6 / 8</div>
+<h2>Choice 4: working assumptions, one file each</h2>
+<div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tile ok"><h3>Chosen</h3><p>Required documents and closing time: content/solicitation.json.</p><p>Scoring weights: content/procurement-rules.json.</p></div><div class="tile no"><h3>Rejected</h3><p>Hard-coding the values in the rules.</p><p>Or stopping until the client supplies them.</p></div><div class="tile warn"><h3>Labelled</h3><p>Every assumption is marked as a proposal on screen.</p><p>A live engagement swaps the file; the rules stay.</p></div></div>
+
+</section>
+<section class="slide" id="s7" aria-label="Slide 7" data-say-script="OGE: So what would make you change your mind?||OBI: Four things. Several people working at once means a server, real sign-in and shared storage. Real vendor documents mean encrypted server storage and a records-retention rule.||OBI: An export from Euna Procurement would let responses be imported instead of recorded by hand. And volume past what a browser holds means a database. The rules in lib move across unchanged." hidden>
+<div class="kicker">Architecture review · CRIS · 7 / 8</div>
+<h2>What would change my mind</h2>
+<div class="grid" style="grid-template-columns:repeat(4,minmax(0,1fr))"><div class="tile warn"><h3>Several users at once</h3><p>Then a server, real sign-in and shared storage.</p></div><div class="tile warn"><h3>Real documents</h3><p>Then encrypted server storage and records retention.</p></div><div class="tile warn"><h3>A Euna export</h3><p>Then import responses instead of recording them.</p></div><div class="tile warn"><h3>Volume</h3><p>Past browser storage limits, a database.</p></div></div>
+
+</section>
+<section class="slide" id="s8" aria-label="Slide 8" data-say-script="OGE: Which choice are you least sure of?||OBI: Browser-only storage. It is right for a rehearsal on synthetic data and wrong the day a real response arrives. What protects it is that the rules never know where data lives, so moving the store is one module, checked by the same tests. Thank you." hidden>
+<div class="kicker">Architecture review · CRIS · 8 / 8</div>
+<h2>The choice I am least sure of</h2>
+<div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))"><div class="tile warn"><h3>Browser-only storage</h3><p>Right for a rehearsal on synthetic data.</p><p>Wrong the day a real response arrives.</p></div><div class="tile ok"><h3>What protects it</h3><p>The rules do not know where data lives.</p><p>Moving the store is one module, tested by the same 73 tests.</p></div></div>
+
+</section>
+<script>
+(function(){var all=[].slice.call(document.querySelectorAll('.slide'));
+function show(){var n=parseInt((location.hash.match(/s(\d+)/)||[0,1])[1],10);all.forEach(function(s,i){s.hidden=i!==n-1;});}
+window.addEventListener('hashchange',show);show();
+document.addEventListener('keydown',function(e){var n=parseInt((location.hash.match(/s(\d+)/)||[0,1])[1],10);
+if(e.key==='ArrowRight'&&n<all.length)location.hash='#s'+(n+1);if(e.key==='ArrowLeft'&&n>1)location.hash='#s'+(n-1);});})();
+</script></body></html>

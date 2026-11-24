@@ -1,26 +1,43 @@
-// Usage (needs scripts/serve.mjs running): node framework/recordings/studio/zoom-record.mjs <meetingId> <pwd> <videoName> <logDir>
-// The meeting id and password come from the portal (presentation-launch) and are never stored.
 // Joins a portal practice room (Zoom web client, cloud recording on), shares a player tab with its audio,
 // plays one produced video to the end, then leaves. Usage: node zoom-record.mjs <meetingId> <pwd> <videoName> <logDir>
-import { createRequire } from 'node:module';
+// Exit code 0 = played and left; 2 = could not join or share (it left the room first, so a retry is safe).
+// The meeting ID and passcode are passed as arguments and never written anywhere.
+import { chromium } from 'playwright';
 import { tmpdir } from 'node:os';
-import { join, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
-const repo = resolve(fileURLToPath(new URL('.', import.meta.url)), '../../..');
-const require = createRequire(join(process.env.REC_TOOLS || resolve(repo, '../rec-tools'), 'package.json'));
-const { chromium } = require('playwright');
+import { join } from 'node:path';
 const [id, pwd, video, logDir] = process.argv.slice(2);
 const TITLE = 'CRIS recording';
-const ctx = await chromium.launchPersistentContext(join(tmpdir(), 'zoom-profile-' + video), { channel: 'chrome', headless: false, viewport: null,
-  args: ['--autoplay-policy=no-user-gesture-required', '--window-size=1400,900', '--window-position=0,0',
+const ctx = await chromium.launchPersistentContext(join(tmpdir(), 'zoom-profile-' + video + '-' + id), { channel: 'chrome', headless: false, viewport: null,
+  args: ['--autoplay-policy=no-user-gesture-required', '--window-size=1400,900', '--window-position=' + (process.env.WIN_X || 0) + ',0',
     `--auto-select-tab-capture-source-by-title=${TITLE}`, '--disable-features=CalculateNativeWinOcclusion', '--disable-background-timer-throttling', '--disable-renderer-backgrounding', '--disable-backgrounding-occluded-windows'] });
 // No --use-fake-ui-for-media-stream: that flag hands a screen share the WHOLE MONITOR. Without it, the title flag
 // picks the player tab (with tab audio). Microphone and camera are never granted, so only the tab is heard.
 const zoom = ctx.pages()[0] || await ctx.newPage();
-const say = (m) => console.log(new Date().toISOString().slice(11, 19), m);
+const say = (m) => console.log(new Date().toISOString().slice(11, 19), video, m);
+const dismiss = async () => {
+  for (const n of ['OK', 'Got it', 'Close', 'Dismiss']) {
+    const b = zoom.getByRole('button', { name: n, exact: true });
+    for (let k = 0; k < await b.count(); k++) await b.nth(k).click({ timeout: 1200, force: true }).catch(() => {});
+  }
+};
+const toolbar = async (i = 0) => { const [W, H] = await zoom.evaluate(() => [innerWidth, innerHeight]); await zoom.mouse.move(W / 2 + i * 37, H - 30 - (i % 2) * 20); await zoom.waitForTimeout(600); };
+async function leave() {
+  let left = false;
+  for (let i = 0; i < 8 && !left; i++) {
+    await toolbar(i);
+    await zoom.getByRole('button', { name: /^Leave$/ }).first().click({ force: true, timeout: 2000 }).catch(() => {});
+    await zoom.waitForTimeout(800);
+    const lm = zoom.getByRole('button', { name: /Leave Meeting/i });
+    if (await lm.count()) { await lm.first().click({ force: true }).catch(() => {}); await zoom.waitForTimeout(2500); }
+    left = !(await zoom.getByRole('button', { name: /^Leave$/ }).count());
+  }
+  say(left ? 'left the room' : 'LEAVE NOT CONFIRMED (closing the browser)');
+}
+const isSharing = async () => (await zoom.locator('body').innerText()).match(/You are (?:screen )?sharing|Stop Share|Stop sharing/i);
+
 // The player in its own window so both stay rendered.
 const playerP = ctx.waitForEvent('page');
-await zoom.evaluate((u) => window.open(u, 'player', 'popup,width=1280,height=760,left=60,top=60'), `http://localhost:4321/framework/recordings/studio/player.html?v=${video}`);
+await zoom.evaluate(([u, x]) => window.open(u, 'player', 'popup,width=1280,height=760,left=' + x + ',top=60'), [`http://localhost:4321/framework/recordings/studio/player.html?v=${video}`, 60 + Number(process.env.WIN_X || 0)]);
 const player = await playerP; await player.waitForLoadState();
 await player.waitForFunction(() => document.getElementById('v').readyState >= 3, null, { timeout: 60000 });
 const dur = await player.evaluate(() => document.getElementById('v').duration);
@@ -34,32 +51,32 @@ for (let i = 0; i < 4 && await zoom.locator('.pepc-permission-dialog').count(); 
   await b.click({ force: true }).catch(() => {}); await zoom.waitForTimeout(800);
   if (await zoom.locator('.pepc-permission-dialog').count()) { await b.focus().catch(() => {}); await zoom.keyboard.press('Enter'); await zoom.waitForTimeout(800); }
 }
-console.log('permission dialog closed:', !(await zoom.locator('.pepc-permission-dialog').count()));
 await zoom.waitForTimeout(1500);
-const nameBox = zoom.locator('#input-for-name'); await nameBox.click(); await nameBox.pressSequentially('Obi', { delay: 60 });
-await zoom.getByRole('button', { name: /^Join$/ }).click();
-await zoom.getByRole('button', { name: 'Leave' }).waitFor({ timeout: 60000 }).catch(async (e) => { await zoom.screenshot({ path: `${logDir}/zoom-${video}-nojoin.png` }); console.log('JOIN PAGE:', (await zoom.locator('body').innerText()).replace(/s+/g, ' ').slice(0, 400)); throw e; });
-for (const n of ['OK', 'Got it']) await zoom.getByRole('button', { name: n, exact: true }).click({ timeout: 4000 }).catch(() => {});
-// In a fresh room the toolbar is not ready until cloud recording has started: wait for it (up to 45 s).
-await zoom.getByRole('button', { name: /recording is on/i }).first().waitFor({ timeout: 45000 }).catch(() => {});
-const rec = await zoom.getByRole('button', { name: /recording is on/i }).count();
-say(`in meeting, cloud recording ${rec ? 'ON' : 'NOT SHOWN'}`);
-// The toolbar hides until the mouse moves; notices can sit on top. Try a few times.
-await zoom.waitForTimeout(5000);
-for (let i = 0; i < 6; i++) {
-  for (const n of ['OK', 'Got it']) await zoom.getByRole('button', { name: n, exact: true }).click({ timeout: 1500 }).catch(() => {});
-  const [W, Hh] = await zoom.evaluate(() => [innerWidth, innerHeight]);
-  await zoom.mouse.move(W / 2 + i * 40, Hh - 30 - (i % 2) * 20); await zoom.waitForTimeout(700);
-  const ok = await zoom.getByRole('button', { name: 'Share', exact: true }).first().click({ timeout: 4000 }).then(() => true).catch(() => false);
-  if (ok) break;
+try {
+  const nameBox = zoom.locator('#input-for-name'); await nameBox.click({ timeout: 20000 }); await nameBox.pressSequentially('Obi', { delay: 60 });
+  await zoom.getByRole('button', { name: /^Join$/ }).click();
+  await zoom.getByRole('button', { name: 'Leave' }).waitFor({ timeout: 60000 });
+} catch (e) { await zoom.screenshot({ path: `${logDir}/zoom-${video}-nojoin.png` }).catch(() => {}); say('could not join'); await ctx.close(); process.exit(2); }
+// Wait for cloud recording (the indicator reads "REC" or "Cloud recording is on"), so the take holds the whole video.
+const recInd = zoom.getByText(/^REC$|recording is on/i);
+await recInd.first().waitFor({ timeout: 45000 }).catch(() => {});
+say(`in meeting, cloud recording ${await recInd.count() ? 'ON' : 'NOT SHOWN'}`);
+await zoom.waitForTimeout(4000);
+let sharing = null;
+for (let round = 0; round < 4 && !sharing; round++) {
+  for (let i = 0; i < 5 && !sharing; i++) {
+    await dismiss(); await toolbar(i);
+    const ok = await zoom.getByRole('button', { name: 'Share', exact: true }).first().click({ timeout: 3000 }).then(() => true).catch(() => false);
+    if (!ok) continue;
+    await zoom.waitForTimeout(2500);
+    for (const n of [/^Share$/, /Share screen/i, /Screen/]) { const b = zoom.getByRole('button', { name: n }); if (await b.count() && await b.first().isVisible()) { await b.first().click().catch(() => {}); await zoom.waitForTimeout(1500); } }
+    await zoom.waitForTimeout(4000);
+    sharing = await isSharing();
+  }
+  if (!sharing) await zoom.waitForTimeout(5000);
 }
-await zoom.waitForTimeout(3000);
-// Zoom may show its own share panel first; take the screen/tab option if it does.
-for (const n of [/^Share$/, /Share screen/i, /Screen/]) { const b = zoom.getByRole('button', { name: n }); if (await b.count() && await b.first().isVisible()) { await b.first().click().catch(() => {}); await zoom.waitForTimeout(2000); } }
-await zoom.waitForTimeout(5000);
-const sharing = (await zoom.locator('body').innerText()).match(/You are (?:screen )?sharing|Stop Share|Stop sharing/i);
-if (!sharing) { await zoom.screenshot({ path: `${logDir}/zoom-${video}-noshare.png` }); throw new Error('share did not start'); }
-say(`sharing: ${sharing ? sharing[0] : 'NOT CONFIRMED'}`);
+if (!sharing) { await zoom.screenshot({ path: `${logDir}/zoom-${video}-noshare.png` }); say('share did not start; leaving'); await leave(); await ctx.close(); process.exit(2); }
+say(`sharing: ${sharing[0]}`);
 await zoom.screenshot({ path: `${logDir}/zoom-${video}-sharing.png` });
 await player.bringToFront();
 await player.evaluate(() => window.playIt());
@@ -68,20 +85,9 @@ await player.waitForFunction(() => document.getElementById('v').ended, null, { t
 say('video ended');
 await player.waitForTimeout(3000);
 await zoom.bringToFront();
+await toolbar();
 await zoom.getByRole('button', { name: /Stop Share/i }).first().click({ force: true, timeout: 5000 }).catch(() => {});
 await zoom.waitForTimeout(1500);
-// Leave properly, so the room is empty and Zoom stops recording at once (closing the browser leaves a ghost
-// participant for minutes). The toolbar hides until the mouse moves.
-let left = false;
-for (let i = 0; i < 8 && !left; i++) {
-  const [W2, H2] = await zoom.evaluate(() => [innerWidth, innerHeight]);
-  await zoom.mouse.move(W2 / 2 + i * 37, H2 - 30 - (i % 2) * 20);
-  await zoom.waitForTimeout(500);
-  await zoom.getByRole('button', { name: /^Leave$/ }).first().click({ force: true, timeout: 2000 }).catch(() => {});
-  await zoom.waitForTimeout(800);
-  const lm = zoom.getByRole('button', { name: /Leave Meeting/i });
-  if (await lm.count()) { await lm.first().click({ force: true }).catch(() => {}); await zoom.waitForTimeout(2500); }
-  left = !(await zoom.getByRole('button', { name: /^Leave$/ }).count());
-}
-say(left ? 'left the room' : 'LEAVE NOT CONFIRMED (closing the browser)');
+// Leave properly, so the room is empty and Zoom stops recording at once (closing the browser leaves a ghost).
+await leave();
 await ctx.close();
