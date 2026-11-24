@@ -7,11 +7,13 @@ synthetic.
 
 | File | What it does |
 |---|---|
-| `plans.mjs` | What each video shows and says, step by step (PREP-1 to PREP-5). Edit the words here. |
-| `stage.html` | The recording stage: the screen on top, the captions and speaker badge below, a highlight ring, title cards. |
+| `plans.mjs` | What each video shows and says, step by step (PREP-1 to PREP-6). Edit the words here. |
+| `stage.html` | The recording stage: the screen on top; below it a footnote caption with the speaker badge that grows to fit the whole sentence; spot-zoom (the screen zooms in on the box being named, with an amber ring); title cards. |
 | `tts.ps1` | Speaks each line to a WAV with the voices built into Windows (David for OBI; Zira for Oge, who is always a female voice). |
 | `record.mjs` | Runs a plan in Edge, captures the tab (picture and sound), saves `../videos/<plan>.webm`. |
 | `verify.mjs` | Plays a video in Google Chrome: checks length, sound and stills (`../videos/stills/`). |
+| `player.html` | Plays one finished video full-window (`?v=<name>`), for sharing into a portal practice room. |
+| `zoom-record.mjs` | Plays one finished video into a portal practice room (a private Zoom room the portal records): joins with no microphone or camera, shares only the player tab with its sound, leaves at the end. Never add `--use-fake-ui-for-media-stream`: it shares the whole screen. |
 
 Output: `framework/recordings/videos/` (WebM: VP9 video, Opus sound; plays in Chrome, Edge and Firefox), with a player
 page at <https://obianams04.github.io/cris-enhancement/framework/recordings/videos/>.
