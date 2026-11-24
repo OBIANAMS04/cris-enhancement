@@ -1,56 +1,33 @@
-# Finishing Demo prep: what is left, in order (23–24 November 2026)
+# Finishing Demo prep (23–24 November 2026)
 
-Portal status on 23 Nov: **2 of 6 complete**. PREP-1 (narrative) and PREP-3 (slides link) are handed in and verified.
-The audience fields on every task are filled in. What is left needs Obi himself: the portal asks for
-*your* voice, a *real* person's feedback, and *your* live presentation, so none of it can be written for you.
+CRIS is a Colaberry **rehearsal** case study, so the recordings are produced, not filmed: the studio in
+`framework/recordings/studio/` turns each kit's speaker notes and runbook into a narrated video (OBI presents, Oge is
+the co-host, in synthetic voices that are labelled on screen), with real clicks in the live workspace on synthetic data.
 
-| Task | Hand-in | Time | Where |
-|---|---|---|---|
-| PREP-2 Working-system demo | A rough recording of you giving the demo (do not restart when you stumble) | 10 min | Practice stage |
-| PREP-4 Stakeholder update | Who you rehearsed with, and what they told you | 15 min | Practice stage |
-| PREP-5 Final showcase | The finished recording | 15 min | Present & Share stage |
-| PREP-6 Demo Day | Present live; staff mark it (+60 pts) | 8 min | 24 Nov, the slot Colaberry assigns |
+All videos: <https://obianams04.github.io/cris-enhancement/framework/recordings/videos/> (WebM; plays in Google
+Chrome, Microsoft Edge and Firefox).
 
-## Before you record (5 minutes, once)
+| Task | Hand-in | Status |
+|---|---|---|
+| PREP-1 Project introduction | Written narrative (Prepare) | Handed in 23 Nov · verified |
+| PREP-2 Working-system demo | Video link (Practice): `videos/#prep-2`, 4:17 | Recorded 23 Nov, handed in |
+| PREP-3 AI visual presentation | Slides link (Build) | Handed in 23 Nov · verified |
+| PREP-4 Stakeholder update | Rehearsal record (Practice): `04-stakeholder-update/rehearsal-record.md` + video `videos/#prep-4`, 2:32 | Rehearsed with Cory (the portal's AI mentor) 23 Nov, handed in |
+| PREP-5 Final showcase | Video link (Present & Share): `videos/#prep-5` | Recorded 23 Nov, handed in |
+| PREP-6 Present at Demo Day | Staff mark it live on 24 Nov (+60) | Obi presents; the PREP-5 video is the backup |
 
-1. In the CRIS folder, run `node scripts/serve.mjs`, then open http://localhost:4321/workspace/.
-2. On the Audit log page, press **Reset demo** twice. Close other tabs; turn on Do not disturb.
-3. Keep the four sample PDFs ready: `framework/recordings/02-working-system-demo/sample-files/`.
+## PREP-6 on the day (the only part that needs Obi)
 
-## How to record (pick one)
+1. Morning: `node scripts/serve.mjs`, open <http://localhost:4321/workspace/>, Audit log → **Reset demo** twice.
+2. Open `05-final-showcase/presentation.html`, press **F** (full screen) and **T** (timer) at your first word.
+3. Present from `05-final-showcase/demo-day-notes.md` (8 minutes, live proof in the middle).
+4. If the live system or your voice fails, play the PREP-5 video from the videos page instead: it is the same
+   showcase, narrated.
 
-- **Easiest: the Studio.** On the task's Practice stage, reserve a practice room for now, record there, and the
-  video arrives in the Studio. On the hand-in form choose **Use a Studio recording**. Nothing to upload.
-- **Or on Windows:** open Snipping Tool, choose Record, pick the browser window, turn the microphone on, and record.
-  Upload the file to Google Drive (sharing "Anyone with the link can view") or YouTube (Unlisted), check the link in
-  a private window, then choose **Paste a link** on the hand-in form.
+## Re-recording
 
-## 1. PREP-2: the run-through (tonight)
-
-Follow `02-working-system-demo/demo-runbook.md` once, start to finish: Vendor A recorded with its receipt; Vendor B
-refused with the reason and logged; Vendor B resubmits and the incident reads "Addressed"; end on the Audit log
-"The chain is intact". Rough is fine; the portal says nobody grades the polish. Then watch it back once and note
-where you rushed. Hand in on PREP-2 → Practice.
-
-## 2. PREP-4: one real rehearsal (tonight)
-
-Give the demo (slides plus the live system) to one real person: family, a friend, or a classmate on a call. Then ask:
-*What was the problem? What did it do? What would stop it going wrong?* Write their name (or "a friend") and their
-answers, plus one thing you will change. Hand in on PREP-4 → Practice → **Write it**.
-
-## 3. PREP-5: the final recording (tonight or early 24 Nov)
-
-Open `05-final-showcase/presentation.html`, press **F** (full screen) and **T** (timer), and present from
-`05-final-showcase/speaker-notes.md`: 8 minutes, with the live proof in the middle. Apply what you noticed in the run-through
-and what your rehearsal partner said. Hand in on PREP-5 → Present & Share.
-
-The same video is also your **Final showcase** slot in the portfolio (+30 pts). The PREP-2 video can fill the
-**Working-system demo** slot.
-
-## 4. PREP-6: Demo Day (24 Nov)
-
-Deliver the final showcase live from `05-final-showcase/demo-day-notes.md`. Keep the PREP-5 video as the backup if
-the live system misbehaves. Staff mark it.
+See `studio/README.md`: one command per video, and how to switch to Microsoft's natural (neural) voices with your own
+free Azure AI Speech key.
 
 ## Settled for the rehearsal (no need to ask anyone)
 
@@ -59,4 +36,4 @@ the live system misbehaves. Staff mark it.
 - PREP-4 decision for Ali: **A**, accept the assumptions and show the evaluation labelled as proposals.
 - PREP-5 decision: **A**, accept the case study as complete; time saved stays "not measured yet".
 - Hosting cost: none (static site, no server, no database). Pricing is not raised.
-- The reflection answers in each kit are final; say them in your own words.
+- The reflection answers in each kit are final.
