@@ -9,7 +9,7 @@ synthetic.
 |---|---|
 | `plans.mjs` | What each video shows and says, step by step (PREP-1 to PREP-5). Edit the words here. |
 | `stage.html` | The recording stage: the screen on top, the captions and speaker badge below, a highlight ring, title cards. |
-| `tts.ps1` | Speaks each line to a WAV with the voices built into Windows (David for OBI, Mark for Oge). |
+| `tts.ps1` | Speaks each line to a WAV with the voices built into Windows (David for OBI; Zira for Oge, who is always a female voice). |
 | `record.mjs` | Runs a plan in Edge, captures the tab (picture and sound), saves `../videos/<plan>.webm`. |
 | `verify.mjs` | Plays a video in Google Chrome: checks length, sound and stills (`../videos/stills/`). |
 
@@ -29,7 +29,7 @@ page at <https://obianams04.github.io/cris-enhancement/framework/recordings/vide
 
 The built-in Windows voices are clear but robotic. Microsoft's natural voices come from its **Azure AI Speech**
 service, which has a free tier (500,000 characters a month; all five videos use about 15,000). With your own key in
-place, `record.mjs` uses the neural voices automatically (OBI: Andrew, Oge: Brian) through Microsoft's official API.
+place, `record.mjs` uses the neural voices automatically (OBI: Andrew; Oge: Ava, a natural female voice) through Microsoft's official API.
 
 1. Sign in at <https://portal.azure.com> (a free Azure account works).
 2. Open <https://portal.azure.com/#create/Microsoft.CognitiveServicesSpeechServices>.

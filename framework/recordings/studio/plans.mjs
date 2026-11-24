@@ -3,7 +3,7 @@
 // Step kinds: card (title card), deck (+ slide), ws (open a workspace page), act (a click or fill in the workspace),
 // say (one narration line: OBI presents, OGE is the co-host), ring (highlight something), pause (ms).
 
-const DISCLOSE = 'Narrated by OBI with co-host Oge in synthetic Windows voices; the clicks are real, in the live workspace on synthetic data.';
+const DISCLOSE = 'Narrated by OBI with co-host Oge in synthetic Windows voices (OBI male, Oge female); the clicks are real, in the live workspace on synthetic data.';
 const REHEARSAL = 'CRIS is a Colaberry rehearsal case study. Nothing is connected to TxDOT.';
 
 const DECK2 = 'framework/recordings/02-working-system-demo/presentation.html';
@@ -101,9 +101,9 @@ export const plans = {
   'prep-3-ai-visual-presentation': {
     title: 'PREP-3 · AI visual presentation',
     steps: [
-      { card: { kicker: 'PREP-3 · AI visual presentation · CRIS', title: 'Rules check the facts; people make every decision', body: [REHEARSAL, 'Narrated by OBI with co-host Oge in synthetic Windows voices.'] }, hold: 4000 },
+      { card: { kicker: 'PREP-3 · AI visual presentation · CRIS', title: 'Rules check the facts; people make every decision', body: [REHEARSAL, 'Narrated by OBI with co-host Oge in synthetic Windows voices (OBI male, Oge female).'] }, hold: 4000 },
       ...deckSteps(DECK3),
-      { card: { kicker: 'PREP-3 · AI visual presentation', title: 'Follow it with the sound off', body: ['Every slide carries its own evidence: drawings from TxDOT\'s published terms, real screens, measured test counts.', 'Synthetic narration (OBI and Oge, Windows voices).'] }, hold: 3500 },
+      { card: { kicker: 'PREP-3 · AI visual presentation', title: 'Follow it with the sound off', body: ['Every slide carries its own evidence: drawings from TxDOT\'s published terms, real screens, measured test counts.', 'Synthetic narration (OBI and Oge, synthetic voices).'] }, hold: 3500 },
     ],
   },
 
@@ -130,7 +130,7 @@ export const plans = {
   'prep-4-stakeholder-update': {
     title: 'PREP-4 · Stakeholder update',
     steps: [
-      { card: { kicker: 'PREP-4 · Stakeholder update · CRIS', title: 'Build done; one decision needed', body: [REHEARSAL, 'Narrated by OBI with co-host Oge in synthetic Windows voices.'] }, hold: 4000 },
+      { card: { kicker: 'PREP-4 · Stakeholder update · CRIS', title: 'Build done; one decision needed', body: [REHEARSAL, 'Narrated by OBI with co-host Oge in synthetic Windows voices (OBI male, Oge female).'] }, hold: 4000 },
       { deck: DECK4, slide: 1 },
       { card: null },
       { say: 'OBI', text: 'Ali, the Crash Records update. The build is done and on track for the twenty-fourth. The case-study recordings were late: they were due on the thirtieth of October. The introduction and the slides are handed in, and the videos are recorded and handed in before Demo Day.' },
@@ -147,7 +147,7 @@ export const plans = {
       { slide: 5 },
       { say: 'OBI', text: 'So, one decision. Option A: accept the working assumptions and close the case study with the evaluation shown, labelled as proposals. Option B: keep the evaluation step out of Demo Day. I recommend A. Which one?' },
       { pause: 1500 },
-      { card: { kicker: 'PREP-4 · Stakeholder update', title: 'Option A or option B?', body: ['Recommendation: A, accept the working assumptions, shown labelled as proposals.', 'Synthetic narration (OBI and Oge, Windows voices).'] }, hold: 3500 },
+      { card: { kicker: 'PREP-4 · Stakeholder update', title: 'Option A or option B?', body: ['Recommendation: A, accept the working assumptions, shown labelled as proposals.', 'Synthetic narration (OBI and Oge, synthetic voices).'] }, hold: 3500 },
     ],
   },
 
@@ -188,6 +188,32 @@ export const plans = {
       { card: { kicker: 'PREP-5 · Final showcase', title: 'Accept the case study, assumptions documented', body: ['Measured: 16 of 16 stories, 50 of 50 criteria, 800 points, 73 tests. Time saved: not measured yet.', DISCLOSE] }, hold: 4000 },
     ],
   },
+};
+
+// PREP-6 · Present at Demo Day. CRIS is a rehearsal, so the Demo Day presentation is produced from the kit like the
+// others: the final showcase run as it would be on the day (05-final-showcase/demo-day-notes.md), followed by the five
+// minutes of questions, with Oge putting the five likely questions from rehearsal-checklist.md and OBI answering
+// from the repo only.
+const showcase = plans['prep-5-final-showcase'].steps;
+plans['prep-6-demo-day'] = {
+  title: 'PREP-6 · Demo Day',
+  steps: [
+    { card: { kicker: 'PREP-6 · Demo Day · CRIS', title: 'The final showcase, then five questions', body: [REHEARSAL, 'Eight minutes of showcase, then the questions a Demo Day room asks, answered from the repo only.', DISCLOSE] }, hold: 5000 },
+    ...showcase.slice(1, -1),
+    { say: 'OGE', text: "Let's take questions. I'll put the five the room is most likely to ask. First: where is the AI in this?" },
+    { say: 'OBI', text: 'There is no AI model in the workspace. Its checks are fixed rules, one file per story, tested by seventy-three unit tests. AI was used to build it: Claude Code wrote code under my direction, and the tests, the sixteen-story rehearsal and the portal\'s verification are how it was checked. It decides completeness, timeliness, outlier flags and clearance. People decide scores, and TxDOT decides the award.' },
+    { say: 'OGE', text: 'How much time does this save TxDOT?' },
+    { say: 'OBI', text: 'I do not know yet. It is not measured. What is measured is that the check runs before anything is stored, and every refusal is named and logged. For any live engagement, the next step is one timed trial with a procurement officer.' },
+    { say: 'OGE', text: 'Is it connected to TxDOT or Euna Procurement?' },
+    { say: 'OBI', text: 'No. Synthetic data, in one browser. TxDOT does use Euna, but this rehearsal has no Euna access, so it is closed by a working assumption kept in one settings file. A live engagement replaces that file with the agency\'s own process.' },
+    { say: 'OGE', text: 'What if your rules are wrong: the documents, the weights, the closing time?' },
+    { say: 'OBI', text: 'They are working assumptions from TxDOT\'s published terms and public Texas procurement practice, labelled as proposals on screen. Each lives in one file, so the agency\'s real values replace that file without touching the logic, and the tests and rehearsal are run again.' },
+    { say: 'OGE', text: 'Last one. Who can see the documents, and how do you know nothing was changed?' },
+    { say: 'OBI', text: 'Four roles can open response documents, and vendor staff also need current cyber training. Every refusal is logged. Each file is stored and read back by its SHA-256 hash, the receipt re-checks it, and every action sits on an audit log chained by hashes, so a changed line is reported. There is no real sign-in: the Acting as picker stands in for it.' },
+    { say: 'OGE', text: 'Thank you, OBI.' },
+    { say: 'OBI', text: 'Thank you all. The recommendation stands: option A, accept the case study with its working assumptions documented.' },
+    { card: { kicker: 'PREP-6 · Demo Day', title: 'Accept the case study, assumptions documented', body: ['Measured: 16 of 16 stories, 50 of 50 criteria, 800 points, 73 tests. Time saved: not measured yet.', DISCLOSE] }, hold: 4500 },
+  ],
 };
 
 // Spoken forms, so the voices say the names the way the kits' pronunciation tables ask.

@@ -1,7 +1,7 @@
 // Records the CRIS rehearsal videos: node framework/recordings/studio/record.mjs [plan ...]
 // Needs `node scripts/serve.mjs` running (http://localhost:4321) and a tools folder with Playwright
 // (REC_TOOLS, default ../rec-tools next to this repo: `npm i playwright fix-webm-duration`). Uses the installed Edge.
-// 1. Each narration line is spoken to a WAV with the Windows voices (tts.ps1): OBI = Microsoft David, Oge = Microsoft Mark.
+// 1. Each narration line is spoken to a WAV with the Windows voices (tts.ps1): OBI = Microsoft David, Oge = Microsoft Zira (female; Oge is always a female voice).
 // 2. Edge opens stage.html, which captures its own tab (picture and sound) with MediaRecorder.
 // 3. The plan runs: decks change slide, the live workspace is clicked for real, each line plays and is captioned.
 // 4. The recording is given its duration (so players can seek) and saved to framework/recordings/videos/<plan>.webm.
@@ -31,8 +31,8 @@ mkdirSync(videos, { recursive: true });
 // Without them, the built-in Windows voices are used. The key is read from the environment, never stored here.
 const AZURE = process.env.AZURE_SPEECH_KEY && process.env.AZURE_SPEECH_REGION;
 const VOICE = AZURE
-  ? { OBI: { voice: 'en-US-AndrewMultilingualNeural', rate: '-4%' }, OGE: { voice: 'en-US-BrianMultilingualNeural', rate: '0%' } }
-  : { OBI: { voice: 'Microsoft David', rate: 0.92 }, OGE: { voice: 'Microsoft Mark', rate: 1.0 } };
+  ? { OBI: { voice: 'en-US-AndrewMultilingualNeural', rate: '-4%' }, OGE: { voice: 'en-US-AvaMultilingualNeural', rate: '0%' } }
+  : { OBI: { voice: 'Microsoft David', rate: 0.92 }, OGE: { voice: 'Microsoft Zira', rate: 1.0 } };
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 async function azureSpeak(lines) {
   let made = 0;
@@ -166,9 +166,10 @@ async function record(name) {
         const el = target(s.ring);
         await el.scrollIntoViewIfNeeded().catch(() => {});
         await settle(300);
-        const box = await el.boundingBox().catch(() => null);
+        // measured inside the screen frame (its own coordinates), so a zoom already on screen does not skew it
+        const box = await el.evaluate((e) => { const r = e.getBoundingClientRect(); return { x: r.x, y: r.y, width: r.width, height: r.height, vh: innerHeight }; }).catch(() => null);
         if (!box) console.warn(`  (nothing to highlight for "${s.ring}")`);
-        const clip = box && { x: Math.max(4, box.x), y: Math.max(4, box.y), width: Math.min(box.width, 1270 - Math.max(4, box.x)), height: Math.min(box.height, 626 - Math.max(4, box.y)) };
+        const clip = box && { x: Math.max(4, box.x), y: Math.max(4, box.y), width: Math.min(box.width, 1270 - Math.max(4, box.x)), height: Math.min(box.height, box.vh - 10 - Math.max(4, box.y)) };
         await page.evaluate((b) => window.studio.ring(b), clip);
       }
     }
