@@ -1,13 +1,25 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>CRIS recording</title>
-<style>html,body{margin:0;height:100%;background:#000}video{width:100vw;height:100vh;object-fit:contain;display:block}</style>
+<style>
+html,body{margin:0;height:100%;background:#000;color:#fff;font:20px/1.4 "Segoe UI",system-ui,sans-serif}
+video{width:100vw;height:100vh;object-fit:contain;display:block}
+#go{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;background:rgba(0,0,0,.6);cursor:pointer;text-align:center;padding:16px}
+#go b{font-size:30px}#go[hidden]{display:none}
+</style>
 </head><body>
-<!-- Plays one produced video full-window, for screen sharing into a portal practice room. ?v=<name>  -->
+<!-- Plays one produced video full-window, for sharing into a portal practice room. ?v=<name>
+     By hand: share this tab (with its audio) in Zoom, then click anywhere or press Space to play. -->
 <video id="v" preload="auto" playsinline></video>
+<div id="go" role="button" tabindex="0"><b>Click or press Space to play</b><span id="name"></span><span>Share this tab in Zoom first, with "Share tab audio" ticked.</span></div>
 <script>
-  var v = document.getElementById('v');
-  v.src = '../videos/' + (new URLSearchParams(location.search).get('v') || 'prep-1-project-introduction') + '.webm';
-  window.playIt = function () { v.currentTime = 0; return v.play(); };
+  var v = document.getElementById('v'), go = document.getElementById('go');
+  var name = new URLSearchParams(location.search).get('v') || 'prep-1-project-introduction';
+  document.getElementById('name').textContent = name;
+  v.src = '../videos/' + name + '.webm';
+  window.playIt = function () { go.hidden = true; v.currentTime = 0; return v.play(); };
+  go.addEventListener('click', function () { window.playIt(); });
+  document.addEventListener('keydown', function (e) { if (e.key === ' ' && !go.hidden) { e.preventDefault(); window.playIt(); } });
+  v.addEventListener('ended', function () { go.hidden = false; go.querySelector('b').textContent = 'Finished. Stop sharing, then leave the meeting.'; });
 </script>
 </body></html>

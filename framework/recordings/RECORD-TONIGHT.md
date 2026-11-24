@@ -26,6 +26,36 @@ joins it in Chrome with no microphone or camera, shares only the player tab (`st
 sound, plays the video to the end and leaves; the take appears in the task within about half an hour.
 Never launch Chrome with `--use-fake-ui-for-media-stream` for this: it shares the whole screen.
 
+## Filling the other portfolio slots (Obi, by hand)
+
+Each PREP task has its own portfolio of seven slots (one per presentation type), filled only by takes recorded in
+**that task's** practice room. On 24 Nov Zoom began refusing automated joins ("Automated bots aren't allowed to join
+this meeting"), so the remaining slots need a person to join. One take is about the video's length plus a minute.
+
+1. Open the task in the portal, for example
+   <https://enterprise.colaberry.ai/portal/projects/workspace/a563218c-c3a4-433c-8ed7-4e8e0573f59c/PREP-1>, go to
+   **Step 4 Practice**, and press **Join** (or **Launch**). Join from the browser, with microphone and camera off.
+2. In another Chrome tab, open the player for the video you want, for example
+   <https://obianams04.github.io/cris-enhancement/framework/recordings/studio/player.html?v=prep-2-working-system-demo>.
+3. Wait until Zoom shows **REC**. Then **Share** → **Chrome Tab** → pick the tab titled **CRIS recording**, tick
+   **Share tab audio**, press **Share**.
+4. Click the player (or press Space). When it says **Finished**, press **Stop Share**, then **Leave**.
+5. Wait a minute, then do the next video in the same room. Tell Claude when done: Claude sets each take's type.
+
+| Room (task) | Already filled | Videos still to play (`?v=` name) |
+|---|---|---|
+| PREP-1 | Project introduction | prep-2-working-system-demo, prep-3-ai-visual-presentation, prep-4-stakeholder-update, prep-5-final-showcase, prep-arch-architecture-review, prep-handoff-client-handoff |
+| PREP-2 | Working-system demo | prep-1-project-introduction, prep-3-…, prep-4-…, prep-5-…, prep-arch-…, prep-handoff-… |
+| PREP-3 | AI visual presentation | prep-1-…, prep-2-…, prep-4-…, prep-5-…, prep-arch-…, prep-handoff-… |
+| PREP-4 | Stakeholder update | prep-1-…, prep-2-…, prep-3-…, prep-5-…, prep-arch-…, prep-handoff-… |
+| PREP-5 | Final showcase (clean take) | prep-1-…, prep-2-…, prep-3-…, prep-4-…, prep-arch-…, prep-handoff-… |
+| PREP-6 | Final showcase (Demo Day) | prep-1-…, prep-2-…, prep-3-…, prep-4-…, prep-arch-…, prep-handoff-… |
+
+Each empty slot says "+30 pts the first time". If time is short, play the two types never recorded anywhere
+(Architecture review and Client handoff) first. The SSS build's videos are `sss-…` names
+(see the videos page); its rooms only open while SSS is the active build, and CRIS must be made active again
+afterwards (Projects → CRIS card → Open build).
+
 ## Re-recording
 
 See `studio/README.md`: one command per video, and how to switch to Microsoft's natural (neural) voices with your own
