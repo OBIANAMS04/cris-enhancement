@@ -276,7 +276,7 @@ td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; }
   function el(tag, attrs, text) { var e = document.createElementNS(NS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; return e; }
   function showTip(evt, text) { tip.textContent = text; tip.hidden = false; tip.style.left = (evt.clientX + 12) + 'px'; tip.style.top = (evt.clientY + 12) + 'px'; }
   function hbars(host, rows, max, fmt) {
-    var labelW = 190, w = 560, rowH = 34, h = rows.length * rowH + 10, plot = w - labelW - 60;
+    var labelW = 190, w = 560, rowH = 34, h = rows.length * rowH + 10, plot = w - labelW - 84; // room for a "80 / 100" value label
     var svg = el('svg', { viewBox: '0 0 ' + w + ' ' + h, role: 'img', 'aria-label': host.getAttribute('aria-label') });
     rows.forEach(function (r, k) {
       var y = 6 + k * rowH, g = el('g', {});
