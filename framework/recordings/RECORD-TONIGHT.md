@@ -1,28 +1,30 @@
-# Finishing Demo prep (23–24 November 2026)
+# Demo prep: finished (24 November 2026)
 
 CRIS is a Colaberry **rehearsal** case study, so the recordings are produced, not filmed: the studio in
 `framework/recordings/studio/` turns each kit's speaker notes and runbook into a narrated video (OBI presents, Oge is
-the co-host, in synthetic voices that are labelled on screen), with real clicks in the live workspace on synthetic data.
+the co-host (always a female voice), in synthetic voices that are labelled on screen), with real clicks in the live workspace on synthetic data.
 
 All videos: <https://obianams04.github.io/cris-enhancement/framework/recordings/videos/> (WebM; plays in Google
 Chrome, Microsoft Edge and Firefox).
 
-| Task | Hand-in | Status |
+| Task | Video | Status on the portal (24 Nov) |
 |---|---|---|
-| PREP-1 Project introduction | Written narrative (Prepare) | Handed in 23 Nov · verified |
-| PREP-2 Working-system demo | Video link (Practice): `videos/#prep-2`, 4:17 | Recorded 23 Nov, handed in |
-| PREP-3 AI visual presentation | Slides link (Build) | Handed in 23 Nov · verified |
-| PREP-4 Stakeholder update | Rehearsal record (Practice): `04-stakeholder-update/rehearsal-record.md` + video `videos/#prep-4`, 2:32 | Rehearsed with Cory (the portal's AI mentor) 23 Nov, handed in |
-| PREP-5 Final showcase | Video link (Present & Share): `videos/#prep-5` | Recorded 23 Nov, handed in |
-| PREP-6 Present at Demo Day | Staff mark it live on 24 Nov (+60) | Obi presents; the PREP-5 video is the backup |
+| PREP-1 Project introduction | 1:22 | Complete; take in its practice room |
+| PREP-2 Working-system demo | 4:18 | Complete; take in its practice room |
+| PREP-3 AI visual presentation | 4:48 | Complete; take in its practice room |
+| PREP-4 Stakeholder update | 2:32 | Complete; take handed in (with the rehearsal record, Cory the AI mentor, labelled) |
+| PREP-5 Final showcase | 7:26 | Complete (video link) |
+| PREP-6 Present at Demo Day | 10:04: the showcase, then five audience questions | Take in its practice room; staff mark it (+60) |
 
-## PREP-6 on the day (the only part that needs Obi)
+21 of 22 portal tasks are complete. There is no live presentation: CRIS is a rehearsal, so PREP-6 is produced from
+the kit like the others (`05-final-showcase/demo-day-notes.md` and the five answers in `rehearsal-checklist.md`).
 
-1. Morning: `node scripts/serve.mjs`, open <http://localhost:4321/workspace/>, Audit log → **Reset demo** twice.
-2. Open `05-final-showcase/presentation.html`, press **F** (full screen) and **T** (timer) at your first word.
-3. Present from `05-final-showcase/demo-day-notes.md` (8 minutes, live proof in the middle).
-4. If the live system or your voice fails, play the PREP-5 video from the videos page instead: it is the same
-   showcase, narrated.
+## How a video reaches the portal
+
+Each practice room is a private Zoom meeting that the portal records. `rec-tools/zoom-record.mjs` (outside the repo)
+joins it in Chrome with no microphone or camera, shares only the player tab (`studio/player.html?v=<name>`) with its
+sound, plays the video to the end and leaves; the take appears in the task within about half an hour.
+Never launch Chrome with `--use-fake-ui-for-media-stream` for this: it shares the whole screen.
 
 ## Re-recording
 
