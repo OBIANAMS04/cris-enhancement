@@ -32,5 +32,17 @@ await page.evaluate(() => { const v = document.getElementById('v'); v.playbackRa
 for (const sec of at.map(Number).sort((a, b) => a - b)) {
   await page.waitForFunction((t) => document.getElementById('v').currentTime >= t, sec, { timeout: 600000, polling: 50 });
   await page.screenshot({ path: join(stills, `${name}-${sec}.png`) });
+  // Black borders mean the picture was shrunk into the frame (the page area drifted from 1280 x 720).
+  const edges = await page.evaluate(() => {
+    const v = document.getElementById('v');
+    const c = Object.assign(document.createElement('canvas'), { width: 1280, height: 720 });
+    const g = c.getContext('2d');
+    g.drawImage(v, 0, 0, 1280, 720);
+    const mean = (x, y, w, h) => { const d = g.getImageData(x, y, w, h).data; let s = 0; for (let i = 0; i < d.length; i += 4) s += d[i] + d[i + 1] + d[i + 2]; return s / (d.length / 4) / 3; };
+    return { left: Math.round(mean(0, 100, 6, 400)), right: Math.round(mean(1274, 100, 6, 400)), bottom: Math.round(mean(100, 716, 1000, 4)) };
+  });
+  const boxed = edges.left < 8 && edges.right < 8;
+  console.log(`  ${sec}s: ${boxed ? 'BLACK BORDERS (re-record)' : 'full frame'} ${JSON.stringify(edges)}`);
+  if (boxed) process.exitCode = 1;
 }
 await browser.close();

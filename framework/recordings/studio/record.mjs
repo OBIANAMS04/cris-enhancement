@@ -59,7 +59,7 @@ async function record(name) {
   const audio = join(work, 'audio');
   mkdirSync(audio, { recursive: true });
   const lines = plan.steps.filter((s) => s.say).map((s) => {
-    const v = VOICE[s.say];
+    const v = { ...VOICE[s.say], ...(!AZURE && plan.rate ? { rate: plan.rate } : {}) };
     const text = spoken(s.text);
     const id = createHash('sha1').update(`${v.voice}|${v.rate}|${text}`).digest('hex').slice(0, 16);
     s.wav = `${id}.wav`;
@@ -122,7 +122,12 @@ async function record(name) {
     return f.locator(t).first();
   };
   const settle = (ms = 700) => page.waitForTimeout(ms);
+  let drift = 0;
   for (const s of plan.steps) {
+    // Keep the page area at exactly 1280 x 720 all the way through: if Edge resizes it (a bar appears, the window
+    // is nudged), the capture would shrink the picture into black borders.
+    const [vw, vh] = await page.evaluate(() => [innerWidth, innerHeight]);
+    if (vw !== 1280 || vh !== 720) { drift++; await fit(); }
     if (s.card !== undefined) { await page.evaluate((c) => window.studio.card(c), s.card && { ...s.card, body: (s.card.body || []).map(voiced) }); if (s.hold) await settle(s.hold); }
     if (s.deck) {
       if (deckUrl !== s.deck) { await page.evaluate((u) => window.studio.load(u), ORIGIN + s.deck); deckUrl = s.deck; await hideTour(); await settle(600); }
@@ -174,6 +179,7 @@ async function record(name) {
     }
     if (s.pause) await settle(s.pause);
   }
+  if (drift) console.log(`  page area corrected ${drift} time(s) during the recording`);
   await page.evaluate(() => window.studio.caption(null, ''));
   await settle(800);
 

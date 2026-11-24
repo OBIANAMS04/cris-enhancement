@@ -86,8 +86,9 @@ const SLIDE1 = 'framework/recordings/01-project-introduction/slide.html';
 export const plans = {
   'prep-1-project-introduction': {
     title: 'PREP-1 · Project introduction',
+    rate: 1.12, // the brief is ninety seconds
     steps: [
-      { card: { kicker: 'PREP-1 · Project introduction · CRIS', title: 'Catch the missing file before it costs the bid', body: [REHEARSAL, 'Narrated by OBI in a synthetic Windows voice.'] }, hold: 2500 },
+      { card: { kicker: 'PREP-1 · Project introduction · CRIS', title: 'Catch the missing file before it costs the bid', body: [REHEARSAL, 'Narrated by OBI in a synthetic Windows voice.'] }, hold: 2000 },
       { deck: SLIDE1, slide: 1 },
       { card: null },
       { say: 'OBI', text: "I'm Obi. Picture a TxDOT procurement officer on closing day for the Crash Records solicitation, CRIS. Every response must carry every required document. The officer has to catch the one that is missing, and show why it was turned away." },
